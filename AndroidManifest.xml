@@ -11,22 +11,15 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name=".CreateAlarm" android:label="@string/title_activity_create_alarm">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity><activity
-            android:name=".AlarmedMain"
-            android:label="@string/title_activity_alarmed_main" >
+        <activity
+            android:name=".CreateAlarm"
+            android:label="@string/title_activity_create_alarm" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
     </application>
 
 </manifest>
