@@ -1,15 +1,12 @@
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
-import edu.chalmers.dat255.group09.Alarmed.R;
-import edu.chalmers.dat255.group09.Alarmed.R.id;
-import edu.chalmers.dat255.group09.Alarmed.R.layout;
-import edu.chalmers.dat255.group09.Alarmed.R.menu;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TimePicker;
+import edu.chalmers.dat255.group09.Alarmed.R;
 
 public class CreateAlarm extends Activity {
 
