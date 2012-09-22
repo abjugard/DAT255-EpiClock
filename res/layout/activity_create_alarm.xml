@@ -3,12 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
+    <TimePicker
+        android:id="@+id/createAlarmTimePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".CreateAlarm" />
+        android:layout_marginTop="51dp" />
+
+    <Button
+        android:id="@+id/createAlarmSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createAlarmTimePicker"
+        android:layout_alignRight="@+id/createAlarmTimePicker"
+        android:layout_below="@+id/createAlarmTimePicker"
+        android:text="@string/createAlarmSaveButtonText" 
+        android:onClick="onSetAlarmBtnPressed"/>
 
 </RelativeLayout>
