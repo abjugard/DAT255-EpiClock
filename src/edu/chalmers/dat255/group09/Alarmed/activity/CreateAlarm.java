@@ -1,5 +1,9 @@
-package edu.chalmers.dat255.group09.Alarmed;
+package edu.chalmers.dat255.group09.Alarmed.activity;
 
+import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.R.id;
+import edu.chalmers.dat255.group09.Alarmed.R.layout;
+import edu.chalmers.dat255.group09.Alarmed.R.menu;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
