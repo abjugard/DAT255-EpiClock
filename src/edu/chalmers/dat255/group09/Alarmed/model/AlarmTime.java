@@ -4,9 +4,6 @@ import java.util.Calendar;
 
 public class AlarmTime {
 
-	private final long ONE_HOUR_IN_MILLI_SECONDS = 3600000;
-	private final long ONE_MINUTE_IN_MILLI_SECONDS = 60000;
-	private final long ONE_SECOND_IN_MILLI_SECONDS = 1000;
 	private final int alarmHours;
 	private final int alarmMinutes;
 
@@ -19,7 +16,17 @@ public class AlarmTime {
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
 	}
-
+	
+	public long getTimeInMilliSeconds() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
+		cal.set(Calendar.MINUTE, alarmMinutes);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		
+		return cal.getTimeInMillis();
+	}
+	
 	private boolean isIllegalMinutes(int minutes) {
 		return minutes > 59 || minutes < 0;
 	}
@@ -28,37 +35,15 @@ public class AlarmTime {
 		return hours > 23 || hours < 0;
 	}
 
-	public long getAlarmTimeInMilliSeconds() {
-		long alarmTimeInMilliSeconds = System.currentTimeMillis();
-		alarmTimeInMilliSeconds += getTimeDifferenceInMilliSeconds();
-
-		return (alarmTimeInMilliSeconds);
+	
+	public int getAlarmHours() {
+		return alarmHours;
 	}
-
-	private long getTimeInMilliSeconds() {
-		return getTimeInMilliSeconds(alarmHours, alarmMinutes, 0);
+	
+	public int getAlarmMinutes() {
+		return alarmMinutes;
 	}
-
-	private long getTimeInMilliSeconds(int hours, int minutes, int seconds) {
-		long timeInMilliSeconds = hours * ONE_HOUR_IN_MILLI_SECONDS;
-
-		timeInMilliSeconds += minutes * ONE_MINUTE_IN_MILLI_SECONDS;
-
-		timeInMilliSeconds += seconds * ONE_SECOND_IN_MILLI_SECONDS;
-
-		return timeInMilliSeconds;
-	}
-
-	private long getTimeDifferenceInMilliSeconds() {
-		Calendar calendar = Calendar.getInstance();
-		int currentMinutes = calendar.get(Calendar.MINUTE);
-		int currentHours = calendar.get(Calendar.HOUR_OF_DAY);
-		int currentSeconds = calendar.get(Calendar.SECOND);
-		long currentTime = getTimeInMilliSeconds(currentHours, currentMinutes,
-				currentSeconds);
-		return Math.abs(getTimeInMilliSeconds() - currentTime);
-	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder strBuilder = new StringBuilder();

@@ -7,62 +7,71 @@ import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
 
 public class AlarmTimeTest extends AndroidTestCase {
 
-	private AlarmTime alarm;
+	public void testAlarmTimeAfterFourHours() {
 
-	public void testGetAlarmTimeInMilliSeconds() {
+		int hoursToAlarmShouldTrigger = 4;
+		int minutesToAlarmShuoldTrigger = 0;
 
-		int alarmHour = 20;
-		int alarmMinute = 20;
+		int alarmHours = getAlarmHours(hoursToAlarmShouldTrigger);
+		int alarmMinutes = getAlarmMinutes(minutesToAlarmShuoldTrigger);
 
-		alarm = new AlarmTime(alarmHour, alarmMinute);
+		long expectedAlarmTime = getExpectedAlarmTime(alarmHours, alarmMinutes);
 
-		long expectedAlarmTime = getExpectedAlarmTime(alarmHour, alarmMinute);
-		long actualAlarmTime = alarm.getAlarmTimeInMilliSeconds();
+		long actualAlarmTime = new AlarmTime(alarmHours, alarmMinutes)
+				.getTimeInMilliSeconds();
+
 		assertEquals(expectedAlarmTime, actualAlarmTime);
-
-		alarmHour = 10;
-		alarmMinute = 10;
-
-		alarm = new AlarmTime(alarmHour, alarmMinute);
-
-		expectedAlarmTime = getExpectedAlarmTime(alarmHour, alarmMinute);
-		actualAlarmTime = alarm.getAlarmTimeInMilliSeconds();
-		assertEquals(expectedAlarmTime, actualAlarmTime);
-
-		alarmHour = 0;
-		alarmMinute = 0;
-
-		alarm = new AlarmTime(alarmHour, alarmMinute);
-
-		expectedAlarmTime = getExpectedAlarmTime(alarmHour, alarmMinute);
-		actualAlarmTime = alarm.getAlarmTimeInMilliSeconds();
-		assertEquals(expectedAlarmTime, actualAlarmTime);
-
 	}
 
-	private long getExpectedAlarmTime(int alarmHour, int alarmMinute) {
-		long currentTime = getCurrentTimeInMilliSeconds();
-		long alarmTime = getTimeInMilliSeconds(alarmHour, alarmMinute, 0);
-		long timeDifference = Math.abs((currentTime - alarmTime));
+	public void testAlarmTimeAfterTwelveHours() {
 
-		return System.currentTimeMillis() + timeDifference;
+		int hoursToAlarmShouldTrigger = 12;
+		int minutesToAlarmShuoldTrigger = 0;
+
+		int alarmHours = getAlarmHours(hoursToAlarmShouldTrigger);
+		int alarmMinutes = getAlarmMinutes(minutesToAlarmShuoldTrigger);
+
+		long expectedAlarmTime = getExpectedAlarmTime(alarmHours, alarmMinutes);
+
+		long actualAlarmTime = new AlarmTime(alarmHours, alarmMinutes)
+				.getTimeInMilliSeconds();
+		assertEquals(expectedAlarmTime, actualAlarmTime);
 	}
 
-	private long getCurrentTimeInMilliSeconds() {
+	public void testAlarmTimeAfterTenHoursThrityMinutes() {
+		int hoursToAlarmShouldTrigger = 10;
+		int minutesToAlarmShuoldTrigger = 30;
+
+		int alarmHours = getAlarmHours(hoursToAlarmShouldTrigger);
+		int alarmMinutes = getAlarmMinutes(minutesToAlarmShuoldTrigger);
+
+		long expectedAlarmTime = getExpectedAlarmTime(alarmHours, alarmMinutes);
+
+		long actualAlarmTime = new AlarmTime(alarmHours, alarmMinutes)
+				.getTimeInMilliSeconds();
+		assertEquals(expectedAlarmTime, actualAlarmTime);
+	}
+
+	private int getAlarmMinutes(int minutesToAlarmShuoldTrigger) {
 		Calendar cal = Calendar.getInstance();
-		int currentHour = cal.get(Calendar.HOUR_OF_DAY);
-		int currentMinute = cal.get(Calendar.MINUTE);
-		int currentSeconds = cal.get(Calendar.SECOND);
-
-		return getTimeInMilliSeconds(currentHour, currentMinute, currentSeconds);
-
+		return (cal.get(Calendar.MINUTE) + minutesToAlarmShuoldTrigger) % 60;
 	}
 
-	private long getTimeInMilliSeconds(int hours, int minutes, int seconds) {
-		long currentTime = hours * 3600000;
-		currentTime += minutes * 60000;
-		currentTime += seconds * 1000;
-		return currentTime;
+	private int getAlarmHours(int hoursToAlarmShouldTrigger) {
+		Calendar cal = Calendar.getInstance();
+		return (cal.get(Calendar.HOUR_OF_DAY) + hoursToAlarmShouldTrigger) % 24;
+	}
+
+	private long getExpectedAlarmTime(int alarmHours, int alarmMinutes) {
+
+		Calendar cal = Calendar.getInstance();
+
+		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
+		cal.set(Calendar.MINUTE, alarmMinutes);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+
+		return cal.getTimeInMillis();
 	}
 
 	public void testIllegalHourInput() {

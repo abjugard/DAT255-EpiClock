@@ -60,7 +60,7 @@ public class CreateAlarm extends Activity {
 
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP,
-				alarm.getAlarmTimeInMilliSeconds(), sender);
+				alarm.getTimeInMilliSeconds(), sender);
 
 		Toast.makeText(this, "Alarm Scheduled", Toast.LENGTH_LONG).show();
 	}
