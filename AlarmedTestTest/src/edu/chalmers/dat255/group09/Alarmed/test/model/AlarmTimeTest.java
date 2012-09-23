@@ -6,9 +6,8 @@ import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
 
 public class AlarmTimeTest extends AndroidTestCase {
-	
+
 	private AlarmTime alarm;
-	
 
 	public void testGetAlarmTimeInMilliSeconds() {
 
@@ -64,5 +63,63 @@ public class AlarmTimeTest extends AndroidTestCase {
 		currentTime += minutes * 60000;
 		currentTime += seconds * 1000;
 		return currentTime;
+	}
+
+	public void testIllegalHourInput() {
+		try {
+			new AlarmTime(24, 23);
+			fail("Should generate an illegalargumentexpection");
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+	}
+
+	public void testNegativeHourInput() {
+		try {
+			new AlarmTime(-3, 23);
+			fail("Should generate an illegalargumentexpection");
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
+	}
+
+	public void testIllegalMinuteInput() {
+		try {
+			new AlarmTime(0, 60);
+			fail("Should generate an illegalargumentexpection");
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
+	}
+
+	public void testNegativeMinuteInput() {
+		try {
+			new AlarmTime(22, -60);
+			fail("Should generate an illegalargumentexpection");
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
+	}
+
+	public void testNegativeHourMinuteInput() {
+		try {
+			new AlarmTime(-1, -2);
+			fail("Should generate an illegalargumentexpection");
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+
+	}
+
+	public void testIllegalHourMinuteInput() {
+		try {
+			new AlarmTime(24, 60);
+			fail("Should generate an illegalargumentexpection");
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
 	}
 }
