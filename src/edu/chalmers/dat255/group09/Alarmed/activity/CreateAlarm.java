@@ -24,13 +24,24 @@ public class CreateAlarm extends Activity {
 		setContentView(R.layout.activity_create_alarm);
 
 		initTimePicker();
+	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
+		setTimepickerToCurrentTime(timePicker);
 	}
 
 	private void initTimePicker() {
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
-		Calendar calendar = Calendar.getInstance();
+
 		timePicker.setIs24HourView(true);
+		setTimepickerToCurrentTime(timePicker);
+	}
+
+	private void setTimepickerToCurrentTime(TimePicker timePicker) {
+		Calendar calendar = Calendar.getInstance();
 		timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
 		timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
 	}
