@@ -1,12 +1,6 @@
 package edu.chalmers.dat255.group09.Alarmed.test.model;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Calendar;
-
-import org.junit.Test;
-
-import junit.framework.Assert;
 
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
@@ -79,10 +73,10 @@ public class AlarmTimeTest extends AndroidTestCase {
 
 		return cal.getTimeInMillis();
 	}
-	
+
 	/*
-	 * The toString() will return a different format depending on how long it's left.
-	 * The format has 8 different formats.
+	 * The toString() will return a different format depending on how long it's
+	 * left. The format has 8 different formats.
 	 */
 
 	public void testOneMinuteToString() {
@@ -103,23 +97,23 @@ public class AlarmTimeTest extends AndroidTestCase {
 
 	public void testOneHourToString() {
 		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 1) % 24),
-				cal.get(Calendar.MINUTE);
+		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 1) % 24,
+				cal.get(Calendar.MINUTE));
 		String toMatch = "Alarm is set for 1 hour from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testFiveHoursToString() {
 		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 5) % 24),
-				cal.get(Calendar.MINUTE);
+		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 5) % 24,
+				cal.get(Calendar.MINUTE));
 		String toMatch = "Alarm is set for 5 hours from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testOneHourOneMinuteToString() {
 		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 1) % 24),
+		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 1) % 24,
 				(cal.get(Calendar.MINUTE) + 1) % 60);
 		String toMatch = "Alarm is set for 1 hour and 1 minute from now.";
 		assertEquals(at.toString(), toMatch);
