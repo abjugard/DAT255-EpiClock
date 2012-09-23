@@ -22,7 +22,6 @@ public class CreateAlarm extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_alarm);
-
 		initTimePicker();
 	}
 
@@ -73,6 +72,6 @@ public class CreateAlarm extends Activity {
 		alarmManager.set(AlarmManager.RTC_WAKEUP,
 				alarm.getTimeInMilliSeconds(), sender);
 
-		Toast.makeText(this, "Alarm Scheduled", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
 	}
 }

@@ -16,17 +16,17 @@ public class AlarmTime {
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
 	}
-	
+
 	public long getTimeInMilliSeconds() {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
 		cal.set(Calendar.MINUTE, alarmMinutes);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		
+
 		return cal.getTimeInMillis();
 	}
-	
+
 	private boolean isIllegalMinutes(int minutes) {
 		return minutes > 59 || minutes < 0;
 	}
@@ -35,54 +35,51 @@ public class AlarmTime {
 		return hours > 23 || hours < 0;
 	}
 
-	
 	public int getAlarmHours() {
 		return alarmHours;
 	}
-	
+
 	public int getAlarmMinutes() {
 		return alarmMinutes;
 	}
-	
+
 	@Override
 	public String toString() {
+		// Format
+		boolean hour = getHoursToAlarm() > 0;
+		boolean hours = getHoursToAlarm() > 1;
+		boolean minute = getMinutesToAlarm() > 0;
+		boolean minutes = getMinutesToAlarm() > 1;
+
 		StringBuilder strBuilder = new StringBuilder();
 
 		strBuilder.append("Alarm is set for ");
-
-		strBuilder.append(getHoursToAlarm());
-
-		strBuilder.append(" hours");
-
-		strBuilder.append(" and ");
-
-		strBuilder.append(getMinutesToAlarm());
-
-		strBuilder.append(" minutes from now");
+		if (hour) {
+			strBuilder.append(getHoursToAlarm() + " hour" + (hours ? "s" : ""));
+		}
+		if (hour && minute) {
+			strBuilder.append(" and ");
+		}
+		if (minute) {
+			strBuilder.append(getMinutesToAlarm() + " minute"
+					+ (minutes ? "s" : ""));
+		}
+		strBuilder.append(" from now.");
 
 		return strBuilder.toString();
 	}
 
-	private String getMinutesToAlarm() {
+	private int getMinutesToAlarm() {
 		int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
-		int minutes = (alarmMinutes == 0) ? 60 : alarmMinutes;
-		int minutesToAlarm = Math.abs(currentMinute - minutes);
+		int minutesToAlarm = (alarmMinutes - currentMinute + 60) % 60;
 
-		return "" + minutesToAlarm;
+		return minutesToAlarm;
 	}
 
-	// TODO do rolen do
-	// perhaps convert the time in millis instead
-	private String getHoursToAlarm() {
+	private int getHoursToAlarm() {
 		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		int hoursToAlarm = (alarmHours - currentHour + 24) % 24;
 
-		int hoursToAlarm = 0;
-		if ((alarmHours >= 0) && (alarmHours <= 12)) {
-			hoursToAlarm = Math.abs(alarmHours - currentHour);
-		} else {
-			// hoursToAlarm =
-		}
-
-		return String.valueOf(hoursToAlarm);
+		return hoursToAlarm;
 	}
 }
