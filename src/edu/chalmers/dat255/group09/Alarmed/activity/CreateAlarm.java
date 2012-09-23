@@ -3,15 +3,20 @@ package edu.chalmers.dat255.group09.Alarmed.activity;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
+import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
 public class CreateAlarm extends Activity {
-	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,23 @@ public class CreateAlarm extends Activity {
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
 		int hour = timePicker.getCurrentHour();
 		int minute = timePicker.getCurrentMinute();
+
 		Log.d("CreateAlarm", hour + ":" + minute);
-		
+
+		createAlarm(hour, minute);
+
+	}
+
+	private void createAlarm(int hour, int minute) {
+		AlarmTime alarm = new AlarmTime(hour, minute);
+
+		Intent intent = new Intent(this, AlarmReceiver.class);
+		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+		alarmManager.set(AlarmManager.RTC_WAKEUP,
+				alarm.getAlarmTimeInMilliSeconds(), sender);
+
+		Toast.makeText(this, "Alarm Scheduled", Toast.LENGTH_LONG).show();
 	}
 }
