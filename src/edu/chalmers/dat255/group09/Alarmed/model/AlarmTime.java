@@ -19,12 +19,27 @@ public class AlarmTime {
 
 	public long getTimeInMilliSeconds() {
 		Calendar cal = Calendar.getInstance();
+
+		if (isHourTomorrow() || isMinuteThisHourTomorrow()) {
+			cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) + 1);
+		}
+
 		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
 		cal.set(Calendar.MINUTE, alarmMinutes);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 
 		return cal.getTimeInMillis();
+	}
+
+	private boolean isMinuteThisHourTomorrow() {
+		Calendar cal = Calendar.getInstance();
+		return (cal.get(Calendar.HOUR_OF_DAY) == alarmHours)
+				&& cal.get(Calendar.MINUTE) >= alarmMinutes;
+	}
+
+	private boolean isHourTomorrow() {
+		return Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > alarmHours;
 	}
 
 	private boolean isIllegalMinutes(int minutes) {

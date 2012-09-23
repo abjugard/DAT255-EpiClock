@@ -1,5 +1,6 @@
 package edu.chalmers.dat255.group09.Alarmed.test.model;
 
+
 import java.util.Calendar;
 
 import android.test.AndroidTestCase;
@@ -7,71 +8,75 @@ import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
 
 public class AlarmTimeTest extends AndroidTestCase {
 
+	private final long ONE_HOUR_IN_MILLI_SECONDS = 3600000;
+	private final long ONE_MINUTE_IN_MILLI_SECONDS = 60000;
+
+	/*
+	 * Since the alarm will triggerd at hh:mm:00, and we are testing that only
+	 * the hh and mm will be equal. Since we are using milliseconds the delta
+	 * will be 60s = 60ms == 60000
+	 */
+	
 	public void testAlarmTimeAfterFourHours() {
-
-		int hoursToAlarmShouldTrigger = 4;
-		int minutesToAlarmShuoldTrigger = 0;
-
-		int alarmHours = getAlarmHours(hoursToAlarmShouldTrigger);
-		int alarmMinutes = getAlarmMinutes(minutesToAlarmShuoldTrigger);
-
-		long expectedAlarmTime = getExpectedAlarmTime(alarmHours, alarmMinutes);
-
-		long actualAlarmTime = new AlarmTime(alarmHours, alarmMinutes)
-				.getTimeInMilliSeconds();
-
-		assertEquals(expectedAlarmTime, actualAlarmTime);
+		int hoursToAdd = 4;
+		int minutesToAdd = 0;
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		assertEquals(expectedTime, actualTime, 60000);
 	}
 
 	public void testAlarmTimeAfterTwelveHours() {
-
-		int hoursToAlarmShouldTrigger = 12;
-		int minutesToAlarmShuoldTrigger = 0;
-
-		int alarmHours = getAlarmHours(hoursToAlarmShouldTrigger);
-		int alarmMinutes = getAlarmMinutes(minutesToAlarmShuoldTrigger);
-
-		long expectedAlarmTime = getExpectedAlarmTime(alarmHours, alarmMinutes);
-
-		long actualAlarmTime = new AlarmTime(alarmHours, alarmMinutes)
-				.getTimeInMilliSeconds();
-		assertEquals(expectedAlarmTime, actualAlarmTime);
+		int hoursToAdd = 12;
+		int minutesToAdd = 0;
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		assertEquals(expectedTime, actualTime, 60000);
 	}
 
 	public void testAlarmTimeAfterTenHoursThrityMinutes() {
-		int hoursToAlarmShouldTrigger = 10;
-		int minutesToAlarmShuoldTrigger = 30;
-
-		int alarmHours = getAlarmHours(hoursToAlarmShouldTrigger);
-		int alarmMinutes = getAlarmMinutes(minutesToAlarmShuoldTrigger);
-
-		long expectedAlarmTime = getExpectedAlarmTime(alarmHours, alarmMinutes);
-
-		long actualAlarmTime = new AlarmTime(alarmHours, alarmMinutes)
-				.getTimeInMilliSeconds();
-		assertEquals(expectedAlarmTime, actualAlarmTime);
+		int hoursToAdd = 10;
+		int minutesToAdd = 30;
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		assertEquals(expectedTime, actualTime, 60000);
 	}
 
-	private int getAlarmMinutes(int minutesToAlarmShuoldTrigger) {
-		Calendar cal = Calendar.getInstance();
-		return (cal.get(Calendar.MINUTE) + minutesToAlarmShuoldTrigger) % 60;
+	public void testAlarmTimeAfterTwentyHoursFiftyMinutes() {
+
+		int minutesToAdd = 52;
+		int hoursToAdd = 20;
+
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		assertEquals(expectedTime, actualTime, 60000);
 	}
 
-	private int getAlarmHours(int hoursToAlarmShouldTrigger) {
-		Calendar cal = Calendar.getInstance();
-		return (cal.get(Calendar.HOUR_OF_DAY) + hoursToAlarmShouldTrigger) % 24;
-	}
-
-	private long getExpectedAlarmTime(int alarmHours, int alarmMinutes) {
+	private long getActualTime(int hoursToAdd, int minutesToAdd) {
 
 		Calendar cal = Calendar.getInstance();
 
-		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
-		cal.set(Calendar.MINUTE, alarmMinutes);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
+		int currentTime = cal.get(Calendar.HOUR_OF_DAY);
+		int currentMinute = cal.get(Calendar.MINUTE);
 
-		return cal.getTimeInMillis();
+		if (minutesToAdd + currentMinute >= 60) {
+			hoursToAdd++;
+		}
+
+		int hours = (currentTime + hoursToAdd) % 24;
+		int minutes = (currentMinute + minutesToAdd) % 60;
+
+		return new AlarmTime(hours, minutes).getTimeInMilliSeconds();
+	}
+
+	private long getExpectedTime(int hoursToAdd, int minutesToAdd) {
+		long hoursToAlarm = hoursToAdd * ONE_HOUR_IN_MILLI_SECONDS;
+		long minutesToAlarm = minutesToAdd * ONE_MINUTE_IN_MILLI_SECONDS;
+
+		long expectedTime = System.currentTimeMillis();
+		expectedTime += hoursToAlarm;
+		expectedTime += minutesToAlarm;
+
+		return expectedTime;
 	}
 
 	/*
