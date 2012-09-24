@@ -1,6 +1,5 @@
 package edu.chalmers.dat255.group09.Alarmed.test.model;
 
-
 import java.util.Calendar;
 
 import android.test.AndroidTestCase;
@@ -16,7 +15,7 @@ public class AlarmTimeTest extends AndroidTestCase {
 	 * the hh and mm will be equal. Since we are using milliseconds the delta
 	 * will be 60s = 60ms == 60000
 	 */
-	
+
 	public void testAlarmTimeAfterFourHours() {
 		int hoursToAdd = 4;
 		int minutesToAdd = 0;
@@ -84,70 +83,71 @@ public class AlarmTimeTest extends AndroidTestCase {
 	 * left. The format has 8 different formats.
 	 */
 
-	public void testOneMinuteToString() {
+	private AlarmTime alarmTimeFromNow(int minute, int hour) {
 		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime(cal.get(Calendar.HOUR_OF_DAY),
-				(cal.get(Calendar.MINUTE) + 1) % 60);
+		int minuteToTrigger = cal.get(Calendar.MINUTE) + minute;
+		int hourToTrigger = cal.get(Calendar.HOUR_OF_DAY) + hour;
+		if(minuteToTrigger >= 60){
+			hourToTrigger++;
+		}
+		return new AlarmTime((hourToTrigger % 24), (minuteToTrigger % 60));
+	}
+	
+	public void testOneMinuteToString() {
+		AlarmTime at = alarmTimeFromNow(1, 0);
 		String toMatch = "Alarm is set for 1 minute from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
-	public void testThirtyMinutesToString() {
-		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime(cal.get(Calendar.HOUR_OF_DAY),
-				(cal.get(Calendar.MINUTE) + 30) % 60);
+	public void testThirtyMinuteToString() {
+		AlarmTime at = alarmTimeFromNow(30, 0);
 		String toMatch = "Alarm is set for 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testOneHourToString() {
-		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 1) % 24,
-				cal.get(Calendar.MINUTE));
+		AlarmTime at = alarmTimeFromNow(0, 1);
 		String toMatch = "Alarm is set for 1 hour from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testFiveHoursToString() {
-		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 5) % 24,
-				cal.get(Calendar.MINUTE));
+		AlarmTime at = alarmTimeFromNow(0, 5);
 		String toMatch = "Alarm is set for 5 hours from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testOneHourOneMinuteToString() {
-		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime((cal.get(Calendar.HOUR_OF_DAY) + 1) % 24,
-				(cal.get(Calendar.MINUTE) + 1) % 60);
+		AlarmTime at = alarmTimeFromNow(1, 1);
 		String toMatch = "Alarm is set for 1 hour and 1 minute from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testOneHourThirtyMinuteToString() {
-		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime(
-				((cal.get(Calendar.HOUR_OF_DAY) + 1) % 24),
-				(cal.get(Calendar.MINUTE) + 30) % 60);
+		AlarmTime at = alarmTimeFromNow(30, 1);
 		String toMatch = "Alarm is set for 1 hour and 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testFiveHourOneMinuteToString() {
-		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime(
-				((cal.get(Calendar.HOUR_OF_DAY) + 5) % 24),
-				(cal.get(Calendar.MINUTE) + 1) % 60);
+		AlarmTime at = alarmTimeFromNow(1, 5);
 		String toMatch = "Alarm is set for 5 hours and 1 minute from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testFiveHourThirtyMinuteToString() {
-		Calendar cal = Calendar.getInstance();
-		AlarmTime at = new AlarmTime(
-				((cal.get(Calendar.HOUR_OF_DAY) + 5) % 24),
-				(cal.get(Calendar.MINUTE) + 30) % 60);
+		AlarmTime at = alarmTimeFromNow(30, 5);
 		String toMatch = "Alarm is set for 5 hours and 30 minutes from now.";
+		assertEquals(at.toString(), toMatch);
+	}
+	public void testTwentyThreeHourThirtyMinuteToString() {
+		AlarmTime at = alarmTimeFromNow(30, 23);
+		String toMatch = "Alarm is set for 23 hours and 30 minutes from now.";
+		assertEquals(at.toString(), toMatch);
+	}
+	public void testTwentyFourHourToString() {
+		AlarmTime at = alarmTimeFromNow(0, 24);
+		String toMatch = "Alarm is set for 24 hours from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 

@@ -92,8 +92,21 @@ public class AlarmTime {
 	}
 
 	private int getHoursToAlarm() {
+		int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int hoursToAlarm = (alarmHours - currentHour + 24) % 24;
+		
+		if(getMinutesToAlarm() == 0 && hoursToAlarm == 0){
+			return 24;
+		}
+		
+		if(currentMinute > alarmMinutes){
+			if(hoursToAlarm == 0){
+				hoursToAlarm = 24;
+			}
+			hoursToAlarm--;
+		}
+		
 
 		return hoursToAlarm;
 	}
