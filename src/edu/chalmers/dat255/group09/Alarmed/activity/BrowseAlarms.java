@@ -20,10 +20,12 @@ public class BrowseAlarms extends Activity {
 		getMenuInflater().inflate(R.menu.activity_browse_alarms, menu);
 		return true;
 	}
-		
+
 	public void onCreateAlarmBtnPressed(View view) {
 		Intent intent = new Intent(this, CreateAlarm.class);
 		startActivity(intent);
-		overridePendingTransition(0, 0);
+		int fadeIn = android.R.anim.fade_in;
+		int fadeOut = android.R.anim.fade_out;
+		overridePendingTransition(fadeIn, fadeOut);
 	}
 }
