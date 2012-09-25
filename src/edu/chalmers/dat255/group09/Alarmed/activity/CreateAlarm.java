@@ -74,4 +74,10 @@ public class CreateAlarm extends Activity {
 
 		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+	    overridePendingTransition(0, 0);
+	}
 }
