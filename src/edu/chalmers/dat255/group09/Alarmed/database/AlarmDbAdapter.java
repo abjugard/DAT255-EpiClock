@@ -1,5 +1,9 @@
 package edu.chalmers.dat255.group09.Alarmed.database;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,7 +17,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author Daniel Augurell
  * 
  */
-public class AlarmDbAdapter {
+public class AlarmDbAdapter implements AlarmAdapter{
 	private DatabaseHelper aDbHelper;
 	private SQLiteDatabase aDb;
 	private final Context aCtx;
@@ -127,9 +131,19 @@ public class AlarmDbAdapter {
 	 * @return Cursor with all alarms
 	 */
 
-	public Cursor fetchAllAlarms() {
-		return aDb.query(true, DB_TABLE, new String[] { KEY_ROWID, KEY_TIME,
+	public List<AlarmTime> fetchAllAlarms() {
+		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID, KEY_TIME,
 				KEY_RECURRING }, null, null, null, null, null, null);
+		ArrayList<AlarmTime> list = new ArrayList<AlarmTime>();
+		if (aCursor != null) {
+			if(aCursor.moveToFirst()){
+				do{
+					String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME)).split(":");
+					list.add(new AlarmTime(Integer.parseInt(time[0]), Integer.parseInt(time[1])));
+				}while(aCursor.moveToNext());
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -139,14 +153,16 @@ public class AlarmDbAdapter {
 	 *            the id of the alarm to retrieve
 	 * @return A cursor with the position set to the matching alarm, if found
 	 */
-	public Cursor fetchAlarm(int alarmID) {
+	public AlarmTime fetchAlarm(int alarmID) {
 		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID,
 				KEY_TIME, KEY_RECURRING }, KEY_ROWID + "=" + alarmID, null,
 				null, null, null, null);
 		if (aCursor != null) {
 			aCursor.moveToFirst();
 		}
-		return aCursor;
+		String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME)).split(":");
+		return new AlarmTime(Integer.parseInt(time[0]), Integer.parseInt(time[1]));
+		
 	}
 
 }
