@@ -3,7 +3,7 @@ package edu.chalmers.dat255.group09.Alarmed.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
+import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -131,15 +131,15 @@ public class AlarmDbAdapter implements AlarmAdapter{
 	 * @return Cursor with all alarms
 	 */
 
-	public List<AlarmTime> fetchAllAlarms() {
+	public List<Alarm> fetchAllAlarms() {
 		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID, KEY_TIME,
 				KEY_RECURRING }, null, null, null, null, null, null);
-		ArrayList<AlarmTime> list = new ArrayList<AlarmTime>();
+		ArrayList<Alarm> list = new ArrayList<Alarm>();
 		if (aCursor != null) {
 			if(aCursor.moveToFirst()){
 				do{
 					String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME)).split(":");
-					list.add(new AlarmTime(Integer.parseInt(time[0]), Integer.parseInt(time[1])));
+					list.add(new Alarm(Integer.parseInt(time[0]), Integer.parseInt(time[1]), aCursor.getInt(aCursor.getColumnIndex(KEY_ROWID))));
 				}while(aCursor.moveToNext());
 			}
 		}
@@ -153,7 +153,7 @@ public class AlarmDbAdapter implements AlarmAdapter{
 	 *            the id of the alarm to retrieve
 	 * @return A cursor with the position set to the matching alarm, if found
 	 */
-	public AlarmTime fetchAlarm(int alarmID) {
+	public Alarm fetchAlarm(int alarmID) {
 		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID,
 				KEY_TIME, KEY_RECURRING }, KEY_ROWID + "=" + alarmID, null,
 				null, null, null, null);
@@ -161,7 +161,7 @@ public class AlarmDbAdapter implements AlarmAdapter{
 			aCursor.moveToFirst();
 		}
 		String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME)).split(":");
-		return new AlarmTime(Integer.parseInt(time[0]), Integer.parseInt(time[1]));
+		return new Alarm(Integer.parseInt(time[0]), Integer.parseInt(time[1]), aCursor.getInt(aCursor.getColumnIndex(KEY_ROWID)));
 		
 	}
 

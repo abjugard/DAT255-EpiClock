@@ -3,7 +3,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.model;
 import java.util.Calendar;
 
 import android.test.AndroidTestCase;
-import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
+import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 public class AlarmTimeTest extends AndroidTestCase {
 
@@ -64,7 +64,7 @@ public class AlarmTimeTest extends AndroidTestCase {
 		int hours = (currentTime + hoursToAdd) % 24;
 		int minutes = (currentMinute + minutesToAdd) % 60;
 
-		return new AlarmTime(hours, minutes).getTimeInMilliSeconds();
+		return new Alarm(hours, minutes, 0).getTimeInMilliSeconds();
 	}
 
 	private long getExpectedTime(int hoursToAdd, int minutesToAdd) {
@@ -83,77 +83,77 @@ public class AlarmTimeTest extends AndroidTestCase {
 	 * left. The format has 8 different formats.
 	 */
 
-	private AlarmTime alarmTimeFromNow(int minute, int hour) {
+	private Alarm alarmTimeFromNow(int minute, int hour) {
 		Calendar cal = Calendar.getInstance();
 		int minuteToTrigger = cal.get(Calendar.MINUTE) + minute;
 		int hourToTrigger = cal.get(Calendar.HOUR_OF_DAY) + hour;
 		if(minuteToTrigger >= 60){
 			hourToTrigger++;
 		}
-		return new AlarmTime((hourToTrigger % 24), (minuteToTrigger % 60));
+		return new Alarm((hourToTrigger % 24), (minuteToTrigger % 60), 0);
 	}
 	
 	public void testOneMinuteToString() {
-		AlarmTime at = alarmTimeFromNow(1, 0);
+		Alarm at = alarmTimeFromNow(1, 0);
 		String toMatch = "Alarm is set for 1 minute from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testThirtyMinuteToString() {
-		AlarmTime at = alarmTimeFromNow(30, 0);
+		Alarm at = alarmTimeFromNow(30, 0);
 		String toMatch = "Alarm is set for 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testOneHourToString() {
-		AlarmTime at = alarmTimeFromNow(0, 1);
+		Alarm at = alarmTimeFromNow(0, 1);
 		String toMatch = "Alarm is set for 1 hour from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testFiveHoursToString() {
-		AlarmTime at = alarmTimeFromNow(0, 5);
+		Alarm at = alarmTimeFromNow(0, 5);
 		String toMatch = "Alarm is set for 5 hours from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testOneHourOneMinuteToString() {
-		AlarmTime at = alarmTimeFromNow(1, 1);
+		Alarm at = alarmTimeFromNow(1, 1);
 		String toMatch = "Alarm is set for 1 hour and 1 minute from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testOneHourThirtyMinuteToString() {
-		AlarmTime at = alarmTimeFromNow(30, 1);
+		Alarm at = alarmTimeFromNow(30, 1);
 		String toMatch = "Alarm is set for 1 hour and 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testFiveHourOneMinuteToString() {
-		AlarmTime at = alarmTimeFromNow(1, 5);
+		Alarm at = alarmTimeFromNow(1, 5);
 		String toMatch = "Alarm is set for 5 hours and 1 minute from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testFiveHourThirtyMinuteToString() {
-		AlarmTime at = alarmTimeFromNow(30, 5);
+		Alarm at = alarmTimeFromNow(30, 5);
 		String toMatch = "Alarm is set for 5 hours and 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 	public void testTwentyThreeHourThirtyMinuteToString() {
-		AlarmTime at = alarmTimeFromNow(30, 23);
+		Alarm at = alarmTimeFromNow(30, 23);
 		String toMatch = "Alarm is set for 23 hours and 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 	public void testTwentyFourHourToString() {
-		AlarmTime at = alarmTimeFromNow(0, 24);
+		Alarm at = alarmTimeFromNow(0, 24);
 		String toMatch = "Alarm is set for 24 hours from now.";
 		assertEquals(at.toString(), toMatch);
 	}
 
 	public void testIllegalHourInput() {
 		try {
-			new AlarmTime(24, 23);
+			new Alarm(24, 23, 0);
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -162,7 +162,7 @@ public class AlarmTimeTest extends AndroidTestCase {
 
 	public void testNegativeHourInput() {
 		try {
-			new AlarmTime(-3, 23);
+			new Alarm(-3, 23, 0);
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -172,7 +172,7 @@ public class AlarmTimeTest extends AndroidTestCase {
 
 	public void testIllegalMinuteInput() {
 		try {
-			new AlarmTime(0, 60);
+			new Alarm(0, 60, 0);
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -182,7 +182,7 @@ public class AlarmTimeTest extends AndroidTestCase {
 
 	public void testNegativeMinuteInput() {
 		try {
-			new AlarmTime(22, -60);
+			new Alarm(22, -60, 0);
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -192,7 +192,7 @@ public class AlarmTimeTest extends AndroidTestCase {
 
 	public void testNegativeHourMinuteInput() {
 		try {
-			new AlarmTime(-1, -2);
+			new Alarm(-1, -2, 0);
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -202,7 +202,7 @@ public class AlarmTimeTest extends AndroidTestCase {
 
 	public void testIllegalHourMinuteInput() {
 		try {
-			new AlarmTime(24, 60);
+			new Alarm(24, 60, 0);
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);

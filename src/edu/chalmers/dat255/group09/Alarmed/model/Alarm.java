@@ -2,12 +2,14 @@ package edu.chalmers.dat255.group09.Alarmed.model;
 
 import java.util.Calendar;
 
-public class AlarmTime {
+public class Alarm {
 
 	private final int alarmHours;
 	private final int alarmMinutes;
+	private final int id;
 
-	public AlarmTime(int hours, int minutes) throws IllegalArgumentException {
+	public Alarm(int hours, int minutes, int id)
+			throws IllegalArgumentException {
 
 		if (isIllegalHour(hours) || isIllegalMinutes(minutes)) {
 			throw new IllegalArgumentException("Illegal constructor argument!");
@@ -15,6 +17,7 @@ public class AlarmTime {
 
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
+		this.id = id;
 	}
 
 	public long getTimeInMilliSeconds() {
@@ -95,19 +98,22 @@ public class AlarmTime {
 		int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int hoursToAlarm = (alarmHours - currentHour + 24) % 24;
-		
-		if(getMinutesToAlarm() == 0 && hoursToAlarm == 0){
+
+		if (getMinutesToAlarm() == 0 && hoursToAlarm == 0) {
 			return 24;
 		}
-		
-		if(currentMinute > alarmMinutes){
-			if(hoursToAlarm == 0){
+
+		if (currentMinute > alarmMinutes) {
+			if (hoursToAlarm == 0) {
 				hoursToAlarm = 24;
 			}
 			hoursToAlarm--;
 		}
-		
 
 		return hoursToAlarm;
+	}
+
+	public int getId() {
+		return id;
 	}
 }
