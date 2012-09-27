@@ -8,20 +8,25 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
+import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 
 public class BrowseAlarms extends Activity {
-	
+
 	private BrowseAlarmAdapter alarmAdapter;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_browse_alarms);
 		
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
-		alarmAdapter = new BrowseAlarmAdapter();
+		DatabaseHandler handler = DatabaseHandler.getInstance();
+		handler.setContext(this);
+		handler.openDb();
+		alarmAdapter = new BrowseAlarmAdapter(this, handler.fetchAlarms());
 		listView.setAdapter(alarmAdapter);
-		
+		handler.closeDb();
 	}
 
 	@Override
@@ -40,7 +45,7 @@ public class BrowseAlarms extends Activity {
 		int fadeIn = android.R.anim.fade_in;
 		int fadeOut = android.R.anim.fade_out;
 		overridePendingTransition(fadeIn, fadeOut);
-		
+
 		return true;
 	}
 

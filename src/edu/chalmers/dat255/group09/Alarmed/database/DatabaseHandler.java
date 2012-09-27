@@ -2,14 +2,13 @@ package edu.chalmers.dat255.group09.Alarmed.database;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 /**
  * A class to help the creation and accessing of alarms in a database. Gives the

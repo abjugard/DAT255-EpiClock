@@ -12,18 +12,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.CreateAlarm"
-            android:label="@string/title_activity_create_alarm" >
-             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.chalmers.dat255.group09.Alarmed.activity.CreateAlarm" />
-        </activity>
-
-        <receiver
-            android:name=".receiver.AlarmReceiver"
-            android:process=":remote" />
-
-        <activity
             android:name=".activity.BrowseAlarms"
             android:label="@string/title_activity_browse_alarms" >
             <intent-filter>
@@ -32,6 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.CreateAlarm"
+            android:label="@string/title_activity_create_alarm" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.dat255.group09.Alarmed.activity.CreateAlarm" />
+        </activity>
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:process=":remote" />
     </application>
 
 </manifest>
