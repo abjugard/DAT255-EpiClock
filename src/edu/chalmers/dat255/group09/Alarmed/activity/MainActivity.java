@@ -16,7 +16,7 @@ import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
-public class BrowseAlarms extends Activity {
+public class MainActivity extends Activity {
 
 	public final static int ADD_ALARM_REQUEST_CODE = 1;
 	private BrowseAlarmAdapter alarmAdapter;
@@ -26,7 +26,7 @@ public class BrowseAlarms extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_browse_alarms);
+		setContentView(R.layout.activity_main);
 
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
 		dbHelper = DatabaseHandler.getInstance();
@@ -38,7 +38,7 @@ public class BrowseAlarms extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_browse_alarms, menu);
+		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
@@ -87,7 +87,7 @@ public class BrowseAlarms extends Activity {
 		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
 
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
