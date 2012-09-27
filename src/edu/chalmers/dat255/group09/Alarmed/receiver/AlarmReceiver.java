@@ -13,6 +13,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		AlarmDbAdapter db = AlarmDbAdapter.getInstance();
+		db.setContext(context);
 		db.openDb();
 		Alarm alarm = db.fetchAlarm(intent.getIntExtra("ID", -1));
 		if (alarm != null) {
@@ -20,6 +21,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 			Log.d("CreateAlarm: ", "Alarm Activated");
 			db.deleteAlarm(alarm.getId());
 		}
+		db.closeDb();
 	}
 
 }
