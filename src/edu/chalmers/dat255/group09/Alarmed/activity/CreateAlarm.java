@@ -15,17 +15,17 @@ import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
-import edu.chalmers.dat255.group09.Alarmed.database.AlarmDbAdapter;
+import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
 public class CreateAlarm extends Activity {
-	private AlarmDbAdapter dbHelp;
+	private DatabaseHandler dbHelp;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dbHelp = AlarmDbAdapter.getInstance();
+		dbHelp = DatabaseHandler.getInstance();
 		dbHelp.setContext(getApplication());
 		dbHelp.openDb();
 		setContentView(R.layout.activity_create_alarm);

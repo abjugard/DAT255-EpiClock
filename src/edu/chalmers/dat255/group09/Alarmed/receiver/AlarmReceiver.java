@@ -1,6 +1,6 @@
 package edu.chalmers.dat255.group09.Alarmed.receiver;
 
-import edu.chalmers.dat255.group09.Alarmed.database.AlarmDbAdapter;
+import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,7 +12,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		AlarmDbAdapter db = AlarmDbAdapter.getInstance();
+		DatabaseHandler db = DatabaseHandler.getInstance();
 		db.setContext(context);
 		db.openDb();
 		Alarm alarm = db.fetchAlarm(intent.getIntExtra("ID", -1));

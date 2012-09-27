@@ -17,8 +17,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author Daniel Augurell
  * 
  */
-public class AlarmDbAdapter implements AlarmAdapter {
-	private static AlarmDbAdapter instance;
+public class DatabaseHandler{
+	private static DatabaseHandler instance;
 	private static Context aCtx;
 
 	private DatabaseHelper aDbHelper;
@@ -64,9 +64,9 @@ public class AlarmDbAdapter implements AlarmAdapter {
 		}
 	}
 
-	public static AlarmDbAdapter getInstance() {
+	public static DatabaseHandler getInstance() {
 		if (instance == null) {
-			instance = new AlarmDbAdapter();
+			instance = new DatabaseHandler();
 		}
 		return instance;
 	}
@@ -81,7 +81,7 @@ public class AlarmDbAdapter implements AlarmAdapter {
 	 * @return this, a self reference
 	 */
 
-	public AlarmDbAdapter openDb() {
+	public DatabaseHandler openDb() {
 		aDbHelper = new DatabaseHelper(aCtx);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;
