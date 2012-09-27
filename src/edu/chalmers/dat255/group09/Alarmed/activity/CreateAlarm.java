@@ -92,4 +92,12 @@ public class CreateAlarm extends Activity {
 
 		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		int fadeIn = android.R.anim.fade_in;
+		int fadeOut = android.R.anim.fade_out;
+		overridePendingTransition(fadeIn, fadeOut);
+	}
 }
