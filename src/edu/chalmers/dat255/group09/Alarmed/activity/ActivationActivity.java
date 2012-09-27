@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -86,7 +87,7 @@ public class ActivationActivity extends Activity {
 				mediaPlayer.start();
 			}
 		} catch (IOException e) {
-			System.out.println("Sound Error");
+			Log.d("Sound", "Sound error");
 		}
 
 	}
