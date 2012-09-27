@@ -12,6 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"
+        android:onClick="onStopAlarmBtnPressed"
         android:text="@string/stop_alarm" />
 
 </RelativeLayout>

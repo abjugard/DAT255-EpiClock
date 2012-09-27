@@ -2,7 +2,6 @@ package edu.chalmers.dat255.group09.Alarmed.activity;
 
 import java.io.IOException;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
@@ -15,12 +14,9 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import edu.chalmers.dat255.group09.Alarmed.R;
 
 public class ActivationActivity extends Activity {
@@ -33,22 +29,27 @@ public class ActivationActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		initServices(this);
-		startAlarm(); // do this first to make sure alarm goes off ASAP
-		initGUI(this);
+		initServices();
+		startAlarm();
+		initGUI();
 	}
 
-	private void initServices(Context context) {
-		audioManager = (AudioManager) context
-				.getSystemService(Context.AUDIO_SERVICE);
+	private void initServices() {
+		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		mediaPlayer = new MediaPlayer();
-		vibrator = (Vibrator) context
-				.getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
 	private void startAlarm() {
 		startVibration();
-		startAudio(this, getAlarmUri());
+		startAudio();
+	}
+
+	private void initGUI() {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		setContentView(R.layout.activity_activation);
 	}
 
 	private void startVibration() {
@@ -56,9 +57,9 @@ public class ActivationActivity extends Activity {
 		vibrator.vibrate(vibPattern, 0);
 	}
 
-	private void startAudio(Context context, Uri alert) {
+	private void startAudio() {
 		try {
-			mediaPlayer.setDataSource(context, alert);
+			mediaPlayer.setDataSource(this, getAlarmTone());
 			if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
 				mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
 				mediaPlayer.prepare();
@@ -69,24 +70,26 @@ public class ActivationActivity extends Activity {
 		}
 	}
 
-	private void initGUI(ActivationActivity activity) {
-		activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		activity.getWindow().setFlags(
-				WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_activation);
-
-		Button stopAlarm = (Button) findViewById(R.id.stopAlarm);
-		stopAlarm.setOnTouchListener(new OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				stopAlarm();
-				finish();
-				return false;
+	private Uri getAlarmTone() {
+		Uri alertTone = RingtoneManager
+				.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		if (alertTone == null) {
+			alertTone = RingtoneManager
+					.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+			if (alertTone == null) {
+				alertTone = RingtoneManager
+						.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 			}
-		});
+		}
+		return alertTone;
 	}
 
-	protected void stopAlarm() {
+	public void onStopAlarmBtnPressed(View view) {
+		stopAlarm();
+		finish();
+	}
+
+	private void stopAlarm() {
 		vibrator.cancel();
 		mediaPlayer.stop();
 	}
@@ -105,20 +108,5 @@ public class ActivationActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	private Uri getAlarmUri() {
-		Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-		if (alert == null) {
-			// shouldn't happen
-			alert = RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-			if (alert == null) {
-				// covering all bases, but also shouldn't happen
-				alert = RingtoneManager
-						.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-			}
-		}
-		return alert;
 	}
 }
