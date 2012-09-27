@@ -1,16 +1,17 @@
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -25,11 +26,21 @@ public class CreateAlarm extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			enableActionbarBackButton();
+		}
+
 		dbHelp = DatabaseHandler.getInstance();
 		dbHelp.setContext(getApplication());
 		dbHelp.openDb();
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void enableActionbarBackButton() {
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -92,10 +103,22 @@ public class CreateAlarm extends Activity {
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
 		int fadeIn = android.R.anim.fade_in;
 		int fadeOut = android.R.anim.fade_out;
 		overridePendingTransition(fadeIn, fadeOut);
+		dbHelp.closeDb();
 	}
+
 }
