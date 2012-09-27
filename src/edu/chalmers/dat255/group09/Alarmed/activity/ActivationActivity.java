@@ -25,38 +25,70 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 
 public class ActivationActivity extends Activity {
 
+	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
 	private Vibrator vibrator;
 
-	@SuppressLint({ "NewApi", "NewApi" })
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+
+		initServices(this);
+		startAlarm(); // do this first to make sure alarm goes off ASAP
+		initGUI(this);
+	}
+
+	private void initServices(Context context) {
+		audioManager = (AudioManager) context
+				.getSystemService(Context.AUDIO_SERVICE);
+		mediaPlayer = new MediaPlayer();
+		vibrator = (Vibrator) context
+				.getSystemService(Context.VIBRATOR_SERVICE);
+	}
+
+	private void startAlarm() {
+		startVibration();
+		startAudio(this, getAlarmUri());
+	}
+
+	private void startVibration() {
+		long[] vibPattern = { 0, 200, 500 };
+		vibrator.vibrate(vibPattern, 0);
+	}
+
+	private void startAudio(Context context, Uri alert) {
+		try {
+			mediaPlayer.setDataSource(context, alert);
+			if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+				mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+				mediaPlayer.prepare();
+				mediaPlayer.start();
+			}
+		} catch (IOException e) {
+			Log.d("Sound", "Sound I/O error");
+		}
+	}
+
+	private void initGUI(ActivationActivity activity) {
+		activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		activity.getWindow().setFlags(
+				WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_activation);
 
 		Button stopAlarm = (Button) findViewById(R.id.stopAlarm);
 		stopAlarm.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
-				vibrator.cancel();
-				mediaPlayer.stop();
+				stopAlarm();
 				finish();
 				return false;
 			}
 		});
-		startVibrate(this);
-		playSound(this, getAlarmUri());
-
 	}
 
-	private void startVibrate(Context context) {
-		vibrator = (Vibrator) context
-				.getSystemService(Context.VIBRATOR_SERVICE);
-		long[] vibPattern = { 0, 200, 500 };
-
-		vibrator.vibrate(vibPattern, 0);
+	protected void stopAlarm() {
+		vibrator.cancel();
+		mediaPlayer.stop();
 	}
 
 	@Override
@@ -75,31 +107,16 @@ public class ActivationActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void playSound(Context context, Uri alert) {
-		mediaPlayer = new MediaPlayer();
-		try {
-			mediaPlayer.setDataSource(context, alert);
-			final AudioManager audioManager = (AudioManager) context
-					.getSystemService(Context.AUDIO_SERVICE);
-			if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
-				mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-				mediaPlayer.prepare();
-				mediaPlayer.start();
-			}
-		} catch (IOException e) {
-			Log.d("Sound", "Sound error");
-		}
-
-	}
-
 	private Uri getAlarmUri() {
 		Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		if (alert == null) {
+			// shouldn't happen
 			alert = RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+					.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 			if (alert == null) {
+				// covering all bases, but also shouldn't happen
 				alert = RingtoneManager
-						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+						.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 			}
 		}
 		return alert;
