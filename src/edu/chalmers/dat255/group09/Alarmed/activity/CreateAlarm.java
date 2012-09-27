@@ -78,9 +78,7 @@ public class CreateAlarm extends Activity {
 	private void createAlarm(int hour, int minute) {
 
 		dbHelp.createAlarm(hour, minute, false);
-		List<Alarm> alarms = dbHelp.fetchAllAlarms();
-		Collections.sort(alarms);
-		Alarm alarm = alarms.get(0);
+		Alarm alarm = dbHelp.fetchFirstAlarm();
 
 		Intent intent = new Intent(this, AlarmReceiver.class);
 		intent.putExtra("ID", alarm.getId());

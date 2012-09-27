@@ -1,6 +1,7 @@
 package edu.chalmers.dat255.group09.Alarmed.database;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
@@ -17,7 +18,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author Daniel Augurell
  * 
  */
-public class DatabaseHandler{
+public class DatabaseHandler {
 	private static DatabaseHandler instance;
 	private static Context aCtx;
 
@@ -30,6 +31,8 @@ public class DatabaseHandler{
 	public static final String KEY_TIME = "time";
 	public static final String KEY_RECURRING = "recurring";
 	public static final String KEY_ROWID = "_id";
+
+	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING };
 
 	private static final String DB_NAME = "data";
 	private static final String DB_TABLE = "alarms";
@@ -133,7 +136,7 @@ public class DatabaseHandler{
 	 * @return Cursor with all alarms
 	 */
 
-	public List<Alarm> fetchAllAlarms() {
+	public Alarm fetchFirstAlarm() {
 		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID,
 				KEY_TIME, KEY_RECURRING }, null, null, null, null, null, null);
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
@@ -148,7 +151,13 @@ public class DatabaseHandler{
 				} while (aCursor.moveToNext());
 			}
 		}
-		return list;
+		Collections.sort(list);
+		return list.get(0);
+	}
+
+	public Cursor fetchAlarms() {
+		return aDb.query(true, DB_TABLE, KEYS, null, null, null, null, null,
+				null);
 	}
 
 	/**
