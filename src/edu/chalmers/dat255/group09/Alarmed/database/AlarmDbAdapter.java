@@ -11,16 +11,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * A class to help the creation and accessing of alarms in a database.
- * Gives the ability to create and delete alarms, and fetching one or all alarms.
+ * A class to help the creation and accessing of alarms in a database. Gives the
+ * ability to create and delete alarms, and fetching one or all alarms.
  * 
  * @author Daniel Augurell
  * 
  */
-public class AlarmDbAdapter implements AlarmAdapter{
+public class AlarmDbAdapter implements AlarmAdapter {
+	private static AlarmDbAdapter instance;
+	private static Context aCtx;
+
 	private DatabaseHelper aDbHelper;
 	private SQLiteDatabase aDb;
-	private final Context aCtx;
 
 	/**
 	 * Database SQL statements
@@ -62,14 +64,14 @@ public class AlarmDbAdapter implements AlarmAdapter{
 		}
 	}
 
-	/**
-	 * Takes a context as a parameter to be able to open/create a database
-	 * 
-	 * @param ctx
-	 *            The context to work with
-	 */
+	public static AlarmDbAdapter getInstance() {
+		if (instance == null) {
+			instance = new AlarmDbAdapter();
+		}
+		return instance;
+	}
 
-	public AlarmDbAdapter(Context ctx) {
+	public void setContext(Context ctx) {
 		aCtx = ctx;
 	}
 
@@ -132,15 +134,18 @@ public class AlarmDbAdapter implements AlarmAdapter{
 	 */
 
 	public List<Alarm> fetchAllAlarms() {
-		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID, KEY_TIME,
-				KEY_RECURRING }, null, null, null, null, null, null);
+		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID,
+				KEY_TIME, KEY_RECURRING }, null, null, null, null, null, null);
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
 		if (aCursor != null) {
-			if(aCursor.moveToFirst()){
-				do{
-					String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME)).split(":");
-					list.add(new Alarm(Integer.parseInt(time[0]), Integer.parseInt(time[1]), aCursor.getInt(aCursor.getColumnIndex(KEY_ROWID))));
-				}while(aCursor.moveToNext());
+			if (aCursor.moveToFirst()) {
+				do {
+					String[] time = aCursor.getString(
+							aCursor.getColumnIndex(KEY_TIME)).split(":");
+					list.add(new Alarm(Integer.parseInt(time[0]), Integer
+							.parseInt(time[1]), aCursor.getInt(aCursor
+							.getColumnIndex(KEY_ROWID))));
+				} while (aCursor.moveToNext());
 			}
 		}
 		return list;
@@ -159,10 +164,14 @@ public class AlarmDbAdapter implements AlarmAdapter{
 				null, null, null, null);
 		if (aCursor != null) {
 			aCursor.moveToFirst();
+
+			String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME))
+					.split(":");
+			return new Alarm(Integer.parseInt(time[0]),
+					Integer.parseInt(time[1]), aCursor.getInt(aCursor
+							.getColumnIndex(KEY_ROWID)));
 		}
-		String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME)).split(":");
-		return new Alarm(Integer.parseInt(time[0]), Integer.parseInt(time[1]), aCursor.getInt(aCursor.getColumnIndex(KEY_ROWID)));
-		
+		return null;
 	}
 
 }

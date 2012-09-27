@@ -2,7 +2,7 @@ package edu.chalmers.dat255.group09.Alarmed.model;
 
 import java.util.Calendar;
 
-public class Alarm {
+public class Alarm implements Comparable<Alarm> {
 
 	private final int alarmHours;
 	private final int alarmMinutes;
@@ -115,5 +115,10 @@ public class Alarm {
 
 	public int getId() {
 		return id;
+	}
+
+	public int compareTo(Alarm another) {
+		return (int) (this.getTimeInMilliSeconds() - another
+				.getTimeInMilliSeconds());
 	}
 }
