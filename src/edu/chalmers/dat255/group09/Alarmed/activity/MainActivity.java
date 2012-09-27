@@ -27,13 +27,20 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
+		openDatabase();
+		setAdapter();
+	}
 
+	private void setAdapter() {
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
+		alarmAdapter = new BrowseAlarmAdapter(this, dbHelper.fetchAlarms());
+		listView.setAdapter(alarmAdapter);
+	}
+
+	private void openDatabase() {
 		dbHelper = DatabaseHandler.getInstance();
 		dbHelper.setContext(this);
 		dbHelper.openDb();
-		alarmAdapter = new BrowseAlarmAdapter(this, dbHelper.fetchAlarms());
-		listView.setAdapter(alarmAdapter);
 	}
 
 	@Override
@@ -49,10 +56,7 @@ public class MainActivity extends Activity {
 			Intent intent = new Intent(this, CreateAlarm.class);
 
 			startActivityForResult(intent, ADD_ALARM_REQUEST_CODE);
-
-			int fadeIn = android.R.anim.fade_in;
-			int fadeOut = android.R.anim.fade_out;
-			overridePendingTransition(fadeIn, fadeOut);
+			overrrideTransition();
 
 			return true;
 		}
@@ -61,9 +65,15 @@ public class MainActivity extends Activity {
 
 	}
 
+	private void overrrideTransition() {
+		int fadeIn = android.R.anim.fade_in;
+		int fadeOut = android.R.anim.fade_out;
+		overridePendingTransition(fadeIn, fadeOut);
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == ADD_ALARM_REQUEST_CODE && resultCode == RESULT_OK) {
+		if (isResonseValid(requestCode, resultCode)) {
 			int hours = data.getIntExtra("hours", -1);
 			int minutes = data.getIntExtra("minutes", -1);
 
@@ -73,19 +83,28 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	private boolean isResonseValid(int requestCode, int resultCode) {
+		return requestCode == ADD_ALARM_REQUEST_CODE && resultCode == RESULT_OK;
+	}
+
 	private void createAlarm(int hour, int minute) {
+
 		dbHelper.createAlarm(hour, minute, false);
-		Alarm alarm = dbHelper.fetchFirstAlarm();
+
+		Alarm nextAlarm = dbHelper.fetchFirstAlarm();
+
 		Intent intent = new Intent(this, AlarmReceiver.class);
-		intent.putExtra("ID", alarm.getId());
+		intent.putExtra("ID", nextAlarm.getId());
 		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
 
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP,
-				alarm.getTimeInMilliSeconds(), sender);
+				nextAlarm.getTimeInMilliSeconds(), sender);
 
-		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
+		Alarm newAlarm = new Alarm(hour, minute, 0);
+		Toast.makeText(this, newAlarm.toString(), Toast.LENGTH_LONG).show();
 
+		alarmAdapter.changeCursor(dbHelper.fetchAlarms());
 	}
 
 	@Override
