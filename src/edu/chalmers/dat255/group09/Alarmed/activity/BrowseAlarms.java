@@ -5,14 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
 
 public class BrowseAlarms extends Activity {
-
+	
+	private BrowseAlarmAdapter alarmAdapter;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_browse_alarms);
+		
+		ListView listView = (ListView) findViewById(R.id.alarms_list);
+		alarmAdapter = new BrowseAlarmAdapter();
+		listView.setAdapter(alarmAdapter);
+		
 	}
 
 	@Override
