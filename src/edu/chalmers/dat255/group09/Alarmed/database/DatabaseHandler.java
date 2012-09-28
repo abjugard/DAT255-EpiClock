@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
+import android.util.Log;
 
 /**
  * A class to help the creation and accessing of alarms in a database. Gives the
@@ -63,6 +64,8 @@ public class DatabaseHandler {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE);
 			onCreate(db);
+			Log.w("DATABASE:", "The database is upgraded from version "
+					+ oldVersion + "to version" + newVersion);
 		}
 	}
 
