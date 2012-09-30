@@ -3,9 +3,12 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="15" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -24,6 +27,14 @@
         <receiver
             android:name=".receiver.AlarmReceiver"
             android:process=":remote" />
+
+        <activity
+            android:name=".activity.ActivationActivity"
+            android:label="@string/title_activity_activation" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.chalmers.dat255.group09.Alarmed.activity.CreateAlarm" />
+        </activity>
     </application>
 
 </manifest>

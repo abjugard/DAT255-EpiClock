@@ -14,7 +14,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
-import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
 public class CreateAlarm extends Activity {
 
@@ -65,8 +64,8 @@ public class CreateAlarm extends Activity {
 	private void createAlarm(int hour, int minute) {
 		AlarmTime alarm = new AlarmTime(hour, minute);
 
-		Intent intent = new Intent(this, AlarmReceiver.class);
-		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
+		Intent intent = new Intent(this, ActivationActivity.class);
+		PendingIntent sender = PendingIntent.getActivity(this, 0, intent, 0);
 
 		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP,
