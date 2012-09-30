@@ -2,33 +2,34 @@ package edu.chalmers.dat255.group09.Alarmed.activity;
 
 import java.util.Calendar;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
-import edu.chalmers.dat255.group09.Alarmed.model.AlarmTime;
 
 public class CreateAlarm extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			enableActionbarBackButton();
+		}
+
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
-		setTimepickerToCurrentTime(timePicker);
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void enableActionbarBackButton() {
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void initTimePicker() {
@@ -50,27 +51,49 @@ public class CreateAlarm extends Activity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overrideTransition();
+	}
+
 	public void onSetAlarmBtnPressed(View view) {
+
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
-		int hour = timePicker.getCurrentHour();
-		int minute = timePicker.getCurrentMinute();
 
-		Log.d("CreateAlarm", hour + ":" + minute);
+		int hours = timePicker.getCurrentHour();
+		int minutes = timePicker.getCurrentMinute();
 
-		createAlarm(hour, minute);
+		Intent intent = getIntent();
+		intent.putExtra("hours", hours);
+		intent.putExtra("minutes", minutes);
+
+		this.setResult(RESULT_OK, intent);
+		finish();
+		overrideTransition();
 
 	}
 
-	private void createAlarm(int hour, int minute) {
-		AlarmTime alarm = new AlarmTime(hour, minute);
+	private void overrideTransition() {
+		int fadeIn = android.R.anim.fade_in;
+		int fadeOut = android.R.anim.fade_out;
+		overridePendingTransition(fadeIn, fadeOut);
+	}
 
-		Intent intent = new Intent(this, ActivationActivity.class);
-		PendingIntent sender = PendingIntent.getActivity(this, 0, intent, 0);
-
-		AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-		alarmManager.set(AlarmManager.RTC_WAKEUP,
-				alarm.getTimeInMilliSeconds(), sender);
-
-		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
+	@Override
+	protected void onResume() {
+		super.onResume();
+		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
+		setTimepickerToCurrentTime(timePicker);
 	}
 }

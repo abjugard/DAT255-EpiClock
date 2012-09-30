@@ -6,5 +6,7 @@
     <string name="createAlarmSaveButtonText">Set Alarm</string>
     <string name="title_activity_activation">Alarming!</string>
     <string name="stop_alarm">Stop the ALARM!</string>
+    <string name="title_activity_browse_alarms">Alarmed+</string>
+    <string name="add_alarm_btn">Add Alarm</string>
 
 </resources>
