@@ -19,8 +19,7 @@ import android.util.Log;
  * 
  */
 public class DatabaseHandler {
-	private static DatabaseHandler instance;
-	private static Context aCtx;
+	private Context aCtx;
 
 	private DatabaseHelper aDbHelper;
 	private SQLiteDatabase aDb;
@@ -69,15 +68,9 @@ public class DatabaseHandler {
 		}
 	}
 
-	public static DatabaseHandler getInstance() {
-		if (instance == null) {
-			instance = new DatabaseHandler();
-		}
-		return instance;
-	}
-
-	public void setContext(Context ctx) {
+	public DatabaseHandler(Context ctx) {
 		aCtx = ctx;
+		openDb();
 	}
 
 	/**

@@ -1,27 +1,18 @@
 package edu.chalmers.dat255.group09.Alarmed.receiver;
 
-import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
-import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
+import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		DatabaseHandler db = DatabaseHandler.getInstance();
-		db.setContext(context);
-		db.openDb();
-		Alarm alarm = db.fetchAlarm(intent.getIntExtra("ID", -1));
-		if (alarm != null) {
-			Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show();
-			Log.d("CreateAlarm: ", "Alarm Activated");
-			db.deleteAlarm(alarm.getId());
-		}
-		db.closeDb();
+		AlarmController aControll = AlarmController.getInstance();
+		aControll.init(context);
+		aControll.alarmRecived(intent.getIntExtra("ID", -1));
+		aControll.destroy();
 	}
 
 }
