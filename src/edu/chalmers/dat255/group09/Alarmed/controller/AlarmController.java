@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
@@ -32,28 +33,43 @@ public class AlarmController {
 
 	public void createAlarm(int hour, int minute) {
 		dbHelper.createAlarm(hour, minute, false);
-		Alarm nextAlarm = dbHelper.fetchFirstAlarm();
-		PendingIntent sender = PendingIntent.getBroadcast(context, 0,
-				new Intent(context, AlarmReceiver.class).putExtra("ID",
-						nextAlarm.getId()), 0);
-
-		AlarmManager alarmManager = (AlarmManager) context
-				.getSystemService(Context.ALARM_SERVICE);
-		alarmManager.set(AlarmManager.RTC_WAKEUP,
-				nextAlarm.getTimeInMilliSeconds(), sender);
-
-		Alarm newAlarm = new Alarm(hour, minute, 0);
-		Toast.makeText(context, newAlarm.toString(), Toast.LENGTH_LONG).show();
-
+		setAlarm();
 		Log.d("CreateAlarm", hour + ":" + minute);
+		Toast.makeText(context, new Alarm(hour, minute, 0).toString(),
+				Toast.LENGTH_LONG).show();
+	}
+
+	private void setAlarm() {
+
+		Alarm nextAlarm = dbHelper.fetchFirstAlarm();
+		if (nextAlarm != null) {
+			
+			Intent intent = new Intent(context, AlarmReceiver.class);
+			intent.setData(Uri.parse(""+nextAlarm.getId()));
+			PendingIntent sender = PendingIntent.getBroadcast(context, 0,
+					intent, Intent.FILL_IN_DATA);
+			
+			AlarmManager alarmManager = (AlarmManager) context
+					.getSystemService(Context.ALARM_SERVICE);
+			alarmManager.set(AlarmManager.RTC_WAKEUP,
+					nextAlarm.getTimeInMilliSeconds(), sender);
+
+			Log.d("NextAlarm",
+					nextAlarm.getAlarmHours() + ":"
+							+ nextAlarm.getAlarmMinutes());
+		}
+
 	}
 
 	public void alarmRecived(int id) {
 		Alarm alarm = dbHelper.fetchAlarm(id);
 		if (alarm != null) {
 			Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show();
-			Log.d("CreateAlarm: ", "Alarm Activated");
-			dbHelper.deleteAlarm(alarm.getId());
+			Log.d("AlarmRecived: ",
+					"Alarm Activated, " + dbHelper.deleteAlarm(id));
+		}
+		if (dbHelper.getNumberOfAlarms() > 0) {
+			setAlarm();
 		}
 	}
 

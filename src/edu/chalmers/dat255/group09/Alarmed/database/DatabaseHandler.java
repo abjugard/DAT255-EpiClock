@@ -2,6 +2,7 @@ package edu.chalmers.dat255.group09.Alarmed.database;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,11 +36,11 @@ public class DatabaseHandler {
 
 	private static final String DB_NAME = "data";
 	private static final String DB_TABLE = "alarms";
-	private static final String DB_CREATE = "create table " + DB_TABLE + " ("
-			+ KEY_ROWID + " integer primary key autoincrement, " + KEY_TIME
-			+ " datetime, " + KEY_RECURRING + " boolean);";
+	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
+			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME
+			+ " DATETIME, " + KEY_RECURRING + " BOOLEAN);";
 
-	private static final int DB_VERSION = 2;
+	private static final int DB_VERSION = 3;
 
 	/**
 	 * 
@@ -63,8 +64,13 @@ public class DatabaseHandler {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE);
 			onCreate(db);
-			Log.w("DATABASE:", "The database is upgraded from version "
-					+ oldVersion + "to version" + newVersion);
+			Log.w("DATABASE:", "The database is changed from version "
+					+ oldVersion + " to version " + newVersion);
+		}
+		@Override
+		public void onDowngrade(SQLiteDatabase db, int oldVersion,
+				int newVersion) {
+			onUpgrade(db, oldVersion, newVersion);
 		}
 	}
 
@@ -108,6 +114,7 @@ public class DatabaseHandler {
 
 	public long createAlarm(int hour, int minute, boolean recurring) {
 		ContentValues alarmTime = new ContentValues();
+		alarmTime.putNull(KEY_ROWID);
 		alarmTime.put(KEY_RECURRING, recurring);
 		alarmTime.put(KEY_TIME, hour + ":" + minute);
 		return aDb.insert(DB_TABLE, null, alarmTime);
@@ -132,20 +139,7 @@ public class DatabaseHandler {
 	 */
 
 	public Alarm fetchFirstAlarm() {
-		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID,
-				KEY_TIME, KEY_RECURRING }, null, null, null, null, null, null);
-		ArrayList<Alarm> list = new ArrayList<Alarm>();
-		if (aCursor != null) {
-			if (aCursor.moveToFirst()) {
-				do {
-					String[] time = aCursor.getString(
-							aCursor.getColumnIndex(KEY_TIME)).split(":");
-					list.add(new Alarm(Integer.parseInt(time[0]), Integer
-							.parseInt(time[1]), aCursor.getInt(aCursor
-							.getColumnIndex(KEY_ROWID))));
-				} while (aCursor.moveToNext());
-			}
-		}
+		List<Alarm> list = getAllAlarms();
 		Collections.sort(list);
 		return list.get(0);
 	}
@@ -160,22 +154,37 @@ public class DatabaseHandler {
 	 * 
 	 * @param alarmID
 	 *            the id of the alarm to retrieve
-	 * @return A cursor with the position set to the matching alarm, if found
+	 * @return the alarm with the specified id, if not found null
 	 */
 	public Alarm fetchAlarm(int alarmID) {
-		Cursor aCursor = aDb.query(true, DB_TABLE, new String[] { KEY_ROWID,
-				KEY_TIME, KEY_RECURRING }, KEY_ROWID + "=" + alarmID, null,
-				null, null, null, null);
-		if (aCursor != null) {
-			aCursor.moveToFirst();
-
-			String[] time = aCursor.getString(aCursor.getColumnIndex(KEY_TIME))
-					.split(":");
-			return new Alarm(Integer.parseInt(time[0]),
-					Integer.parseInt(time[1]), aCursor.getInt(aCursor
-							.getColumnIndex(KEY_ROWID)));
+		Log.d("Database", "Fetch alarmID:"+alarmID);
+		List<Alarm> list = getAllAlarms();
+		for(Alarm alarm: list){
+			if(alarmID == alarm.getId()){
+				return alarm;
+			}
 		}
 		return null;
+	}
+
+	public int getNumberOfAlarms() {
+		return fetchAlarms().getCount();
+	}
+	private List<Alarm> getAllAlarms(){
+		Cursor aCursor = fetchAlarms();
+		ArrayList<Alarm> list = new ArrayList<Alarm>();
+		if (aCursor != null) {
+			if (aCursor.moveToFirst()) {
+				do {
+					String[] time = aCursor.getString(
+							aCursor.getColumnIndex(KEY_TIME)).split(":");
+					list.add(new Alarm(Integer.parseInt(time[0]), Integer
+							.parseInt(time[1]), aCursor.getInt(aCursor
+							.getColumnIndex(KEY_ROWID))));
+				} while (aCursor.moveToNext());
+			}
+		}
+		return list;
 	}
 
 }

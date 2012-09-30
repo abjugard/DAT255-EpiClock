@@ -46,7 +46,8 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == R.id.menu_add_alarm) {
-			startActivityForResult(new Intent(this, CreateAlarm.class), ADD_ALARM_REQUEST_CODE);
+			startActivityForResult(new Intent(this, CreateAlarm.class),
+					ADD_ALARM_REQUEST_CODE);
 			overrrideTransition();
 
 			return true;
@@ -76,6 +77,12 @@ public class MainActivity extends Activity {
 
 	private void createAlarm(int hour, int minute) {
 		aControll.createAlarm(hour, minute);
+		alarmAdapter.changeCursor(aControll.getAllAlarms());
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		alarmAdapter.changeCursor(aControll.getAllAlarms());
 	}
 

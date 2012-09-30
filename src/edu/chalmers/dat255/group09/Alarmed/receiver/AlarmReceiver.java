@@ -11,7 +11,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		AlarmController aControll = AlarmController.getInstance();
 		aControll.init(context);
-		aControll.alarmRecived(intent.getIntExtra("ID", -1));
+		aControll.alarmRecived(Integer.parseInt(intent.getData().toString()));
 		aControll.destroy();
 	}
 
