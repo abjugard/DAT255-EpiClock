@@ -117,6 +117,27 @@ public class Alarm implements Comparable<Alarm> {
 		return id;
 	}
 
+	@Override
+	public int hashCode() {
+
+		return (int) getTimeInMilliSeconds() * 7;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+
+		Alarm other = (Alarm) obj;
+
+		return this.getTimeInMilliSeconds() == other.getTimeInMilliSeconds();
+	}
+
 	public int compareTo(Alarm another) {
 		return (int) (this.getTimeInMilliSeconds() - another
 				.getTimeInMilliSeconds());
