@@ -1,15 +1,17 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 
-public class AdditionOperator implements MathOperator {
+public final class AdditionOperator implements MathOperator {
+
+	private final static String OPERATOR = "+";
 
 	@Override
-	public void getResult(int numberOne, int numberTwo) {
-
+	public int getResult(int numberOne, int numberTwo) {
+		return numberOne + numberTwo;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return OPERATOR;
 	}
 
 }
