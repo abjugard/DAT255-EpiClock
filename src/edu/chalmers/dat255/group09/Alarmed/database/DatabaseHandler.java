@@ -131,6 +131,17 @@ public class DatabaseHandler {
 	public boolean deleteAlarm(int alarmID) {
 		return aDb.delete(DB_TABLE, KEY_ROWID + "=" + alarmID, null) > 0;
 	}
+	/**
+	 * Deletes an Alarm with a specified time.
+	 * 
+	 * @param alarmID
+	 *            time of the alarm to be deleted.
+	 * @return true if deleted else false
+	 */
+
+	public boolean deleteAlarm(String time) {
+		return aDb.delete(DB_TABLE, KEY_TIME + "=" + time, null) > 0;
+	}
 
 	/**
 	 * Returns a Cursor over the list of all set alarms

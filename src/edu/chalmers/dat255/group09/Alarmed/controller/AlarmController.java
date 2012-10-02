@@ -72,6 +72,9 @@ public class AlarmController {
 			setAlarm();
 		}
 	}
+	public boolean deleteAlarm(int id){
+		return dbHelper.deleteAlarm(id);
+	}
 
 	public Cursor getAllAlarms() {
 		return dbHelper.fetchAlarms();
