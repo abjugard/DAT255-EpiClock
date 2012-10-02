@@ -8,5 +8,7 @@
     <string name="stop_alarm">Stop the ALARM!</string>
     <string name="title_activity_browse_alarms">Alarmed+</string>
     <string name="add_alarm_btn">Add Alarm</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_math">MathActivity</string>
 
 </resources>
