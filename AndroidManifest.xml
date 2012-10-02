@@ -38,14 +38,10 @@
             android:name=".activity.ActivationActivity"
             android:label="@string/title_activity_activation" >
         </activity>
+        
         <activity
             android:name=".modules.mathModule.activity.MathActivity"
             android:label="@string/title_activity_math" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
