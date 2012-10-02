@@ -66,7 +66,11 @@ public class MainActivity extends Activity {
 			aControll.deleteAlarm(cursor.getInt(cursor.getColumnIndex("_id")));
 			break;
 		case 2:
-
+			Intent intent = new Intent(this, CreateAlarm.class);
+			intent.putExtra("ID", cursor.getInt(cursor.getColumnIndex("_id")));
+			intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);   
+			intent.putExtra("time", cursor.getString(cursor.getColumnIndex("time")));
+			startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 			overrrideTransition();
 			break;
 		default:
@@ -105,14 +109,21 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (isResonseValid(requestCode, resultCode)) {
-			createAlarm(data.getIntExtra("hours", -1),
-					data.getIntExtra("minutes", -1));
+		if (isResonseValid(resultCode)) {
+			if (requestCode == ADD_ALARM_REQUEST_CODE) {
+				createAlarm(data.getIntExtra("hours", -1),
+						data.getIntExtra("minutes", -1));
+			} else if (requestCode == EDIT_ALARM_REQUEST_CODE) {
+				aControll.deleteAlarm(data.getIntExtra("ID", -1));
+				createAlarm(data.getIntExtra("hours", -1),
+						data.getIntExtra("minutes", -1));
+			}
+
 		}
 	}
 
-	private boolean isResonseValid(int requestCode, int resultCode) {
-		return requestCode == ADD_ALARM_REQUEST_CODE && resultCode == RESULT_OK;
+	private boolean isResonseValid(int resultCode) {
+		return resultCode == RESULT_OK;
 	}
 
 	private void createAlarm(int hour, int minute) {
