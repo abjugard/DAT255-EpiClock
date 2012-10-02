@@ -5,7 +5,7 @@ import java.util.Calendar;
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
-public class AlarmTimeTest extends AndroidTestCase {
+public class AlarmTest extends AndroidTestCase {
 
 	private final long ONE_HOUR_IN_MILLI_SECONDS = 3600000;
 	private final long ONE_MINUTE_IN_MILLI_SECONDS = 60000;
