@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +28,7 @@ public class MainActivity extends Activity {
 
 		setContentView(R.layout.activity_main);
 		initController();
-		setAdapter();
+		initAdapter();
 	}
 
 	private void initController() {
@@ -37,11 +36,10 @@ public class MainActivity extends Activity {
 		aControll.init(this);
 	}
 
-	private void setAdapter() {
+	private void initAdapter() {
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
 		alarmAdapter = new BrowseAlarmAdapter(this, aControll.getAllAlarms());
 		listView.setAdapter(alarmAdapter);
-
 		registerForContextMenu(listView);
 	}
 
@@ -62,9 +60,11 @@ public class MainActivity extends Activity {
 		Cursor cursor = (Cursor) listView.getAdapter().getItem(info.position);
 		switch (item.getItemId()) {
 		case 1:
+			//DELETE ALARM
 			aControll.deleteAlarm(cursor.getInt(cursor.getColumnIndex("_id")));
 			break;
 		case 2:
+			//EDIT ALARM
 			Intent intent = new Intent(this, CreateAlarm.class);
 			intent.putExtra("ID", cursor.getInt(cursor.getColumnIndex("_id")));
 			intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);   
@@ -92,14 +92,14 @@ public class MainActivity extends Activity {
 			startActivityForResult(new Intent(this, CreateAlarm.class),
 					ADD_ALARM_REQUEST_CODE);
 			overrrideTransition();
-
 			return true;
 		}
-
 		return super.onOptionsItemSelected(item);
-
 	}
-
+	
+	/**
+	 * Makes the transition between views smoother by animating them.
+	 */
 	private void overrrideTransition() {
 		int fadeIn = android.R.anim.fade_in;
 		int fadeOut = android.R.anim.fade_out;
@@ -120,20 +120,23 @@ public class MainActivity extends Activity {
 
 		}
 	}
-
+	/**
+	 * Checks if the result code from the Activity that finishes is valid.
+	 * @param resultCode The code returned from onActivityResult
+	 * @return true if the resultCode was valid.
+	 */
 	private boolean isResonseValid(int resultCode) {
 		return resultCode == RESULT_OK;
 	}
+	/**
+	 * Creates a new alarm and then updates the view
+	 * @param hour The hour of the new alarm
+	 * @param minute The minute of the new alarm
+	 */
 
 	private void createAlarm(int hour, int minute) {
 		aControll.createAlarm(hour, minute);
 		updateList();
-	}
-
-	@Override
-	public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-
-		return super.onKeyLongPress(keyCode, event);
 	}
 
 	@Override
@@ -147,7 +150,9 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 		aControll.destroy();
 	}
-
+	/**
+	 * Updates the list of the alarms to the newest 
+	 */
 	private void updateList() {
 		alarmAdapter.changeCursor(aControll.getAllAlarms());
 	}

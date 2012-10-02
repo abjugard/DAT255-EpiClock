@@ -31,7 +31,7 @@ public class DatabaseHandler {
 
 	private static final String DB_NAME = "data";
 	private static final String DB_TABLE = "alarms";
-	
+
 	public static final String KEY_TIME = "time";
 	public static final String KEY_RECURRING = "recurring";
 	public static final String KEY_ROWID = "_id";
@@ -39,7 +39,7 @@ public class DatabaseHandler {
 
 	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING,
 			KEY_ENABLED };
-	
+
 	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
 			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME + " DATETIME, "
 			+ KEY_RECURRING + " BOOLEAN," + KEY_ENABLED + " BOOLEAN);";
@@ -151,9 +151,9 @@ public class DatabaseHandler {
 	}
 
 	/**
-	 * Returns a Cursor over the list of all set alarms
+	 * Fetches the first alarm given by the time to the next occurring alarm.
 	 * 
-	 * @return Cursor with all alarms
+	 * @return The next alarm to activate.
 	 */
 
 	public Alarm fetchFirstAlarm() {
@@ -161,6 +161,12 @@ public class DatabaseHandler {
 		Collections.sort(list);
 		return list.get(0);
 	}
+
+	/**
+	 * Fetches all alarms as Cursor to the database
+	 * 
+	 * @return Cursor with all the alarmdata
+	 */
 
 	public Cursor fetchAlarms() {
 		return aDb.query(true, DB_TABLE, KEYS, null, null, null, null, null,
@@ -185,10 +191,20 @@ public class DatabaseHandler {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @return The number of alarms in the database
+	 */
+
 	public int getNumberOfAlarms() {
 		return fetchAlarms().getCount();
 	}
 
+	/**
+	 * Fetches all the alarm data and makes a list of Alarms
+	 * 
+	 * @return A list of all the alarms
+	 */
 	private List<Alarm> getAllAlarms() {
 		Cursor aCursor = fetchAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
@@ -206,19 +222,50 @@ public class DatabaseHandler {
 		return list;
 	}
 
+	/**
+	 * Enables the alarm
+	 * 
+	 * @param id
+	 *            The id of the alarm
+	 * @return true if changed
+	 */
 	public boolean enableAlarm(int id) {
 		return updateAlarm(id, true);
 	}
 
+	/**
+	 * Disables the alarm
+	 * 
+	 * @param id
+	 *            The id of the alarm
+	 * @return true if changed
+	 */
 	public boolean disableAlarm(int id) {
 		return updateAlarm(id, false);
 	}
+
+	/**
+	 * 
+	 * @param id
+	 *            The id of the alarm
+	 * @return true if enabled
+	 */
 
 	public boolean isEnabled(int id) {
 		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "=" + id,
 				null, null, null, null, null);
 		return cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0;
 	}
+
+	/**
+	 * Updates the alarm given the id and the state to set the alarm to
+	 * 
+	 * @param id
+	 *            The id of the alarm
+	 * @param enable
+	 *            the state to set the alarm to
+	 * @return true if changed
+	 */
 
 	private boolean updateAlarm(int id, boolean enable) {
 		ContentValues values = new ContentValues();
