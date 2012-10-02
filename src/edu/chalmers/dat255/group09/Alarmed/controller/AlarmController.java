@@ -61,10 +61,9 @@ public class AlarmController {
 
 	}
 
-	public void alarmRecived(int id) {
+	public void alarmReceived(int id) {
 		Alarm alarm = dbHelper.fetchAlarm(id);
 		if (alarm != null) {
-			Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show();
 			Log.d("AlarmRecived: ",
 					"Alarm Activated, " + dbHelper.deleteAlarm(id));
 		}

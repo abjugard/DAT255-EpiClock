@@ -10,10 +10,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		AlarmController aControll = AlarmController.getInstance();
-		aControll.init(context);
-		aControll.alarmRecived(Integer.parseInt(intent.getData().toString()));
-		aControll.destroy();
+		AlarmController aControl = AlarmController.getInstance();
+		aControl.init(context);
+		aControl.alarmReceived(Integer.parseInt(intent.getData().toString()));
+		aControl.destroy();
 		Intent activateIntent = new Intent(context, ActivationActivity.class);
 		activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(activateIntent);

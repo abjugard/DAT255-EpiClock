@@ -20,7 +20,7 @@ import android.util.Log;
  * 
  */
 public class DatabaseHandler {
-	private Context aCtx;
+	private Context aContext;
 
 	private DatabaseHelper aDbHelper;
 	private SQLiteDatabase aDb;
@@ -28,9 +28,9 @@ public class DatabaseHandler {
 	/**
 	 * Database SQL statements
 	 */
+	public static final String KEY_ROWID = "_id";
 	public static final String KEY_TIME = "time";
 	public static final String KEY_RECURRING = "recurring";
-	public static final String KEY_ROWID = "_id";
 
 	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING };
 
@@ -74,8 +74,8 @@ public class DatabaseHandler {
 		}
 	}
 
-	public DatabaseHandler(Context ctx) {
-		aCtx = ctx;
+	public DatabaseHandler(Context context) {
+		aContext = context;
 		openDb();
 	}
 
@@ -86,7 +86,7 @@ public class DatabaseHandler {
 	 */
 
 	public DatabaseHandler openDb() {
-		aDbHelper = new DatabaseHelper(aCtx);
+		aDbHelper = new DatabaseHelper(aContext);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;
 	}
