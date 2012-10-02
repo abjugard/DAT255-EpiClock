@@ -18,14 +18,14 @@
         android:id="@+id/activity_math_submit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/activity_math_enter_answer_text"
-        android:layout_alignRight="@+id/activity_math_enter_answer_text"
+        android:layout_alignLeft="@+id/activity_math_answer_text"
+        android:layout_alignRight="@+id/activity_math_answer_text"
         android:layout_centerVertical="true"
         android:text="@string/activity_math_submit_btn"
         android:onClick="onSubmitButtonPressed" />
 
     <EditText
-        android:id="@+id/activity_math_enter_answer_text"
+        android:id="@+id/activity_math_answer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/activity_math_submit_btn"
