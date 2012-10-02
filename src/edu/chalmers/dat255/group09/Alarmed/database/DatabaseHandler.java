@@ -28,19 +28,23 @@ public class DatabaseHandler {
 	/**
 	 * Database SQL statements
 	 */
-	public static final String KEY_TIME = "time";
-	public static final String KEY_RECURRING = "recurring";
-	public static final String KEY_ROWID = "_id";
-
-	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING };
 
 	private static final String DB_NAME = "data";
 	private static final String DB_TABLE = "alarms";
-	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
-			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME
-			+ " DATETIME, " + KEY_RECURRING + " BOOLEAN);";
+	
+	public static final String KEY_TIME = "time";
+	public static final String KEY_RECURRING = "recurring";
+	public static final String KEY_ROWID = "_id";
+	public static final String KEY_ENABLED = "enabled";
 
-	private static final int DB_VERSION = 3;
+	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING,
+			KEY_ENABLED };
+	
+	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
+			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME + " DATETIME, "
+			+ KEY_RECURRING + " BOOLEAN," + KEY_ENABLED + " BOOLEAN);";
+
+	private static final int DB_VERSION = 4;
 
 	/**
 	 * 
@@ -67,6 +71,7 @@ public class DatabaseHandler {
 			Log.w("DATABASE:", "The database is changed from version "
 					+ oldVersion + " to version " + newVersion);
 		}
+
 		@Override
 		public void onDowngrade(SQLiteDatabase db, int oldVersion,
 				int newVersion) {
@@ -116,6 +121,7 @@ public class DatabaseHandler {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
 		alarmTime.put(KEY_RECURRING, recurring);
+		alarmTime.put(KEY_ENABLED, true);
 		alarmTime.put(KEY_TIME, hour + ":" + minute);
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
@@ -131,6 +137,7 @@ public class DatabaseHandler {
 	public boolean deleteAlarm(int alarmID) {
 		return aDb.delete(DB_TABLE, KEY_ROWID + "=" + alarmID, null) > 0;
 	}
+
 	/**
 	 * Deletes an Alarm with a specified time.
 	 * 
@@ -168,10 +175,10 @@ public class DatabaseHandler {
 	 * @return the alarm with the specified id, if not found null
 	 */
 	public Alarm fetchAlarm(int alarmID) {
-		Log.d("Database", "Fetch alarmID:"+alarmID);
+		Log.d("Database", "Fetch alarmID:" + alarmID);
 		List<Alarm> list = getAllAlarms();
-		for(Alarm alarm: list){
-			if(alarmID == alarm.getId()){
+		for (Alarm alarm : list) {
+			if (alarmID == alarm.getId()) {
 				return alarm;
 			}
 		}
@@ -181,7 +188,8 @@ public class DatabaseHandler {
 	public int getNumberOfAlarms() {
 		return fetchAlarms().getCount();
 	}
-	private List<Alarm> getAllAlarms(){
+
+	private List<Alarm> getAllAlarms() {
 		Cursor aCursor = fetchAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
 		if (aCursor != null) {
@@ -196,6 +204,26 @@ public class DatabaseHandler {
 			}
 		}
 		return list;
+	}
+
+	public boolean enableAlarm(int id) {
+		return updateAlarm(id, true);
+	}
+
+	public boolean disableAlarm(int id) {
+		return updateAlarm(id, false);
+	}
+
+	public boolean isEnabled(int id) {
+		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "=" + id,
+				null, null, null, null, null);
+		return cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0;
+	}
+
+	private boolean updateAlarm(int id, boolean enable) {
+		ContentValues values = new ContentValues();
+		values.put(KEY_ENABLED, enable);
+		return aDb.update(DB_TABLE, values, KEY_ROWID + "=" + id, null) > 0;
 	}
 
 }

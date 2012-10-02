@@ -49,9 +49,8 @@ public class MainActivity extends Activity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		if (v.getId() == R.id.alarms_list) {
-			menu.setHeaderTitle("Menu");
-			menu.add(Menu.NONE, 1, 1, "Delete");
-			menu.add(Menu.NONE, 2, 2, "Edit");
+			menu.add(Menu.NONE, 2, 1, R.string.edit_alarm);
+			menu.add(Menu.NONE, 1, 2, R.string.delete_alarm);
 		}
 	}
 
