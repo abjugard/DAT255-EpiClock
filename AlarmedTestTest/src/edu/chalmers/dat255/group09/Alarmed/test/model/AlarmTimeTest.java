@@ -254,4 +254,18 @@ public class AlarmTimeTest extends AndroidTestCase {
 		assertTrue(alarm.equals(otherAlarm));
 	}
 
+	public void testCompareTo() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm otherAlarm = new Alarm(21, 20, 1);
+
+		assertTrue(alarm.compareTo(otherAlarm) < 0);
+
+		otherAlarm = new Alarm(20, 20, 2);
+
+		assertTrue(alarm.compareTo(otherAlarm) == 0);
+
+		otherAlarm = new Alarm(19, 19, 2);
+
+		assertTrue(alarm.compareTo(otherAlarm) > 0);
+	}
 }
