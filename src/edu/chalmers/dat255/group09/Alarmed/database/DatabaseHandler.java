@@ -19,7 +19,7 @@ import android.util.Log;
  * @author Daniel Augurell
  * 
  */
-public class DatabaseHandler implements HandlerInterface {
+public class DatabaseHandler implements AlarmHandlerInterface {
 	private Context aCtx;
 
 	private DatabaseHelper aDbHelper;
@@ -81,10 +81,9 @@ public class DatabaseHandler implements HandlerInterface {
 
 	public DatabaseHandler(Context ctx) {
 		aCtx = ctx;
-		openCon();
 	}
 
-	public HandlerInterface openCon() {
+	public AlarmHandlerInterface openCon() {
 		aDbHelper = new DatabaseHelper(aCtx);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;
@@ -111,11 +110,15 @@ public class DatabaseHandler implements HandlerInterface {
 		return aDb.delete(DB_TABLE, KEY_TIME + "=" + time, null) > 0;
 	}
 
-	public Alarm fetchFirstAlarm() {
+	public Alarm fetchFirstEnabledAlarm() {
 		List<Alarm> list = getAllAlarms();
 		Collections.sort(list);
-			
-		return list.get(0);
+		for(Alarm alarm: list){
+			if(alarm.isEnabled()){
+				return alarm;
+			}
+		}
+		return null;
 	}
 
 	public Cursor fetchAlarms() {
@@ -151,9 +154,11 @@ public class DatabaseHandler implements HandlerInterface {
 				do {
 					String[] time = aCursor.getString(
 							aCursor.getColumnIndex(KEY_TIME)).split(":");
-					list.add(new Alarm(Integer.parseInt(time[0]), Integer
+					Alarm a = new Alarm(Integer.parseInt(time[0]), Integer
 							.parseInt(time[1]), aCursor.getInt(aCursor
-							.getColumnIndex(KEY_ROWID))));
+							.getColumnIndex(KEY_ROWID)));
+					a.setEnabled(aCursor.getInt(aCursor.getColumnIndex(KEY_ENABLED)) > 0);
+					list.add(a);
 				} while (aCursor.moveToNext());
 			}
 		}

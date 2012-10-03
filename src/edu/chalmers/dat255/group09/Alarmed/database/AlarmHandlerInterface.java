@@ -3,7 +3,7 @@ package edu.chalmers.dat255.group09.Alarmed.database;
 import android.database.Cursor;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
-public interface HandlerInterface {
+public interface AlarmHandlerInterface {
 
 	/**
 	 * Open the connection to the handler.
@@ -11,7 +11,7 @@ public interface HandlerInterface {
 	 * @return this, a self reference
 	 */
 
-	public HandlerInterface openCon();
+	public AlarmHandlerInterface openCon();
 
 	/**
 	 * Closes the connection to the handler
@@ -60,7 +60,7 @@ public interface HandlerInterface {
 	 * @return The next alarm to activate.
 	 */
 
-	public abstract Alarm fetchFirstAlarm();
+	public Alarm fetchFirstEnabledAlarm();
 
 	/**
 	 * Fetches all alarms as Cursor to the database

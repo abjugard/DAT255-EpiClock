@@ -9,14 +9,14 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
-import edu.chalmers.dat255.group09.Alarmed.database.HandlerInterface;
+import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandlerInterface;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
 public class AlarmController {
 
 	private static AlarmController instance;
-	private HandlerInterface dbHelper;
+	private AlarmHandlerInterface alarmHandler;
 
 	private Context context;
 
@@ -29,11 +29,11 @@ public class AlarmController {
 
 	public void init(Context context) {
 		this.context = context;
-		dbHelper = new DatabaseHandler(context);
+		alarmHandler = new DatabaseHandler(context).openCon();
 	}
 
 	public void createAlarm(int hour, int minute) {
-		dbHelper.createAlarm(hour, minute, false);
+		alarmHandler.createAlarm(hour, minute, false);
 		setAlarm();
 		Log.d("CreateAlarm", hour + ":" + minute);
 		Toast.makeText(context, new Alarm(hour, minute, 0).toString(),
@@ -42,7 +42,7 @@ public class AlarmController {
 
 	private void setAlarm() {
 
-		Alarm nextAlarm = dbHelper.fetchFirstAlarm();
+		Alarm nextAlarm = alarmHandler.fetchFirstEnabledAlarm();
 		if (nextAlarm != null) {
 			
 			Intent intent = new Intent(context, AlarmReceiver.class);
@@ -62,33 +62,34 @@ public class AlarmController {
 
 	}
 
-	public void alarmRecived(int id) {
-		Alarm alarm = dbHelper.fetchAlarm(id);
-		if (alarm != null) {
+	public boolean alarmRecived(int id) {
+		Alarm alarm = alarmHandler.fetchAlarm(id);
+		if (alarm != null && alarm.isEnabled()) {
 			Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show();
 			Log.d("AlarmRecived: ",
-					"Alarm Activated, " + dbHelper.deleteAlarm(id));
+					"Alarm Activated, " + alarmHandler.deleteAlarm(id));
 		}
-		if (dbHelper.getNumberOfAlarms() > 0) {
+		if (alarmHandler.getNumberOfAlarms() > 0) {
 			setAlarm();
 		}
+		return alarm.isEnabled();
 	}
 	public boolean deleteAlarm(int id){
-		return dbHelper.deleteAlarm(id);
+		return alarmHandler.deleteAlarm(id);
 	}
 	public boolean isAlarmEnabled(int id){
-		return dbHelper.isEnabled(id);
+		return alarmHandler.isEnabled(id);
 	}
 	public boolean enableAlarm(int id, boolean enable){
-		return dbHelper.enableAlarm(id, enable);
+		return alarmHandler.enableAlarm(id, enable);
 	}
 
 	public Cursor getAllAlarms() {
-		return dbHelper.fetchAlarms();
+		return alarmHandler.fetchAlarms();
 	}
 
 	public void destroy() {
-		dbHelper.closeCon();
+		alarmHandler.closeCon();
 	}
 
 }

@@ -7,6 +7,7 @@ public class Alarm implements Comparable<Alarm> {
 	private final int alarmHours;
 	private final int alarmMinutes;
 	private final int id;
+	private boolean enabled;
 
 	public Alarm(int hours, int minutes, int id)
 			throws IllegalArgumentException {
@@ -18,6 +19,7 @@ public class Alarm implements Comparable<Alarm> {
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
 		this.id = id;
+		this.enabled = true;
 	}
 
 	public long getTimeInMilliSeconds() {
@@ -119,7 +121,6 @@ public class Alarm implements Comparable<Alarm> {
 
 	@Override
 	public int hashCode() {
-
 		return (int) getTimeInMilliSeconds() * 7;
 	}
 
@@ -127,19 +128,24 @@ public class Alarm implements Comparable<Alarm> {
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
-		}
-
+		} 
 		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
-
 		Alarm other = (Alarm) obj;
-
 		return this.getTimeInMilliSeconds() == other.getTimeInMilliSeconds();
 	}
 
 	public int compareTo(Alarm another) {
 		return (int) (this.getTimeInMilliSeconds() - another
 				.getTimeInMilliSeconds());
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

@@ -12,11 +12,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		AlarmController aControll = AlarmController.getInstance();
 		aControll.init(context);
-		aControll.alarmRecived(Integer.parseInt(intent.getData().toString()));
-		aControll.destroy();
+		if(aControll.alarmRecived(Integer.parseInt(intent.getData().toString()))){
+		
 		Intent activateIntent = new Intent(context, ActivationActivity.class);
 		activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(activateIntent);
+		}
+		aControll.destroy();
 	}
 
 }
