@@ -6,9 +6,9 @@ public class MathProblemGenerator {
 	private final static int LOWER_LIMIT = 0;
 	private final static int NBR_OF_OPERATORS = 2;
 
-	public MathProblem generateProblem() {
+	public MathProblem generateProblem(int nbrOfNumbers) {
 		MathOperator operator = generateOperator();
-		int[] numbers = generateNumbers(2);
+		int[] numbers = generateNumbers(nbrOfNumbers);
 
 		return new MathProblem(numbers, operator);
 	}

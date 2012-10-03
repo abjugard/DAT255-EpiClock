@@ -20,9 +20,13 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 	public void testGetProblem() {
 
-		MathProblem problem = generator.generateProblem();
+		int nbrOfNumbers = 2;
+
+		MathProblem problem = generator.generateProblem(nbrOfNumbers);
 
 		int[] nbrs = problem.getNumbers();
+
+		assertEquals(nbrOfNumbers, nbrs.length);
 
 		for (int i = 0; i < nbrs.length; i++) {
 			assertTrue(nbrs[i] <= upperLimit);
@@ -33,10 +37,23 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 		assertTrue(operator instanceof MathOperator);
 
+		nbrs = problem.getNumbers();
+
+		assertEquals(nbrOfNumbers, nbrs.length);
+
+		for (int i = 0; i < nbrs.length; i++) {
+			assertTrue(nbrs[i] <= upperLimit);
+			assertTrue(nbrs[i] >= lowerLimit);
+		}
+
+		operator = problem.getOperator();
+
+		assertTrue(operator instanceof MathOperator);
 	}
 
 	public void testOperatorProbability() {
 		int iterations = 1000;
+		int nbrOfNumbers = 2;
 		int numberOfAdditionOperators = 0;
 		int expectedNumberOfAdditionOperators = 500;
 		int delta = 50;
@@ -44,7 +61,7 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 		MathProblem problem = null;
 
 		for (int i = 0; i < iterations; i++) {
-			problem = generator.generateProblem();
+			problem = generator.generateProblem(nbrOfNumbers);
 			if (problem.getOperator() instanceof AdditionOperator) {
 				numberOfAdditionOperators++;
 			}
@@ -56,11 +73,12 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 	public void testNumbersInterval() {
 		int iterations = 1000;
+		int nbrOfNumbers = 2;
 
 		MathProblem problem = null;
 
 		for (int i = 0; i < iterations; i++) {
-			problem = generator.generateProblem();
+			problem = generator.generateProblem(nbrOfNumbers);
 			int[] nbrs = problem.getNumbers();
 			for (int j = 0; j < nbrs.length; j++) {
 				if (nbrs[j] > upperLimit || nbrs[j] < lowerLimit) {

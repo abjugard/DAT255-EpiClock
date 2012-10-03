@@ -94,6 +94,8 @@ public class MathControllerTest extends AndroidTestCase {
 		assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 	}
 
+	
+
 	private int getCorrectAnswer() {
 		controller.generateNewProblem();
 		int answer = correctAnswers[problemIndex];
@@ -130,7 +132,7 @@ public class MathControllerTest extends AndroidTestCase {
 		}
 
 		@Override
-		public MathProblem generateProblem() {
+		public MathProblem generateProblem(int nbrOfNumbers) {
 			MathProblem problem = problems.get(index);
 			index = (index + 1) % 2;
 			return problem;

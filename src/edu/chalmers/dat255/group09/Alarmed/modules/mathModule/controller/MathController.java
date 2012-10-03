@@ -10,6 +10,7 @@ public class MathController {
 	private int completedProblemsInARow;
 	private MathProblemGenerator problemGenerator;
 	private final static int problemsThatMustBeCompleted = 5;
+	private final static int completedProblemsToIncreaseDiffulcty = 3;
 
 	/**
 	 * Create a new MathController Object
@@ -50,7 +51,10 @@ public class MathController {
 	 * @return A new MathProblem
 	 */
 	public MathProblem generateNewProblem() {
-		currentProblem = problemGenerator.generateProblem();
+
+		int nbrOfNumbers = 2;
+
+		currentProblem = problemGenerator.generateProblem(nbrOfNumbers);
 		return currentProblem;
 	}
 
