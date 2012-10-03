@@ -20,17 +20,16 @@ public class AdditionOperatorTest extends AndroidTestCase {
 	}
 
 	public void testGetResult() {
-		int actualResult = additionOperator.getResult(6, 6);
+		int actualResult = additionOperator.getResult(new int[] { 6, 6 });
 		int expectedResult = 12;
 		assertEquals(expectedResult, actualResult);
-		
 
-		actualResult = additionOperator.getResult(2, -1);
+		actualResult = additionOperator.getResult(new int[] { 2, -1 });
 		expectedResult = 1;
 		assertEquals(expectedResult, actualResult);
-		
-		actualResult = additionOperator.getResult(5, -5);
-		expectedResult = 0;
+
+		actualResult = additionOperator.getResult(new int[] { 5, -5, 1 });
+		expectedResult = 1;
 		assertEquals(expectedResult, actualResult);
 	}
 

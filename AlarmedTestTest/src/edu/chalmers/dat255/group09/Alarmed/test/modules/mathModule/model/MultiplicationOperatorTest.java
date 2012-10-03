@@ -21,16 +21,16 @@ public class MultiplicationOperatorTest extends AndroidTestCase {
 	}
 
 	public void testGetResult() {
-		int actualResult = multiOperator.getResult(6, 6);
+		int actualResult = multiOperator.getResult(new int[] { 6, 6 });
 		int expectedResult = 36;
 		assertEquals(expectedResult, actualResult);
 
-		actualResult = multiOperator.getResult(2, -1);
+		actualResult = multiOperator.getResult(new int[] { 2, -1 });
 		expectedResult = -2;
 		assertEquals(expectedResult, actualResult);
 
-		actualResult = multiOperator.getResult(5, -5);
-		expectedResult = -25;
+		actualResult = multiOperator.getResult(new int[] { 5, -5, -1 });
+		expectedResult = 25;
 		assertEquals(expectedResult, actualResult);
 	}
 
