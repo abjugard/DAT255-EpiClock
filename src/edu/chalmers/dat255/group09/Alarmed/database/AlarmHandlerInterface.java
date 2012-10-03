@@ -1,5 +1,7 @@
 package edu.chalmers.dat255.group09.Alarmed.database;
 
+import java.util.List;
+
 import android.database.Cursor;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
@@ -62,13 +64,14 @@ public interface AlarmHandlerInterface {
 
 	public Alarm fetchFirstEnabledAlarm();
 
+
 	/**
-	 * Fetches all alarms as Cursor to the database
+	 * Fetches all the alarm data and makes a list of Alarms
 	 * 
-	 * @return Cursor with all the alarmdata
+	 * @return A list of all the alarms
 	 */
 
-	public Cursor fetchAlarms();
+	public List<Alarm> fetchAllAlarms();
 
 	/**
 	 * Fetches an alarm from the handler given an specified id.

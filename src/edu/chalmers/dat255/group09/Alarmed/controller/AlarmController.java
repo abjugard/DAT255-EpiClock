@@ -1,5 +1,7 @@
 package edu.chalmers.dat255.group09.Alarmed.controller;
 
+import java.util.List;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -84,8 +86,8 @@ public class AlarmController {
 		return alarmHandler.enableAlarm(id, enable);
 	}
 
-	public Cursor getAllAlarms() {
-		return alarmHandler.fetchAlarms();
+	public List<Alarm> getAllAlarms() {
+		return alarmHandler.fetchAllAlarms();
 	}
 
 	public void destroy() {

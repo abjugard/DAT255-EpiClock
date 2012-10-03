@@ -111,7 +111,7 @@ public class DatabaseHandler implements AlarmHandlerInterface {
 	}
 
 	public Alarm fetchFirstEnabledAlarm() {
-		List<Alarm> list = getAllAlarms();
+		List<Alarm> list = fetchAllAlarms();
 		Collections.sort(list);
 		for(Alarm alarm: list){
 			if(alarm.isEnabled()){
@@ -120,15 +120,20 @@ public class DatabaseHandler implements AlarmHandlerInterface {
 		}
 		return null;
 	}
+	/**
+	 * Fetches all alarms as Cursor to the database
+	 * 
+	 * @return Cursor with all the alarmdata
+	 */
 
-	public Cursor fetchAlarms() {
+	private Cursor getAlarms() {
 		return aDb.query(true, DB_TABLE, KEYS, null, null, null, null, null,
 				null);
 	}
 
 	public Alarm fetchAlarm(int alarmID) {
 		Log.d("Database", "Fetch alarmID:" + alarmID);
-		List<Alarm> list = getAllAlarms();
+		List<Alarm> list = fetchAllAlarms();
 		for (Alarm alarm : list) {
 			if (alarmID == alarm.getId()) {
 				return alarm;
@@ -138,16 +143,12 @@ public class DatabaseHandler implements AlarmHandlerInterface {
 	}
 
 	public int getNumberOfAlarms() {
-		return fetchAlarms().getCount();
+		return getAlarms().getCount();
 	}
 
-	/**
-	 * Fetches all the alarm data and makes a list of Alarms
-	 * 
-	 * @return A list of all the alarms
-	 */
-	private List<Alarm> getAllAlarms() {
-		Cursor aCursor = fetchAlarms();
+
+	public List<Alarm> fetchAllAlarms() {
+		Cursor aCursor = getAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
 		if (aCursor != null) {
 			if (aCursor.moveToFirst()) {

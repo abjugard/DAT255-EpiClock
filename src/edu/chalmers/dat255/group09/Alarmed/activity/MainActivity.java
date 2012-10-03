@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 
 	private void initAdapter() {
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
-		alarmAdapter = new BrowseAlarmAdapter(this, aControll.getAllAlarms());
+		alarmAdapter = new BrowseAlarmAdapter(this, R.layout.alarms_list_item, aControll.getAllAlarms());
 		listView.setAdapter(alarmAdapter);
 		registerForContextMenu(listView);
 	}
@@ -173,6 +173,6 @@ public class MainActivity extends Activity {
 	 * Updates the list of the alarms to the newest
 	 */
 	private void updateList() {
-		alarmAdapter.changeCursor(aControll.getAllAlarms());
+		alarmAdapter.updateList(aControll.getAllAlarms());
 	}
 }
