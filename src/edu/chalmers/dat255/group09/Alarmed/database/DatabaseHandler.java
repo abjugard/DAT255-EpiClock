@@ -113,13 +113,14 @@ public class DatabaseHandler implements AlarmHandlerInterface {
 	public Alarm fetchFirstEnabledAlarm() {
 		List<Alarm> list = fetchAllAlarms();
 		Collections.sort(list);
-		for(Alarm alarm: list){
-			if(alarm.isEnabled()){
+		for (Alarm alarm : list) {
+			if (alarm.isEnabled()) {
 				return alarm;
 			}
 		}
 		return null;
 	}
+
 	/**
 	 * Fetches all alarms as Cursor to the database
 	 * 
@@ -146,24 +147,35 @@ public class DatabaseHandler implements AlarmHandlerInterface {
 		return getAlarms().getCount();
 	}
 
-
 	public List<Alarm> fetchAllAlarms() {
 		Cursor aCursor = getAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
 		if (aCursor != null) {
 			if (aCursor.moveToFirst()) {
 				do {
-					String[] time = aCursor.getString(
-							aCursor.getColumnIndex(KEY_TIME)).split(":");
-					Alarm a = new Alarm(Integer.parseInt(time[0]), Integer
-							.parseInt(time[1]), aCursor.getInt(aCursor
-							.getColumnIndex(KEY_ROWID)));
-					a.setEnabled(aCursor.getInt(aCursor.getColumnIndex(KEY_ENABLED)) > 0);
-					list.add(a);
+					list.add(getAlarmFromCursor(aCursor));
 				} while (aCursor.moveToNext());
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * Gets the alarm from the data at the cursors current position.
+	 * 
+	 * @param cursor
+	 *            The cursor set at the specified position.
+	 * @return An Alarm with the specified data.
+	 */
+
+	private Alarm getAlarmFromCursor(Cursor cursor) {
+		String[] time = cursor.getString(cursor.getColumnIndex(KEY_TIME))
+				.split(":");
+		Alarm a = new Alarm(Integer.parseInt(time[0]),
+				Integer.parseInt(time[1]), cursor.getInt(cursor
+						.getColumnIndex(KEY_ROWID)));
+		a.setEnabled(cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0);
+		return a;
 	}
 
 	public boolean isEnabled(int id) {
