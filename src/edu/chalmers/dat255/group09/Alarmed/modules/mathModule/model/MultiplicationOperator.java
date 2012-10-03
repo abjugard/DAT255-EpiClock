@@ -4,9 +4,13 @@ public final class MultiplicationOperator implements MathOperator {
 
 	private final static String OPERATOR = "*";
 
-	@Override
-	public int getResult(int numberOne, int numberTwo) {
-		return numberOne * numberTwo;
+	
+	public int getResult(int[] numbers) {
+		int product = 1;
+		for (int i = 0; i < numbers.length; i++) {
+			product *= numbers[i];
+		}
+		return product;
 	}
 
 	@Override

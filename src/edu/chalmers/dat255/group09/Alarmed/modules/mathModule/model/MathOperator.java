@@ -5,12 +5,10 @@ public interface MathOperator {
 	/**
 	 * Evalutate the entered numbers using the decided operator
 	 * 
-	 * @param numberOne
-	 *            A number
-	 * @param numberTwo
-	 *            A number
+	 * @param numbers
+	 *            An array containing the numbers to evaluate
 	 * @return The evaluate result of the two numbers
 	 */
-	public int getResult(int numberOne, int numberTwo);
+	public int getResult(int[] numbers);
 
 }

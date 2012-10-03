@@ -33,7 +33,7 @@ public class MathController {
 		MathOperator operator = currentProblem.getOperator();
 		int[] nbrs = currentProblem.getNumbers();
 
-		boolean correctAnswer = answer == operator.getResult(nbrs[0], nbrs[1]);
+		boolean correctAnswer = answer == operator.getResult(nbrs);
 
 		if (correctAnswer) {
 			completedProblemsInARow++;
