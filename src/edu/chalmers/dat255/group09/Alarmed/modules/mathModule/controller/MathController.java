@@ -52,10 +52,22 @@ public class MathController {
 	 */
 	public MathProblem generateNewProblem() {
 
-		int nbrOfNumbers = 2;
+		int nbrOfNumbers = getNbrOfNumbers();
 
 		currentProblem = problemGenerator.generateProblem(nbrOfNumbers);
 		return currentProblem;
+	}
+
+	private int getNbrOfNumbers() {
+		
+		int nbrOfNumbers;
+		
+		if (completedProblemsInARow >= completedProblemsToIncreaseDiffulcty) {
+			nbrOfNumbers = 3;
+		} else {
+			nbrOfNumbers = 2;
+		}
+		return nbrOfNumbers;
 	}
 
 	/**

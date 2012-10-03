@@ -21,7 +21,7 @@ public class MathControllerTest extends AndroidTestCase {
 		super.setUp();
 		MockMathProblemGenerator mockGenerator = new MockMathProblemGenerator();
 		controller = new MathController(mockGenerator);
-		correctAnswers = new int[] { 1, 4 };
+		correctAnswers = new int[] { 1, 4, 1 };
 		problemIndex = 0;
 	}
 
@@ -49,12 +49,10 @@ public class MathControllerTest extends AndroidTestCase {
 
 		int expectedCorrectAnswers = 0;
 		int actualCorrectAnswers = 0;
-		int answer = 0;
 
 		for (int i = 0; i < 5; i++) {
 			assertFalse(controller.isComplete());
-			answer = getCorrectAnswer();
-			controller.checkAnswer(answer);
+			simulateCorrectAnswers();
 			expectedCorrectAnswers++;
 			actualCorrectAnswers = controller.getCompletedProblems();
 			assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
@@ -74,8 +72,7 @@ public class MathControllerTest extends AndroidTestCase {
 		 */
 
 		for (int i = 0; i < 5; i++) {
-			answer = getCorrectAnswer();
-			controller.checkAnswer(answer);
+			simulateCorrectAnswers();
 			expectedCorrectAnswers++;
 			actualCorrectAnswers = controller.getCompletedProblems();
 			assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
@@ -94,11 +91,37 @@ public class MathControllerTest extends AndroidTestCase {
 		assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 	}
 
-	
+	public void testNbrOfNumbersIncrease() {
+
+		int answersToComplete = 3;
+
+		for (int i = 0; i < answersToComplete; i++) {
+			simulateCorrectAnswers();
+		}
+
+		MathProblem problem = controller.generateNewProblem();
+
+		int[] nbrs = problem.getNumbers();
+
+		assertTrue(nbrs.length > 2);
+
+	}
+
+	private void simulateCorrectAnswers() {
+		int answer = getCorrectAnswer();
+		controller.checkAnswer(answer);
+	}
 
 	private int getCorrectAnswer() {
-		controller.generateNewProblem();
-		int answer = correctAnswers[problemIndex];
+		MathProblem problem = controller.generateNewProblem();
+		int answer = 0;
+		int nbrOfNumbers = problem.getNumbers().length;
+
+		if (nbrOfNumbers == 2) {
+			answer = correctAnswers[problemIndex];
+		} else {
+			answer = correctAnswers[2];
+		}
 		problemIndex = (problemIndex + 1) % 2;
 		return answer;
 	}
@@ -115,6 +138,8 @@ public class MathControllerTest extends AndroidTestCase {
 	 * returns two different problems every other time. Which results in that
 	 * the first time controller.generateNewProblem() will return a problem with
 	 * answer 1 and the seconds time 4 and the third 1 and so on
+	 * 
+	 * If the paramater nbrOfNumbers > 2 then the answer will be 3
 	 * 
 	 */
 	private class MockMathProblemGenerator extends MathProblemGenerator {
@@ -133,8 +158,17 @@ public class MathControllerTest extends AndroidTestCase {
 
 		@Override
 		public MathProblem generateProblem(int nbrOfNumbers) {
-			MathProblem problem = problems.get(index);
+			MathProblem problem = null;
+			if (nbrOfNumbers == 2) {
+				problem = problems.get(index);
+
+			} else {
+				problem = new MathProblem(new int[] { 1, 1, 1 },
+						new MultiplicationOperator());
+			}
+
 			index = (index + 1) % 2;
+
 			return problem;
 		}
 	}
