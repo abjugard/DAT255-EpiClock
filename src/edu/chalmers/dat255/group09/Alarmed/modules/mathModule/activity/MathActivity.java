@@ -61,8 +61,23 @@ public class MathActivity extends Activity {
 		int[] nbrs = problem.getNumbers();
 		String operator = problem.getOperator().toString();
 		TextView textView = (TextView) findViewById(R.id.math_activity_problem_text);
-		String textViewText = nbrs[0] + " " + operator + " " + nbrs[1];
+		String textViewText = createProblemString(nbrs, operator);
 		textView.setText(textViewText);
+	}
+
+	private String createProblemString(int[] nbrs, String operator) {
+		StringBuilder builder = new StringBuilder();
+		String operatorSign = operator.toString();
+
+		for (int i = 0; i < nbrs.length; i++) {
+			builder.append(nbrs[i] + " ");
+			if ((i + 1) != nbrs.length) {
+				builder.append(operatorSign + " ");
+			}
+		}
+
+		builder.append(" = ?");
+		return builder.toString();
 	}
 
 	private boolean isInputValid(String text) {
