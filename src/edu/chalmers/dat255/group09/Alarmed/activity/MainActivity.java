@@ -40,7 +40,8 @@ public class MainActivity extends Activity {
 
 	private void initAdapter() {
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
-		alarmAdapter = new BrowseAlarmAdapter(this, R.layout.alarms_list_item, aControll.getAllAlarms());
+		alarmAdapter = new BrowseAlarmAdapter(this, R.layout.alarms_list_item,
+				aControll.getAllAlarms());
 		listView.setAdapter(alarmAdapter);
 		registerForContextMenu(listView);
 	}

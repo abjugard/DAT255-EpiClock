@@ -46,12 +46,12 @@ public class AlarmController {
 
 		Alarm nextAlarm = alarmHandler.fetchFirstEnabledAlarm();
 		if (nextAlarm != null) {
-			
+
 			Intent intent = new Intent(context, AlarmReceiver.class);
-			intent.setData(Uri.parse(""+nextAlarm.getId()));
+			intent.setData(Uri.parse("" + nextAlarm.getId()));
 			PendingIntent sender = PendingIntent.getBroadcast(context, 0,
 					intent, Intent.FILL_IN_DATA);
-			
+
 			AlarmManager alarmManager = (AlarmManager) context
 					.getSystemService(Context.ALARM_SERVICE);
 			alarmManager.set(AlarmManager.RTC_WAKEUP,
@@ -68,21 +68,24 @@ public class AlarmController {
 		Alarm alarm = alarmHandler.fetchAlarm(id);
 		if (alarm != null && alarm.isEnabled()) {
 			Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show();
-			Log.d("AlarmRecived: ",
-					"Alarm Activated, " + alarmHandler.deleteAlarm(id));
+			Log.d("AlarmRecived: ", "Alarm Activated");
+			alarmHandler.deleteAlarm(id);
 		}
 		if (alarmHandler.getNumberOfAlarms() > 0) {
 			setAlarm();
 		}
 		return alarm.isEnabled();
 	}
-	public boolean deleteAlarm(int id){
+
+	public boolean deleteAlarm(int id) {
 		return alarmHandler.deleteAlarm(id);
 	}
-	public boolean isAlarmEnabled(int id){
+
+	public boolean isAlarmEnabled(int id) {
 		return alarmHandler.isEnabled(id);
 	}
-	public boolean enableAlarm(int id, boolean enable){
+
+	public boolean enableAlarm(int id, boolean enable) {
 		return alarmHandler.enableAlarm(id, enable);
 	}
 

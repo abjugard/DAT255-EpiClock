@@ -30,8 +30,7 @@ public interface AlarmHandlerInterface {
 	 *            The minute which the alarm has been set to trigger on
 	 * @param recurring
 	 *            True if the alarm is set to be recurring.
-	 * @return the id of the created Alarm, or -1 if an error
-	 *         occurred
+	 * @return the id of the created Alarm, or -1 if an error occurred
 	 */
 
 	public long createAlarm(int hour, int minute, boolean recurring);
@@ -63,7 +62,6 @@ public interface AlarmHandlerInterface {
 	 */
 
 	public Alarm fetchFirstEnabledAlarm();
-
 
 	/**
 	 * Fetches all the alarm data and makes a list of Alarms

@@ -128,7 +128,7 @@ public class Alarm implements Comparable<Alarm> {
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
-		} 
+		}
 		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
