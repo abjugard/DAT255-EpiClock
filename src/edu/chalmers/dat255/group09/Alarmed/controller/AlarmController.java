@@ -9,13 +9,14 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
+import edu.chalmers.dat255.group09.Alarmed.database.HandlerInterface;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
 public class AlarmController {
 
 	private static AlarmController instance;
-	private DatabaseHandler dbHelper;
+	private HandlerInterface dbHelper;
 
 	private Context context;
 
@@ -75,13 +76,19 @@ public class AlarmController {
 	public boolean deleteAlarm(int id){
 		return dbHelper.deleteAlarm(id);
 	}
+	public boolean isAlarmEnabled(int id){
+		return dbHelper.isEnabled(id);
+	}
+	public boolean enableAlarm(int id, boolean enable){
+		return dbHelper.enableAlarm(id, enable);
+	}
 
 	public Cursor getAllAlarms() {
 		return dbHelper.fetchAlarms();
 	}
 
 	public void destroy() {
-		dbHelper.closeDb();
+		dbHelper.closeCon();
 	}
 
 }

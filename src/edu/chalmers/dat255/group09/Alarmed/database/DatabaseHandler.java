@@ -19,7 +19,7 @@ import android.util.Log;
  * @author Daniel Augurell
  * 
  */
-public class DatabaseHandler {
+public class DatabaseHandler implements HandlerInterface {
 	private Context aCtx;
 
 	private DatabaseHelper aDbHelper;
@@ -81,41 +81,18 @@ public class DatabaseHandler {
 
 	public DatabaseHandler(Context ctx) {
 		aCtx = ctx;
-		openDb();
+		openCon();
 	}
 
-	/**
-	 * Open the database or create a new if it hasn't been created yet.
-	 * 
-	 * @return this, a self reference
-	 */
-
-	public DatabaseHandler openDb() {
+	public HandlerInterface openCon() {
 		aDbHelper = new DatabaseHelper(aCtx);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;
 	}
 
-	/**
-	 * Closes the connection to the database
-	 */
-	public void closeDb() {
+	public void closeCon() {
 		aDbHelper.close();
 	}
-
-	/**
-	 * Inserts a alarm to the database given the time and if it should be
-	 * recurring.
-	 * 
-	 * @param hour
-	 *            The hour which the alarm has been set to trigger on
-	 * @param minute
-	 *            The minute which the alarm has been set to trigger on
-	 * @param recurring
-	 *            True if the alarm is set to be recurring.
-	 * @return the id of the created Alarm in the database, or -1 if an error
-	 *         occurred
-	 */
 
 	public long createAlarm(int hour, int minute, boolean recurring) {
 		ContentValues alarmTime = new ContentValues();
@@ -126,60 +103,26 @@ public class DatabaseHandler {
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
 
-	/**
-	 * Deletes an Alarm with a specified id.
-	 * 
-	 * @param alarmID
-	 *            id of the alarm to be deleted.
-	 * @return true if deleted else false
-	 */
-
 	public boolean deleteAlarm(int alarmID) {
 		return aDb.delete(DB_TABLE, KEY_ROWID + "=" + alarmID, null) > 0;
 	}
-
-	/**
-	 * Deletes an Alarm with a specified time.
-	 * 
-	 * @param alarmID
-	 *            time of the alarm to be deleted.
-	 * @return true if deleted else false
-	 */
 
 	public boolean deleteAlarm(String time) {
 		return aDb.delete(DB_TABLE, KEY_TIME + "=" + time, null) > 0;
 	}
 
-	/**
-	 * Fetches the first alarm given by the time to the next occurring alarm.
-	 * 
-	 * @return The next alarm to activate.
-	 */
-
 	public Alarm fetchFirstAlarm() {
 		List<Alarm> list = getAllAlarms();
 		Collections.sort(list);
+			
 		return list.get(0);
 	}
-
-	/**
-	 * Fetches all alarms as Cursor to the database
-	 * 
-	 * @return Cursor with all the alarmdata
-	 */
 
 	public Cursor fetchAlarms() {
 		return aDb.query(true, DB_TABLE, KEYS, null, null, null, null, null,
 				null);
 	}
 
-	/**
-	 * Fetches an alarm from the database given an specified id.
-	 * 
-	 * @param alarmID
-	 *            the id of the alarm to retrieve
-	 * @return the alarm with the specified id, if not found null
-	 */
 	public Alarm fetchAlarm(int alarmID) {
 		Log.d("Database", "Fetch alarmID:" + alarmID);
 		List<Alarm> list = getAllAlarms();
@@ -190,11 +133,6 @@ public class DatabaseHandler {
 		}
 		return null;
 	}
-
-	/**
-	 * 
-	 * @return The number of alarms in the database
-	 */
 
 	public int getNumberOfAlarms() {
 		return fetchAlarms().getCount();
@@ -222,52 +160,13 @@ public class DatabaseHandler {
 		return list;
 	}
 
-	/**
-	 * Enables the alarm
-	 * 
-	 * @param id
-	 *            The id of the alarm
-	 * @return true if changed
-	 */
-	public boolean enableAlarm(int id) {
-		return updateAlarm(id, true);
-	}
-
-	/**
-	 * Disables the alarm
-	 * 
-	 * @param id
-	 *            The id of the alarm
-	 * @return true if changed
-	 */
-	public boolean disableAlarm(int id) {
-		return updateAlarm(id, false);
-	}
-
-	/**
-	 * 
-	 * @param id
-	 *            The id of the alarm
-	 * @return true if enabled
-	 */
-
 	public boolean isEnabled(int id) {
 		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "=" + id,
 				null, null, null, null, null);
 		return cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0;
 	}
 
-	/**
-	 * Updates the alarm given the id and the state to set the alarm to
-	 * 
-	 * @param id
-	 *            The id of the alarm
-	 * @param enable
-	 *            the state to set the alarm to
-	 * @return true if changed
-	 */
-
-	private boolean updateAlarm(int id, boolean enable) {
+	public boolean enableAlarm(int id, boolean enable) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_ENABLED, enable);
 		return aDb.update(DB_TABLE, values, KEY_ROWID + "=" + id, null) > 0;

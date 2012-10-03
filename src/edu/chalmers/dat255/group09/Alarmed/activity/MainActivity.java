@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
@@ -43,6 +45,14 @@ public class MainActivity extends Activity {
 		registerForContextMenu(listView);
 	}
 
+	public void onAlarmEnable(View view) {
+		if (view instanceof CheckBox) {
+			CheckBox box = (CheckBox) view;
+			aControll.enableAlarm((Integer) box.getTag(), box.isChecked());
+		}
+
+	}
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -60,15 +70,16 @@ public class MainActivity extends Activity {
 		Cursor cursor = (Cursor) listView.getAdapter().getItem(info.position);
 		switch (item.getItemId()) {
 		case 1:
-			//DELETE ALARM
+			// DELETE ALARM
 			aControll.deleteAlarm(cursor.getInt(cursor.getColumnIndex("_id")));
 			break;
 		case 2:
-			//EDIT ALARM
+			// EDIT ALARM
 			Intent intent = new Intent(this, CreateAlarm.class);
 			intent.putExtra("ID", cursor.getInt(cursor.getColumnIndex("_id")));
-			intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);   
-			intent.putExtra("time", cursor.getString(cursor.getColumnIndex("time")));
+			intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
+			intent.putExtra("time",
+					cursor.getString(cursor.getColumnIndex("time")));
 			startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 			overrrideTransition();
 			break;
@@ -96,7 +107,7 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	/**
 	 * Makes the transition between views smoother by animating them.
 	 */
@@ -120,18 +131,25 @@ public class MainActivity extends Activity {
 
 		}
 	}
+
 	/**
 	 * Checks if the result code from the Activity that finishes is valid.
-	 * @param resultCode The code returned from onActivityResult
+	 * 
+	 * @param resultCode
+	 *            The code returned from onActivityResult
 	 * @return true if the resultCode was valid.
 	 */
 	private boolean isResonseValid(int resultCode) {
 		return resultCode == RESULT_OK;
 	}
+
 	/**
 	 * Creates a new alarm and then updates the view
-	 * @param hour The hour of the new alarm
-	 * @param minute The minute of the new alarm
+	 * 
+	 * @param hour
+	 *            The hour of the new alarm
+	 * @param minute
+	 *            The minute of the new alarm
 	 */
 
 	private void createAlarm(int hour, int minute) {
@@ -150,8 +168,9 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 		aControll.destroy();
 	}
+
 	/**
-	 * Updates the list of the alarms to the newest 
+	 * Updates the list of the alarms to the newest
 	 */
 	private void updateList() {
 		alarmAdapter.changeCursor(aControll.getAllAlarms());
