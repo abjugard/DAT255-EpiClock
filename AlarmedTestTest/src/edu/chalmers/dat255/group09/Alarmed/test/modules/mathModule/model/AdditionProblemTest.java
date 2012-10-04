@@ -21,34 +21,36 @@ import android.test.AndroidTestCase;
 /**
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class AdditionProblemTest extends AndroidTestCase {
 
-	private AdditionProblem additionOperator;
+	private AdditionProblem additionProblem;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		additionOperator = new AdditionProblem();
+		additionProblem = new AdditionProblem();
 	}
+
+	// TODO add tests for getHeader and generateNumbers
 
 	public void testToString() {
 		String expected = "+";
-		String actual = additionOperator.toString();
+		String actual = additionProblem.toString();
 		assertEquals(expected, actual);
 	}
 
 	public void testGetResult() {
-		int actualResult = additionOperator.getResult(new int[] { 6, 6 });
+		int actualResult = additionProblem.getResult(new int[] { 6, 6 });
 		int expectedResult = 12;
 		assertEquals(expectedResult, actualResult);
 
-		actualResult = additionOperator.getResult(new int[] { 2, -1 });
+		actualResult = additionProblem.getResult(new int[] { 2, -1 });
 		expectedResult = 1;
 		assertEquals(expectedResult, actualResult);
 
-		actualResult = additionOperator.getResult(new int[] { 5, -5, 1 });
+		actualResult = additionProblem.getResult(new int[] { 5, -5, 1 });
 		expectedResult = 1;
 		assertEquals(expectedResult, actualResult);
 	}
@@ -56,6 +58,6 @@ public class AdditionProblemTest extends AndroidTestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		additionOperator = null;
+		additionProblem = null;
 	}
 }
