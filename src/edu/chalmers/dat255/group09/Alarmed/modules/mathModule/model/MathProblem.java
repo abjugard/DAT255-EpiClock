@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class MathProblem {
 
 	private int[] numbers;
-	private MathOperator operator;
+	private MathProblemType operator;
 
 	/**
 	 * Create a new mathproblem instance
@@ -15,7 +15,7 @@ public class MathProblem {
 	 * @param operator
 	 *            The MathOperator to be used is this problem
 	 */
-	public MathProblem(int[] numbers, MathOperator operator) {
+	public MathProblem(int[] numbers, MathProblemType operator) {
 		this.numbers = new int[numbers.length];
 		System.arraycopy(numbers, 0, this.numbers, 0, numbers.length);
 		this.operator = operator;
@@ -35,7 +35,7 @@ public class MathProblem {
 	 * 
 	 * @return A MathOperator used in the problem
 	 */
-	public MathOperator getOperator() {
+	public MathProblemType getOperator() {
 		return operator;
 	}
 }

@@ -1,8 +1,8 @@
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 
 import android.test.AndroidTestCase;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionOperator;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathOperator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
 
@@ -33,9 +33,9 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 			assertTrue(nbrs[i] >= lowerLimit);
 		}
 
-		MathOperator operator = problem.getOperator();
+		MathProblemType operator = problem.getOperator();
 
-		assertTrue(operator instanceof MathOperator);
+		assertTrue(operator instanceof MathProblemType);
 
 		nbrs = problem.getNumbers();
 
@@ -48,7 +48,7 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 		operator = problem.getOperator();
 
-		assertTrue(operator instanceof MathOperator);
+		assertTrue(operator instanceof MathProblemType);
 	}
 
 	public void testOperatorProbability() {
@@ -62,7 +62,7 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 		for (int i = 0; i < iterations; i++) {
 			problem = generator.generateProblem(nbrOfNumbers);
-			if (problem.getOperator() instanceof AdditionOperator) {
+			if (problem.getOperator() instanceof AdditionProblem) {
 				numberOfAdditionOperators++;
 			}
 		}

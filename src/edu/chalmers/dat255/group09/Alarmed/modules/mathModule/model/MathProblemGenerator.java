@@ -7,23 +7,23 @@ public class MathProblemGenerator {
 	private final static int NBR_OF_OPERATORS = 2;
 
 	public MathProblem generateProblem(int nbrOfNumbers) {
-		MathOperator operator = generateOperator();
+		MathProblemType operator = generateOperator();
 		int[] numbers = generateNumbers(nbrOfNumbers);
 
 		return new MathProblem(numbers, operator);
 	}
 
-	private MathOperator generateOperator() {
+	private MathProblemType generateOperator() {
 
-		MathOperator operator = null;
+		MathProblemType operator = null;
 		int rand = (int) Math.floor((Math.random() * NBR_OF_OPERATORS));
 
 		if (rand == 0) {
-			operator = new AdditionOperator();
+			operator = new AdditionProblem();
 		}
 
 		if (rand == 1) {
-			operator = new MultiplicationOperator();
+			operator = new MultiplicationProblem();
 		}
 
 		return operator;

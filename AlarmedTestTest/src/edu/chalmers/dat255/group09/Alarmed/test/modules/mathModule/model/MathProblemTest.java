@@ -3,8 +3,8 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 import java.util.Arrays;
 
 import android.test.AndroidTestCase;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionOperator;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathOperator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 
 public class MathProblemTest extends AndroidTestCase {
@@ -13,7 +13,7 @@ public class MathProblemTest extends AndroidTestCase {
 
 	public void testGetNumbers() {
 		int[] expected = { 2, 3 };
-		MathOperator operator = new AdditionOperator();
+		MathProblemType operator = new AdditionProblem();
 		problem = new MathProblem(expected, operator);
 
 		int[] actual = problem.getNumbers();
@@ -21,7 +21,7 @@ public class MathProblemTest extends AndroidTestCase {
 
 		expected = new int[] { 2, 3, 4, 5 };
 
-		operator = new AdditionOperator();
+		operator = new AdditionProblem();
 		problem = new MathProblem(expected, operator);
 
 		actual = problem.getNumbers();
@@ -30,11 +30,11 @@ public class MathProblemTest extends AndroidTestCase {
 
 	public void testGetOperator() {
 		int[] numbers = { 1, 2 };
-		MathOperator expectedOperator = new AdditionOperator();
+		MathProblemType expectedOperator = new AdditionProblem();
 
 		problem = new MathProblem(numbers, expectedOperator);
 
-		MathOperator actualOperator = problem.getOperator();
+		MathProblemType actualOperator = problem.getOperator();
 
 		assertEquals(expectedOperator, actualOperator);
 

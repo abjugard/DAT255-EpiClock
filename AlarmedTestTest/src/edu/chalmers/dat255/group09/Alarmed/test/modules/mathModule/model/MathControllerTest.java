@@ -5,10 +5,10 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionOperator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationOperator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationProblem;
 
 public class MathControllerTest extends AndroidTestCase {
 
@@ -151,9 +151,9 @@ public class MathControllerTest extends AndroidTestCase {
 			super();
 			problems = new ArrayList<MathProblem>();
 			problems.add(new MathProblem(new int[] { 1, 1 },
-					new MultiplicationOperator()));
+					new MultiplicationProblem()));
 			problems.add(new MathProblem(new int[] { 2, 2 },
-					new AdditionOperator()));
+					new AdditionProblem()));
 		}
 
 		@Override
@@ -164,7 +164,7 @@ public class MathControllerTest extends AndroidTestCase {
 
 			} else {
 				problem = new MathProblem(new int[] { 1, 1, 1 },
-						new MultiplicationOperator());
+						new MultiplicationProblem());
 			}
 
 			index = (index + 1) % 2;

@@ -1,6 +1,6 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathOperator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
 
@@ -31,7 +31,7 @@ public class MathController {
 	 * @return If it was correct or not
 	 */
 	public boolean checkAnswer(int answer) {
-		MathOperator operator = currentProblem.getOperator();
+		MathProblemType operator = currentProblem.getOperator();
 		int[] nbrs = currentProblem.getNumbers();
 
 		boolean correctAnswer = answer == operator.getResult(nbrs);
