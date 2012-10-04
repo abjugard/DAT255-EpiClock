@@ -3,17 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/math_activity_problem_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp"
-        android:text="@string/activity_math_text_holder"
-        android:textSize="40sp"
-        tools:context=".MathActivity" />
-
     <Button
         android:id="@+id/activity_math_submit_btn"
         android:layout_width="wrap_content"
@@ -35,5 +24,26 @@
 
         <requestFocus />
     </EditText>
+
+    <TextView
+        android:id="@+id/math_activity_problem_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_math_answer_text"
+        android:layout_centerHorizontal="true"
+        android:text="@string/activity_math_text_holder"
+        android:textSize="40sp"
+        tools:context=".MathActivity" />
+
+    <TextView
+        android:id="@+id/math_activity_problem_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/math_activity_problem_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="@string/activity_math_header_holder"
+        android:textSize="30sp"
+        tools:context=".MathActivity" />
 
 </RelativeLayout>

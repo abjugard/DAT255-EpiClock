@@ -82,15 +82,20 @@ public class MathActivity extends Activity {
 		int[] nbrs = problem.getNumbers();
 		MathProblemType problemType = problem.getProblemType();
 		String operator = problemType.toString();
-		
-		
+
+		setProblemHeader(problemType);
+		setProblemText(nbrs, operator);
+	}
+
+	private void setProblemText(int[] nbrs, String operator) {
 		TextView textView = (TextView) findViewById(R.id.math_activity_problem_text);
 		String textViewText = createProblemString(nbrs, operator);
-		
-		TextView textHeader = (TextView) findViewById(R.id.math_activity_problem_header);
-		
-		
 		textView.setText(textViewText);
+	}
+
+	private void setProblemHeader(MathProblemType problemType) {
+		TextView textHeader = (TextView) findViewById(R.id.math_activity_problem_header);
+		textHeader.setText(problemType.getProblemHeader());
 	}
 
 	private String createProblemString(int[] nbrs, String operator) {

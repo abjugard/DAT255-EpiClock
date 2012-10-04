@@ -11,5 +11,6 @@
     <string name="title_activity_math">U mad bro?</string>
     <string name="activity_math_text_holder">3 * 3 = ?</string>
     <string name="activity_math_submit_btn">Submit</string>
+    <string name="activity_math_header_holder">What Is The Product?</string>
 
 </resources>
