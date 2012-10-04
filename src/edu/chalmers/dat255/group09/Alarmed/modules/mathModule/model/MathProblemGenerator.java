@@ -24,7 +24,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  */
 public class MathProblemGenerator {
 
-	private final static int NBR_OF_OPERATORS = 2;
+	private final static int NBR_OF_OPERATORS = 3;
 
 	public MathProblem generateProblem(Difficulty difficulty) {
 		MathProblemType operator = generateOperator();
@@ -33,22 +33,26 @@ public class MathProblemGenerator {
 		return new MathProblem(numbers, operator);
 	}
 
-	// Add a mathoperator for deciding if a number is a multiple if
+	// TODO Add a mathoperator for deciding if a number is a multiple if
+	// TODO use enum or final static int:s istället
 
 	private MathProblemType generateOperator() {
 
-		MathProblemType operator = null;
+		MathProblemType problemType = null;
 		int rand = (int) Math.floor((Math.random() * NBR_OF_OPERATORS));
 
 		if (rand == 0) {
-			operator = new AdditionProblem();
+			problemType = new AdditionProblem();
 		}
 
 		if (rand == 1) {
-			operator = new MultiplicationProblem();
+			problemType = new MultiplicationProblem();
 		}
 
-		return operator;
+		if (rand == 2) {
+			problemType = new PrimeProblem();
+		}
+		return problemType;
 	}
 
 }

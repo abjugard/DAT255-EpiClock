@@ -20,6 +20,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProb
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
@@ -39,13 +40,14 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 	public void testGetProblem() {
 
-		int nbrOfNumbers = 2;
+		int delta = 2;
+		int nbrOfNumbers = delta;
 
 		MathProblem problem = generator.generateProblem(Difficulty.EASY);
 
 		int[] nbrs = problem.getNumbers();
 
-		assertEquals(nbrOfNumbers, nbrs.length);
+		assertEquals(nbrOfNumbers, nbrs.length, delta);
 
 		MathProblemType operator = problem.getProblemType();
 
@@ -53,18 +55,21 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 		nbrs = problem.getNumbers();
 
-		assertEquals(nbrOfNumbers, nbrs.length);
+		assertEquals(nbrOfNumbers, nbrs.length, delta);
 
 		operator = problem.getProblemType();
 
 		assertTrue(operator instanceof MathProblemType);
 	}
 
+	// TODO do something better or different
 	public void testOperatorProbability() {
 		int iterations = 1000;
 		int numberOfAdditionOperators = 0;
-		int expectedNumberOfAdditionOperators = 500;
-		int delta = 50;
+		int expectedNumberOfAdditionOperators = 300;
+		int numberOfMultiplicationOperators = 0;
+		int expectedNumberOfMultiplicationOperators = 300;
+		int delta = 100;
 
 		MathProblem problem = null;
 
@@ -73,10 +78,15 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 			if (problem.getProblemType() instanceof AdditionProblem) {
 				numberOfAdditionOperators++;
 			}
+			if (problem.getProblemType() instanceof MultiplicationProblem) {
+				numberOfMultiplicationOperators++;
+			}
 		}
 
 		assertEquals(expectedNumberOfAdditionOperators,
 				numberOfAdditionOperators, delta);
+		assertEquals(expectedNumberOfMultiplicationOperators,
+				numberOfMultiplicationOperators, delta);
 	}
 
 	@Override
