@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
+package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,8 +112,10 @@ public class MathControllerTest extends AndroidTestCase {
 		assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 	}
 
-	// TODO add test for increasing the level and move it into the correct
-	// package
+	
+	public void testIncreaseDifficulty() {
+		fail("Not Yet Implemented");
+	}
 
 	private void simulateCorrectAnswers() {
 		int answer = getCorrectAnswer();
