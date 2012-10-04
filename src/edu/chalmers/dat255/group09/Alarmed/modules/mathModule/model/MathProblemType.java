@@ -15,10 +15,12 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+
 /**
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public interface MathProblemType {
 
@@ -30,5 +32,21 @@ public interface MathProblemType {
 	 * @return The evaluate result of the two numbers
 	 */
 	public int getResult(int[] numbers);
+
+	/**
+	 * Generate numbers customized for the problem based on the difficulty
+	 * 
+	 * @param difficulty
+	 *            The difficulty of the problem
+	 * @return An array of numbers
+	 */
+	public int[] generateNumbers(Difficulty difficulty);
+
+	/**
+	 * Get The Header/Title for the problem
+	 * 
+	 * @return The Title of the problem
+	 */
+	public String getProblemHeader();
 
 }
