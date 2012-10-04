@@ -23,15 +23,17 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 /**
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class MathController {
 
 	private MathProblem currentProblem;
 	private int completedProblemsInARow;
 	private MathProblemGenerator problemGenerator;
+	private Difficulty currentDifficulty;
 	private final static int problemsThatMustBeCompleted = 5;
-	private final static int completedProblemsToIncreaseDiffulcty = 3;
+	private final static int MEDIUM_DIFFICULTY_LEVEL = 3;
+	private final static int HARD_DIFFICULTY_LEVEL = 4;
 
 	/**
 	 * Create a new MathController Object
@@ -42,10 +44,11 @@ public class MathController {
 	public MathController(MathProblemGenerator generator) {
 		this.problemGenerator = generator;
 		this.completedProblemsInARow = 0;
+		this.currentDifficulty = Difficulty.EASY;
 	}
 
 	/**
-	 * Checks if the user has answerd the current problem correctly
+	 * Checks if the user has answered the current problem correctly
 	 * 
 	 * @param answer
 	 *            The Users Answer
@@ -63,14 +66,35 @@ public class MathController {
 			completedProblemsInARow = 0;
 		}
 
+		setDifficulty();
+
 		return correctAnswer;
 	}
 
-	// TODO add logic to increase difficulty
 	public MathProblem generateNewProblem() {
-		Difficulty difficulty = Difficulty.HARD;
-		currentProblem = problemGenerator.generateProblem(difficulty);
+
+		currentProblem = problemGenerator.generateProblem(currentDifficulty);
 		return currentProblem;
+	}
+
+	private void setDifficulty() {
+		if (completedProblemsInARow >= HARD_DIFFICULTY_LEVEL) {
+			currentDifficulty = Difficulty.HARD;
+		} else if (completedProblemsInARow >= MEDIUM_DIFFICULTY_LEVEL) {
+			currentDifficulty = Difficulty.MEDIUM;
+
+		} else {
+			currentDifficulty = Difficulty.EASY;
+		}
+	}
+
+	/**
+	 * Get the current difficulty of the active problem
+	 * 
+	 * @return The current difficulty
+	 */
+	public Difficulty getDifficulty() {
+		return currentDifficulty;
 	}
 
 	/**

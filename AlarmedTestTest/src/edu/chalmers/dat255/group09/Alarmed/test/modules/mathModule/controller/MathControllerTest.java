@@ -92,7 +92,7 @@ public class MathControllerTest extends AndroidTestCase {
 		 * Two correct answers in a row
 		 */
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			simulateCorrectAnswers();
 			expectedCorrectAnswers++;
 			actualCorrectAnswers = controller.getCompletedProblems();
@@ -112,9 +112,66 @@ public class MathControllerTest extends AndroidTestCase {
 		assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 	}
 
-	
 	public void testIncreaseDifficulty() {
-		fail("Not Yet Implemented");
+		Difficulty actual = controller.getDifficulty();
+		Difficulty expected = Difficulty.EASY;
+		assertEquals(expected, actual);
+
+		/*
+		 * Simulate three correct answers
+		 */
+		for (int i = 0; i < 3; i++) {
+			simulateCorrectAnswers();
+		}
+
+		expected = Difficulty.MEDIUM;
+		actual = controller.getDifficulty();
+		assertEquals(expected, actual);
+
+		/*
+		 * Simulate One More Correct Answer
+		 */
+		simulateCorrectAnswers();
+
+		// Stimulate difficulty change
+		controller.generateNewProblem();
+
+		expected = Difficulty.HARD;
+		actual = controller.getDifficulty();
+		assertEquals(expected, actual);
+
+	}
+
+	public void testDifficultyReset() {
+		/*
+		 * Simulate three correct answers
+		 */
+		for (int i = 0; i < 3; i++) {
+			simulateCorrectAnswers();
+		}
+		
+		Difficulty expected = Difficulty.MEDIUM;
+		Difficulty actual = controller.getDifficulty();
+		assertEquals(expected, actual);
+
+		
+		/*
+		 * Simulate One Wrong Answer
+		 */
+		controller.generateNewProblem();
+		int answer = -1;
+		controller.checkAnswer(answer);
+
+		expected = Difficulty.EASY;
+		actual = controller.getDifficulty();
+		assertEquals(expected, actual);
+	}
+
+	public void testGetDifficulty() {
+		Difficulty actual = controller.getDifficulty();
+		Difficulty expected = Difficulty.EASY;
+
+		assertEquals(expected, actual);
 	}
 
 	private void simulateCorrectAnswers() {
