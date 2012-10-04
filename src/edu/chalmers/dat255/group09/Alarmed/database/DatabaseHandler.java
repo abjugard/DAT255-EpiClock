@@ -19,7 +19,7 @@ import android.util.Log;
  * @author Daniel Augurell
  * 
  */
-public class DatabaseHandler implements AlarmHandlerInterface {
+public class DatabaseHandler implements AlarmHandler {
 	private Context aCtx;
 
 	private DatabaseHelper aDbHelper;
@@ -83,7 +83,7 @@ public class DatabaseHandler implements AlarmHandlerInterface {
 		aCtx = ctx;
 	}
 
-	public AlarmHandlerInterface openCon() {
+	public AlarmHandler openCon() {
 		aDbHelper = new DatabaseHelper(aCtx);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;

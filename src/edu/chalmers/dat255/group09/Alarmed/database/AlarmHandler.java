@@ -5,7 +5,7 @@ import java.util.List;
 import android.database.Cursor;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
-public interface AlarmHandlerInterface {
+public interface AlarmHandler {
 
 	/**
 	 * Open the connection to the handler.
@@ -13,7 +13,7 @@ public interface AlarmHandlerInterface {
 	 * @return this, a self reference
 	 */
 
-	public AlarmHandlerInterface openCon();
+	public AlarmHandler openCon();
 
 	/**
 	 * Closes the connection to the handler

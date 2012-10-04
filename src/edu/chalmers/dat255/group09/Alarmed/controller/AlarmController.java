@@ -11,14 +11,14 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
-import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandlerInterface;
+import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
 public class AlarmController {
 
 	private static AlarmController instance;
-	private AlarmHandlerInterface alarmHandler;
+	private AlarmHandler alarmHandler;
 
 	private Context context;
 
@@ -32,6 +32,11 @@ public class AlarmController {
 	public void init(Context context) {
 		this.context = context;
 		alarmHandler = new DatabaseHandler(context).openCon();
+	}
+	
+	public void init(Context context, AlarmHandler handler) {
+		this.context = context;
+		alarmHandler = handler.openCon();
 	}
 
 	public void createAlarm(int hour, int minute) {
