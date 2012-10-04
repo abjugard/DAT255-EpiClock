@@ -54,7 +54,7 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		assertEquals(expectedResult, actualResult);
 	}
 
-	// TODO add tests for getHeader and generateNumbers
+	// TODO add tests for getHeader and generateNumbers, formattedString
 
 	@Override
 	protected void tearDown() throws Exception {

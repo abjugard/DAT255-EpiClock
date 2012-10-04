@@ -108,4 +108,21 @@ public final class AdditionProblem implements MathProblemType {
 
 		return (int) (lowerLimit + diff * Math.random());
 	}
+
+	@Override
+	public String getFormattedProblem(int[] nbrs) {
+		StringBuilder builder = new StringBuilder();
+		String operatorSign = OPERATOR;
+
+		for (int i = 0; i < nbrs.length; i++) {
+			builder.append(nbrs[i] + " ");
+			if ((i + 1) != nbrs.length) {
+				builder.append(operatorSign + " ");
+			}
+		}
+
+		builder.append(" = ?");
+		return builder.toString();
+
+	}
 }

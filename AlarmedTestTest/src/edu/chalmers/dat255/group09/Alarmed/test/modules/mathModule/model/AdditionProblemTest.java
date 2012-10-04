@@ -33,7 +33,7 @@ public class AdditionProblemTest extends AndroidTestCase {
 		additionProblem = new AdditionProblem();
 	}
 
-	// TODO add tests for getHeader and generateNumbers
+	// TODO add tests for getHeader and generateNumbers, formattedString
 
 	public void testToString() {
 		String expected = "+";

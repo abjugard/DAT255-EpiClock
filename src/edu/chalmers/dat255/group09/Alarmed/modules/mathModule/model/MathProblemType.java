@@ -49,4 +49,13 @@ public interface MathProblemType {
 	 */
 	public String getProblemHeader();
 
+	/**
+	 * Get a formatted output of the current problem
+	 * 
+	 * @param nbrs
+	 *            The numbers in the current problem
+	 * @return A formatted String
+	 */
+	public String getFormattedProblem(int[] nbrs);
+
 }

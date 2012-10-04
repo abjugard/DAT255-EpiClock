@@ -79,38 +79,21 @@ public class MathActivity extends Activity {
 
 	private void generateNewMathProblem() {
 		MathProblem problem = controller.generateNewProblem();
-		int[] nbrs = problem.getNumbers();
 		MathProblemType problemType = problem.getProblemType();
-		String operator = problemType.toString();
+		int[] nbrs = problem.getNumbers();
 
 		setProblemHeader(problemType);
-		setProblemText(nbrs, operator);
+		setProblemText(nbrs, problemType);
 	}
 
-	private void setProblemText(int[] nbrs, String operator) {
+	private void setProblemText(int[] nbrs, MathProblemType problemType) {
 		TextView textView = (TextView) findViewById(R.id.math_activity_problem_text);
-		String textViewText = createProblemString(nbrs, operator);
-		textView.setText(textViewText);
+		textView.setText(problemType.getFormattedProblem(nbrs));
 	}
 
 	private void setProblemHeader(MathProblemType problemType) {
 		TextView textHeader = (TextView) findViewById(R.id.math_activity_problem_header);
 		textHeader.setText(problemType.getProblemHeader());
-	}
-
-	private String createProblemString(int[] nbrs, String operator) {
-		StringBuilder builder = new StringBuilder();
-		String operatorSign = operator.toString();
-
-		for (int i = 0; i < nbrs.length; i++) {
-			builder.append(nbrs[i] + " ");
-			if ((i + 1) != nbrs.length) {
-				builder.append(operatorSign + " ");
-			}
-		}
-
-		builder.append(" = ?");
-		return builder.toString();
 	}
 
 	private boolean isInputValid(String text) {
