@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 
 import java.util.ArrayList;
@@ -9,7 +24,13 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProb
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
+/**
+ * 
+ * @author Joakim Persson
+ * 
+ */
 public class MathControllerTest extends AndroidTestCase {
 
 	private MathController controller;
@@ -21,7 +42,7 @@ public class MathControllerTest extends AndroidTestCase {
 		super.setUp();
 		MockMathProblemGenerator mockGenerator = new MockMathProblemGenerator();
 		controller = new MathController(mockGenerator);
-		correctAnswers = new int[] { 1, 4, 1 };
+		correctAnswers = new int[] { 1, 4 };
 		problemIndex = 0;
 	}
 
@@ -91,21 +112,8 @@ public class MathControllerTest extends AndroidTestCase {
 		assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 	}
 
-	public void testNbrOfNumbersIncrease() {
-
-		int answersToComplete = 3;
-
-		for (int i = 0; i < answersToComplete; i++) {
-			simulateCorrectAnswers();
-		}
-
-		MathProblem problem = controller.generateNewProblem();
-
-		int[] nbrs = problem.getNumbers();
-
-		assertTrue(nbrs.length > 2);
-
-	}
+	// TODO add test for increasing the level and move it into the correct
+	// package
 
 	private void simulateCorrectAnswers() {
 		int answer = getCorrectAnswer();
@@ -139,8 +147,6 @@ public class MathControllerTest extends AndroidTestCase {
 	 * the first time controller.generateNewProblem() will return a problem with
 	 * answer 1 and the seconds time 4 and the third 1 and so on
 	 * 
-	 * If the paramater nbrOfNumbers > 2 then the answer will be 3
-	 * 
 	 */
 	private class MockMathProblemGenerator extends MathProblemGenerator {
 
@@ -157,15 +163,8 @@ public class MathControllerTest extends AndroidTestCase {
 		}
 
 		@Override
-		public MathProblem generateProblem(int nbrOfNumbers) {
-			MathProblem problem = null;
-			if (nbrOfNumbers == 2) {
-				problem = problems.get(index);
-
-			} else {
-				problem = new MathProblem(new int[] { 1, 1, 1 },
-						new MultiplicationProblem());
-			}
+		public MathProblem generateProblem(Difficulty difficulty) {
+			MathProblem problem = problems.get(index);
 
 			index = (index + 1) % 2;
 
