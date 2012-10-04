@@ -34,7 +34,7 @@ public class MathProblemTest extends AndroidTestCase {
 
 		problem = new MathProblem(numbers, expectedOperator);
 
-		MathProblemType actualOperator = problem.getOperator();
+		MathProblemType actualOperator = problem.getProblemType();
 
 		assertEquals(expectedOperator, actualOperator);
 

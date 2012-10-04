@@ -5,20 +5,20 @@ import java.util.Arrays;
 public class MathProblem {
 
 	private int[] numbers;
-	private MathProblemType operator;
+	private MathProblemType mathProblemType;
 
 	/**
 	 * Create a new mathproblem instance
 	 * 
 	 * @param numbers
 	 *            The numbers to be used in this problem
-	 * @param operator
-	 *            The MathOperator to be used is this problem
+	 * @param problemType
+	 *            The MathProblemType to be used is this problem
 	 */
-	public MathProblem(int[] numbers, MathProblemType operator) {
+	public MathProblem(int[] numbers, MathProblemType problemType) {
 		this.numbers = new int[numbers.length];
 		System.arraycopy(numbers, 0, this.numbers, 0, numbers.length);
-		this.operator = operator;
+		this.mathProblemType = problemType;
 	}
 
 	/**
@@ -31,11 +31,11 @@ public class MathProblem {
 	}
 
 	/**
-	 * Get the problems operator
+	 * Get the problemtype
 	 * 
 	 * @return A MathOperator used in the problem
 	 */
-	public MathProblemType getOperator() {
-		return operator;
+	public MathProblemType getProblemType() {
+		return mathProblemType;
 	}
 }

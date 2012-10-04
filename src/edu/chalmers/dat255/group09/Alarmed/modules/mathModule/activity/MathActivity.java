@@ -26,6 +26,7 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 
 /**
  * 
@@ -79,9 +80,16 @@ public class MathActivity extends Activity {
 	private void generateNewMathProblem() {
 		MathProblem problem = controller.generateNewProblem();
 		int[] nbrs = problem.getNumbers();
-		String operator = problem.getOperator().toString();
+		MathProblemType problemType = problem.getProblemType();
+		String operator = problemType.toString();
+		
+		
 		TextView textView = (TextView) findViewById(R.id.math_activity_problem_text);
 		String textViewText = createProblemString(nbrs, operator);
+		
+		TextView textHeader = (TextView) findViewById(R.id.math_activity_problem_header);
+		
+		
 		textView.setText(textViewText);
 	}
 

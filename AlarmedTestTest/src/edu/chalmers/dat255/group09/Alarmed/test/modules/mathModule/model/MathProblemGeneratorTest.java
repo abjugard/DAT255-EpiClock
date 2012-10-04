@@ -47,7 +47,7 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 		assertEquals(nbrOfNumbers, nbrs.length);
 
-		MathProblemType operator = problem.getOperator();
+		MathProblemType operator = problem.getProblemType();
 
 		assertTrue(operator instanceof MathProblemType);
 
@@ -55,7 +55,7 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 		assertEquals(nbrOfNumbers, nbrs.length);
 
-		operator = problem.getOperator();
+		operator = problem.getProblemType();
 
 		assertTrue(operator instanceof MathProblemType);
 	}
@@ -70,7 +70,7 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 
 		for (int i = 0; i < iterations; i++) {
 			problem = generator.generateProblem(Difficulty.EASY);
-			if (problem.getOperator() instanceof AdditionProblem) {
+			if (problem.getProblemType() instanceof AdditionProblem) {
 				numberOfAdditionOperators++;
 			}
 		}

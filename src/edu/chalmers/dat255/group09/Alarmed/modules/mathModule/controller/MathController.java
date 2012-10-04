@@ -55,7 +55,7 @@ public class MathController {
 	 * @return If it was correct or not
 	 */
 	public boolean checkAnswer(int answer) {
-		MathProblemType operator = currentProblem.getOperator();
+		MathProblemType operator = currentProblem.getProblemType();
 		int[] nbrs = currentProblem.getNumbers();
 
 		boolean correctAnswer = answer == operator.getResult(nbrs);
