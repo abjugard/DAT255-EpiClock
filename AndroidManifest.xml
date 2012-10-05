@@ -35,8 +35,8 @@
             android:process=":remote" />
 
         <activity
-            android:name=".activity.ActivationActivity"
-            android:label="@string/title_activity_activation" >
+            android:name=".activity.AbstractActivity"
+            android:label="null" >
         </activity>
         
         <activity

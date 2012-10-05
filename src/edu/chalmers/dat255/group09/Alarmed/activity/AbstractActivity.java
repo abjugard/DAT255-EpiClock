@@ -14,12 +14,8 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import edu.chalmers.dat255.group09.Alarmed.R;
 
-public class ActivationActivity extends Activity {
+public abstract class AbstractActivity extends Activity {
 
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
@@ -31,7 +27,6 @@ public class ActivationActivity extends Activity {
 
 		initServices();
 		startAlarm();
-		initGUI();
 	}
 
 	private void initServices() {
@@ -43,13 +38,6 @@ public class ActivationActivity extends Activity {
 	private void startAlarm() {
 		startVibration();
 		startAudio();
-	}
-
-	private void initGUI() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_activation);
 	}
 
 	private void startVibration() {
@@ -84,20 +72,14 @@ public class ActivationActivity extends Activity {
 		return alertTone;
 	}
 
-	public void onStopAlarmBtnPressed(View view) {
-		stopAlarm();
-		finish();
-	}
-
-	private void stopAlarm() {
+	public void stopAlarm() {
 		vibrator.cancel();
 		mediaPlayer.stop();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_activation, menu);
-		return true;
+		return false;
 	}
 
 	@Override

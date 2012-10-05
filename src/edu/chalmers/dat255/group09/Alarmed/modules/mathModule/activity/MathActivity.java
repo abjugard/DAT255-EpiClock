@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -23,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.activity.AbstractActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
@@ -33,7 +33,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemT
  * @author Joakim Persson
  * 
  */
-public class MathActivity extends Activity {
+public class MathActivity extends AbstractActivity {
 
 	private MathController controller;
 
@@ -65,6 +65,7 @@ public class MathActivity extends Activity {
 
 			if (controller.isComplete()) {
 				Toast.makeText(this, "Winner Winner", Toast.LENGTH_LONG).show();
+				stopAlarm();
 			}
 
 			generateNewMathProblem();
