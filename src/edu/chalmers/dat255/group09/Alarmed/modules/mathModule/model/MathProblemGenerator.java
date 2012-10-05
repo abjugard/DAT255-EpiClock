@@ -24,7 +24,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  */
 public class MathProblemGenerator {
 
-	private final static int NBR_OF_OPERATORS = 3;
+	private final static int NBR_OF_OPERATORS = 4;
 
 	public MathProblem generateProblem(Difficulty difficulty) {
 		MathProblemType operator = generateOperator();
@@ -33,9 +33,8 @@ public class MathProblemGenerator {
 		return new MathProblem(numbers, operator);
 	}
 
-	// TODO Add a mathoperator for deciding if a number is a multiple if
-	// TODO use enum or final static int:s istället
-
+	// TODO add fibbi series
+	// TODO do something better
 	private MathProblemType generateOperator() {
 
 		MathProblemType problemType = null;
@@ -52,7 +51,11 @@ public class MathProblemGenerator {
 		if (rand == 2) {
 			problemType = new PrimeProblem();
 		}
+
+		if (rand == 3) {
+			problemType = new FactorialProblem();
+		}
+
 		return problemType;
 	}
-
 }
