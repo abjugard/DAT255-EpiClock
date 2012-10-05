@@ -51,36 +51,81 @@ public class MathActivity extends BaseActivationActivity {
 		return true;
 	}
 
+	/**
+	 * A callback for when the submit button has been pressed in the
+	 * activity_math gui.
+	 * 
+	 * @param view
+	 *            The current view
+	 */
 	public void onSubmitButtonPressed(View view) {
 		EditText answerField = (EditText) findViewById(R.id.activity_math_answer_text);
-		String text = answerField.getText().toString();
+		String text = answerField.getText().toString().replace(" ", "");
 
 		if (isInputValid(text)) {
-			int answer = Integer.parseInt(text);
-
-			if (!controller.checkAnswer(answer)) {
-				Toast.makeText(this, "OOOOOOO not good....", Toast.LENGTH_LONG)
-						.show();
-			}
-
-			if (controller.isComplete()) {
-				Toast.makeText(this, "Winner Winner", Toast.LENGTH_LONG).show();
-				stopAlarm();
-			}
-
-			generateNewMathProblem();
-
+			evaluateAnswer(text);
 		} else {
-
-			Toast.makeText(this, "Please Enter Something!", Toast.LENGTH_LONG)
-					.show();
+			displayErrorMessage("Please Enter Something!");
 		}
+
 		answerField.setText("");
 	}
 
+	private boolean isInputValid(String text) {
+		return text.length() != 0;
+	}
+
+	/**
+	 * Evaluate the answer the user entered. If it is correct then generate a
+	 * new answer or if the user has answered enough questions then stop the
+	 * alarm
+	 * 
+	 * @param text
+	 *            The answer the user entered
+	 */
+	private void evaluateAnswer(String text) {
+		int answer = Integer.parseInt(text);
+
+		if (isWrongAnswer(answer)) {
+			displayErrorMessage("OOOOOOO not good....");
+		}
+
+		if (controller.isComplete()) {
+			super.stopAlarm();
+		}
+
+		generateNewMathProblem();
+	}
+
+	/**
+	 * Evaluate if the user entered right or wrong answer
+	 * 
+	 * @param answer
+	 *            The users answer
+	 * @return If it was correct or not
+	 */
+	private boolean isWrongAnswer(int answer) {
+		return !controller.checkAnswer(answer);
+	}
+
+	/**
+	 * Display an error message to the user
+	 * 
+	 * @param message
+	 *            The message to the user
+	 */
+	private void displayErrorMessage(String message) {
+		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+	}
+
+	/**
+	 * Generate a new MathProblem and update the view with the problem text from
+	 * the new problem
+	 */
 	private void generateNewMathProblem() {
 		MathProblem problem = controller.generateNewProblem();
 		MathProblemType problemType = problem.getProblemType();
+
 		int[] nbrs = problem.getNumbers();
 
 		setProblemHeader(problemType);
@@ -95,9 +140,5 @@ public class MathActivity extends BaseActivationActivity {
 	private void setProblemHeader(MathProblemType problemType) {
 		TextView textHeader = (TextView) findViewById(R.id.math_activity_problem_header);
 		textHeader.setText(problemType.getProblemHeader());
-	}
-
-	private boolean isInputValid(String text) {
-		return text.length() != 0;
 	}
 }
