@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
-import edu.chalmers.dat255.group09.Alarmed.activity.AbstractActivity;
+import edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
@@ -33,7 +33,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemT
  * @author Joakim Persson
  * 
  */
-public class MathActivity extends AbstractActivity {
+public class MathActivity extends BaseActivationActivity {
 
 	private MathController controller;
 

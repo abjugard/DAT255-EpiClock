@@ -32,7 +32,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-public abstract class AbstractActivity extends Activity {
+public abstract class BaseActivationActivity extends Activity {
 
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
@@ -42,8 +42,8 @@ public abstract class AbstractActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		initServices();
 		enterFullScreen();
+		initServices();
 		startAlarm();
 	}
 
