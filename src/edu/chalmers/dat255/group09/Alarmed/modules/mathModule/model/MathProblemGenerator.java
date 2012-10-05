@@ -24,7 +24,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  */
 public class MathProblemGenerator {
 
-	private final static int NBR_OF_OPERATORS = 4;
+	private final static int NBR_OF_OPERATORS = 5;
 
 	public MathProblem generateProblem(Difficulty difficulty) {
 		MathProblemType operator = generateOperator();
@@ -33,7 +33,6 @@ public class MathProblemGenerator {
 		return new MathProblem(numbers, operator);
 	}
 
-	// TODO add fibbi series
 	// TODO do something better
 	private MathProblemType generateOperator() {
 
@@ -56,6 +55,9 @@ public class MathProblemGenerator {
 			problemType = new FactorialProblem();
 		}
 
+		if (rand == 4) {
+			problemType = new FibonacciProblem();
+		}
 		return problemType;
 	}
 }
