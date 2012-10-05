@@ -119,4 +119,9 @@ public abstract class BaseActivationActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	public void onBackPressed() {
+		// The user is not aloud to go back
+	}
 }
