@@ -88,6 +88,9 @@ public class AlarmController {
 		if (alarmHandler.getNumberOfAlarms() > 0) {
 			setAlarm();
 		}
+		if(alarm == null){
+			return false;
+		}
 		return alarm.isEnabled();
 	}
 
