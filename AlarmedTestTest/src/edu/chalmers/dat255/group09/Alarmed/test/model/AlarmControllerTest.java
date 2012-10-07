@@ -67,7 +67,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 			return false;
 		}
 
-		public boolean enableAlarm(int id, boolean enable) {
+		public boolean setAlarmEnabled(int id, boolean enable) {
 			return false;
 		}
 		

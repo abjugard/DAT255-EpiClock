@@ -193,7 +193,7 @@ public class DatabaseHandler implements AlarmHandler {
 		return cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0;
 	}
 
-	public boolean enableAlarm(int id, boolean enable) {
+	public boolean setAlarmEnabled(int id, boolean enable) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_ENABLED, enable);
 		return aDb.update(DB_TABLE, values, KEY_ROWID + "=" + id, null) > 0;

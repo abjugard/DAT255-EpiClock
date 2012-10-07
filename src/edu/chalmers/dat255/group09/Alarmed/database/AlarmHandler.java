@@ -112,6 +112,6 @@ public interface AlarmHandler {
 	 * @return true if changed
 	 */
 
-	public boolean enableAlarm(int id, boolean enable);
+	public boolean setAlarmEnabled(int id, boolean enable);
 
 }

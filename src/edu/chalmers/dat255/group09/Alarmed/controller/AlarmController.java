@@ -83,7 +83,7 @@ public class AlarmController {
 	public boolean alarmReceived(int id) {
 		Alarm alarm = alarmHandler.fetchAlarm(id);
 		if (alarm != null && alarm.isEnabled()) {
-			alarmHandler.deleteAlarm(id);
+			alarmHandler.setAlarmEnabled(id, false);
 		}
 		if (alarmHandler.getNumberOfAlarms() > 0) {
 			setAlarm();
@@ -100,7 +100,7 @@ public class AlarmController {
 	}
 
 	public boolean enableAlarm(int id, boolean enable) {
-		return alarmHandler.enableAlarm(id, enable);
+		return alarmHandler.setAlarmEnabled(id, enable);
 	}
 
 	public List<Alarm> getAllAlarms() {
