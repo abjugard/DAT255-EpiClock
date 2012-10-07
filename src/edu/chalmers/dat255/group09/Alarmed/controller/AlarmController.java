@@ -61,10 +61,6 @@ public class AlarmController {
 					.getSystemService(Context.ALARM_SERVICE);
 			alarmManager.set(AlarmManager.RTC_WAKEUP,
 					nextAlarm.getTimeInMilliSeconds(), sender);
-
-			Log.d("NextAlarm",
-					nextAlarm.getAlarmHours() + ":"
-							+ nextAlarm.getAlarmMinutes());
 		}
 
 	}
@@ -72,8 +68,6 @@ public class AlarmController {
 	public boolean alarmRecived(int id) {
 		Alarm alarm = alarmHandler.fetchAlarm(id);
 		if (alarm != null && alarm.isEnabled()) {
-			Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show();
-			Log.d("AlarmRecived: ", "Alarm Activated");
 			alarmHandler.deleteAlarm(id);
 		}
 		if (alarmHandler.getNumberOfAlarms() > 0) {

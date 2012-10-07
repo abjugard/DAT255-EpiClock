@@ -106,10 +106,6 @@ public class DatabaseHandler implements AlarmHandler {
 		return aDb.delete(DB_TABLE, KEY_ROWID + "=" + alarmID, null) > 0;
 	}
 
-	public boolean deleteAlarm(String time) {
-		return aDb.delete(DB_TABLE, KEY_TIME + "=" + time, null) > 0;
-	}
-
 	public Alarm fetchFirstEnabledAlarm() {
 		List<Alarm> list = fetchAllAlarms();
 		Collections.sort(list);
@@ -133,12 +129,10 @@ public class DatabaseHandler implements AlarmHandler {
 	}
 
 	public Alarm fetchAlarm(int alarmID) {
-		Log.d("Database", "Fetch alarmID:" + alarmID);
-		List<Alarm> list = fetchAllAlarms();
-		for (Alarm alarm : list) {
-			if (alarmID == alarm.getId()) {
-				return alarm;
-			}
+		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "=" + alarmID,
+				null, null, null, null, null);
+		if(cursor.moveToFirst()){
+			return getAlarmFromCursor(cursor);
 		}
 		return null;
 	}
@@ -148,13 +142,13 @@ public class DatabaseHandler implements AlarmHandler {
 	}
 
 	public List<Alarm> fetchAllAlarms() {
-		Cursor aCursor = getAlarms();
+		Cursor cursor = getAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
-		if (aCursor != null) {
-			if (aCursor.moveToFirst()) {
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
 				do {
-					list.add(getAlarmFromCursor(aCursor));
-				} while (aCursor.moveToNext());
+					list.add(getAlarmFromCursor(cursor));
+				} while (cursor.moveToNext());
 			}
 		}
 		return list;

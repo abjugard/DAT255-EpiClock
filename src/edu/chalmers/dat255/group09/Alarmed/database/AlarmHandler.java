@@ -45,15 +45,6 @@ public interface AlarmHandler {
 
 	public abstract boolean deleteAlarm(int alarmID);
 
-	/**
-	 * Deletes an Alarm with a specified time.
-	 * 
-	 * @param alarmID
-	 *            time of the alarm to be deleted.
-	 * @return true if deleted else false
-	 */
-
-	public boolean deleteAlarm(String time);
 
 	/**
 	 * Fetches the first alarm given by the time to the next occurring alarm.

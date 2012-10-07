@@ -21,6 +21,8 @@ public class MainActivity extends Activity {
 
 	public static final int ADD_ALARM_REQUEST_CODE = 1;
 	public static final int EDIT_ALARM_REQUEST_CODE = 2;
+	private static final int DELETE_ALARM_MENU = 1;
+	private static final int EDIT_ALARM_MENU = 2;
 	private BrowseAlarmAdapter alarmAdapter;
 	private AlarmController aControll;
 
@@ -69,26 +71,29 @@ public class MainActivity extends Activity {
 				.getMenuInfo();
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
 		Cursor cursor = (Cursor) listView.getAdapter().getItem(info.position);
+		
 		switch (item.getItemId()) {
-		case 1:
-			// DELETE ALARM
+		case DELETE_ALARM_MENU:
 			aControll.deleteAlarm(cursor.getInt(cursor.getColumnIndex("_id")));
 			break;
-		case 2:
-			// EDIT ALARM
-			Intent intent = new Intent(this, CreateAlarm.class);
-			intent.putExtra("ID", cursor.getInt(cursor.getColumnIndex("_id")));
-			intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
-			intent.putExtra("time",
-					cursor.getString(cursor.getColumnIndex("time")));
-			startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
-			overrrideTransition();
+		case EDIT_ALARM_MENU:
+			editAlarm(cursor);
 			break;
 		default:
 			break;
 		}
 		updateList();
-		return true;
+		return false;
+	}
+
+	private void editAlarm(Cursor cursor) {
+		Intent intent = new Intent(this, CreateAlarm.class);
+		intent.putExtra("ID", cursor.getInt(cursor.getColumnIndex("_id")));
+		intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
+		intent.putExtra("time",
+				cursor.getString(cursor.getColumnIndex("time")));
+		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
+		overrrideTransition();
 	}
 
 	@Override
