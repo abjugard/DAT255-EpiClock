@@ -123,7 +123,7 @@ public final class AdditionProblem implements MathProblemType {
 			}
 		}
 
-		builder.append(" = ?");
+		builder.append("= ?");
 		return builder.toString();
 
 	}
