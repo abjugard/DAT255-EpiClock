@@ -36,7 +36,7 @@ import android.view.WindowManager;
 
 public abstract class BaseActivationActivity extends Activity {
 
-	private final static String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activty.ActivationActivity";
+	private final static String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activty.BaseActivationActivity";
 	private WakeLock wakeLock;
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
