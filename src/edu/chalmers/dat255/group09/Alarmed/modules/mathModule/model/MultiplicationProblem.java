@@ -123,7 +123,7 @@ public final class MultiplicationProblem implements MathProblemType {
 			}
 		}
 
-		builder.append(" = ?");
+		builder.append("= ?");
 		return builder.toString();
 
 	}

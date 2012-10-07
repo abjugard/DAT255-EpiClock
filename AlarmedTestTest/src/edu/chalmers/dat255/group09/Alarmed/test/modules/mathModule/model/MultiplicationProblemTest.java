@@ -17,6 +17,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
  * 
@@ -25,6 +26,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.Multiplicati
  */
 public class MultiplicationProblemTest extends AndroidTestCase {
 
+	private final static int ITERATIONS = 100;
 	private MultiplicationProblem multiProblem;
 
 	@Override
@@ -33,10 +35,16 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		multiProblem = new MultiplicationProblem();
 	}
 
-	public void testToString() {
+	public void testGetPromlemHeader() {
+		String expected = "What Is The Product?";
+		String actual = multiProblem.getProblemHeader();
+		assertEquals(expected, actual);
+	}
 
-		String expected = "*";
-		String actual = multiProblem.toString();
+	public void testGetFormattedString() {
+		int[] nbrs = { 3, 4, 5 };
+		String expected = "3 * 4 * 5 = ?";
+		String actual = multiProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
 
@@ -54,7 +62,68 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		assertEquals(expectedResult, actualResult);
 	}
 
-	// TODO add tests for getHeader and generateNumbers, formattedString
+	public void testGenerateEasyProblem() {
+		int lowerLimit = 0;
+		int upperLimit = 10;
+		int expectedNbrOfNumbers = 2;
+
+		testMultiplicationProblem(Difficulty.EASY, lowerLimit, upperLimit,
+				expectedNbrOfNumbers);
+	}
+
+	public void testGenerateMediumProblems() {
+		int lowerLimit = 0;
+		int upperLimit = 10;
+		int expectedNbrOfNumbers = 3;
+
+		testMultiplicationProblem(Difficulty.MEDIUM, lowerLimit, upperLimit,
+				expectedNbrOfNumbers);
+	}
+
+	public void testGenerateHardProblems() {
+		int lowerLimit = 10;
+		int upperLimit = 15;
+		int expectedNbrOfNumbers = 3;
+
+		testMultiplicationProblem(Difficulty.HARD, lowerLimit, upperLimit,
+				expectedNbrOfNumbers);
+	}
+
+	private void testMultiplicationProblem(Difficulty difficulty,
+			int lowerLimit, int upperLimit, int expectedNbrOfNumbers) {
+		int[] nbrs = null;
+
+		for (int i = 0; i < ITERATIONS; i++) {
+			nbrs = multiProblem.generateNumbers(difficulty);
+			assertTrue(isCorrectNbrOfNumbers(expectedNbrOfNumbers, nbrs));
+			assertTrue(isNumbersInRange(nbrs, lowerLimit, upperLimit));
+			assertTrue(isNumbersNonNegative(nbrs));
+		}
+
+	}
+
+	private boolean isCorrectNbrOfNumbers(int expectedNbrOfNumbers, int[] nbrs) {
+		return expectedNbrOfNumbers == nbrs.length;
+	}
+
+	private boolean isNumbersInRange(int[] nbrs, int lowerLimit, int upperLimit) {
+		for (int number : nbrs) {
+			if (number < lowerLimit || number >= upperLimit) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean isNumbersNonNegative(int[] numbers) {
+		for (int number : numbers) {
+			if (number < 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	protected void tearDown() throws Exception {
