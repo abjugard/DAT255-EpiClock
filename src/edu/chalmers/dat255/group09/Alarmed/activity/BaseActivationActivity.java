@@ -24,6 +24,8 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -34,6 +36,8 @@ import android.view.WindowManager;
 
 public abstract class BaseActivationActivity extends Activity {
 
+	private final static String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activty.ActivationActivity";
+	private WakeLock wakeLock;
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
 	private Vibrator vibrator;
@@ -43,17 +47,29 @@ public abstract class BaseActivationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		enterFullScreen();
+		initWakeLock();
 		initServices();
 		startAlarm();
 	}
 
 	private void enterFullScreen() {
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		Window window = getWindow();
+		window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+	}
 
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+	private void initWakeLock() {
+		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
-		WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		wakeLock = powerManager
+				.newWakeLock(
+						(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+								| PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP),
+						WAKE_LOCK_TAG);
+
+		wakeLock.acquire();
 	}
 
 	private void initServices() {
@@ -102,6 +118,7 @@ public abstract class BaseActivationActivity extends Activity {
 	public void stopAlarm() {
 		vibrator.cancel();
 		mediaPlayer.stop();
+		wakeLock.release();
 		finish();
 	}
 
