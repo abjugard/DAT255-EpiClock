@@ -270,17 +270,38 @@ public class AlarmTest extends AndroidTestCase {
 	}
 
 	public void testCompareTo() {
-		Alarm alarm = new Alarm(20, 20, 1);
-		Alarm otherAlarm = new Alarm(21, 20, 1);
+		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+		// Sets the test to be set on different times depending on the current
+		// time
+		int hour = currentHour > 12 ? 6 : 18;
+		int minute = 20;
+		Alarm alarm = new Alarm(hour, minute, 1);
+		Alarm otherAlarm = new Alarm(hour + 1, minute, 1);
 
 		assertTrue(alarm.compareTo(otherAlarm) < 0);
 
-		otherAlarm = new Alarm(20, 20, 2);
+		otherAlarm = new Alarm(hour, minute, 2);
 
 		assertTrue(alarm.compareTo(otherAlarm) == 0);
 
-		otherAlarm = new Alarm(19, 19, 2);
+		otherAlarm = new Alarm(hour - 1, minute - 1, 2);
 
 		assertTrue(alarm.compareTo(otherAlarm) > 0);
+	}
+
+	public void testEnabled() {
+
+		Alarm alarm = new Alarm(20, 20, 1);
+
+		assertTrue(alarm.isEnabled());
+
+		alarm.setEnabled(false);
+
+		assertFalse(alarm.isEnabled());
+
+		alarm.setEnabled(true);
+
+		assertTrue(alarm.isEnabled());
 	}
 }
