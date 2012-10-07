@@ -26,7 +26,7 @@ public class AlarmTest extends AndroidTestCase {
 	private final long ONE_MINUTE_IN_MILLI_SECONDS = 60000;
 
 	/*
-	 * Since the alarm will triggerd at hh:mm:00, and we are testing that only
+	 * Since the alarm will triggered at hh:mm:00, and we are testing that only
 	 * the hh and mm will be equal. Since we are using milliseconds the delta
 	 * will be 60s = 60ms == 60000
 	 */
@@ -34,24 +34,31 @@ public class AlarmTest extends AndroidTestCase {
 	public void testAlarmTimeAfterFourHours() {
 		int hoursToAdd = 4;
 		int minutesToAdd = 0;
-		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
-		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		long currentTime = System.currentTimeMillis();
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd)
+				- currentTime;
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd) - currentTime;
 		assertEquals(expectedTime, actualTime, 60000);
 	}
 
 	public void testAlarmTimeAfterTwelveHours() {
 		int hoursToAdd = 12;
 		int minutesToAdd = 0;
-		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
-		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		long currentTime = System.currentTimeMillis();
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd)
+				- currentTime;
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd) - currentTime;
 		assertEquals(expectedTime, actualTime, 60000);
 	}
 
 	public void testAlarmTimeAfterTenHoursThrityMinutes() {
 		int hoursToAdd = 10;
 		int minutesToAdd = 30;
-		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
-		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		long currentTime = System.currentTimeMillis();
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd)
+				- currentTime;
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd) - currentTime;
+
 		assertEquals(expectedTime, actualTime, 60000);
 	}
 
@@ -59,9 +66,10 @@ public class AlarmTest extends AndroidTestCase {
 
 		int minutesToAdd = 52;
 		int hoursToAdd = 20;
-
-		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd);
-		long actualTime = getActualTime(hoursToAdd, minutesToAdd);
+		long currentTime = System.currentTimeMillis();
+		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd)
+				- currentTime;
+		long actualTime = getActualTime(hoursToAdd, minutesToAdd) - currentTime;
 		assertEquals(expectedTime, actualTime, 60000);
 	}
 
