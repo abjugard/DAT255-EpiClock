@@ -16,6 +16,8 @@
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,8 +31,12 @@ import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -41,6 +47,7 @@ public abstract class BaseActivationActivity extends Activity {
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
 	private Vibrator vibrator;
+	private Timer inputTimer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,7 @@ public abstract class BaseActivationActivity extends Activity {
 
 		enterFullScreen();
 		initWakeLock();
+		initTouchListener();
 		initServices();
 		startAlarm();
 	}
@@ -60,6 +68,9 @@ public abstract class BaseActivationActivity extends Activity {
 		window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 	}
 
+	/**
+	 * Sets up wake lock
+	 */
 	private void initWakeLock() {
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
@@ -72,26 +83,57 @@ public abstract class BaseActivationActivity extends Activity {
 		wakeLock.acquire();
 	}
 
+	/**
+	 * Sets up touch listener to detect input
+	 */
+	private void initTouchListener() {
+		View v = (View) this.findViewById(android.R.id.content);
+		v.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				inputDetected();
+				return false;
+			}
+		});
+	}
+
+	/**
+	 * Initialises services
+	 */
 	private void initServices() {
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		mediaPlayer = new MediaPlayer();
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		inputTimer = new Timer();
 	}
 
+	/**
+	 * Start the alarm
+	 */
 	private void startAlarm() {
 		startVibration();
 		startAudio();
 	}
 
+	/**
+	 * Starts the vibration
+	 */
 	private void startVibration() {
 		long[] vibPattern = { 0, 200, 500 };
 		vibrator.vibrate(vibPattern, 0);
 	}
 
+	/**
+	 * Starts the audio
+	 */
 	private void startAudio() {
 		try {
 			mediaPlayer.setDataSource(this, getAlarmTone());
+			audioManager.setStreamVolume(AudioManager.STREAM_ALARM,
+					6 /* 7 is max */, 0);
 			if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+				// TODO adrian: this should eventually check for desired volume
+				// saved in database
 				mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
 				mediaPlayer.prepare();
 				mediaPlayer.start();
@@ -101,6 +143,11 @@ public abstract class BaseActivationActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Method for getting an alarm tone
+	 * 
+	 * @return Returns alarm tone
+	 */
 	private Uri getAlarmTone() {
 		Uri alertTone = RingtoneManager
 				.getDefaultUri(RingtoneManager.TYPE_ALARM);
@@ -115,6 +162,9 @@ public abstract class BaseActivationActivity extends Activity {
 		return alertTone;
 	}
 
+	/**
+	 * Stops the alarm
+	 */
 	public void stopAlarm() {
 		vibrator.cancel();
 		mediaPlayer.stop();
@@ -139,6 +189,82 @@ public abstract class BaseActivationActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		// The user is not aloud to go back
+		// The user is not allowed to go back
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+			// The user is not allowed to lower the volume
+		}
+		inputDetected();
+		return true;
+	}
+
+	/**
+	 * Increase the alarm audio streams volume one step
+	 */
+	public void increaseVolume() {
+		audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM,
+				AudioManager.ADJUST_RAISE, 0);
+	}
+
+	/**
+	 * Decrease the alarm audio streams volume one step (if volume greater than
+	 * one)
+	 */
+	public void decreaseVolume() {
+		if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) > 1) {
+			audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM,
+					AudioManager.ADJUST_LOWER, 0);
+		}
+	}
+
+	/**
+	 * Sets the volume for the alarm audio stream to the desired level.
+	 * 
+	 * @param desiredVol
+	 *            An integer between 0 and 7
+	 */
+	public void setVolume(int desiredVol) {
+		if (desiredVol > 7) {
+			desiredVol = 7;
+		} else if (desiredVol < 1) {
+			desiredVol = 1;
+		}
+		audioManager.setStreamVolume(AudioManager.STREAM_ALARM, desiredVol, 0);
+	}
+
+	/**
+	 * Methd which is run when input is detected
+	 */
+	public void inputDetected() {
+		setVolume(1);
+		refreshTimer(5000);
+	}
+
+	/**
+	 * Refreshes the input timer
+	 * 
+	 * @param millis
+	 *            Amount of seconds until timer runs task
+	 */
+	private void refreshTimer(int millis) {
+		inputTimer.cancel();
+		inputTimer = new Timer();
+		inputTimer.schedule(new InputTimerTask(), millis);
+	}
+
+	/**
+	 * Timer-task that is used for scheduling what happens no input is detected
+	 * for a while
+	 */
+	private class InputTimerTask extends TimerTask {
+		@Override
+		public void run() {
+			increaseVolume();
+
+			refreshTimer(5000);
+		}
 	}
 }
