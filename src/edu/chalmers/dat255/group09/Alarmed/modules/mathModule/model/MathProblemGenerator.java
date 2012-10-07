@@ -33,13 +33,13 @@ public class MathProblemGenerator {
 	private final static int NBR_OF_OPERATORS = 5;
 
 	public MathProblem generateProblem(Difficulty difficulty) {
-		MathProblemType operator = generateOperator();
+		MathProblemType operator = generateProblemType();
 		int[] numbers = operator.generateNumbers(difficulty);
 
 		return new MathProblem(numbers, operator);
 	}
 
-	private MathProblemType generateOperator() {
+	private MathProblemType generateProblemType() {
 
 		MathProblemType problemType = null;
 		int rand = (int) Math.floor((Math.random() * NBR_OF_OPERATORS));
