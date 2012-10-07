@@ -5,7 +5,7 @@ import java.util.Calendar;
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
-public class AlarmTimeTest extends AndroidTestCase {
+public class AlarmTest extends AndroidTestCase {
 
 	private final long ONE_HOUR_IN_MILLI_SECONDS = 3600000;
 	private final long ONE_MINUTE_IN_MILLI_SECONDS = 60000;
@@ -87,12 +87,12 @@ public class AlarmTimeTest extends AndroidTestCase {
 		Calendar cal = Calendar.getInstance();
 		int minuteToTrigger = cal.get(Calendar.MINUTE) + minute;
 		int hourToTrigger = cal.get(Calendar.HOUR_OF_DAY) + hour;
-		if(minuteToTrigger >= 60){
+		if (minuteToTrigger >= 60) {
 			hourToTrigger++;
 		}
 		return new Alarm((hourToTrigger % 24), (minuteToTrigger % 60), 0);
 	}
-	
+
 	public void testOneMinuteToString() {
 		Alarm at = alarmTimeFromNow(1, 0);
 		String toMatch = "Alarm is set for 1 minute from now.";
@@ -140,11 +140,13 @@ public class AlarmTimeTest extends AndroidTestCase {
 		String toMatch = "Alarm is set for 5 hours and 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
+
 	public void testTwentyThreeHourThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(30, 23);
 		String toMatch = "Alarm is set for 23 hours and 30 minutes from now.";
 		assertEquals(at.toString(), toMatch);
 	}
+
 	public void testTwentyFourHourToString() {
 		Alarm at = alarmTimeFromNow(0, 24);
 		String toMatch = "Alarm is set for 24 hours from now.";
@@ -207,5 +209,63 @@ public class AlarmTimeTest extends AndroidTestCase {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+	}
+
+	public void testGetID() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		int actual = 1;
+		assertEquals(alarm.getId(), actual);
+	}
+
+	public void testGetAlarmHours() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		int actual = 20;
+		assertEquals(alarm.getAlarmHours(), actual);
+	}
+
+	public void testGetAlarmMinutes() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		int actual = 20;
+		assertEquals(alarm.getAlarmMinutes(), actual);
+	}
+
+	public void testHashCode() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm otherAlarm = new Alarm(21, 20, 2);
+
+		assertFalse(alarm.hashCode() == otherAlarm.hashCode());
+
+		otherAlarm = new Alarm(20, 20, 2);
+		assertTrue(alarm.hashCode() == otherAlarm.hashCode());
+	}
+
+	public void testEquals() {
+
+		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm otherAlarm = new Alarm(21, 20, 2);
+
+		// // Testing for self refrence and null
+		assertTrue(alarm.equals(alarm));
+		assertFalse(alarm.equals(null));
+
+		assertFalse(alarm.equals(otherAlarm));
+
+		otherAlarm = new Alarm(20, 20, 2);
+		assertTrue(alarm.equals(otherAlarm));
+	}
+
+	public void testCompareTo() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm otherAlarm = new Alarm(21, 20, 1);
+
+		assertTrue(alarm.compareTo(otherAlarm) < 0);
+
+		otherAlarm = new Alarm(20, 20, 2);
+
+		assertTrue(alarm.compareTo(otherAlarm) == 0);
+
+		otherAlarm = new Alarm(19, 19, 2);
+
+		assertTrue(alarm.compareTo(otherAlarm) > 0);
 	}
 }

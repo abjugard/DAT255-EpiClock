@@ -19,7 +19,7 @@ import android.util.Log;
  * @author Daniel Augurell
  * 
  */
-public class DatabaseHandler {
+public class DatabaseHandler implements AlarmHandler {
 	private Context aCtx;
 
 	private DatabaseHelper aDbHelper;
@@ -28,19 +28,23 @@ public class DatabaseHandler {
 	/**
 	 * Database SQL statements
 	 */
-	public static final String KEY_TIME = "time";
-	public static final String KEY_RECURRING = "recurring";
-	public static final String KEY_ROWID = "_id";
-
-	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING };
 
 	private static final String DB_NAME = "data";
 	private static final String DB_TABLE = "alarms";
-	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
-			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME
-			+ " DATETIME, " + KEY_RECURRING + " BOOLEAN);";
 
-	private static final int DB_VERSION = 3;
+	public static final String KEY_TIME = "time";
+	public static final String KEY_RECURRING = "recurring";
+	public static final String KEY_ROWID = "_id";
+	public static final String KEY_ENABLED = "enabled";
+
+	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING,
+			KEY_ENABLED };
+
+	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
+			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME + " DATETIME, "
+			+ KEY_RECURRING + " BOOLEAN," + KEY_ENABLED + " BOOLEAN);";
+
+	private static final int DB_VERSION = 4;
 
 	/**
 	 * 
@@ -67,6 +71,7 @@ public class DatabaseHandler {
 			Log.w("DATABASE:", "The database is changed from version "
 					+ oldVersion + " to version " + newVersion);
 		}
+
 		@Override
 		public void onDowngrade(SQLiteDatabase db, int oldVersion,
 				int newVersion) {
@@ -76,115 +81,107 @@ public class DatabaseHandler {
 
 	public DatabaseHandler(Context ctx) {
 		aCtx = ctx;
-		openDb();
 	}
 
-	/**
-	 * Open the database or create a new if it hasn't been created yet.
-	 * 
-	 * @return this, a self reference
-	 */
-
-	public DatabaseHandler openDb() {
+	public AlarmHandler openCon() {
 		aDbHelper = new DatabaseHelper(aCtx);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;
 	}
 
-	/**
-	 * Closes the connection to the database
-	 */
-	public void closeDb() {
+	public void closeCon() {
 		aDbHelper.close();
 	}
-
-	/**
-	 * Inserts a alarm to the database given the time and if it should be
-	 * recurring.
-	 * 
-	 * @param hour
-	 *            The hour which the alarm has been set to trigger on
-	 * @param minute
-	 *            The minute which the alarm has been set to trigger on
-	 * @param recurring
-	 *            True if the alarm is set to be recurring.
-	 * @return the id of the created Alarm in the database, or -1 if an error
-	 *         occurred
-	 */
 
 	public long createAlarm(int hour, int minute, boolean recurring) {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
 		alarmTime.put(KEY_RECURRING, recurring);
+		alarmTime.put(KEY_ENABLED, true);
 		alarmTime.put(KEY_TIME, hour + ":" + minute);
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
-
-	/**
-	 * Deletes an Alarm with a specified id.
-	 * 
-	 * @param alarmID
-	 *            id of the alarm to be deleted.
-	 * @return true if deleted else false
-	 */
 
 	public boolean deleteAlarm(int alarmID) {
 		return aDb.delete(DB_TABLE, KEY_ROWID + "=" + alarmID, null) > 0;
 	}
 
-	/**
-	 * Returns a Cursor over the list of all set alarms
-	 * 
-	 * @return Cursor with all alarms
-	 */
-
-	public Alarm fetchFirstAlarm() {
-		List<Alarm> list = getAllAlarms();
+	public Alarm fetchFirstEnabledAlarm() {
+		List<Alarm> list = fetchAllAlarms();
 		Collections.sort(list);
-		return list.get(0);
-	}
-
-	public Cursor fetchAlarms() {
-		return aDb.query(true, DB_TABLE, KEYS, null, null, null, null, null,
-				null);
-	}
-
-	/**
-	 * Fetches an alarm from the database given an specified id.
-	 * 
-	 * @param alarmID
-	 *            the id of the alarm to retrieve
-	 * @return the alarm with the specified id, if not found null
-	 */
-	public Alarm fetchAlarm(int alarmID) {
-		Log.d("Database", "Fetch alarmID:"+alarmID);
-		List<Alarm> list = getAllAlarms();
-		for(Alarm alarm: list){
-			if(alarmID == alarm.getId()){
+		for (Alarm alarm : list) {
+			if (alarm.isEnabled()) {
 				return alarm;
 			}
 		}
 		return null;
 	}
 
-	public int getNumberOfAlarms() {
-		return fetchAlarms().getCount();
+	/**
+	 * Fetches all alarms as Cursor to the database
+	 * 
+	 * @return Cursor with all the alarmdata
+	 */
+
+	private Cursor getAlarms() {
+		return aDb.query(true, DB_TABLE, KEYS, null, null, null, null, null,
+				null);
 	}
-	private List<Alarm> getAllAlarms(){
-		Cursor aCursor = fetchAlarms();
+
+	public Alarm fetchAlarm(int alarmID) {
+		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "=" + alarmID,
+				null, null, null, null, null);
+		if(cursor.moveToFirst()){
+			return getAlarmFromCursor(cursor);
+		}
+		return null;
+	}
+
+	public int getNumberOfAlarms() {
+		return getAlarms().getCount();
+	}
+
+	public List<Alarm> fetchAllAlarms() {
+		Cursor cursor = getAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
-		if (aCursor != null) {
-			if (aCursor.moveToFirst()) {
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
 				do {
-					String[] time = aCursor.getString(
-							aCursor.getColumnIndex(KEY_TIME)).split(":");
-					list.add(new Alarm(Integer.parseInt(time[0]), Integer
-							.parseInt(time[1]), aCursor.getInt(aCursor
-							.getColumnIndex(KEY_ROWID))));
-				} while (aCursor.moveToNext());
+					list.add(getAlarmFromCursor(cursor));
+				} while (cursor.moveToNext());
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * Gets the alarm from the data at the cursors current position.
+	 * 
+	 * @param cursor
+	 *            The cursor set at the specified position.
+	 * @return An Alarm with the specified data.
+	 */
+
+	private Alarm getAlarmFromCursor(Cursor cursor) {
+		String[] time = cursor.getString(cursor.getColumnIndex(KEY_TIME))
+				.split(":");
+		Alarm a = new Alarm(Integer.parseInt(time[0]),
+				Integer.parseInt(time[1]), cursor.getInt(cursor
+						.getColumnIndex(KEY_ROWID)));
+		a.setEnabled(cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0);
+		return a;
+	}
+
+	public boolean isEnabled(int id) {
+		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "=" + id,
+				null, null, null, null, null);
+		return cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0;
+	}
+
+	public boolean enableAlarm(int id, boolean enable) {
+		ContentValues values = new ContentValues();
+		values.put(KEY_ENABLED, enable);
+		return aDb.update(DB_TABLE, values, KEY_ROWID + "=" + id, null) > 0;
 	}
 
 }

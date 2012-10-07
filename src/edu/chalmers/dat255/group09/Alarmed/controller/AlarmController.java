@@ -1,5 +1,7 @@
 package edu.chalmers.dat255.group09.Alarmed.controller;
 
+import java.util.List;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,13 +11,14 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
+import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
 public class AlarmController {
 
 	private static AlarmController instance;
-	private DatabaseHandler dbHelper;
+	private AlarmHandler alarmHandler;
 
 	private Context context;
 
@@ -28,11 +31,16 @@ public class AlarmController {
 
 	public void init(Context context) {
 		this.context = context;
-		dbHelper = new DatabaseHandler(context);
+		alarmHandler = new DatabaseHandler(context).openCon();
+	}
+	
+	public void init(Context context, AlarmHandler handler) {
+		this.context = context;
+		alarmHandler = handler.openCon();
 	}
 
 	public void createAlarm(int hour, int minute) {
-		dbHelper.createAlarm(hour, minute, false);
+		alarmHandler.createAlarm(hour, minute, false);
 		setAlarm();
 		Log.d("CreateAlarm", hour + ":" + minute);
 		Toast.makeText(context, new Alarm(hour, minute, 0).toString(),
@@ -41,44 +49,51 @@ public class AlarmController {
 
 	private void setAlarm() {
 
-		Alarm nextAlarm = dbHelper.fetchFirstAlarm();
+		Alarm nextAlarm = alarmHandler.fetchFirstEnabledAlarm();
 		if (nextAlarm != null) {
-			
+
 			Intent intent = new Intent(context, AlarmReceiver.class);
-			intent.setData(Uri.parse(""+nextAlarm.getId()));
+			intent.setData(Uri.parse("" + nextAlarm.getId()));
 			PendingIntent sender = PendingIntent.getBroadcast(context, 0,
 					intent, Intent.FILL_IN_DATA);
-			
+
 			AlarmManager alarmManager = (AlarmManager) context
 					.getSystemService(Context.ALARM_SERVICE);
 			alarmManager.set(AlarmManager.RTC_WAKEUP,
 					nextAlarm.getTimeInMilliSeconds(), sender);
-
-			Log.d("NextAlarm",
-					nextAlarm.getAlarmHours() + ":"
-							+ nextAlarm.getAlarmMinutes());
 		}
 
 	}
 
-	public void alarmRecived(int id) {
-		Alarm alarm = dbHelper.fetchAlarm(id);
-		if (alarm != null) {
-			Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show();
-			Log.d("AlarmRecived: ",
-					"Alarm Activated, " + dbHelper.deleteAlarm(id));
+	public boolean alarmRecived(int id) {
+		Alarm alarm = alarmHandler.fetchAlarm(id);
+		if (alarm != null && alarm.isEnabled()) {
+			alarmHandler.deleteAlarm(id);
 		}
-		if (dbHelper.getNumberOfAlarms() > 0) {
+		if (alarmHandler.getNumberOfAlarms() > 0) {
 			setAlarm();
 		}
+		return alarm.isEnabled();
 	}
 
-	public Cursor getAllAlarms() {
-		return dbHelper.fetchAlarms();
+	public boolean deleteAlarm(int id) {
+		return alarmHandler.deleteAlarm(id);
+	}
+
+	public boolean isAlarmEnabled(int id) {
+		return alarmHandler.isEnabled(id);
+	}
+
+	public boolean enableAlarm(int id, boolean enable) {
+		return alarmHandler.enableAlarm(id, enable);
+	}
+
+	public List<Alarm> getAllAlarms() {
+		return alarmHandler.fetchAllAlarms();
 	}
 
 	public void destroy() {
-		dbHelper.closeDb();
+		alarmHandler.closeCon();
 	}
 
 }

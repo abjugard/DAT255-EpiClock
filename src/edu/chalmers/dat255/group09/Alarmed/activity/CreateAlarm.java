@@ -41,8 +41,16 @@ public class CreateAlarm extends Activity {
 
 	private void setTimepickerToCurrentTime(TimePicker timePicker) {
 		Calendar calendar = Calendar.getInstance();
-		timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
-		timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int minute = calendar.get(Calendar.MINUTE);
+		Intent intent = this.getIntent();
+		if (intent.getIntExtra("requestCode", -1) == MainActivity.EDIT_ALARM_REQUEST_CODE) {
+			String[] times = intent.getStringExtra("time").split(":");
+			hour = Integer.parseInt(times[0]);
+			minute = Integer.parseInt(times[1]);
+		}
+		timePicker.setCurrentHour(hour);
+		timePicker.setCurrentMinute(minute);
 	}
 
 	@Override
