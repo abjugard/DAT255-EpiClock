@@ -31,6 +31,7 @@ import android.widget.ListView;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
+import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 public class MainActivity extends Activity {
 
@@ -59,6 +60,7 @@ public class MainActivity extends Activity {
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
 		alarmAdapter = new BrowseAlarmAdapter(this, R.layout.alarms_list_item,
 				aControl.getAllAlarms());
+		alarmAdapter.setContexMenuListner(this);
 		listView.setAdapter(alarmAdapter);
 		registerForContextMenu(listView);
 	}
@@ -85,14 +87,14 @@ public class MainActivity extends Activity {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
-		Cursor cursor = (Cursor) listView.getAdapter().getItem(info.position);
-		
+		Alarm alarm = (Alarm) listView.getAdapter().getItem(info.position);
+
 		switch (item.getItemId()) {
 		case DELETE_ALARM_MENU:
-			aControl.deleteAlarm(cursor.getInt(cursor.getColumnIndex("_id")));
+			aControl.deleteAlarm(alarm.getId());
 			break;
 		case EDIT_ALARM_MENU:
-			editAlarm(cursor);
+			editAlarm(alarm);
 			break;
 		default:
 			break;
@@ -101,12 +103,12 @@ public class MainActivity extends Activity {
 		return false;
 	}
 
-	private void editAlarm(Cursor cursor) {
+	private void editAlarm(Alarm alarm) {
 		Intent intent = new Intent(this, CreateAlarm.class);
-		intent.putExtra("ID", cursor.getInt(cursor.getColumnIndex("_id")));
+		intent.putExtra("ID", alarm.getId());
 		intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
 		intent.putExtra("time",
-				cursor.getString(cursor.getColumnIndex("time")));
+				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 		overrideTransition();
 	}

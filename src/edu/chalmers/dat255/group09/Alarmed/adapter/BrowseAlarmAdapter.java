@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 
+	private OnCreateContextMenuListener listener;
+	
 	public BrowseAlarmAdapter(Context context, int textViewResourceId,
 			List<Alarm> objects) {
 		super(context, textViewResourceId, objects);
@@ -49,6 +52,8 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 				+ getItem(position).getAlarmMinutes());
 		checkBox.setChecked(getItem(position).isEnabled());
 		checkBox.setTag(getItem(position).getId());
+		
+		view.setOnCreateContextMenuListener(listener);
 
 		return view;
 	}
@@ -59,6 +64,10 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 			add(a);
 		}
 		notifyDataSetChanged();
+	}
+
+	public void setContexMenuListner(OnCreateContextMenuListener listener) {
+		this.listener = listener;
 	}
 
 }
