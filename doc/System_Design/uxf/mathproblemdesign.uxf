@@ -4,9 +4,9 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>250</x>
-      <y>10</y>
-      <w>100</w>
+      <x>180</x>
+      <y>130</y>
+      <w>170</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Activity&gt;&gt;
@@ -17,45 +17,45 @@ MathActivity
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>180</x>
-      <y>110</y>
-      <w>270</w>
+      <x>90</x>
+      <y>230</y>
+      <w>310</w>
       <h>140</h>
     </coordinates>
     <panel_attributes>MathController
---
--currentProblem: Problem
--completedProblemsInARow: int
+
 --
 +isComplete(): boolean
 +getProblem(): Problem
 +checkAnswer(answer: int): boolean
--evaluateAnswer(answer: int): boolean</panel_attributes>
++generateNewProblem(): MathProblem
++getDifficulty(): Difficulty
++getCompletedProblems(): int
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>180</x>
-      <y>300</y>
-      <w>260</w>
+      <x>90</x>
+      <y>420</y>
+      <w>310</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>MathProblemGenerator
 --
--lowerLimit: int
--upperLimit: int
+-NBR_OF_OPERATORS: int
 --
-+generateProblem(): Problem
--generateOperator(): Operator
--generateNumbers(): int[]</panel_attributes>
++generateProblem(): Difficulty
+-generateProblemType(): MathProblemType
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>270</x>
-      <y>220</y>
+      <x>230</x>
+      <y>340</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
@@ -65,25 +65,25 @@ MathActivity
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>560</x>
-      <y>300</y>
-      <w>260</w>
+      <x>520</x>
+      <y>420</y>
+      <w>290</w>
       <h>120</h>
     </coordinates>
-    <panel_attributes>Problem
+    <panel_attributes>MathProblem
 --
--operator: Operator
--numberst: int[]
+-problemType: MathProblemType
+-numbers: int[]
 --
 +getNumbers(): int[]
-+getOperator(): Operator</panel_attributes>
++getProblemType(): MathProblemType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>410</x>
-      <y>310</y>
+      <x>370</x>
+      <y>430</y>
       <w>170</w>
       <h>70</h>
     </coordinates>
@@ -94,8 +94,8 @@ Creates</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>270</x>
-      <y>20</y>
+      <x>230</x>
+      <y>140</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -105,26 +105,53 @@ Creates</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>560</x>
-      <y>480</y>
-      <w>260</w>
-      <h>70</h>
+      <x>520</x>
+      <y>600</y>
+      <w>290</w>
+      <h>100</h>
     </coordinates>
-    <panel_attributes>Operator
+    <panel_attributes>MathProblemType
 --
-+toString()
-+getResult(int... numbers): int</panel_attributes>
++getResult(int[] numbers): int
++generateNumbers(difficulty: Difficulty)
++getProblemHeader(): String
++getFormattedProblem(): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>650</x>
-      <y>390</y>
+      <x>640</x>
+      <y>510</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>30;90;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>90</x>
+      <y>20</y>
+      <w>310</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Activity&gt;&gt;
+BaseActivationActivity
+--
++stopAlarm(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>230</x>
+      <y>70</y>
+      <w>50</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;60</additional_attributes>
   </element>
 </diagram>

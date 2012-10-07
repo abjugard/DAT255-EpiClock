@@ -43,8 +43,8 @@ DatabaseHandler
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>390</x>
-      <y>340</y>
+      <x>630</x>
+      <y>360</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
@@ -103,17 +103,6 @@ creates</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>420</x>
-      <y>260</y>
-      <w>50</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30;80;30;30</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
       <x>480</x>
       <y>240</y>
       <w>170</w>
@@ -167,7 +156,7 @@ creates</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Activity&gt;&gt;
-SimpleActivationActivty
+MathActivationActivty
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -205,5 +194,17 @@ SimpleActivationActivty
 BrowseAlarmAdapter
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>630</x>
+      <y>260</y>
+      <w>106</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+creates</panel_attributes>
+    <additional_attributes>60;100;60;30</additional_attributes>
   </element>
 </diagram>
