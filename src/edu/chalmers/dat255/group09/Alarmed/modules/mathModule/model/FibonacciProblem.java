@@ -21,14 +21,14 @@ import java.util.List;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
+ * A class representing a FibonacciProblem. The problem generates a subset of
+ * the fibonacci sequence. The user solves the problem calculating the next term
+ * in the sequence.
  * 
  * @author Joakim Persson
  * 
  */
-// TODO add better documentation
 public class FibonacciProblem implements MathProblemType {
-
-	// the users guesses the next number in the fibonacci sequence
 
 	private final static String PROBLEM_HEADER = "What is the next term?";
 	private final static int NBR_OF_NUMBERS = 4;
@@ -79,6 +79,12 @@ public class FibonacciProblem implements MathProblemType {
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * 
+	 * @param lowerLimit
+	 * @param upperLimit
+	 * @return
+	 */
 	private int[] generateRandomSequence(int lowerLimit, int upperLimit) {
 
 		List<Integer> fibonacciNumbers = getFibonacciSequence(lowerLimit,
@@ -99,6 +105,13 @@ public class FibonacciProblem implements MathProblemType {
 		return getSequence(startingNumber, surrondingNumber);
 	}
 
+	/**
+	 * Get an random index of a list
+	 * 
+	 * @param listLength
+	 *            The length of the list
+	 * @return An random index within the size of an list
+	 */
 	private int getRandomIndex(int size) {
 		int lowerLimit = 0;
 		int diff = size - lowerLimit;
@@ -106,11 +119,29 @@ public class FibonacciProblem implements MathProblemType {
 		return getRandomNumberWithInRange(lowerLimit, diff);
 	}
 
+	/**
+	 * Get a random number within and interval [lowerLimit, upperLimit)
+	 * 
+	 * @param lowerLimit
+	 *            The problems lowerlimit
+	 * @param upperLimit
+	 *            The problems upperlimit
+	 * @return An random integer within the interval
+	 */
 	private int getRandomNumberWithInRange(int lowerLimit, int upperLimit) {
 		int diff = upperLimit - lowerLimit;
 		return (int) (lowerLimit + diff * Math.random());
 	}
 
+	/**
+	 * Create a subset of the fibonacci sequence around two starting numbers
+	 * 
+	 * @param startingNumber
+	 *            The first term in the sequence
+	 * @param surrondingNumber
+	 *            A term either greather than or less than startingNumber
+	 * @return A subset of the fibonacci sequence
+	 */
 	private int[] getSequence(int startingNumber, int surrondingNumber) {
 		int[] nbrs = new int[NBR_OF_NUMBERS];
 
@@ -129,6 +160,15 @@ public class FibonacciProblem implements MathProblemType {
 		return nbrs;
 	}
 
+	/**
+	 * Get a list of the terms in the fibonacci sequence between two limits
+	 * 
+	 * @param lowerLimit
+	 *            The lower limit
+	 * @param upperLimit
+	 *            The upper limit
+	 * @return A list of terms in the fibonacci sequence
+	 */
 	private List<Integer> getFibonacciSequence(int lowerLimit, int upperLimit) {
 		List<Integer> fibonacciSequence = new ArrayList<Integer>();
 
@@ -152,6 +192,16 @@ public class FibonacciProblem implements MathProblemType {
 		return removeTermsBelowLowerLimit(fibonacciSequence, lowerLimit);
 	}
 
+	/**
+	 * Removes any term in an list which is less than the lower limit
+	 * 
+	 * @param sequence
+	 *            An list of integers
+	 * @param lowerLimit
+	 *            The lower limit
+	 * @return A list of integers with terms greater than or equal to lower
+	 *         limit
+	 */
 	private List<Integer> removeTermsBelowLowerLimit(List<Integer> sequence,
 			int lowerLimit) {
 		List<Integer> fibonacciSequence = new ArrayList<Integer>();

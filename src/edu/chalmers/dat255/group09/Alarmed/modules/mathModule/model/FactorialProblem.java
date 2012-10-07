@@ -18,16 +18,16 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
+ * A class representing a FactorialProblem. The problem generates two or more
+ * factorial factors. The user solves the problem by adding upp the sum of the
+ * factorials
  * 
  * @author Joakim Persson
  * 
  */
-// TODO add better documentation
-public class FactorialProblem implements MathProblemType {
+public final class FactorialProblem implements MathProblemType {
 
 	private final static String PROBLEM_HEADER = "What is the sum?";
-
-	// They have to summarize two or three factorial problems
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -40,6 +40,13 @@ public class FactorialProblem implements MathProblemType {
 		return sum;
 	}
 
+	/**
+	 * Calculates the factorial of a specified number
+	 * 
+	 * @param number
+	 *            The factorial number
+	 * @return The calculated factorial
+	 */
 	private int factorial(int number) {
 		if (number <= 1) {
 			return 1;

@@ -18,6 +18,9 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
+ * A class representing an AdditionProblem. The problem generates two or more
+ * numbers. The user solves the problem by calculating the product of the
+ * factors.
  * 
  * @author Joakim Persson
  * 
@@ -27,6 +30,7 @@ public final class MultiplicationProblem implements MathProblemType {
 	private final static String OPERATOR = "*";
 	private final static String PROBLEM_HEADER = "What Is The Product?";
 
+	@Override
 	public int getResult(int[] numbers) {
 		int product = 1;
 		for (int i = 0; i < numbers.length; i++) {

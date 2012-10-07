@@ -16,16 +16,27 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * A utility class for doing prime related actions. For example finding all
+ * prime number between and interval or deciding if a number is a prime number
+ * or not
  * 
  * @author Joakim Persson
  * 
  */
-// TODO add better documentation
 public class PrimeUtil {
 
+	/**
+	 * Finds out if a number is a prime number or not
+	 * 
+	 * @param number
+	 *            The possible prime number
+	 * @return If it is a prime number or not
+	 */
 	public static boolean isPrime(int number) {
+
 		if (number < 2) {
 			return false;
 		}
@@ -34,13 +45,13 @@ public class PrimeUtil {
 			return true;
 		}
 
-		int d = (int) Math.sqrt((double) number);
-
 		if (number % 2 == 0) {
 			return false;
 		}
 
-		for (int j = 3; j <= d; j++) {
+		int root = (int) Math.sqrt((double) number);
+
+		for (int j = 3; j <= root; j++) {
 			if (number % j == 0) {
 				return false;
 			}
@@ -48,16 +59,24 @@ public class PrimeUtil {
 		return true;
 	}
 
-	public static ArrayList<Integer> getPrimeList(int lowerLimit, int upperLimit) {
+	/**
+	 * Get a list of prime numbers between a lower and upper limit [lower,upper)
+	 * 
+	 * @param lowerLimit
+	 *            The lower limit
+	 * @param upperLimit
+	 *            The upper limit
+	 * @return A list of primenumbers
+	 */
+	public static List<Integer> getPrimeList(int lowerLimit, int upperLimit) {
 		Boolean[] tmpPrimeList = createArray(upperLimit);
-		ArrayList<Integer> rtn = new ArrayList<Integer>();
+		List<Integer> primes = new ArrayList<Integer>();
 		for (int i = 2; i < tmpPrimeList.length; i++) {
 			if (tmpPrimeList[i] && i >= lowerLimit) {
-				rtn.add(i);
+				primes.add(i);
 			}
 		}
-		rtn.trimToSize();
-		return rtn;
+		return primes;
 	}
 
 	private static Boolean[] createArray(int numbers) {

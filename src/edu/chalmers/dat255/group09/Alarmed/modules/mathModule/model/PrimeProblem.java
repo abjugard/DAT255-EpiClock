@@ -22,13 +22,15 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 
 /**
  * 
+ * A class representing a PrimeProblem. The problem generates a list of number
+ * and one of these numbers is a prime number and the other numbers is located
+ * within a specified delta. The user solves the problem by picking out which
+ * number is prime.
+ * 
  * @author Joakim Persson
  * 
- *         the user gets four numbers of which one is prime number and should
- *         pick out the prime number
  */
-// TODO add better documentation
-public class PrimeProblem implements MathProblemType {
+public final class PrimeProblem implements MathProblemType {
 	private final static String PROBLEM_HEADER = "Which Number Is Prime?";
 	private final static int NBR_OF_NUMBERS = 4;
 
@@ -67,6 +69,11 @@ public class PrimeProblem implements MathProblemType {
 		return nbrs;
 	}
 
+	/**
+	 * Generates numbers based on the easy difficulty.
+	 * 
+	 * @return An array of number, including one prime number
+	 */
 	private int[] generateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 30;
@@ -76,6 +83,11 @@ public class PrimeProblem implements MathProblemType {
 				deltaToPrime);
 	}
 
+	/**
+	 * Generates numbers based on the medium difficulty.
+	 * 
+	 * @return An array of number, including one prime number
+	 */
 	private int[] generateMediumProblem() {
 		int lowerLimit = 30;
 		int upperLimit = 50;
@@ -85,6 +97,11 @@ public class PrimeProblem implements MathProblemType {
 				deltaToPrime);
 	}
 
+	/**
+	 * Generates numbers based on the hard difficulty.
+	 * 
+	 * @return An array of number, including one prime number
+	 */
 	private int[] generateHardProblem() {
 		int lowerLimit = 50;
 		int upperLimit = 100;
@@ -94,6 +111,19 @@ public class PrimeProblem implements MathProblemType {
 				deltaToPrime);
 	}
 
+	/**
+	 * Generates an array of numbers containing only one prime number in the
+	 * interval [lowerLimit, upperLimit) and the other numbers in in the
+	 * interval [lowerLimit-delta, lowerLimit+delta)
+	 * 
+	 * @param lowerLimit
+	 *            The lower limit for the prime number
+	 * @param upperLimit
+	 *            The upper limit for the prime number
+	 * @param delta
+	 *            The other numbers delta to the prime number
+	 * @return An array of numbers
+	 */
 	private int[] generateRandomNumbersAndPrime(int lowerLimit, int upperLimit,
 			int delta) {
 		List<Integer> primeList = PrimeUtil
@@ -107,13 +137,29 @@ public class PrimeProblem implements MathProblemType {
 
 	}
 
-	private int getRandomIndex(int size) {
+	/**
+	 * Get an random index of a list
+	 * 
+	 * @param listLength
+	 *            The length of the list
+	 * @return An random index within the size of an list
+	 */
+	private int getRandomIndex(int listLength) {
 		int lowerLimit = 0;
-		int diff = size - lowerLimit;
+		int diff = listLength - lowerLimit;
 
 		return getRandomNumberWithInRange(lowerLimit, diff);
 	}
 
+	/**
+	 * Get a random number within a delta to a prime number
+	 * 
+	 * @param primeNumber
+	 *            The prime number to generate numbers around
+	 * @param delta
+	 *            The delta to the prime
+	 * @return An array of random numbers and the prime number
+	 */
 	private int[] getRandomNumbers(int primeNumber, int delta) {
 
 		int[] nbrs = new int[NBR_OF_NUMBERS];
@@ -127,6 +173,17 @@ public class PrimeProblem implements MathProblemType {
 		return randomizeOrder(nbrs);
 	}
 
+	/**
+	 * Get a unique random number
+	 * 
+	 * @param primeNumber
+	 *            The prime number
+	 * @param previousNumbers
+	 *            The previous generated numbers
+	 * @param delta
+	 *            The delta to the prime number
+	 * @return A unique random number
+	 */
 	private int getRandomNumber(int primeNumber, int[] previousNumbers,
 			int delta) {
 		int lowerLimit = primeNumber - delta;
@@ -141,11 +198,30 @@ public class PrimeProblem implements MathProblemType {
 		return number;
 	}
 
+	/**
+	 * Get a random number within and interval [lowerLimit, upperLimit)
+	 * 
+	 * @param lowerLimit
+	 *            The problems lowerlimit
+	 * @param upperLimit
+	 *            The problems upperlimit
+	 * @return An random integer within the interval
+	 */
 	private int getRandomNumberWithInRange(int lowerLimit, int upperLimit) {
 		int diff = upperLimit - lowerLimit;
 		return (int) (lowerLimit + diff * Math.random());
 	}
 
+	/**
+	 * Validates so a number is not already existing in an previous array and
+	 * not is a prime number
+	 * 
+	 * @param previousNumbers
+	 *            The previous numbers in an array
+	 * @param number
+	 *            The new number
+	 * @return If the newNumber exists or not
+	 */
 	private boolean isValidNumber(int[] previousNumbers, int number) {
 
 		for (int i : previousNumbers) {
@@ -157,6 +233,13 @@ public class PrimeProblem implements MathProblemType {
 		return !(PrimeUtil.isPrime(number));
 	}
 
+	/**
+	 * Randomize the order of the items in an array
+	 * 
+	 * @param nbrs
+	 *            The array to randomnize
+	 * @return An array with the items in random order
+	 */
 	private int[] randomizeOrder(int[] nbrs) {
 		int[] randomizedArray = initEmptyArray(nbrs);
 		int index = 0;

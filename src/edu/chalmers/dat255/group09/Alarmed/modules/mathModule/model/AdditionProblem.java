@@ -18,6 +18,8 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
+ * A class representing an AdditionProblem. The problem generates two or more
+ * numbers. The user solves the problem by calculating the sum of the factors.
  * 
  * @author Joakim Persson
  * 
