@@ -45,11 +45,6 @@ public final class MultiplicationProblem implements MathProblemType {
 	}
 
 	@Override
-	public String toString() {
-		return OPERATOR;
-	}
-
-	@Override
 	public int[] generateNumbers(Difficulty difficulty) {
 
 		int[] nbrs = null;

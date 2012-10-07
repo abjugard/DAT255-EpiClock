@@ -45,11 +45,6 @@ public final class AdditionProblem implements MathProblemType {
 	}
 
 	@Override
-	public String toString() {
-		return OPERATOR;
-	}
-
-	@Override
 	public int[] generateNumbers(Difficulty difficulty) {
 
 		int[] nbrs = null;
