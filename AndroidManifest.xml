@@ -38,10 +38,10 @@
             android:name=".activity.BaseActivationActivity"
             android:label="null" >
         </activity>
-        
         <activity
             android:name=".modules.mathModule.activity.MathActivity"
-            android:label="@string/title_activity_math" >
+            android:label="@string/title_activity_math"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
