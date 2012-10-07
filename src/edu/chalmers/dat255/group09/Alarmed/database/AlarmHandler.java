@@ -17,7 +17,6 @@ package edu.chalmers.dat255.group09.Alarmed.database;
 
 import java.util.List;
 
-import android.database.Cursor;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 public interface AlarmHandler {
