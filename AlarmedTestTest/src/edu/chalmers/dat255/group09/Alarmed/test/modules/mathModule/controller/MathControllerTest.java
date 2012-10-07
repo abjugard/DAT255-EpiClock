@@ -20,11 +20,11 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
 
 /**
  * 

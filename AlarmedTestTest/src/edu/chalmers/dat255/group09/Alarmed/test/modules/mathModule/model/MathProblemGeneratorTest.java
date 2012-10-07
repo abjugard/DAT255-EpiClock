@@ -16,12 +16,12 @@
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 
 import android.test.AndroidTestCase;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
 
 /**
  * 
@@ -62,7 +62,6 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 		assertTrue(operator instanceof MathProblemType);
 	}
 
-	// TODO do something better or different
 	public void testOperatorProbability() {
 		int iterations = 100;
 		int numberOfAdditionOperators = 0;

@@ -13,52 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
+package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
 import android.test.AndroidTestCase;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MultiplicationProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
 
 /**
  * 
  * @author Joakim Persson
  * 
  */
-public class MultiplicationProblemTest extends AndroidTestCase {
+public class AdditionProblemTest extends AndroidTestCase {
 
 	private final static int ITERATIONS = 100;
-	private MultiplicationProblem multiProblem;
+	private AdditionProblem additionProblem;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		multiProblem = new MultiplicationProblem();
+		additionProblem = new AdditionProblem();
 	}
 
 	public void testGetPromlemHeader() {
-		String expected = "What Is The Product?";
-		String actual = multiProblem.getProblemHeader();
+		String expected = "What Is The Sum?";
+		String actual = additionProblem.getProblemHeader();
 		assertEquals(expected, actual);
 	}
 
 	public void testGetFormattedString() {
 		int[] nbrs = { 3, 4, 5 };
-		String expected = "3 * 4 * 5 = ?";
-		String actual = multiProblem.getFormattedProblem(nbrs);
+		String expected = "3 + 4 + 5 = ?";
+		String actual = additionProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
 
 	public void testGetResult() {
-		int actualResult = multiProblem.getResult(new int[] { 6, 6 });
-		int expectedResult = 36;
+		int actualResult = additionProblem.getResult(new int[] { 6, 6 });
+		int expectedResult = 12;
 		assertEquals(expectedResult, actualResult);
 
-		actualResult = multiProblem.getResult(new int[] { 2, -1 });
-		expectedResult = -2;
+		actualResult = additionProblem.getResult(new int[] { 2, -1 });
+		expectedResult = 1;
 		assertEquals(expectedResult, actualResult);
 
-		actualResult = multiProblem.getResult(new int[] { 5, -5, -1 });
-		expectedResult = 25;
+		actualResult = additionProblem.getResult(new int[] { 5, -5, 1 });
+		expectedResult = 1;
 		assertEquals(expectedResult, actualResult);
 	}
 
@@ -67,7 +67,7 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		int upperLimit = 10;
 		int expectedNbrOfNumbers = 2;
 
-		testMultiplicationProblem(Difficulty.EASY, lowerLimit, upperLimit,
+		testAdditionProblem(Difficulty.EASY, lowerLimit, upperLimit,
 				expectedNbrOfNumbers);
 	}
 
@@ -76,25 +76,25 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		int upperLimit = 10;
 		int expectedNbrOfNumbers = 3;
 
-		testMultiplicationProblem(Difficulty.MEDIUM, lowerLimit, upperLimit,
+		testAdditionProblem(Difficulty.MEDIUM, lowerLimit, upperLimit,
 				expectedNbrOfNumbers);
 	}
 
 	public void testGenerateHardProblems() {
 		int lowerLimit = 10;
-		int upperLimit = 15;
+		int upperLimit = 500;
 		int expectedNbrOfNumbers = 3;
 
-		testMultiplicationProblem(Difficulty.HARD, lowerLimit, upperLimit,
+		testAdditionProblem(Difficulty.HARD, lowerLimit, upperLimit,
 				expectedNbrOfNumbers);
 	}
 
-	private void testMultiplicationProblem(Difficulty difficulty,
-			int lowerLimit, int upperLimit, int expectedNbrOfNumbers) {
+	private void testAdditionProblem(Difficulty difficulty, int lowerLimit,
+			int upperLimit, int expectedNbrOfNumbers) {
 		int[] nbrs = null;
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			nbrs = multiProblem.generateNumbers(difficulty);
+			nbrs = additionProblem.generateNumbers(difficulty);
 			assertTrue(isCorrectNbrOfNumbers(expectedNbrOfNumbers, nbrs));
 			assertTrue(isNumbersInRange(nbrs, lowerLimit, upperLimit));
 			assertTrue(isNumbersNonNegative(nbrs));
@@ -128,6 +128,6 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		multiProblem = null;
+		additionProblem = null;
 	}
 }

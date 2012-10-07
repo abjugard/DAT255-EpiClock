@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
+package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**

@@ -16,6 +16,11 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FactorialProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FibonacciProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.PrimeProblem;
 
 /**
  * 
@@ -33,7 +38,6 @@ public class MathProblemGenerator {
 		return new MathProblem(numbers, operator);
 	}
 
-	// TODO do something better
 	private MathProblemType generateOperator() {
 
 		MathProblemType problemType = null;
@@ -58,6 +62,7 @@ public class MathProblemGenerator {
 		if (rand == 4) {
 			problemType = new FibonacciProblem();
 		}
+
 		return problemType;
 	}
 }

@@ -13,40 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
+package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
- * A class representing an AdditionProblem. The problem generates two or more
- * numbers. The user solves the problem by calculating the sum of the factors.
+ * A class representing a FactorialProblem. The problem generates two or more
+ * factorial factors. The user solves the problem by adding upp the sum of the
+ * factorials
  * 
  * @author Joakim Persson
  * 
  */
-public final class AdditionProblem implements MathProblemType {
+public final class FactorialProblem implements MathProblemType {
 
-	private final static String PROBLEM_HEADER = "What Is The Sum?";
-	private final static String OPERATOR = "+";
-
-	@Override
-	public String getProblemHeader() {
-		return PROBLEM_HEADER;
-	}
+	private final static String PROBLEM_HEADER = "What is the sum?";
 
 	@Override
 	public int getResult(int[] numbers) {
 		int sum = 0;
-		for (int i = 0; i < numbers.length; i++) {
-			sum += numbers[i];
-		}
-		return sum;
 
+		for (int number : numbers) {
+			sum += factorial(number);
+		}
+
+		return sum;
 	}
 
-	@Override
-	public String toString() {
-		return OPERATOR;
+	/**
+	 * Calculates the factorial of a specified number
+	 * 
+	 * @param number
+	 *            The factorial number
+	 * @return The calculated factorial
+	 */
+	private int factorial(int number) {
+		if (number <= 1) {
+			return 1;
+		} else {
+			return (number * factorial(number - 1));
+		}
 	}
 
 	@Override
@@ -70,54 +77,56 @@ public final class AdditionProblem implements MathProblemType {
 	}
 
 	private int[] generateEasyProblem() {
-		int numberOfNumbers = 2;
-		int upperLimit = 10;
 		int lowerLimit = 0;
+		int upperLimit = 6;
+		int nbrOfFactors = 2;
 
-		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
-
+		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
 	private int[] generateMediumProblem() {
-		int numberOfNumbers = 3;
-		int upperLimit = 10;
 		int lowerLimit = 0;
+		int upperLimit = 6;
+		int nbrOfFactors = 3;
 
-		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
+		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
 	private int[] generateHardProblem() {
-		int numberOfNumbers = 3;
-		int upperLimit = 50;
-		int lowerLimit = 10;
-
-		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
+		int lowerLimit = 0;
+		int upperLimit = 8;
+		int nbrOfFactors = 2;
+		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
-	private int[] generateRandomNumbers(int numberOfNumbers, int upperLimit,
-			int lowerLimit) {
-		int[] numbers;
-		numbers = new int[numberOfNumbers];
+	private int[] generateRandomNumbers(int nbrOfFactors, int lowerLimit,
+			int upperLimit) {
+		int[] nbrs = new int[nbrOfFactors];
 
-		for (int i = 0; i < numberOfNumbers; i++) {
-			numbers[i] = generateRandomNumber(lowerLimit, upperLimit);
+		for (int i = 1; i < nbrOfFactors; i++) {
+			nbrs[i] = getRandomNumber(lowerLimit, upperLimit);
 		}
-		return numbers;
+
+		return nbrs;
 	}
 
-	private int generateRandomNumber(int lowerLimit, int upperLimit) {
+	private int getRandomNumber(int lowerLimit, int upperLimit) {
 		int diff = upperLimit - lowerLimit;
-
 		return (int) (lowerLimit + diff * Math.random());
+	}
+
+	@Override
+	public String getProblemHeader() {
+		return PROBLEM_HEADER;
 	}
 
 	@Override
 	public String getFormattedProblem(int[] nbrs) {
 		StringBuilder builder = new StringBuilder();
-		String operatorSign = OPERATOR;
+		String operatorSign = "+";
 
 		for (int i = 0; i < nbrs.length; i++) {
-			builder.append(nbrs[i] + " ");
+			builder.append(nbrs[i] + "! ");
 			if ((i + 1) != nbrs.length) {
 				builder.append(operatorSign + " ");
 			}
@@ -125,6 +134,6 @@ public final class AdditionProblem implements MathProblemType {
 
 		builder.append("= ?");
 		return builder.toString();
-
 	}
+
 }

@@ -3,9 +3,9 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 import java.util.Arrays;
 
 import android.test.AndroidTestCase;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
 
 public class MathProblemTest extends AndroidTestCase {
 

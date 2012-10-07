@@ -13,35 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
+package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
  * A class representing an AdditionProblem. The problem generates two or more
- * numbers. The user solves the problem by calculating the product of the
- * factors.
+ * numbers. The user solves the problem by calculating the sum of the factors.
  * 
  * @author Joakim Persson
  * 
  */
-public final class MultiplicationProblem implements MathProblemType {
+public final class AdditionProblem implements MathProblemType {
 
-	private final static String OPERATOR = "*";
-	private final static String PROBLEM_HEADER = "What Is The Product?";
-
-	@Override
-	public int getResult(int[] numbers) {
-		int product = 1;
-		for (int i = 0; i < numbers.length; i++) {
-			product *= numbers[i];
-		}
-		return product;
-	}
+	private final static String PROBLEM_HEADER = "What Is The Sum?";
+	private final static String OPERATOR = "+";
 
 	@Override
 	public String getProblemHeader() {
 		return PROBLEM_HEADER;
+	}
+
+	@Override
+	public int getResult(int[] numbers) {
+		int sum = 0;
+		for (int i = 0; i < numbers.length; i++) {
+			sum += numbers[i];
+		}
+		return sum;
+
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public final class MultiplicationProblem implements MathProblemType {
 
 	private int[] generateHardProblem() {
 		int numberOfNumbers = 3;
-		int upperLimit = 15;
+		int upperLimit = 50;
 		int lowerLimit = 10;
 
 		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
