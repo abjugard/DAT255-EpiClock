@@ -17,7 +17,6 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 
 import java.util.List;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemType;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 

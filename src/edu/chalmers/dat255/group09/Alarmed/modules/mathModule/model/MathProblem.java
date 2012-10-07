@@ -17,6 +17,8 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 
 import java.util.Arrays;
 
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
+
 public class MathProblem {
 
 	private int[] numbers;
