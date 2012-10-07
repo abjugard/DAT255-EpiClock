@@ -80,7 +80,7 @@ public class AlarmController {
 
 	}
 
-	public boolean alarmRecived(int id) {
+	public boolean alarmReceived(int id) {
 		Alarm alarm = alarmHandler.fetchAlarm(id);
 		if (alarm != null && alarm.isEnabled()) {
 			alarmHandler.deleteAlarm(id);

@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 	private static final int DELETE_ALARM_MENU = 1;
 	private static final int EDIT_ALARM_MENU = 2;
 	private BrowseAlarmAdapter alarmAdapter;
-	private AlarmController aControll;
+	private AlarmController aControl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,14 +51,14 @@ public class MainActivity extends Activity {
 	}
 
 	private void initController() {
-		aControll = AlarmController.getInstance();
-		aControll.init(this);
+		aControl = AlarmController.getInstance();
+		aControl.init(this);
 	}
 
 	private void initAdapter() {
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
 		alarmAdapter = new BrowseAlarmAdapter(this, R.layout.alarms_list_item,
-				aControll.getAllAlarms());
+				aControl.getAllAlarms());
 		listView.setAdapter(alarmAdapter);
 		registerForContextMenu(listView);
 	}
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 	public void onAlarmEnable(View view) {
 		if (view instanceof CheckBox) {
 			CheckBox box = (CheckBox) view;
-			aControll.enableAlarm((Integer) box.getTag(), box.isChecked());
+			aControl.enableAlarm((Integer) box.getTag(), box.isChecked());
 		}
 
 	}
@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
 		
 		switch (item.getItemId()) {
 		case DELETE_ALARM_MENU:
-			aControll.deleteAlarm(cursor.getInt(cursor.getColumnIndex("_id")));
+			aControl.deleteAlarm(cursor.getInt(cursor.getColumnIndex("_id")));
 			break;
 		case EDIT_ALARM_MENU:
 			editAlarm(cursor);
@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
 		intent.putExtra("time",
 				cursor.getString(cursor.getColumnIndex("time")));
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
-		overrrideTransition();
+		overrideTransition();
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
 		if (item.getItemId() == R.id.menu_add_alarm) {
 			startActivityForResult(new Intent(this, CreateAlarm.class),
 					ADD_ALARM_REQUEST_CODE);
-			overrrideTransition();
+			overrideTransition();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -132,7 +132,7 @@ public class MainActivity extends Activity {
 	/**
 	 * Makes the transition between views smoother by animating them.
 	 */
-	private void overrrideTransition() {
+	private void overrideTransition() {
 		int fadeIn = android.R.anim.fade_in;
 		int fadeOut = android.R.anim.fade_out;
 		overridePendingTransition(fadeIn, fadeOut);
@@ -145,7 +145,7 @@ public class MainActivity extends Activity {
 				createAlarm(data.getIntExtra("hours", -1),
 						data.getIntExtra("minutes", -1));
 			} else if (requestCode == EDIT_ALARM_REQUEST_CODE) {
-				aControll.deleteAlarm(data.getIntExtra("ID", -1));
+				aControl.deleteAlarm(data.getIntExtra("ID", -1));
 				createAlarm(data.getIntExtra("hours", -1),
 						data.getIntExtra("minutes", -1));
 			}
@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
 	 */
 
 	private void createAlarm(int hour, int minute) {
-		aControll.createAlarm(hour, minute);
+		aControl.createAlarm(hour, minute);
 		updateList();
 	}
 
@@ -187,13 +187,13 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		aControll.destroy();
+		aControl.destroy();
 	}
 
 	/**
 	 * Updates the list of the alarms to the newest
 	 */
 	private void updateList() {
-		alarmAdapter.updateList(aControll.getAllAlarms());
+		alarmAdapter.updateList(aControl.getAllAlarms());
 	}
 }
