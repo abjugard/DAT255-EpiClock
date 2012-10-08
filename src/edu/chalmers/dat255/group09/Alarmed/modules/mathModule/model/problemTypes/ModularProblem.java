@@ -28,17 +28,79 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 public class ModularProblem implements MathProblemType {
 
 	private final static String PROBLEM_HEADER = "Solve for x!";
+	private final static int NBR_OF_NUMBERS = 2;
 
 	@Override
 	public int getResult(int[] numbers) {
-		// TODO Auto-generated method stub
-		return 0;
+		// a = b mod n
+		int b = numbers[0];
+		int n = numbers[1];
+		int a = b % n;
+
+		if (a < 0) {
+			a += n;
+		}
+
+		return a;
 	}
 
 	@Override
 	public int[] generateNumbers(Difficulty difficulty) {
-		// TODO Auto-generated method stub
-		return null;
+		int[] nbrs = null;
+
+		switch (difficulty) {
+		case EASY:
+			nbrs = generateEasyProblem();
+			break;
+		case MEDIUM:
+			nbrs = generateMediumProblem();
+			break;
+		case HARD:
+			nbrs = generateHardProblem();
+			break;
+		}
+
+		return nbrs;
+	}
+
+	private int[] generateEasyProblem() {
+		int lowerLimit = 0;
+		int upperLimit = 30;
+
+		return generateRandomNumbers(lowerLimit, upperLimit);
+	}
+
+	private int[] generateMediumProblem() {
+		int lowerLimit = -30;
+		int upperLimit = 30;
+
+		return generateRandomNumbers(lowerLimit, upperLimit);
+	}
+
+	private int[] generateHardProblem() {
+		int lowerLimit = -50;
+		int upperLimit = 50;
+
+		return generateRandomNumbers(lowerLimit, upperLimit);
+	}
+
+	private int[] generateRandomNumbers(int lowerLimit, int upperLimit) {
+
+		int[] nbrs = new int[NBR_OF_NUMBERS];
+
+		nbrs[0] = getRandomNumberWithInRange(lowerLimit, upperLimit);
+		nbrs[1] = getRandomModulusNumber(upperLimit);
+
+		return nbrs;
+	}
+
+	private int getRandomModulusNumber(int upperLimit) {
+		return getRandomNumberWithInRange(0, upperLimit);
+	}
+
+	private int getRandomNumberWithInRange(int lowerLimit, int upperLimit) {
+		int diff = upperLimit - lowerLimit;
+		return (int) (lowerLimit + diff * Math.random());
 	}
 
 	@Override

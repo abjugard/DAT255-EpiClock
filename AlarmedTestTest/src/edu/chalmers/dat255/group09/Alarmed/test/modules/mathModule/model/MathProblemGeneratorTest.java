@@ -62,12 +62,14 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 		assertTrue(operator instanceof MathProblemType);
 	}
 
+	// TODO improve
+	// test that every operator at least appear once as well
 	public void testOperatorProbability() {
 		int iterations = 100;
 		int numberOfAdditionOperators = 0;
-		int expectedNumberOfAdditionOperators = 20;
+		int expectedNumberOfAdditionOperators = 15;
 		int numberOfMultiplicationOperators = 0;
-		int expectedNumberOfMultiplicationOperators = 20;
+		int expectedNumberOfMultiplicationOperators = 15;
 		int delta = 10;
 
 		MathProblem problem = null;

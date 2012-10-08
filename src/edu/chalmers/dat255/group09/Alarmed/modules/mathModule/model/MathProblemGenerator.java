@@ -20,6 +20,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FactorialProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FibonacciProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.ModularProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.PrimeProblem;
 
@@ -30,7 +31,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  */
 public class MathProblemGenerator {
 
-	private final static int NBR_OF_OPERATORS = 5;
+	private final static int NBR_OF_OPERATORS = 6;
 
 	public MathProblem generateProblem(Difficulty difficulty) {
 		MathProblemType operator = generateProblemType();
@@ -62,6 +63,10 @@ public class MathProblemGenerator {
 
 		if (rand == 4) {
 			problemType = new FibonacciProblem();
+		}
+
+		if (rand == 5) {
+			problemType = new ModularProblem();
 		}
 
 		return problemType;
