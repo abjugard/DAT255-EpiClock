@@ -28,7 +28,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 	AlarmController ac;
 	MockContext context;
 	AlarmHandler handler;
-	
+
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
@@ -37,7 +37,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 		handler = new MockAlarmHandler().openCon();
 		ac.init(context, handler);
 	}
-	
+
 	public void testDestroy() {
 		setUpAlarms();
 		ac.destroy();
@@ -66,24 +66,35 @@ public class AlarmControllerTest extends AndroidTestCase {
 		ac.alarmReceived(2);
 		assertFalse(handler.isEnabled(2));
 	}
+
 	public void testAlarmEnabled() {
 		setUpAlarms();
 		assertTrue(ac.enableAlarm(1, false));
 		assertFalse(ac.enableAlarm(2, true));
-		assertFalse(handler.isEnabled(1));
+		assertFalse(ac.isAlarmEnabled(1));
 	}
+
 	public void testCreateAlarm() {
 		setUpAlarms();
 		assertNotNull(handler.fetchAlarm(1));
 		assertNotNull(handler.fetchAlarm(2));
 	}
-	private void setUpAlarms(){
+
+	private void setUpAlarms() {
 		ac.createAlarm(10, 10);
 		ac.createAlarm(20, 20);
 	}
 
-
-
+	/**
+	 * The MockAlarmHandler is an handler which instead of using a database is
+	 * using a list to represent the stored values. The biggest difference
+	 * between this class and a regular implementation of the interface is that
+	 * the fetchFirstEnabledAlarm is returning a null value because of the code
+	 * not able to run tests on.
+	 * 
+	 * @author Daniel Augurell
+	 * 
+	 */
 	private class MockAlarmHandler implements AlarmHandler {
 		private int nbrID;
 		private List<Alarm> alarms;
@@ -115,7 +126,6 @@ public class AlarmControllerTest extends AndroidTestCase {
 		}
 
 		public Alarm fetchFirstEnabledAlarm() {
-			
 			return null;
 		}
 
