@@ -24,11 +24,14 @@ import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 public class AlarmControllerTest extends AndroidTestCase {
-
 	
-	private class MockAlarmHandler implements AlarmHandler{
+	
+	
+
+	private class MockAlarmHandler implements AlarmHandler {
 		private int nbrID;
 		List<Alarm> alarms;
+
 		public AlarmHandler openCon() {
 			alarms = new ArrayList<Alarm>();
 			return this;
@@ -46,7 +49,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 
 		public boolean deleteAlarm(int alarmID) {
 			for (Alarm alarm : alarms) {
-				if(alarm.getId() == alarmID){
+				if (alarm.getId() == alarmID) {
 					alarms.remove(alarm);
 					return true;
 				}
@@ -59,7 +62,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 			Collections.copy(sortedList, alarms);
 			Collections.sort(sortedList);
 			for (Alarm alarm : sortedList) {
-				if(alarm.isEnabled()){
+				if (alarm.isEnabled()) {
 					return alarm;
 				}
 			}
@@ -67,24 +70,42 @@ public class AlarmControllerTest extends AndroidTestCase {
 		}
 
 		public List<Alarm> fetchAllAlarms() {
-			return null;
+			return alarms;
 		}
 
 		public Alarm fetchAlarm(int alarmID) {
+			for (Alarm alarm : alarms) {
+				if (alarm.getId() == alarmID) {
+					return alarm;
+				}
+			}
 			return null;
 		}
 
 		public int getNumberOfAlarms() {
-			return 0;
+			return alarms.size();
 		}
 
 		public boolean isEnabled(int id) {
+			for (Alarm alarm : alarms) {
+				if (alarm.getId() == id) {
+					return alarm.isEnabled();
+				}
+			}
 			return false;
 		}
 
 		public boolean setAlarmEnabled(int id, boolean enable) {
+
+			for (Alarm alarm : alarms) {
+				if (alarm.getId() == id) {
+					boolean change = alarm.isEnabled() == enable;
+					alarm.setEnabled(enable);
+					return change;
+				}
+			}
 			return false;
 		}
-		
+
 	}
 }
