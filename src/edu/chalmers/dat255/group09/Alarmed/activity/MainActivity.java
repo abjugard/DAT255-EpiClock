@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
@@ -175,6 +176,8 @@ public class MainActivity extends Activity {
 
 	private void createAlarm(int hour, int minute) {
 		aControl.createAlarm(hour, minute);
+		Toast.makeText(this, new Alarm(hour, minute, 0).toString(),
+				Toast.LENGTH_LONG).show();
 		updateList();
 	}
 

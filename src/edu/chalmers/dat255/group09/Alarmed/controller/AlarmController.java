@@ -56,9 +56,6 @@ public class AlarmController {
 	public void createAlarm(int hour, int minute) {
 		alarmHandler.createAlarm(hour, minute, false);
 		setAlarm();
-		Log.d("CreateAlarm", hour + ":" + minute);
-		Toast.makeText(context, new Alarm(hour, minute, 0).toString(),
-				Toast.LENGTH_LONG).show();
 	}
 
 	private void setAlarm() {
