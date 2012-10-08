@@ -26,9 +26,9 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  * 
  */
 public class ModularProblem implements MathProblemType {
-	
+
 	private final static String PROBLEM_HEADER = "Solve for x!";
-	
+
 	@Override
 	public int getResult(int[] numbers) {
 		// TODO Auto-generated method stub
@@ -43,14 +43,20 @@ public class ModularProblem implements MathProblemType {
 
 	@Override
 	public String getProblemHeader() {
-		// TODO Auto-generated method stub
-		return null;
+		return PROBLEM_HEADER;
 	}
 
 	@Override
 	public String getFormattedProblem(int[] nbrs) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO not so good...
+		StringBuilder builder = new StringBuilder("");
+		if (nbrs.length == 2) {
+			builder.append("x = ");
+			builder.append(nbrs[0] + " ");
+			builder.append("mod ");
+			builder.append(nbrs[1]);
+		}
+		return builder.toString();
 	}
 
 }

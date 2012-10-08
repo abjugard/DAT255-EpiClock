@@ -16,12 +16,33 @@
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
 import android.test.AndroidTestCase;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.ModularProblem;
 
 /**
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class ModularProblemTest extends AndroidTestCase {
 
+	private ModularProblem modularProblem;
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		modularProblem = new ModularProblem();
+	}
+
+	public void testGetPromlemHeader() {
+		String expected = "Solve for x!";
+		String actual = modularProblem.getProblemHeader();
+		assertEquals(expected, actual);
+	}
+
+	public void testGetFormattedString() {
+		int[] nbrs = { 3, 4 };
+		String expected = "x = 3 mod 4";
+		String actual = modularProblem.getFormattedProblem(nbrs);
+		assertEquals(expected, actual);
+	}
 }

@@ -79,8 +79,9 @@ public class FibonacciProblem implements MathProblemType {
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
 
+	//TODO add missing comment
 	/**
-	 * 
+	 *
 	 * @param lowerLimit
 	 * @param upperLimit
 	 * @return
