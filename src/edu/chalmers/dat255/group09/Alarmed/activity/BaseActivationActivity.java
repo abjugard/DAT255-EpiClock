@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian BjugŒrd, Andreas RolŽn
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,16 +27,13 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
 public abstract class BaseActivationActivity extends Activity {
 
-	private final static String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activty.BaseActivationActivity";
+	private final static String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity";
 	private WakeLock wakeLock;
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
@@ -63,11 +60,10 @@ public abstract class BaseActivationActivity extends Activity {
 	private void initWakeLock() {
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
-		wakeLock = powerManager
-				.newWakeLock(
-						(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-								| PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP),
-						WAKE_LOCK_TAG);
+		wakeLock = powerManager.newWakeLock(
+				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+						| PowerManager.FULL_WAKE_LOCK
+						| PowerManager.ACQUIRE_CAUSES_WAKEUP, WAKE_LOCK_TAG);
 
 		wakeLock.acquire();
 	}
@@ -99,6 +95,7 @@ public abstract class BaseActivationActivity extends Activity {
 		} catch (IOException e) {
 			Log.d("Sound", "Sound I/O error");
 		}
+
 	}
 
 	private Uri getAlarmTone() {
@@ -123,22 +120,8 @@ public abstract class BaseActivationActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public void onBackPressed() {
-		// The user is not aloud to go back
+		// The user is not aloud to use the backbutton
 	}
+
 }
