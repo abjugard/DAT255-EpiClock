@@ -19,7 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.activity.MathActivity;
+import edu.chalmers.dat255.group09.Alarmed.factory.ModuleFactory;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -29,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		aControll.init(context);
 		if (aControll.alarmReceived(Integer
 				.parseInt(intent.getData().toString()))) {
-			Intent activateIntent = new Intent(context, MathActivity.class);
+			Intent activateIntent = new Intent(context, ModuleFactory.getModule("MathModule"));
 			activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(activateIntent);
 		}
