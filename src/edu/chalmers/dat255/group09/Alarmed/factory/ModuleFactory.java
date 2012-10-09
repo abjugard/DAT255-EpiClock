@@ -17,29 +17,31 @@ package edu.chalmers.dat255.group09.Alarmed.factory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.activity.MathActivity;
 
 /**
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class ModuleFactory {
-	
-	private static Map<String, Class<?>>modules;
-	
+
+	private static Map<String, Class<?>> modules;
+
 	static {
 		modules = new HashMap<String, Class<?>>();
 		modules.put("MathModule", MathActivity.class);
 	}
-	
+
 	public static String[] getModuleNames() {
-		return (String[]) modules.keySet().toArray();
+		Set<String> names = modules.keySet();
+		return names.toArray(new String[0]);
 	}
-	
-	public static Class<?>getModule(String moduleName) {
+
+	public static Class<?> getModule(String moduleName) {
 		return modules.get(moduleName);
 	}
-	
+
 }

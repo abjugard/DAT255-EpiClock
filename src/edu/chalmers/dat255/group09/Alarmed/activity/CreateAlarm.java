@@ -25,8 +25,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.factory.ModuleFactory;
 
 public class CreateAlarm extends Activity {
 
@@ -40,6 +43,7 @@ public class CreateAlarm extends Activity {
 
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
+		initTaskSpinner();
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -66,6 +70,17 @@ public class CreateAlarm extends Activity {
 		}
 		timePicker.setCurrentHour(hour);
 		timePicker.setCurrentMinute(minute);
+	}
+
+	private void initTaskSpinner() {
+		Spinner spinner = (Spinner) findViewById(R.id.activity_create_alarm_task_spinner);
+		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+				this, android.R.layout.simple_spinner_item,
+				ModuleFactory.getModuleNames());
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		spinner.setAdapter(adapter);
+
 	}
 
 	@Override
@@ -119,4 +134,5 @@ public class CreateAlarm extends Activity {
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
 		setTimepickerToCurrentTime(timePicker);
 	}
+
 }
