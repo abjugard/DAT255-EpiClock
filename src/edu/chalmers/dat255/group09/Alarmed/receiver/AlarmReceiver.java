@@ -29,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		aControll.init(context);
 		if (aControll.alarmReceived(Integer
 				.parseInt(intent.getData().toString()))) {
-			Intent activateIntent = new Intent(context, ModuleFactory.getModule("MathModule"));
+			Intent activateIntent = new Intent(context, ModuleFactory.getModule(intent.getStringExtra("module")));
 			activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(activateIntent);
 		}

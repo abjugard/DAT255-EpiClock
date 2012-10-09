@@ -22,8 +22,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
@@ -53,8 +51,8 @@ public class AlarmController {
 		alarmHandler = handler.openCon();
 	}
 
-	public void createAlarm(int hour, int minute) {
-		alarmHandler.createAlarm(hour, minute, false);
+	public void createAlarm(int hour, int minute, String module) {
+		alarmHandler.createAlarm(hour, minute, false, module);
 		setAlarm();
 	}
 
@@ -65,6 +63,7 @@ public class AlarmController {
 
 			Intent intent = new Intent(context, AlarmReceiver.class);
 			intent.setData(Uri.parse("" + nextAlarm.getId()));
+			intent.putExtra("module", nextAlarm.getModule());
 			PendingIntent sender = PendingIntent.getBroadcast(context, 0,
 					intent, Intent.FILL_IN_DATA);
 

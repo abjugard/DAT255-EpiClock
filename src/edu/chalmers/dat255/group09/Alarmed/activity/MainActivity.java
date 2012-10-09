@@ -144,11 +144,11 @@ public class MainActivity extends Activity {
 		if (isResonseValid(resultCode)) {
 			if (requestCode == ADD_ALARM_REQUEST_CODE) {
 				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1));
+						data.getIntExtra("minutes", -1), data.getStringExtra("module"));
 			} else if (requestCode == EDIT_ALARM_REQUEST_CODE) {
 				aControl.deleteAlarm(data.getIntExtra("ID", -1));
 				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1));
+						data.getIntExtra("minutes", -1), data.getStringExtra("module"));
 			}
 
 		}
@@ -174,9 +174,9 @@ public class MainActivity extends Activity {
 	 *            The minute of the new alarm
 	 */
 
-	private void createAlarm(int hour, int minute) {
-		aControl.createAlarm(hour, minute);
-		Toast.makeText(this, new Alarm(hour, minute, 0).toString(),
+	private void createAlarm(int hour, int minute, String module) {
+		aControl.createAlarm(hour, minute, module);
+		Toast.makeText(this, new Alarm(hour, minute, 0, "").toString(),
 				Toast.LENGTH_LONG).show();
 		updateList();
 	}

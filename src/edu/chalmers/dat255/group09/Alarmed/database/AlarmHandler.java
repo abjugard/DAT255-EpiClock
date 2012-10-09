@@ -44,10 +44,13 @@ public interface AlarmHandler {
 	 *            The minute which the alarm has been set to trigger on
 	 * @param recurring
 	 *            True if the alarm is set to be recurring.
+	 * @param module
+	 *            The name of the module to be set
 	 * @return the id of the created Alarm, or -1 if an error occurred
 	 */
 
-	public long createAlarm(int hour, int minute, boolean recurring);
+	public long createAlarm(int hour, int minute, boolean recurring,
+			String module);
 
 	/**
 	 * Deletes an Alarm with a specified id.
@@ -58,7 +61,6 @@ public interface AlarmHandler {
 	 */
 
 	public abstract boolean deleteAlarm(int alarmID);
-
 
 	/**
 	 * Fetches the first alarm given by the time to the next occurring alarm.

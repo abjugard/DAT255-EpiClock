@@ -23,8 +23,9 @@ public class Alarm implements Comparable<Alarm> {
 	private final int alarmMinutes;
 	private final int id;
 	private boolean enabled;
+	private String module;
 
-	public Alarm(int hours, int minutes, int id)
+	public Alarm(int hours, int minutes, int id, String module)
 			throws IllegalArgumentException {
 
 		if (isIllegalHour(hours) || isIllegalMinutes(minutes)) {
@@ -34,6 +35,7 @@ public class Alarm implements Comparable<Alarm> {
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
 		this.id = id;
+		this.module = module;
 		this.enabled = true;
 	}
 
@@ -163,4 +165,13 @@ public class Alarm implements Comparable<Alarm> {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
+	
 }

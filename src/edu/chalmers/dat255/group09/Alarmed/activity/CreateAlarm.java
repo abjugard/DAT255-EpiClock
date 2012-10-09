@@ -108,13 +108,17 @@ public class CreateAlarm extends Activity {
 	public void onSetAlarmBtnPressed(View view) {
 
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
-
+		Spinner spinner = (Spinner) findViewById(R.id.activity_create_alarm_task_spinner);
+		
 		int hours = timePicker.getCurrentHour();
 		int minutes = timePicker.getCurrentMinute();
+		
+		String module = (String) spinner.getSelectedItem();
 
 		Intent intent = getIntent();
 		intent.putExtra("hours", hours);
 		intent.putExtra("minutes", minutes);
+		intent.putExtra("module", module);
 
 		this.setResult(RESULT_OK, intent);
 		finish();

@@ -87,7 +87,7 @@ public class AlarmTest extends AndroidTestCase {
 		int hours = (currentTime + hoursToAdd) % 24;
 		int minutes = (currentMinute + minutesToAdd) % 60;
 
-		return new Alarm(hours, minutes, 0).getTimeInMilliSeconds();
+		return new Alarm(hours, minutes, 0, "").getTimeInMilliSeconds();
 	}
 
 	private long getExpectedTime(int hoursToAdd, int minutesToAdd) {
@@ -113,7 +113,7 @@ public class AlarmTest extends AndroidTestCase {
 		if (minuteToTrigger >= 60) {
 			hourToTrigger++;
 		}
-		return new Alarm((hourToTrigger % 24), (minuteToTrigger % 60), 0);
+		return new Alarm((hourToTrigger % 24), (minuteToTrigger % 60), 0, "");
 	}
 
 	public void testOneMinuteToString() {
@@ -178,7 +178,7 @@ public class AlarmTest extends AndroidTestCase {
 
 	public void testIllegalHourInput() {
 		try {
-			new Alarm(24, 23, 0);
+			new Alarm(24, 23, 0, "");
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -187,7 +187,7 @@ public class AlarmTest extends AndroidTestCase {
 
 	public void testNegativeHourInput() {
 		try {
-			new Alarm(-3, 23, 0);
+			new Alarm(-3, 23, 0, "");
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -197,7 +197,7 @@ public class AlarmTest extends AndroidTestCase {
 
 	public void testIllegalMinuteInput() {
 		try {
-			new Alarm(0, 60, 0);
+			new Alarm(0, 60, 0, "");
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -207,7 +207,7 @@ public class AlarmTest extends AndroidTestCase {
 
 	public void testNegativeMinuteInput() {
 		try {
-			new Alarm(22, -60, 0);
+			new Alarm(22, -60, 0, "");
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -217,7 +217,7 @@ public class AlarmTest extends AndroidTestCase {
 
 	public void testNegativeHourMinuteInput() {
 		try {
-			new Alarm(-1, -2, 0);
+			new Alarm(-1, -2, 0, "");
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -227,7 +227,7 @@ public class AlarmTest extends AndroidTestCase {
 
 	public void testIllegalHourMinuteInput() {
 		try {
-			new Alarm(24, 60, 0);
+			new Alarm(24, 60, 0, "");
 			fail("Should generate an illegalargumentexpection");
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -235,37 +235,37 @@ public class AlarmTest extends AndroidTestCase {
 	}
 
 	public void testGetID() {
-		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm alarm = new Alarm(20, 20, 1, "");
 		int actual = 1;
 		assertEquals(alarm.getId(), actual);
 	}
 
 	public void testGetAlarmHours() {
-		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm alarm = new Alarm(20, 20, 1, "");
 		int actual = 20;
 		assertEquals(alarm.getAlarmHours(), actual);
 	}
 
 	public void testGetAlarmMinutes() {
-		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm alarm = new Alarm(20, 20, 1, "");
 		int actual = 20;
 		assertEquals(alarm.getAlarmMinutes(), actual);
 	}
 
 	public void testHashCode() {
-		Alarm alarm = new Alarm(20, 20, 1);
-		Alarm otherAlarm = new Alarm(21, 20, 2);
+		Alarm alarm = new Alarm(20, 20, 1, "");
+		Alarm otherAlarm = new Alarm(21, 20, 2, "");
 
 		assertFalse(alarm.hashCode() == otherAlarm.hashCode());
 
-		otherAlarm = new Alarm(20, 20, 2);
+		otherAlarm = new Alarm(20, 20, 2, "");
 		assertTrue(alarm.hashCode() == otherAlarm.hashCode());
 	}
 
 	public void testEquals() {
 
-		Alarm alarm = new Alarm(20, 20, 1);
-		Alarm otherAlarm = new Alarm(21, 20, 2);
+		Alarm alarm = new Alarm(20, 20, 1, "");
+		Alarm otherAlarm = new Alarm(21, 20, 2, "");
 
 		// // Testing for self refrence and null
 		assertTrue(alarm.equals(alarm));
@@ -273,7 +273,7 @@ public class AlarmTest extends AndroidTestCase {
 
 		assertFalse(alarm.equals(otherAlarm));
 
-		otherAlarm = new Alarm(20, 20, 2);
+		otherAlarm = new Alarm(20, 20, 2, "");
 		assertTrue(alarm.equals(otherAlarm));
 	}
 
@@ -284,23 +284,23 @@ public class AlarmTest extends AndroidTestCase {
 		// time
 		int hour = currentHour > 12 ? 6 : 18;
 		int minute = 20;
-		Alarm alarm = new Alarm(hour, minute, 1);
-		Alarm otherAlarm = new Alarm(hour + 1, minute, 1);
+		Alarm alarm = new Alarm(hour, minute, 1, "");
+		Alarm otherAlarm = new Alarm(hour + 1, minute, 1, "");
 
 		assertTrue(alarm.compareTo(otherAlarm) < 0);
 
-		otherAlarm = new Alarm(hour, minute, 2);
+		otherAlarm = new Alarm(hour, minute, 2, "");
 
 		assertTrue(alarm.compareTo(otherAlarm) == 0);
 
-		otherAlarm = new Alarm(hour - 1, minute - 1, 2);
+		otherAlarm = new Alarm(hour - 1, minute - 1, 2, "");
 
 		assertTrue(alarm.compareTo(otherAlarm) > 0);
 	}
 
 	public void testEnabled() {
 
-		Alarm alarm = new Alarm(20, 20, 1);
+		Alarm alarm = new Alarm(20, 20, 1, "");
 
 		assertTrue(alarm.isEnabled());
 
@@ -311,5 +311,15 @@ public class AlarmTest extends AndroidTestCase {
 		alarm.setEnabled(true);
 
 		assertTrue(alarm.isEnabled());
+	}
+	public void testModule(){
+		String moduleName = "module";
+		Alarm alarm = new Alarm(20, 20, 1, moduleName);
+
+		assertEquals(alarm.getModule(), moduleName);
+
+		alarm.setModule("module2");
+
+		assertFalse(alarm.getModule().equals(moduleName));
 	}
 }
