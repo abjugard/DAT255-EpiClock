@@ -113,7 +113,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 		}
 
 		public long createAlarm(int hour, int minute, boolean recurring, String module) {
-			Alarm alarm = new Alarm(hour, minute, ++nbrID, module);
+			Alarm alarm = new Alarm(hour, minute, ++nbrID, module, 0);
 			alarms.add(alarm);
 			return alarm.getId();
 		}
