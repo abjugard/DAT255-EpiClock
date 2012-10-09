@@ -52,15 +52,17 @@ public class DatabaseHandler implements AlarmHandler {
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_ENABLED = "enabled";
 	public static final String KEY_MODULE = "module";
+	public static final String KEY_VOLUME = "volume";
 
 	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING,
-			KEY_ENABLED, KEY_MODULE };
+			KEY_ENABLED, KEY_MODULE, KEY_VOLUME };
 
 	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
 			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME + " DATETIME, "
-			+ KEY_RECURRING + " BOOLEAN," + KEY_ENABLED + " BOOLEAN,"+KEY_MODULE+" STRING);";
+			+ KEY_RECURRING + " BOOLEAN," + KEY_ENABLED + " BOOLEAN,"
+			+ KEY_MODULE + " STRING," + KEY_VOLUME + " INTEGER);";
 
-	private static final int DB_VERSION = 5;
+	private static final int DB_VERSION = 6;
 
 	/**
 	 * 
@@ -186,7 +188,7 @@ public class DatabaseHandler implements AlarmHandler {
 		Alarm a = new Alarm(Integer.parseInt(time[0]),
 				Integer.parseInt(time[1]), cursor.getInt(cursor
 						.getColumnIndex(KEY_ROWID)), cursor.getString(cursor
-						.getColumnIndex(KEY_MODULE)));
+						.getColumnIndex(KEY_MODULE)), cursor.getInt(cursor.getColumnIndex(KEY_VOLUME)));
 		a.setEnabled(cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0);
 		return a;
 	}

@@ -176,7 +176,7 @@ public class MainActivity extends Activity {
 
 	private void createAlarm(int hour, int minute, String module) {
 		aControl.createAlarm(hour, minute, module);
-		Toast.makeText(this, new Alarm(hour, minute, 0, "").toString(),
+		Toast.makeText(this, new Alarm(hour, minute, 0).toString(),
 				Toast.LENGTH_LONG).show();
 		updateList();
 	}

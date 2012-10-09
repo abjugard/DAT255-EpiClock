@@ -24,19 +24,24 @@ public class Alarm implements Comparable<Alarm> {
 	private final int id;
 	private boolean enabled;
 	private String module;
+	private int volume;
 
-	public Alarm(int hours, int minutes, int id, String module)
+	public Alarm(int hours, int minutes, int id)
 			throws IllegalArgumentException {
-
 		if (isIllegalHour(hours) || isIllegalMinutes(minutes)) {
 			throw new IllegalArgumentException("Illegal constructor argument!");
 		}
-
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
 		this.id = id;
+	}
+
+	public Alarm(int hours, int minutes, int id, String module, int volume)
+			throws IllegalArgumentException {
+		this(hours, minutes, id);
 		this.module = module;
 		this.enabled = true;
+		this.volume = volume;
 	}
 
 	public long getTimeInMilliSeconds() {
@@ -173,5 +178,13 @@ public class Alarm implements Comparable<Alarm> {
 	public void setModule(String module) {
 		this.module = module;
 	}
-	
+
+	public int getVolume() {
+		return volume;
+	}
+
+	public void setVolume(int volume) {
+		this.volume = volume;
+	}
+
 }
