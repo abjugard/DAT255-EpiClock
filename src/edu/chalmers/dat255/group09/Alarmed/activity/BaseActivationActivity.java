@@ -117,8 +117,18 @@ public abstract class BaseActivationActivity extends Activity {
 		mediaPlayer.stop();
 		wakeLock.release();
 		finish();
+		overrideTransition();
 	}
-
+	
+	/**
+	 * Makes the transition between views smoother by animating them.
+	 */
+	private void overrideTransition() {
+		int fadeIn = android.R.anim.fade_in;
+		int fadeOut = android.R.anim.fade_out;
+		overridePendingTransition(fadeIn, fadeOut);
+	}
+	
 	@Override
 	public void onBackPressed() {
 		// The user is not aloud to use the backbutton

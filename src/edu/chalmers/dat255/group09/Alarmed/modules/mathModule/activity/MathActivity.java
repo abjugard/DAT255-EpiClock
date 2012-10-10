@@ -92,9 +92,9 @@ public class MathActivity extends BaseActivationActivity {
 
 		if (controller.isComplete()) {
 			super.stopAlarm();
+		} else {
+			generateNewMathProblem();
 		}
-
-		generateNewMathProblem();
 	}
 
 	/**
