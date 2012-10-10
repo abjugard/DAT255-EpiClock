@@ -31,7 +31,7 @@
         android:layout_alignBaseline="@+id/button_01"
         android:layout_alignBottom="@+id/button_01"
         android:layout_alignLeft="@+id/button_02"
-        android:onClick="onButtonPressed"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
     <Button
@@ -42,7 +42,7 @@
         android:layout_alignBottom="@+id/button_08"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:onClick="onButtonPressed"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
     <Button
@@ -52,6 +52,7 @@
         android:layout_alignBaseline="@+id/button_04"
         android:layout_alignBottom="@+id/button_04"
         android:layout_alignLeft="@+id/button_03"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
     <Button
@@ -60,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button_01"
         android:layout_centerVertical="true"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
     <Button
@@ -69,6 +71,7 @@
         android:layout_alignLeft="@+id/button_04"
         android:layout_below="@+id/button_04"
         android:layout_marginTop="32dp"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
     <Button
@@ -78,6 +81,7 @@
         android:layout_alignBaseline="@+id/button_09"
         android:layout_alignBottom="@+id/button_09"
         android:layout_alignLeft="@+id/button_08"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
     <Button
@@ -87,6 +91,7 @@
         android:layout_alignBaseline="@+id/button_05"
         android:layout_alignBottom="@+id/button_05"
         android:layout_alignLeft="@+id/button_06"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
     <Button
@@ -95,6 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button_09"
         android:layout_centerHorizontal="true"
+        android:onClick="onCardPressed"
         android:text="Button" />
 
 </RelativeLayout>
