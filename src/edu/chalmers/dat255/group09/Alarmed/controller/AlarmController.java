@@ -47,7 +47,7 @@ public class AlarmController {
 		alarmHandler = new DatabaseHandler(context).openCon();
 		notificationController = new NotificationController(context);
 	}
-	
+
 	public void init(Context context, AlarmHandler handler) {
 		this.context = context;
 		alarmHandler = handler.openCon();
@@ -57,7 +57,6 @@ public class AlarmController {
 	public void createAlarm(int hour, int minute) {
 		alarmHandler.createAlarm(hour, minute, false);
 		setAlarm();
-		notificationController.addNotification(hour, minute);
 	}
 
 	private void setAlarm() {
@@ -74,6 +73,8 @@ public class AlarmController {
 					.getSystemService(Context.ALARM_SERVICE);
 			alarmManager.set(AlarmManager.RTC_WAKEUP,
 					nextAlarm.getTimeInMilliSeconds(), sender);
+			
+			notificationController.addNotification(nextAlarm);
 		}
 
 	}
@@ -86,7 +87,7 @@ public class AlarmController {
 		if (alarmHandler.getNumberOfAlarms() > 0) {
 			setAlarm();
 		}
-		if(alarm == null){
+		if (alarm == null) {
 			return false;
 		}
 		return alarm.isEnabled();
