@@ -29,7 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
-import edu.chalmers.dat255.group09.Alarmed.factory.ModuleFactory;
+import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 
 public class CreateAlarm extends Activity {
 

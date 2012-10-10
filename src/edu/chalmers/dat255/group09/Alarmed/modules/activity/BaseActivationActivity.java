@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.chalmers.dat255.group09.Alarmed.activity;
+package edu.chalmers.dat255.group09.Alarmed.modules.activity;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -31,8 +31,6 @@ import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;

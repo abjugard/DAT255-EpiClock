@@ -19,7 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
-import edu.chalmers.dat255.group09.Alarmed.factory.ModuleFactory;
+import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
