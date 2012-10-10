@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
 import android.test.AndroidTestCase;
+import android.util.Log;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.ModularProblem;
 
@@ -47,7 +48,15 @@ public class ModularProblemTest extends AndroidTestCase {
 		String actual = modularProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
-
+	
+	public void testGetFormattedStringForMoreThanTwoNumbers() {
+		int[] nbrs = { 3, 4, 8 };
+		String expected = "x = 3 + 4 mod 8";
+		String actual = modularProblem.getFormattedProblem(nbrs);
+		Log.d("CreateAlarm", actual);
+		assertEquals(expected, actual);
+	}
+	
 	public void testZeroModOne() {
 		int actualResult = modularProblem.getResult(new int[] { 0, 1 });
 		int expectedResult = 0;
@@ -81,6 +90,12 @@ public class ModularProblemTest extends AndroidTestCase {
 	public void testMinusFourteenModTen() {
 		int actualResult = modularProblem.getResult(new int[] { -14, 10 });
 		int expectedResult = 6;
+		assertEquals(expectedResult, actualResult);
+	}
+
+	public void testTreeNumbersGetResult() {
+		int actualResult = modularProblem.getResult(new int[] { -14, -6, 10 });
+		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 

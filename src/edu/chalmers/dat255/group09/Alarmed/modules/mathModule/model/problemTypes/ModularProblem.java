@@ -22,9 +22,14 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  * form: a = b mod n. The user is supplied with b and n. The user solves the
  * problem by calculating what b mod n is equal or just a.
  * 
+ * The problem it optimated for two problems but if someone enter more than two
+ * numbers, the last number in the array will be equal two n and b will be equal
+ * to the sum of the numbers
+ * 
  * @author Joakim Persson
  * 
  */
+// TODO add better method documentation
 public class ModularProblem implements MathProblemType {
 
 	private final static String PROBLEM_HEADER = "Solve for x!";
@@ -32,15 +37,26 @@ public class ModularProblem implements MathProblemType {
 
 	@Override
 	public int getResult(int[] numbers) {
+		int result = 0;
+		if (numbers.length == 2) {
+			result = getModulus(numbers[0], numbers[1]);
+		} else {
+			int sum = 0;
+			for (int i = 0; i < numbers.length - 1; i++) {
+				sum += numbers[i];
+			}
+			result = getModulus(sum, numbers[numbers.length - 1]);
+		}
+		return result;
+	}
+
+	private int getModulus(int b, int n) {
 		// a = b mod n
-		int b = numbers[0];
-		int n = numbers[1];
 		int a = b % n;
 
 		if (a < 0) {
 			a += n;
 		}
-
 		return a;
 	}
 
@@ -110,14 +126,37 @@ public class ModularProblem implements MathProblemType {
 
 	@Override
 	public String getFormattedProblem(int[] nbrs) {
-		// TODO not so good...
-		StringBuilder builder = new StringBuilder("");
 		if (nbrs.length == 2) {
-			builder.append("x = ");
-			builder.append(nbrs[0] + " ");
-			builder.append("mod ");
-			builder.append(nbrs[1]);
+			return getFormattedStringForTwoNumbers(nbrs);
+		} else {
+			return getFormattedStringForMorThanTwoNumbers(nbrs);
 		}
+
+	}
+
+	private String getFormattedStringForTwoNumbers(int[] nbrs) {
+		StringBuilder builder = new StringBuilder("");
+		builder.append("x = ");
+		builder.append(nbrs[0] + " ");
+		builder.append("mod ");
+		builder.append(nbrs[1]);
+		return builder.toString();
+	}
+
+	private String getFormattedStringForMorThanTwoNumbers(int[] nbrs) {
+		StringBuilder builder = new StringBuilder("");
+		String operatorSign = "+";
+		builder.append("x = ");
+
+		for (int i = 0; i < nbrs.length - 1; i++) {
+			builder.append(nbrs[i] + " ");
+			if ((i + 1) != nbrs.length - 1) {
+				builder.append(operatorSign + " ");
+			}
+		}
+
+		builder.append("mod ");
+		builder.append(nbrs[nbrs.length - 1]);
 		return builder.toString();
 	}
 
