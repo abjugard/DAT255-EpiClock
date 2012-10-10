@@ -22,8 +22,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
@@ -33,6 +31,7 @@ public class AlarmController {
 
 	private static AlarmController instance;
 	private AlarmHandler alarmHandler;
+	private NotificationController notificationController;
 
 	private Context context;
 
@@ -46,16 +45,19 @@ public class AlarmController {
 	public void init(Context context) {
 		this.context = context;
 		alarmHandler = new DatabaseHandler(context).openCon();
+		notificationController = new NotificationController(context);
 	}
 	
 	public void init(Context context, AlarmHandler handler) {
 		this.context = context;
 		alarmHandler = handler.openCon();
+		notificationController = new NotificationController(context);
 	}
 
 	public void createAlarm(int hour, int minute) {
 		alarmHandler.createAlarm(hour, minute, false);
 		setAlarm();
+		notificationController.addNotification(hour, minute);
 	}
 
 	private void setAlarm() {
