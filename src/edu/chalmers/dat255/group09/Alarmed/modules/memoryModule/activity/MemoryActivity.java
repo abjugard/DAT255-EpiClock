@@ -17,14 +17,17 @@ package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.adapter.MemoryAdapter;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
@@ -37,27 +40,44 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageB
  */
 public class MemoryActivity extends Activity implements OnItemClickListener {
 
+	private int PAIRS_LEFT = 3;
+	private final static int COLUMNS = 3;
+	private final static int TIMER_DURATION = 1500;
+	private Timer timer;
+	private boolean isFirstCard = true;
+	private CardImageButton firstCard = null;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_memory);
 
-		List<CardImageButton> images = new ArrayList<CardImageButton>();
-
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
-		images.add(new CardImageButton(this, new Card(R.drawable.sample_image)));
+		List<CardImageButton> images = addData();
 		GridView g = (GridView) findViewById(R.id.myGrid);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
 		g.setAdapter(memoryAdapter);
-		g.setNumColumns(3);
+		g.setNumColumns(COLUMNS);
 		g.setOnItemClickListener(this);
+
+		timer = new Timer();
+	}
+
+	private List<CardImageButton> addData() {
+		List<CardImageButton> images = new ArrayList<CardImageButton>();
+
+		images.add(new CardImageButton(this,
+				new Card(R.drawable.sample_image_1)));
+		images.add(new CardImageButton(this,
+				new Card(R.drawable.sample_image_1)));
+		images.add(new CardImageButton(this,
+				new Card(R.drawable.sample_image_2)));
+		images.add(new CardImageButton(this,
+				new Card(R.drawable.sample_image_2)));
+		images.add(new CardImageButton(this,
+				new Card(R.drawable.sample_image_3)));
+		images.add(new CardImageButton(this,
+				new Card(R.drawable.sample_image_3)));
+		return images;
 	}
 
 	@Override
@@ -70,6 +90,7 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int id, long numb) {
 		CardImageButton btn = (CardImageButton) view;
+
 		btn.toggleStatus();
 
 	}
