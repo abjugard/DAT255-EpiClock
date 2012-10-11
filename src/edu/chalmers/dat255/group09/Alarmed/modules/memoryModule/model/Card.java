@@ -15,6 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model;
 
+import edu.chalmers.dat255.group09.Alarmed.R;
 
 /**
  * 
@@ -28,17 +29,16 @@ public final class Card {
 	}
 
 	private CardStatus currentStatus;
-	private int color;
+	private int visableImageResource;
+	private final static int hiddenImageResorce = R.drawable.ic_launcher;
 
-	public Card(int color) {
+	public Card(int imageResource) {
 		this.currentStatus = CardStatus.Hidden;
-		this.color = color;
+		this.visableImageResource = imageResource;
 	}
 
 	public Card(Card card) {
-		this.color = card.color;
-		this.currentStatus = card.currentStatus;
-
+		this(card.visableImageResource);
 	}
 
 	public void toggleStatus() {
@@ -51,13 +51,16 @@ public final class Card {
 
 	}
 
-	public CardStatus getStatus() {
-		return currentStatus;
+	public int getImageResource() {
+		if (currentStatus == CardStatus.Hidden) {
+			return hiddenImageResorce;
+		} else {
+			return visableImageResource;
+		}
 	}
 
-	// TODO only for rapid development
-	public int getColor() {
-		return color;
+	public CardStatus getStatus() {
+		return currentStatus;
 	}
 
 	@Override
@@ -70,14 +73,14 @@ public final class Card {
 		}
 		Card other = (Card) obj;
 
-		return this.color == other.color;
+		return this.visableImageResource == other.visableImageResource;
 	}
 
 	@Override
 	public int hashCode() {
 		int sum = 0;
 
-		sum += color * 13;
+		sum += visableImageResource * 13;
 
 		return sum;
 	}

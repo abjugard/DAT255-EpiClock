@@ -15,8 +15,8 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.memoryModule.model;
 
-import android.graphics.Color;
 import android.test.AndroidTestCase;
+import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardStatus;
 
@@ -28,11 +28,13 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardS
 public class CardTest extends AndroidTestCase {
 
 	private Card card;
+	private int imageResource;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		card = new Card(Color.RED);
+		imageResource = 55;
+		card = new Card(imageResource);
 	}
 
 	public void testChangeStatus() {
@@ -51,8 +53,15 @@ public class CardTest extends AndroidTestCase {
 
 	}
 
-	public void testGetColor() {
-		assertEquals(Color.RED, card.getColor());
+	public void testGetImageResourceIfHidden() {
+		assertTrue(card.getStatus().equals(CardStatus.Hidden));
+		assertEquals(R.drawable.ic_launcher, card.getImageResource());
+	}
+
+	public void testGetImageResourceIfVisable() {
+		card.toggleStatus();
+		assertTrue(card.getStatus().equals(CardStatus.Visable));
+		assertEquals(imageResource, card.getImageResource());
 	}
 
 	public void testCopyConstructor() {
@@ -64,18 +73,18 @@ public class CardTest extends AndroidTestCase {
 		assertEquals(card.hashCode(), card.hashCode());
 	}
 
-	public void testHashCodeAgainstOtherColor() {
-		Card otherCard = new Card(Color.BLACK);
+	public void testHashCodeAgainstOtherImage() {
+		Card otherCard = new Card(0);
 		assertFalse(card.hashCode() == otherCard.hashCode());
 	}
 
-	public void testEHashCodeAgainstSameColor() {
-		Card otherCard = new Card(Color.RED);
+	public void testEHashCodeAgainstSameImage() {
+		Card otherCard = new Card(imageResource);
 		assertEquals(card.hashCode(), otherCard.hashCode());
 	}
 
-	public void testHashCodeAgainstSameColorOtherCardStatus() {
-		Card otherCard = new Card(Color.RED);
+	public void testHashCodeAgainstSameImageOtherCardStatus() {
+		Card otherCard = new Card(imageResource);
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
 		assertEquals(card.hashCode(), otherCard.hashCode());
@@ -89,18 +98,18 @@ public class CardTest extends AndroidTestCase {
 		assertTrue(card.equals(card));
 	}
 
-	public void testEqualsAgainstOtherColor() {
-		Card otherCard = new Card(Color.BLACK);
+	public void testEqualsAgainstOtherImage() {
+		Card otherCard = new Card(0);
 		assertFalse(card.equals(otherCard));
 	}
 
-	public void testEqualsSameColor() {
-		Card otherCard = new Card(Color.RED);
+	public void testEqualsSameImage() {
+		Card otherCard = new Card(imageResource);
 		assertTrue(card.equals(otherCard));
 	}
 
-	public void testEqualsSameColorOtherCardStatus() {
-		Card otherCard = new Card(Color.RED);
+	public void testEqualsSameImagerOtherCardStatus() {
+		Card otherCard = new Card(imageResource);
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
 		assertTrue(card.equals(otherCard));
