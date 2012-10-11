@@ -24,8 +24,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import android.util.Log;
+import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 /**
  * A class to help the creation and accessing of alarms in a database. Gives the
@@ -48,21 +48,21 @@ public class DatabaseHandler implements AlarmHandler {
 	private static final String DB_TABLE = "alarms";
 
 	public static final String KEY_TIME = "time";
-	public static final String KEY_RECURRING = "recurring";
+	public static final String KEY_DAYSOFWEEK = "recurring";
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_ENABLED = "enabled";
 	public static final String KEY_MODULE = "module";
 	public static final String KEY_VOLUME = "volume";
 
-	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_RECURRING,
+	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_DAYSOFWEEK,
 			KEY_ENABLED, KEY_MODULE, KEY_VOLUME };
 
 	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
 			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME + " DATETIME, "
-			+ KEY_RECURRING + " BOOLEAN," + KEY_ENABLED + " BOOLEAN,"
+			+ KEY_DAYSOFWEEK + " INTEGER," + KEY_ENABLED + " BOOLEAN,"
 			+ KEY_MODULE + " STRING," + KEY_VOLUME + " INTEGER);";
 
-	private static final int DB_VERSION = 6;
+	private static final int DB_VERSION = 7;
 
 	/**
 	 * 
@@ -111,11 +111,10 @@ public class DatabaseHandler implements AlarmHandler {
 		aDbHelper.close();
 	}
 
-	public long createAlarm(int hour, int minute, boolean recurring,
-			String module) {
+	public long createAlarm(int hour, int minute, int daysOfWeek, String module) {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
-		alarmTime.put(KEY_RECURRING, recurring);
+		alarmTime.put(KEY_DAYSOFWEEK, daysOfWeek);
 		alarmTime.put(KEY_ENABLED, true);
 		alarmTime.put(KEY_TIME, hour + ":" + minute);
 		alarmTime.put(KEY_MODULE, module);
@@ -188,8 +187,10 @@ public class DatabaseHandler implements AlarmHandler {
 		Alarm a = new Alarm(Integer.parseInt(time[0]),
 				Integer.parseInt(time[1]), cursor.getInt(cursor
 						.getColumnIndex(KEY_ROWID)), cursor.getString(cursor
-						.getColumnIndex(KEY_MODULE)), cursor.getInt(cursor.getColumnIndex(KEY_VOLUME)));
+						.getColumnIndex(KEY_MODULE)), cursor.getInt(cursor
+						.getColumnIndex(KEY_VOLUME)));
 		a.setEnabled(cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0);
+		a.setDaysOfWeek(cursor.getInt(cursor.getColumnIndex(KEY_DAYSOFWEEK)));
 		return a;
 	}
 

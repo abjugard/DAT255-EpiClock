@@ -45,14 +45,14 @@ public class AlarmController {
 		this.context = context;
 		alarmHandler = new DatabaseHandler(context).openCon();
 	}
-	
+
 	public void init(Context context, AlarmHandler handler) {
 		this.context = context;
 		alarmHandler = handler.openCon();
 	}
 
-	public void createAlarm(int hour, int minute, String module) {
-		alarmHandler.createAlarm(hour, minute, false, module);
+	public void createAlarm(int hour, int minute, int dayOfWeek, String module) {
+		alarmHandler.createAlarm(hour, minute, dayOfWeek, module);
 		setAlarm();
 	}
 
@@ -77,13 +77,13 @@ public class AlarmController {
 
 	public boolean alarmReceived(int id) {
 		Alarm alarm = alarmHandler.fetchAlarm(id);
-		if (alarm != null && alarm.isEnabled()) {
+		if (alarm != null && alarm.isEnabled() && alarm.getDaysOfWeek() == 0) {
 			alarmHandler.setAlarmEnabled(id, false);
 		}
 		if (alarmHandler.getNumberOfAlarms() > 0) {
 			setAlarm();
 		}
-		if(alarm == null){
+		if (alarm == null) {
 			return false;
 		}
 		return alarm.isEnabled();

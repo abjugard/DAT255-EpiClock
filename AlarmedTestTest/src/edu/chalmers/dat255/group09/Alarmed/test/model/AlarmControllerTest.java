@@ -42,8 +42,8 @@ public class AlarmControllerTest extends AndroidTestCase {
 		context = new MockContext();
 		handler = new MockAlarmHandler().openCon();
 		ac.init(context, handler);
-		ac.createAlarm(10, 10, "");
-		ac.createAlarm(20, 20, "");
+		ac.createAlarm(10, 10, 0, "");
+		ac.createAlarm(20, 20, 0, "");
 	}
 
 	public void testDestroy() {
@@ -112,7 +112,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 			nbrID = 0;
 		}
 
-		public long createAlarm(int hour, int minute, boolean recurring, String module) {
+		public long createAlarm(int hour, int minute, int daysOfWeek, String module) {
 			Alarm alarm = new Alarm(hour, minute, ++nbrID, module, 0);
 			alarms.add(alarm);
 			return alarm.getId();

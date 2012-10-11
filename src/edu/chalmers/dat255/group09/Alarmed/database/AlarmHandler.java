@@ -42,14 +42,14 @@ public interface AlarmHandler {
 	 *            The hour which the alarm has been set to trigger on
 	 * @param minute
 	 *            The minute which the alarm has been set to trigger on
-	 * @param recurring
-	 *            True if the alarm is set to be recurring.
+	 * @param daysOfWeek
+	 *            days which the alarm is set to be repeated in as a bitmap
 	 * @param module
 	 *            The name of the module to be set
 	 * @return the id of the created Alarm, or -1 if an error occurred
 	 */
 
-	public long createAlarm(int hour, int minute, boolean recurring,
+	public long createAlarm(int hour, int minute, int daysOfWeek,
 			String module);
 
 	/**
