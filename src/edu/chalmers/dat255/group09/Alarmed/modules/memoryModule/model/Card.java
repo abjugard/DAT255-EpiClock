@@ -73,7 +73,9 @@ public final class Card {
 		}
 		Card other = (Card) obj;
 
-		return this.visableImageResource == other.visableImageResource;
+		return this.visableImageResource == other.visableImageResource
+				&& this.currentStatus.equals(other.currentStatus);
+
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public final class Card {
 		int sum = 0;
 
 		sum += visableImageResource * 13;
-
+		sum += currentStatus.hashCode();
 		return sum;
 	}
 }

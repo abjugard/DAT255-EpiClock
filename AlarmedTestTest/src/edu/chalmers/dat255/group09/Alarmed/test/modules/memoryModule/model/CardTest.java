@@ -78,7 +78,7 @@ public class CardTest extends AndroidTestCase {
 		assertFalse(card.hashCode() == otherCard.hashCode());
 	}
 
-	public void testEHashCodeAgainstSameImage() {
+	public void testHashCodeAgainstSameImage() {
 		Card otherCard = new Card(imageResource);
 		assertEquals(card.hashCode(), otherCard.hashCode());
 	}
@@ -87,7 +87,7 @@ public class CardTest extends AndroidTestCase {
 		Card otherCard = new Card(imageResource);
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
-		assertEquals(card.hashCode(), otherCard.hashCode());
+		assertFalse(card.hashCode() == otherCard.hashCode());
 	}
 
 	public void testEqualsNull() {
@@ -112,7 +112,7 @@ public class CardTest extends AndroidTestCase {
 		Card otherCard = new Card(imageResource);
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
-		assertTrue(card.equals(otherCard));
+		assertFalse(card.equals(otherCard));
 	}
 
 	@Override
