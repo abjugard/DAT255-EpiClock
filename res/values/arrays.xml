@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="days_of_week">
+        <item >Each Monday</item>
+        <item >Each Tuesday</item>
+        <item >Each Wednesday</item>
+        <item >Each Thursday</item>
+        <item >Each Friday</item>
+        <item >Each Saturday</item>
+        <item >Each Sunday</item>
+    </string-array>
+    
+</resources>

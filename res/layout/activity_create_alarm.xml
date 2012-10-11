@@ -30,4 +30,15 @@
         android:layout_alignRight="@+id/createAlarmTimePicker"
         android:layout_below="@+id/createAlarmTimePicker" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/activity_create_alarm_task_spinner"
+        android:layout_alignRight="@+id/activity_create_alarm_task_spinner"
+        android:layout_below="@+id/activity_create_alarm_task_spinner"
+        android:layout_marginTop="22dp"
+        android:onClick="onDayOfWeekClick"
+        android:text="Button" />
+
 </RelativeLayout>
