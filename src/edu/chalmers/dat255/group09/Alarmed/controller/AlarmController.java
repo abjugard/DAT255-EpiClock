@@ -57,22 +57,35 @@ public class AlarmController {
 	}
 
 	private void setAlarm() {
-
 		Alarm nextAlarm = alarmHandler.fetchFirstEnabledAlarm();
 		if (nextAlarm != null) {
-
-			Intent intent = new Intent(context, AlarmReceiver.class);
-			intent.setData(Uri.parse("" + nextAlarm.getId()));
-			intent.putExtra("module", nextAlarm.getModule());
-			PendingIntent sender = PendingIntent.getBroadcast(context, 0,
-					intent, Intent.FILL_IN_DATA);
-
-			AlarmManager alarmManager = (AlarmManager) context
-					.getSystemService(Context.ALARM_SERVICE);
-			alarmManager.set(AlarmManager.RTC_WAKEUP,
-					nextAlarm.getTimeInMilliSeconds(), sender);
+			addAlarmToAlarmManager(nextAlarm);
 		}
 
+	}
+
+	private void addAlarmToAlarmManager(Alarm alarm) {
+		PendingIntent sender = createAlarmPendingIntent(alarm);
+		AlarmManager alarmManager = (AlarmManager) context
+				.getSystemService(Context.ALARM_SERVICE);
+		alarmManager.set(AlarmManager.RTC_WAKEUP,
+				alarm.getTimeInMilliSeconds(), sender);
+	}
+
+	private void removeAlarmFromAlarmManager(Alarm alarm) {
+		PendingIntent sender = createAlarmPendingIntent(alarm);
+		AlarmManager alarmManager = (AlarmManager) context
+				.getSystemService(Context.ALARM_SERVICE);
+		alarmManager.cancel(sender);
+	}
+
+	private PendingIntent createAlarmPendingIntent(Alarm nextAlarm) {
+		Intent intent = new Intent(context, AlarmReceiver.class);
+		intent.setData(Uri.parse("" + nextAlarm.getId()));
+		intent.putExtra("module", nextAlarm.getModule());
+		PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent,
+				Intent.FILL_IN_DATA);
+		return sender;
 	}
 
 	public boolean alarmReceived(int id) {
@@ -86,11 +99,14 @@ public class AlarmController {
 		if (alarm == null) {
 			return false;
 		}
-		return alarm.isEnabled();
+		return true;
 	}
 
 	public boolean deleteAlarm(int id) {
-		return alarmHandler.deleteAlarm(id);
+		removeAlarmFromAlarmManager(alarmHandler.fetchAlarm(id));
+		boolean removed = alarmHandler.deleteAlarm(id);
+		setAlarm();
+		return removed;
 	}
 
 	public boolean isAlarmEnabled(int id) {
@@ -98,7 +114,10 @@ public class AlarmController {
 	}
 
 	public boolean enableAlarm(int id, boolean enable) {
-		return alarmHandler.setAlarmEnabled(id, enable);
+		removeAlarmFromAlarmManager(alarmHandler.fetchAlarm(id));
+		boolean enabled = alarmHandler.setAlarmEnabled(id, enable);
+		setAlarm();
+		return enabled;
 	}
 
 	public List<Alarm> getAllAlarms() {
