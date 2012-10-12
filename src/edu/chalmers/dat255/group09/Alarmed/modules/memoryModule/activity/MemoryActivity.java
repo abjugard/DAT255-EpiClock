@@ -15,17 +15,12 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,8 +30,7 @@ import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.adapter.MemoryAdapter;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.ImageLoader;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.GameboardGenerator;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
 
 /**
@@ -48,23 +42,23 @@ public class MemoryActivity extends BaseActivationActivity implements
 		OnItemClickListener {
 
 	private int PAIRS = 8;
-	private int PAIRS_LEFT = PAIRS;
+	private int pairsLeft = PAIRS;
 	private final static int COLUMNS = 4;
 	private final static int DELAY = 500;
 	private Timer timer;
 	private boolean isFirstCard = true;
 	private CardImageButton firstCard = null;
 	private boolean isTimerActive = false;
-	private ImageLoader imageLoader;
+	private GameboardGenerator generator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_memory);
 
-		imageLoader = new ImageLoader();
+		generator = new GameboardGenerator(this);
 
-		List<CardImageButton> images = addData();
+		List<CardImageButton> images = generator.getGameBoard(PAIRS);
 		GridView gridView = (GridView) findViewById(R.id.myGrid);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
 		gridView.setAdapter(memoryAdapter);
@@ -72,29 +66,6 @@ public class MemoryActivity extends BaseActivationActivity implements
 		gridView.setOnItemClickListener(this);
 
 		timer = new Timer();
-	}
-
-	private List<CardImageButton> addData() {
-		List<CardImageButton> images = new ArrayList<CardImageButton>();
-
-		for (int i = 0; i < PAIRS; i++) {
-			List<CardImageButton> cardPair = getUniqueImagePair(i);
-			images.addAll(cardPair);
-		}
-
-		Collections.shuffle(images, new Random());
-
-		return images;
-	}
-
-	private List<CardImageButton> getUniqueImagePair(int i) {
-		List<CardImageButton> pair = new ArrayList<CardImageButton>();
-		Card card = new Card(imageLoader.getImageResource(i));
-		Card otherCard = new Card(card);
-
-		pair.add(new CardImageButton(this, card));
-		pair.add(new CardImageButton(this, otherCard));
-		return pair;
 	}
 
 	@Override
@@ -122,7 +93,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 				timer.schedule(new MemoryTask(firstCard, secondCard), DELAY);
 
 				if (firstCard.equals(secondCard)) {
-					PAIRS_LEFT--;
+					pairsLeft--;
 				}
 
 				isFirstCard = true;
@@ -130,7 +101,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 				secondCard = null;
 			}
 
-			if (PAIRS_LEFT == 0) {
+			if (pairsLeft == 0) {
 				super.stopAlarm();
 				Toast.makeText(this, "Well Played sir", Toast.LENGTH_SHORT)
 						.show();
