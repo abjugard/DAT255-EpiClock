@@ -35,7 +35,7 @@ public class NotificationController {
 		Intent notificationIntent = new Intent(context, MainActivity.class);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 				notificationIntent, 0);
-		String contentTitle = "Your next alarm is set at: "
+		String contentTitle = "Next alarm set at: "
 				+ alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes();
 		String contentText = "Click here to see all your alarms.";
 		String tickerText = "A New Alarm is Scheduled!";
