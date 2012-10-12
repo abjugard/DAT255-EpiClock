@@ -39,6 +39,6 @@
         android:layout_below="@+id/activity_create_alarm_task_spinner"
         android:layout_marginTop="22dp"
         android:onClick="onDayOfWeekClick"
-        android:text="Button" />
+        android:text="@string/recurring_alarms" />
 
 </RelativeLayout>

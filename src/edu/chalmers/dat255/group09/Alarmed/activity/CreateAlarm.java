@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
-import java.util.Arrays;
 import java.util.Calendar;
 
 import android.annotation.TargetApi;
@@ -25,7 +24,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,11 +46,6 @@ public class CreateAlarm extends Activity {
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
 		initTaskSpinner();
-		getIntent()
-				.putExtra(
-						"daysOfWeek",
-						new boolean[] { false, false, false, false, false,
-								false, false });
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -128,10 +121,25 @@ public class CreateAlarm extends Activity {
 		intent.putExtra("hours", hours);
 		intent.putExtra("minutes", minutes);
 		intent.putExtra("module", module);
+		intent.putExtra("days", getIntegerFromBooleanArray(intent
+				.getBooleanArrayExtra("daysOfWeek")));
 
 		this.setResult(RESULT_OK, intent);
 		finish();
 		overrideTransition();
+
+	}
+
+	private int getIntegerFromBooleanArray(boolean[] daysOfWeek) {
+		String days = "";
+		for (int i = daysOfWeek.length - 1; i >= 0; i--) {
+			if (daysOfWeek[i]) {
+				days += "1";
+			} else {
+				days += "0";
+			}
+		}
+		return Integer.valueOf(days, 2);
 
 	}
 
@@ -158,17 +166,9 @@ public class CreateAlarm extends Activity {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
-
-							}
-						})
-				.setNegativeButton(R.string.cancel_button,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-
-								/* User clicked No so do some stuff */
 							}
 						}).create().show();
+
 	}
 
 	private class MultiClickListener implements
