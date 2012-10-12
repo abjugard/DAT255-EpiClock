@@ -63,7 +63,8 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 
 	private void initGridView() {
 		GridView gridView = (GridView) findViewById(R.id.myGrid);
-		List<CardImageButton> images = generator.getGameBoard(NBR_OF_PAIRS);
+		List<CardImageButton> images = generator.getGameBoard(NBR_OF_PAIRS,
+				false);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
 		gridView.setAdapter(memoryAdapter);
 		gridView.setNumColumns(COLUMNS);

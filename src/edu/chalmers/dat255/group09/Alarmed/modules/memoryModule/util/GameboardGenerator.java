@@ -35,7 +35,8 @@ public class GameboardGenerator {
 		imageLoader = new ImageLoader();
 	}
 
-	public List<CardImageButton> getGameBoard(int nbrOfpairs) {
+	// TODO add documentation for test case
+	public List<CardImageButton> getGameBoard(int nbrOfpairs, boolean isTest) {
 		List<CardImageButton> images = new ArrayList<CardImageButton>();
 
 		for (int i = 0; i < nbrOfpairs; i++) {
@@ -43,8 +44,9 @@ public class GameboardGenerator {
 			images.addAll(cardPair);
 		}
 
-		Collections.shuffle(images, new Random());
-
+		if (!isTest) {
+			Collections.shuffle(images, new Random());
+		}
 		return images;
 	}
 
