@@ -16,12 +16,19 @@
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +39,8 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.factory.ModuleFactory;
 
 public class CreateAlarm extends Activity {
+
+	private HashMap<String, Uri> alarmTones;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,16 @@ public class CreateAlarm extends Activity {
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
 		initTaskSpinner();
+		long begin = System.currentTimeMillis();
+
+		initAlarmTones();
+
+		long end = System.currentTimeMillis();
+		Log.d("DEBUG", end - begin + "ms");
+	}
+
+	private void initAlarmTones() {
+		alarmTones = getAlarmTones();
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -109,10 +128,10 @@ public class CreateAlarm extends Activity {
 
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
 		Spinner spinner = (Spinner) findViewById(R.id.activity_create_alarm_task_spinner);
-		
+
 		int hours = timePicker.getCurrentHour();
 		int minutes = timePicker.getCurrentMinute();
-		
+
 		String module = (String) spinner.getSelectedItem();
 
 		Intent intent = getIntent();
@@ -139,4 +158,45 @@ public class CreateAlarm extends Activity {
 		setTimepickerToCurrentTime(timePicker);
 	}
 
+	public void onAlarmToneBtnPressed(View view) {
+		String[] array = new String[alarmTones.size()];
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, (String[]) alarmTones
+						.keySet().toArray(array));
+		new AlertDialog.Builder(this).setTitle("Pick alarm tone")
+				.setAdapter(adapter, new AlarmToneClickListener()).create()
+				.show();
+	}
+
+	private class AlarmToneClickListener implements
+			DialogInterface.OnClickListener {
+		@Override
+		public void onClick(DialogInterface dialog, int index) {
+			Log.d("DEBUG", alarmTones.get(alarmTones.keySet().toArray()[index])
+					.toString());
+			Log.d("DEBUG", alarmTones.keySet().toArray()[index].toString());
+		}
+	}
+
+	private HashMap<String, Uri> getAlarmTones() {
+		RingtoneManager ringMan = new RingtoneManager(this);
+		ringMan.setType(RingtoneManager.TYPE_ALARM);
+
+		Cursor cur = ringMan.getCursor();
+
+		int tonesAvailable = cur.getCount();
+		if (tonesAvailable == 0) {
+			return new HashMap<String, Uri>();
+		}
+
+		HashMap<String, Uri> alarmTones = new HashMap<String, Uri>();
+		while (!cur.isAfterLast() && cur.moveToNext()) {
+			int pos = cur.getPosition();
+			alarmTones.put(ringMan.getRingtone(pos).getTitle(this),
+					ringMan.getRingtoneUri(pos));
+		}
+		cur.close();
+
+		return alarmTones;
+	}
 }

@@ -30,4 +30,15 @@
         android:layout_alignRight="@+id/createAlarmTimePicker"
         android:layout_below="@+id/createAlarmTimePicker" />
 
+    <Button
+        android:id="@+id/activity_create_alarm_select_tone_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/createAlarmSaveButton"
+        android:layout_alignLeft="@+id/createAlarmSaveButton"
+        android:layout_alignRight="@+id/createAlarmSaveButton"
+        android:layout_marginBottom="22dp"
+        android:onClick="onAlarmToneBtnPressed"
+        android:text="@string/activity_create_alarm_tone_selector_button" />
+
 </RelativeLayout>

@@ -10,8 +10,10 @@
     <string name="delete_alarm">Delete Alarm</string>
     <string name="add_alarm_btn">Add alarm</string>
     <string name="title_activity_math">U mad bro?</string>
+    <string name="title_pick_ringtone">Pick ringtone</string>
     <string name="activity_math_text_holder">3 * 3 = ?</string>
     <string name="activity_math_submit_btn">Submit</string>
     <string name="activity_math_header_holder">What Is The Product?</string>
+    <string name="activity_create_alarm_tone_selector_button">Select alarm sound</string>
 
 </resources>
