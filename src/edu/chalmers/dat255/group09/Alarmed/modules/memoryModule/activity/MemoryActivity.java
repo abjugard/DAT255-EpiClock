@@ -23,6 +23,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,13 +42,27 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageB
  */
 public class MemoryActivity extends Activity implements OnItemClickListener {
 
-	private int PAIRS_LEFT = 3;
-	private final static int COLUMNS = 3;
+	private int PAIRS = 8;
+	private int PAIRS_LEFT = PAIRS;
+	private final static int COLUMNS = 4;
 	private final static int DELAY = 500;
 	private Timer timer;
 	private boolean isFirstCard = true;
 	private CardImageButton firstCard = null;
 	private boolean isTimerActive = false;
+	private static SparseIntArray imagesIntegers;
+
+	static {
+		imagesIntegers = new SparseIntArray();
+		imagesIntegers.append(0, R.drawable.sample_image_0);
+		imagesIntegers.append(1, R.drawable.sample_image_1);
+		imagesIntegers.append(2, R.drawable.sample_image_2);
+		imagesIntegers.append(3, R.drawable.sample_image_3);
+		imagesIntegers.append(4, R.drawable.sample_image_4);
+		imagesIntegers.append(5, R.drawable.sample_image_5);
+		imagesIntegers.append(6, R.drawable.sample_image_6);
+		imagesIntegers.append(7, R.drawable.sample_image_7);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,19 +82,22 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 	private List<CardImageButton> addData() {
 		List<CardImageButton> images = new ArrayList<CardImageButton>();
 
-		images.add(new CardImageButton(this,
-				new Card(R.drawable.sample_image_1)));
-		images.add(new CardImageButton(this,
-				new Card(R.drawable.sample_image_1)));
-		images.add(new CardImageButton(this,
-				new Card(R.drawable.sample_image_2)));
-		images.add(new CardImageButton(this,
-				new Card(R.drawable.sample_image_2)));
-		images.add(new CardImageButton(this,
-				new Card(R.drawable.sample_image_3)));
-		images.add(new CardImageButton(this,
-				new Card(R.drawable.sample_image_3)));
+		for (int i = 0; i < PAIRS; i++) {
+			List<CardImageButton> cardPair = getUniqueImagePair(i);
+			images.addAll(cardPair);
+		}
+
 		return images;
+	}
+
+	private List<CardImageButton> getUniqueImagePair(int i) {
+		List<CardImageButton> pair = new ArrayList<CardImageButton>();
+		Card card = new Card(imagesIntegers.get(i));
+		Card otherCard = new Card(card);
+
+		pair.add(new CardImageButton(this, card));
+		pair.add(new CardImageButton(this, otherCard));
+		return pair;
 	}
 
 	@Override
