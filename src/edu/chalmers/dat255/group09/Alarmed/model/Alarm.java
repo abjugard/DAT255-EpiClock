@@ -139,7 +139,7 @@ public class Alarm implements Comparable<Alarm> {
 		if (day) {
 			strBuilder.append(daysLeft + " day" + (days ? "s" : ""));
 		}
-		if (day && (hour || minute)) {
+		if (day && hour) {
 			strBuilder.append(" and ");
 		}
 		if (hour) {
