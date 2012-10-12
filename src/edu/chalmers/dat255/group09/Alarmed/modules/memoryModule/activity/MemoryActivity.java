@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -28,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.adapter.MemoryAdapter;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.controller.MemoryController;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.GameboardGenerator;
@@ -38,7 +38,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageB
  * @author Joakim Persson
  * 
  */
-public class MemoryActivity extends Activity implements OnItemClickListener {
+public class MemoryActivity extends BaseActivationActivity implements
+		OnItemClickListener {
 
 	private final static int NBR_OF_PAIRS = 8;
 	private final static int COLUMNS = 4;
@@ -145,7 +146,7 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 					}
 
 					if (controller.isGameOver()) {
-						MemoryActivity.super.finish();
+						MemoryActivity.super.stopAlarm();
 					}
 				}
 
