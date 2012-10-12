@@ -16,7 +16,9 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -86,6 +88,8 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 			List<CardImageButton> cardPair = getUniqueImagePair(i);
 			images.addAll(cardPair);
 		}
+
+		Collections.shuffle(images, new Random());
 
 		return images;
 	}
