@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,16 @@ import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
+/**
+ * 
+ * @author Daniel Augurell
+ * @modified Joakim Persson
+ * 
+ */
 public class AlarmControllerTest extends AndroidTestCase {
-	AlarmController ac;
-	MockContext context;
-	AlarmHandler handler;
+	private AlarmController ac;
+	private MockContext context;
+	private AlarmHandler handler;
 
 	@Override
 	public void setUp() throws Exception {
@@ -36,23 +42,22 @@ public class AlarmControllerTest extends AndroidTestCase {
 		context = new MockContext();
 		handler = new MockAlarmHandler().openCon();
 		ac.init(context, handler);
+		ac.createAlarm(10, 10, 0, "");
+		ac.createAlarm(20, 20, 0, "");
 	}
 
 	public void testDestroy() {
-		setUpAlarms();
 		ac.destroy();
 		assertNull(handler.fetchAllAlarms());
 	}
 
 	public void testDeleteAlarm() {
-		setUpAlarms();
 		assertTrue(ac.deleteAlarm(2));
 		assertNull(handler.fetchAlarm(2));
 		assertFalse(ac.deleteAlarm(2));
 	}
 
 	public void testGetAllAlarms() {
-		setUpAlarms();
 		List<Alarm> list = ac.getAllAlarms();
 		assertEquals(2, list.size());
 		for (Alarm alarm : list) {
@@ -61,28 +66,26 @@ public class AlarmControllerTest extends AndroidTestCase {
 	}
 
 	public void testAlarmReceived() {
-		setUpAlarms();
 		assertFalse(ac.alarmReceived(3));
 		ac.alarmReceived(2);
 		assertFalse(handler.isEnabled(2));
 	}
 
 	public void testAlarmEnabled() {
-		setUpAlarms();
 		assertTrue(ac.enableAlarm(1, false));
 		assertFalse(ac.enableAlarm(2, true));
 		assertFalse(ac.isAlarmEnabled(1));
 	}
 
 	public void testCreateAlarm() {
-		setUpAlarms();
 		assertNotNull(handler.fetchAlarm(1));
 		assertNotNull(handler.fetchAlarm(2));
 	}
 
-	private void setUpAlarms() {
-		ac.createAlarm(10, 10);
-		ac.createAlarm(20, 20);
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		ac = null;
 	}
 
 	/**
@@ -109,8 +112,8 @@ public class AlarmControllerTest extends AndroidTestCase {
 			nbrID = 0;
 		}
 
-		public long createAlarm(int hour, int minute, boolean recurring) {
-			Alarm alarm = new Alarm(hour, minute, ++nbrID);
+		public long createAlarm(int hour, int minute, int daysOfWeek, String module) {
+			Alarm alarm = new Alarm(hour, minute, ++nbrID, module, 0);
 			alarms.add(alarm);
 			return alarm.getId();
 		}

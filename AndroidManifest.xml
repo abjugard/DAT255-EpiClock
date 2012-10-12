@@ -38,7 +38,7 @@
             android:process=":remote" />
 
         <activity
-            android:name=".activity.BaseActivationActivity"
+            android:name=".modules.activity.BaseActivationActivity"
             android:label="null" >
         </activity>
         <activity

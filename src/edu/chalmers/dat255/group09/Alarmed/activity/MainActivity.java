@@ -142,13 +142,15 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (isResonseValid(resultCode)) {
-			if (requestCode == ADD_ALARM_REQUEST_CODE) {
-				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1));
-			} else if (requestCode == EDIT_ALARM_REQUEST_CODE) {
+			if (requestCode == EDIT_ALARM_REQUEST_CODE) {
 				aControl.deleteAlarm(data.getIntExtra("ID", -1));
+			}
+			if (requestCode == ADD_ALARM_REQUEST_CODE
+					|| requestCode == EDIT_ALARM_REQUEST_CODE) {
 				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1));
+						data.getIntExtra("minutes", -1),
+						data.getIntExtra("daysOfWeek", 0),
+						data.getStringExtra("module"));
 			}
 
 		}
@@ -174,8 +176,8 @@ public class MainActivity extends Activity {
 	 *            The minute of the new alarm
 	 */
 
-	private void createAlarm(int hour, int minute) {
-		aControl.createAlarm(hour, minute);
+	private void createAlarm(int hour, int minute, int dayOfWeek, String module) {
+		aControl.createAlarm(hour, minute, dayOfWeek, module);
 		Toast.makeText(this, new Alarm(hour, minute, 0).toString(),
 				Toast.LENGTH_LONG).show();
 		updateList();

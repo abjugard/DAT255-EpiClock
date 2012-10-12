@@ -15,18 +15,25 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 
 public class CreateAlarm extends Activity {
 
@@ -40,6 +47,12 @@ public class CreateAlarm extends Activity {
 
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
+		initTaskSpinner();
+		getIntent()
+				.putExtra(
+						"daysOfWeek",
+						new boolean[] { false, false, false, false, false,
+								false, false });
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -68,6 +81,17 @@ public class CreateAlarm extends Activity {
 		timePicker.setCurrentMinute(minute);
 	}
 
+	private void initTaskSpinner() {
+		Spinner spinner = (Spinner) findViewById(R.id.activity_create_alarm_task_spinner);
+		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+				this, android.R.layout.simple_spinner_item,
+				ModuleFactory.getModuleNames());
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		spinner.setAdapter(adapter);
+
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_create_alarm, menu);
@@ -93,13 +117,17 @@ public class CreateAlarm extends Activity {
 	public void onSetAlarmBtnPressed(View view) {
 
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
+		Spinner spinner = (Spinner) findViewById(R.id.activity_create_alarm_task_spinner);
 
 		int hours = timePicker.getCurrentHour();
 		int minutes = timePicker.getCurrentMinute();
 
+		String module = (String) spinner.getSelectedItem();
+
 		Intent intent = getIntent();
 		intent.putExtra("hours", hours);
 		intent.putExtra("minutes", minutes);
+		intent.putExtra("module", module);
 
 		this.setResult(RESULT_OK, intent);
 		finish();
@@ -119,4 +147,41 @@ public class CreateAlarm extends Activity {
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
 		setTimepickerToCurrentTime(timePicker);
 	}
+
+	public void onDayOfWeekClick(View view) {
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.recurring_alarms)
+				.setMultiChoiceItems(R.array.days_of_week,
+						getIntent().getBooleanArrayExtra("daysOfWeek"),
+						new MultiClickListener())
+				.setPositiveButton(R.string.ok_button,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+
+							}
+						})
+				.setNegativeButton(R.string.cancel_button,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+
+								/* User clicked No so do some stuff */
+							}
+						}).create().show();
+	}
+
+	private class MultiClickListener implements
+			DialogInterface.OnMultiChoiceClickListener {
+
+		@Override
+		public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+			Intent intent = getIntent();
+			boolean[] daysOfWeek = intent.getBooleanArrayExtra("daysOfWeek");
+			daysOfWeek[which] = isChecked;
+
+		}
+
+	}
+
 }
