@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -26,11 +27,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
-import edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.adapter.MemoryAdapter;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.GameboardGenerator;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.controller.MemoryController;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.GameboardGenerator;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
 
 /**
@@ -38,17 +38,15 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageB
  * @author Joakim Persson
  * 
  */
-public class MemoryActivity extends BaseActivationActivity implements
-		OnItemClickListener {
+public class MemoryActivity extends Activity implements OnItemClickListener {
 
-	private int PAIRS = 8;
-	private int pairsLeft = PAIRS;
+	private final static int NBR_OF_PAIRS = 8;
 	private final static int COLUMNS = 4;
 	private final static int DELAY = 500;
-	private Timer timer;
 	private boolean isFirstCard = true;
+	private Timer timer;
 	private CardImageButton firstCard = null;
-	private boolean isTimerActive = false;
+	private MemoryController controller;
 	private GameboardGenerator generator;
 
 	@Override
@@ -56,21 +54,24 @@ public class MemoryActivity extends BaseActivationActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_memory);
 
-		generator = new GameboardGenerator(this);
+		controller = new MemoryController(NBR_OF_PAIRS);
 
-		List<CardImageButton> images = generator.getGameBoard(PAIRS);
-		GridView gridView = (GridView) findViewById(R.id.myGrid);
-		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
-		gridView.setAdapter(memoryAdapter);
-		gridView.setNumColumns(COLUMNS);
-		gridView.setOnItemClickListener(this);
+		initGridView();
 
 		timer = new Timer();
 	}
 
+	private void initGridView() {
+		GridView gridView = (GridView) findViewById(R.id.myGrid);
+		List<CardImageButton> images = generator.getGameBoard(NBR_OF_PAIRS);
+		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
+		gridView.setAdapter(memoryAdapter);
+		gridView.setNumColumns(COLUMNS);
+		gridView.setOnItemClickListener(this);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_memory, menu);
 		return true;
 	}
@@ -78,71 +79,78 @@ public class MemoryActivity extends BaseActivationActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int id, long numb) {
 		CardImageButton btn = (CardImageButton) view;
+		if (isValidPress(btn)) {
+			handleButtonPressed(btn);
+		}
+	}
 
-		if (!isTimerActive && !btn.isDisabled() && !btn.equals(firstCard)) {
+	private boolean isValidPress(CardImageButton btn) {
+		return !btn.isDisabled() && !btn.equals(firstCard);
+	}
 
-			if (isFirstCard) {
-				btn.toggleStatus();
-				firstCard = btn;
-				isFirstCard = false;
-			} else {
+	private void handleButtonPressed(CardImageButton cardImage) {
 
-				CardImageButton secondCard = btn;
-				secondCard.toggleStatus();
-
-				timer.schedule(new MemoryTask(firstCard, secondCard), DELAY);
-
-				if (firstCard.equals(secondCard)) {
-					pairsLeft--;
-				}
-
-				isFirstCard = true;
-				firstCard = null;
-				secondCard = null;
-			}
-
-			if (pairsLeft == 0) {
-				super.stopAlarm();
-				Toast.makeText(this, "Well Played sir", Toast.LENGTH_SHORT)
-						.show();
-			}
-
+		if (isFirstCard) {
+			handleFirstCardPressed(cardImage);
+		} else {
+			handleSecondCardPressed(cardImage);
 		}
 
 	}
 
+	private void handleFirstCardPressed(CardImageButton cardImage) {
+		cardImage.toggleStatus();
+		firstCard = cardImage;
+		isFirstCard = false;
+	}
+
+	private void handleSecondCardPressed(CardImageButton cardImage) {
+		CardImageButton secondCard = cardImage;
+		secondCard.toggleStatus();
+
+		timer.schedule(new MemoryTask(firstCard, secondCard), DELAY);
+
+		isFirstCard = true;
+		firstCard = null;
+		secondCard = null;
+	}
+
 	private class MemoryTask extends TimerTask {
 
-		private final CardImageButton firstCardImage;
-		private final CardImageButton secondCardImage;
+		private final CardImageButton cardOne;
+		private final CardImageButton cardTwo;
 		private Handler handler = new Handler();
 
 		public MemoryTask(CardImageButton firstCard, CardImageButton secondCard) {
-			this.firstCardImage = firstCard;
-			this.secondCardImage = secondCard;
+			this.cardOne = firstCard;
+			this.cardTwo = secondCard;
 		}
 
 		@Override
 		public void run() {
-
+			// Must use an handler to make the changes to the ui thread
 			handler.post(new Runnable() {
 
 				@Override
 				public void run() {
-					if (firstCardImage.equals(secondCardImage)) {
+					if (controller.isCardsEqual(cardOne, cardTwo)) {
+						controller.correctGuess();
+						cardOne.setDisabled();
+						cardTwo.setDisabled();
 
-						firstCardImage.setDisabled();
-						secondCardImage.setDisabled();
 					} else {
-						firstCardImage.toggleStatus();
-						secondCardImage.toggleStatus();
+						cardOne.toggleStatus();
+						cardTwo.toggleStatus();
 					}
 
+					if (controller.isGameOver()) {
+						MemoryActivity.super.finish();
+					}
 				}
+
 			});
 
 		}
-
 	}
 
 }
