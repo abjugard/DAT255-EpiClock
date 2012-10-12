@@ -18,10 +18,11 @@ package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.activity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,10 +43,11 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 
 	private int PAIRS_LEFT = 3;
 	private final static int COLUMNS = 3;
-	private final static int TIMER_DURATION = 1500;
+	private final static int DELAY = 500;
 	private Timer timer;
 	private boolean isFirstCard = true;
 	private CardImageButton firstCard = null;
+	private boolean isTimerActive = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,11 +55,11 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 		setContentView(R.layout.activity_memory);
 
 		List<CardImageButton> images = addData();
-		GridView g = (GridView) findViewById(R.id.myGrid);
+		GridView gridView = (GridView) findViewById(R.id.myGrid);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
-		g.setAdapter(memoryAdapter);
-		g.setNumColumns(COLUMNS);
-		g.setOnItemClickListener(this);
+		gridView.setAdapter(memoryAdapter);
+		gridView.setNumColumns(COLUMNS);
+		gridView.setOnItemClickListener(this);
 
 		timer = new Timer();
 	}
@@ -91,7 +93,69 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> adapter, View view, int id, long numb) {
 		CardImageButton btn = (CardImageButton) view;
 
-		btn.toggleStatus();
+		if (!isTimerActive && !btn.isDisabled() && !btn.equals(firstCard)) {
+
+			if (isFirstCard) {
+				btn.toggleStatus();
+				firstCard = btn;
+				isFirstCard = false;
+			} else {
+
+				CardImageButton secondCard = btn;
+				secondCard.toggleStatus();
+
+				timer.schedule(new MemoryTask(firstCard, secondCard), DELAY);
+
+				if (firstCard.equals(secondCard)) {
+					PAIRS_LEFT--;
+				}
+
+				isFirstCard = true;
+				firstCard = null;
+				secondCard = null;
+			}
+
+			if (PAIRS_LEFT == 0) {
+				Toast.makeText(this, "Well Played sir", Toast.LENGTH_SHORT)
+						.show();
+			}
+
+		}
 
 	}
+
+	private class MemoryTask extends TimerTask {
+
+		private final CardImageButton firstCardImage;
+		private final CardImageButton secondCardImage;
+		private Handler handler = new Handler();
+
+		public MemoryTask(CardImageButton firstCard, CardImageButton secondCard) {
+			this.firstCardImage = firstCard;
+			this.secondCardImage = secondCard;
+		}
+
+		@Override
+		public void run() {
+
+			handler.post(new Runnable() {
+
+				@Override
+				public void run() {
+					if (firstCardImage.equals(secondCardImage)) {
+
+						firstCardImage.setDisabled();
+						secondCardImage.setDisabled();
+					} else {
+						firstCardImage.toggleStatus();
+						secondCardImage.toggleStatus();
+					}
+
+				}
+			});
+
+		}
+
+	}
+
 }

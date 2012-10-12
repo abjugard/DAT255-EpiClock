@@ -25,6 +25,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
 
+/**
+ * 
+ * @author Joakim Persson
+ *
+ */
 public class MemoryAdapter extends BaseAdapter {
 
 	private List<CardImageButton> images;

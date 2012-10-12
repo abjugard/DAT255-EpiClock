@@ -15,6 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.ImageView;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
@@ -24,9 +25,11 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
  * @author Joakim Persson
  * 
  */
+@SuppressLint("ViewConstructor")
 public class CardImageButton extends ImageView {
 
 	private Card card;
+	private boolean disabled = false;
 
 	public CardImageButton(Context context, Card card) {
 		super(context);
@@ -38,5 +41,30 @@ public class CardImageButton extends ImageView {
 	public void toggleStatus() {
 		card.toggleStatus();
 		setImageResource(card.getImageResource());
+	}
+
+	public void setDisabled() {
+		disabled = true;
+		setImageResource(edu.chalmers.dat255.group09.Alarmed.R.drawable.sample_image_1);
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof CardImageButton) {
+			CardImageButton other = (CardImageButton) o;
+			return card.equals(other.card);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return card.hashCode();
 	}
 }
