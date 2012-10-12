@@ -33,6 +33,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.adapter.MemoryAdapter;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
@@ -42,7 +43,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageB
  * @author Joakim Persson
  * 
  */
-public class MemoryActivity extends Activity implements OnItemClickListener {
+public class MemoryActivity extends BaseActivationActivity implements OnItemClickListener {
 
 	private int PAIRS = 8;
 	private int PAIRS_LEFT = PAIRS;
@@ -138,6 +139,7 @@ public class MemoryActivity extends Activity implements OnItemClickListener {
 			}
 
 			if (PAIRS_LEFT == 0) {
+				super.stopAlarm();
 				Toast.makeText(this, "Well Played sir", Toast.LENGTH_SHORT)
 						.show();
 			}
