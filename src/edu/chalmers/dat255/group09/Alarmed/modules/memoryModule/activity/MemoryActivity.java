@@ -36,6 +36,7 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.adapter.MemoryAdapter;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.ImageLoader;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
 
 /**
@@ -43,7 +44,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageB
  * @author Joakim Persson
  * 
  */
-public class MemoryActivity extends BaseActivationActivity implements OnItemClickListener {
+public class MemoryActivity extends BaseActivationActivity implements
+		OnItemClickListener {
 
 	private int PAIRS = 8;
 	private int PAIRS_LEFT = PAIRS;
@@ -53,24 +55,14 @@ public class MemoryActivity extends BaseActivationActivity implements OnItemClic
 	private boolean isFirstCard = true;
 	private CardImageButton firstCard = null;
 	private boolean isTimerActive = false;
-	private static SparseIntArray imagesIntegers;
-
-	static {
-		imagesIntegers = new SparseIntArray();
-		imagesIntegers.append(0, R.drawable.sample_image_0);
-		imagesIntegers.append(1, R.drawable.sample_image_1);
-		imagesIntegers.append(2, R.drawable.sample_image_2);
-		imagesIntegers.append(3, R.drawable.sample_image_3);
-		imagesIntegers.append(4, R.drawable.sample_image_4);
-		imagesIntegers.append(5, R.drawable.sample_image_5);
-		imagesIntegers.append(6, R.drawable.sample_image_6);
-		imagesIntegers.append(7, R.drawable.sample_image_7);
-	}
+	private ImageLoader imageLoader;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_memory);
+
+		imageLoader = new ImageLoader();
 
 		List<CardImageButton> images = addData();
 		GridView gridView = (GridView) findViewById(R.id.myGrid);
@@ -97,7 +89,7 @@ public class MemoryActivity extends BaseActivationActivity implements OnItemClic
 
 	private List<CardImageButton> getUniqueImagePair(int i) {
 		List<CardImageButton> pair = new ArrayList<CardImageButton>();
-		Card card = new Card(imagesIntegers.get(i));
+		Card card = new Card(imageLoader.getImageResource(i));
 		Card otherCard = new Card(card);
 
 		pair.add(new CardImageButton(this, card));
