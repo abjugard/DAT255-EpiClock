@@ -54,7 +54,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_memory);
-
+		generator = new GameboardGenerator(this);
 		controller = new MemoryController(NBR_OF_PAIRS);
 
 		initGridView();
@@ -63,7 +63,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	}
 
 	private void initGridView() {
-		GridView gridView = (GridView) findViewById(R.id.myGrid);
+		GridView gridView = (GridView) findViewById(R.id.activity_math_grid_view);
 		List<CardImageButton> images = generator.getGameBoard(NBR_OF_PAIRS,
 				false);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
