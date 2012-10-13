@@ -25,17 +25,37 @@ import android.content.Context;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
+/**
+ * A util class for generating gameboards for the memory game.
+ * 
+ * @author Joakim Persson
+ * 
+ */
 public class GameboardGenerator {
 
 	private Context context;
 	private ImageLoader imageLoader;
 
+	/**
+	 * Create a new instance of the Gameboard generator.
+	 * 
+	 * @param context
+	 *            The android context
+	 */
 	public GameboardGenerator(Context context) {
 		this.context = context;
 		imageLoader = new ImageLoader();
 	}
 
-	// TODO add documentation for test case
+	/**
+	 * Get a new gameboard as a list of cardimages.
+	 * 
+	 * @param nbrOfpairs
+	 *            How many pairs the gameboard should have.
+	 * @param isTest
+	 *            If the method is in test mode or not.
+	 * @return A gameboard consisting of cardimages.
+	 */
 	public List<CardImage> getGameBoard(int nbrOfpairs, boolean isTest) {
 		List<CardImage> images = new ArrayList<CardImage>();
 
@@ -50,6 +70,13 @@ public class GameboardGenerator {
 		return images;
 	}
 
+	/**
+	 * Get an unique pair of cardimages.
+	 * 
+	 * @param i
+	 *            The image key to be used
+	 * @return A list containing a unique pair of card images
+	 */
 	private List<CardImage> getUniqueImagePair(int i) {
 		List<CardImage> pair = new ArrayList<CardImage>();
 		Card card = new Card(imageLoader.getImageResource(i));

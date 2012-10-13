@@ -26,14 +26,21 @@ import android.widget.ImageView;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
+ * An adapter for display card images used in a memory game, with a gridview.
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class MemoryAdapter extends BaseAdapter {
 
 	private List<CardImage> images;
 
+	/**
+	 * Create a new MempryAdapter instance.
+	 * 
+	 * @param cardImages
+	 *            A list of cardimages to be used in the adapter.
+	 */
 	public MemoryAdapter(List<CardImage> cardImages) {
 		images = new ArrayList<CardImage>(cardImages);
 	}

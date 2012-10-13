@@ -29,7 +29,7 @@ public class MemoryController {
 	private int pairsLeft;
 
 	/**
-	 * Create a new instance of the MemoryController
+	 * Create a new instance of the MemoryController.
 	 * 
 	 * @param nbrOfPairs
 	 *            Number of card pairs used in the game.
