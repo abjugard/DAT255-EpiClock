@@ -19,7 +19,7 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.GameboardGenerator;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
  * 
@@ -38,12 +38,12 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 
 	public void testCorrectNbrOfPairs() {
 		int nbrOfPairs = 8;
-		List<CardImageButton> cards = generator.getGameBoard(nbrOfPairs, true);
+		List<CardImage> cards = generator.getGameBoard(nbrOfPairs, true);
 
 		assertEquals(nbrOfPairs, getNbrOfPairs(cards));
 	}
 
-	private int getNbrOfPairs(List<CardImageButton> cards) {
+	private int getNbrOfPairs(List<CardImage> cards) {
 		int nbrOfPairs = 0;
 
 		for (int i = 0; i < cards.size(); i += 2) {
@@ -57,8 +57,8 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 
 	public void testIsGeneratingRandomGameBoards() {
 		int nbrOfpairs = 8;
-		List<CardImageButton> cards = generator.getGameBoard(nbrOfpairs, false);
-		List<CardImageButton> otherCards = generator.getGameBoard(nbrOfpairs,
+		List<CardImage> cards = generator.getGameBoard(nbrOfpairs, false);
+		List<CardImage> otherCards = generator.getGameBoard(nbrOfpairs,
 				false);
 
 		assertFalse(cards.equals(otherCards));

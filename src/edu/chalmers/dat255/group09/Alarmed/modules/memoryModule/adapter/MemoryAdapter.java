@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
  * 
@@ -32,10 +32,10 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageB
  */
 public class MemoryAdapter extends BaseAdapter {
 
-	private List<CardImageButton> images;
+	private List<CardImage> images;
 
-	public MemoryAdapter(List<CardImageButton> cardImages) {
-		images = new ArrayList<CardImageButton>(cardImages);
+	public MemoryAdapter(List<CardImage> cardImages) {
+		images = new ArrayList<CardImage>(cardImages);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class MemoryAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		CardImageButton view;
+		CardImage view;
 		if (convertView == null) {
 			view = images.get(position);
 			view.setLayoutParams(new GridView.LayoutParams(160, 160));
@@ -63,7 +63,7 @@ public class MemoryAdapter extends BaseAdapter {
 			view.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			view.setPadding(8, 8, 8, 8);
 		} else {
-			view = (CardImageButton) convertView;
+			view = (CardImage) convertView;
 		}
 
 		return view;

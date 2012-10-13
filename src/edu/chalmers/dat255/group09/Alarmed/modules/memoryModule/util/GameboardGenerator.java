@@ -23,7 +23,7 @@ import java.util.Random;
 import android.content.Context;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 public class GameboardGenerator {
 
@@ -36,11 +36,11 @@ public class GameboardGenerator {
 	}
 
 	// TODO add documentation for test case
-	public List<CardImageButton> getGameBoard(int nbrOfpairs, boolean isTest) {
-		List<CardImageButton> images = new ArrayList<CardImageButton>();
+	public List<CardImage> getGameBoard(int nbrOfpairs, boolean isTest) {
+		List<CardImage> images = new ArrayList<CardImage>();
 
 		for (int i = 0; i < nbrOfpairs; i++) {
-			List<CardImageButton> cardPair = getUniqueImagePair(i);
+			List<CardImage> cardPair = getUniqueImagePair(i);
 			images.addAll(cardPair);
 		}
 
@@ -50,13 +50,13 @@ public class GameboardGenerator {
 		return images;
 	}
 
-	private List<CardImageButton> getUniqueImagePair(int i) {
-		List<CardImageButton> pair = new ArrayList<CardImageButton>();
+	private List<CardImage> getUniqueImagePair(int i) {
+		List<CardImage> pair = new ArrayList<CardImage>();
 		Card card = new Card(imageLoader.getImageResource(i));
 		Card otherCard = new Card(card);
 
-		pair.add(new CardImageButton(context, card));
-		pair.add(new CardImageButton(context, otherCard));
+		pair.add(new CardImage(context, card));
+		pair.add(new CardImage(context, otherCard));
 		return pair;
 	}
 }

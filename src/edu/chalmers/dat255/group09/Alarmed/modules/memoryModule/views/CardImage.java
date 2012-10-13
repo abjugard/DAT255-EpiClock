@@ -26,12 +26,12 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
  * 
  */
 @SuppressLint("ViewConstructor")
-public class CardImageButton extends ImageView {
+public class CardImage extends ImageView {
 
 	private Card card;
 	private boolean disabled = false;
 
-	public CardImageButton(Context context, Card card) {
+	public CardImage(Context context, Card card) {
 		super(context);
 
 		this.setImageResource(card.getImageResource());
@@ -55,8 +55,8 @@ public class CardImageButton extends ImageView {
 	@Override
 	public boolean equals(Object o) {
 
-		if (o instanceof CardImageButton) {
-			CardImageButton other = (CardImageButton) o;
+		if (o instanceof CardImage) {
+			CardImage other = (CardImage) o;
 			return card.equals(other.card);
 		} else {
 			return false;

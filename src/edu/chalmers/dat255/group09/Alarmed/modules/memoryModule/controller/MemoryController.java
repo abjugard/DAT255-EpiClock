@@ -15,7 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.controller;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
  * 
@@ -33,8 +33,8 @@ public class MemoryController {
 		return pairsLeft == 0;
 	}
 
-	public boolean isCardsEqual(CardImageButton firstCard,
-			CardImageButton secondCard) {
+	public boolean isCardsEqual(CardImage firstCard,
+			CardImage secondCard) {
 		return firstCard.equals(secondCard);
 	}
 

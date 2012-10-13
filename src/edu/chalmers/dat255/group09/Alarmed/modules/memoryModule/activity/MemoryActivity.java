@@ -31,7 +31,7 @@ import edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.adapter.MemoryAdapter;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.controller.MemoryController;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.GameboardGenerator;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	private final static int DELAY = 500;
 	private boolean isFirstCard = true;
 	private Timer timer;
-	private CardImageButton firstCard = null;
+	private CardImage firstCard = null;
 	private MemoryController controller;
 	private GameboardGenerator gameboardGenerator;
 
@@ -69,7 +69,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 */
 	private void initGridView() {
 		GridView gridView = (GridView) findViewById(R.id.activity_memory_grid_view);
-		List<CardImageButton> images = gameboardGenerator.getGameBoard(
+		List<CardImage> images = gameboardGenerator.getGameBoard(
 				NBR_OF_PAIRS, false);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
 		gridView.setAdapter(memoryAdapter);
@@ -86,7 +86,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position,
 			long id) {
-		CardImageButton cardImage = (CardImageButton) view;
+		CardImage cardImage = (CardImage) view;
 		if (isValidPress(cardImage)) {
 			handleButtonPressed(cardImage);
 		}
@@ -100,7 +100,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 *            The pressed card image.
 	 * @return If it was an valid press.
 	 */
-	private boolean isValidPress(CardImageButton cardImage) {
+	private boolean isValidPress(CardImage cardImage) {
 		return !cardImage.isDisabled() && !cardImage.equals(firstCard);
 	}
 
@@ -110,7 +110,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 * @param cardImage
 	 *            The pressed card image.
 	 */
-	private void handleButtonPressed(CardImageButton cardImage) {
+	private void handleButtonPressed(CardImage cardImage) {
 
 		if (isFirstCard) {
 			handleFirstCardPressed(cardImage);
@@ -126,7 +126,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 * @param cardImage
 	 *            The first pressed card image.
 	 */
-	private void handleFirstCardPressed(CardImageButton cardImage) {
+	private void handleFirstCardPressed(CardImage cardImage) {
 		cardImage.toggleStatus();
 		firstCard = cardImage;
 		isFirstCard = false;
@@ -138,8 +138,8 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 * @param cardImage
 	 *            The second pressed card image.
 	 */
-	private void handleSecondCardPressed(CardImageButton cardImage) {
-		CardImageButton secondCard = cardImage;
+	private void handleSecondCardPressed(CardImage cardImage) {
+		CardImage secondCard = cardImage;
 		secondCard.toggleStatus();
 
 		timer.schedule(new MemoryTask(firstCard, secondCard), DELAY);
@@ -159,11 +159,11 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 */
 	private class MemoryTask extends TimerTask {
 
-		private final CardImageButton cardOne;
-		private final CardImageButton cardTwo;
+		private final CardImage cardOne;
+		private final CardImage cardTwo;
 		private Handler handler = new Handler();
 
-		public MemoryTask(CardImageButton firstCard, CardImageButton secondCard) {
+		public MemoryTask(CardImage firstCard, CardImage secondCard) {
 			this.cardOne = firstCard;
 			this.cardTwo = secondCard;
 		}

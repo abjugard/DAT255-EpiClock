@@ -18,7 +18,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.memoryModule.controller
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.controller.MemoryController;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImageButton;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 public class MemoryControllerTest extends AndroidTestCase {
 
@@ -45,14 +45,14 @@ public class MemoryControllerTest extends AndroidTestCase {
 	}
 
 	public void testCardsEqual() {
-		CardImageButton cardOne = new CardImageButton(getContext(), new Card(0));
-		CardImageButton cardTwo = new CardImageButton(getContext(), new Card(0));
+		CardImage cardOne = new CardImage(getContext(), new Card(0));
+		CardImage cardTwo = new CardImage(getContext(), new Card(0));
 		assertTrue(controller.isCardsEqual(cardOne, cardTwo));
 	}
 
 	public void testCardsNotEqual() {
-		CardImageButton cardOne = new CardImageButton(getContext(), new Card(0));
-		CardImageButton cardTwo = new CardImageButton(getContext(), new Card(1));
+		CardImage cardOne = new CardImage(getContext(), new Card(0));
+		CardImage cardTwo = new CardImage(getContext(), new Card(1));
 		assertFalse(controller.isCardsEqual(cardOne, cardTwo));
 	}
 
