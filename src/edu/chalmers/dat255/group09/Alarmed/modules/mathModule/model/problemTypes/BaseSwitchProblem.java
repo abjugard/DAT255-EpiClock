@@ -24,14 +24,14 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  * @author Joakim Persson
  * 
  */
+// TODO complete felhantering
 public class BaseSwitchProblem implements MathProblemType {
 
 	private final static String PROBLEM_HEADER = "Convert to base ten";
 
 	@Override
 	public int getResult(int[] numbers) {
-		// TODO Auto-generated method stub
-		return 0;
+		return convertBaseTwoToTen(numbers);
 	}
 
 	private int convertBaseTwoToTen(int[] nbrs) {
@@ -46,6 +46,20 @@ public class BaseSwitchProblem implements MathProblemType {
 		}
 
 		return sum;
+	}
+
+	private int[] reverseArray(int[] nbrs) {
+		int size = nbrs.length;
+		int mid = size / 2;
+		int temp;
+
+		for (int i = 0; i < mid; i++) {
+			temp = nbrs[i];
+			nbrs[i] = nbrs[size - i - 1];
+			nbrs[size - i - 1] = temp;
+		}
+
+		return nbrs;
 	}
 
 	@Override
@@ -68,20 +82,6 @@ public class BaseSwitchProblem implements MathProblemType {
 		}
 	}
 
-	private static int[] reverseArray(int[] nbrs) {
-		int size = nbrs.length;
-		int mid = size / 2;
-		int temp;
-
-		for (int i = 0; i < mid; i++) {
-			temp = nbrs[i];
-			nbrs[i] = nbrs[size - i - 1];
-			nbrs[size - i - 1] = temp;
-		}
-
-		return nbrs;
-	}
-
 	@Override
 	public String getProblemHeader() {
 		return PROBLEM_HEADER;
@@ -89,8 +89,15 @@ public class BaseSwitchProblem implements MathProblemType {
 
 	@Override
 	public String getFormattedProblem(int[] nbrs) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder builder = new StringBuilder();
+
+		for (int i = 0; i < nbrs.length; i++) {
+			builder.append(nbrs[i]);
+			if (i != nbrs.length - 1) {
+				builder.append(" ");
+			}
+		}
+		return builder.toString();
 	}
 
 }

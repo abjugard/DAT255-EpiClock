@@ -16,12 +16,13 @@
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
 import android.test.AndroidTestCase;
+import android.util.Log;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.BaseSwitchProblem;
 
 /**
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class BaseSwitchProblemTest extends AndroidTestCase {
 
@@ -37,6 +38,35 @@ public class BaseSwitchProblemTest extends AndroidTestCase {
 	public void testGetProblemHeader() {
 		String expected = "Convert to base ten";
 		String actual = problem.getProblemHeader();
+		assertEquals(expected, actual);
+	}
+
+	public void testGetFormattedProblem() {
+		int[] nbrs = { 0, 1, 1, 0 };
+		String expected = "0 1 1 0";
+		String actual = problem.getFormattedProblem(nbrs);
+		Log.d("CreateAlarm", actual);
+		assertEquals(expected, actual);
+	}
+
+	public void testGetResultForTwoDigits() {
+		int[] nbrs = { 1, 1 };
+		int expected = 3;
+		int actual = problem.getResult(nbrs);
+		assertEquals(expected, actual);
+	}
+
+	public void testGetResultForThreeDigits() {
+		int[] nbrs = { 1, 1, 0 };
+		int expected = 6;
+		int actual = problem.getResult(nbrs);
+		assertEquals(expected, actual);
+	}
+
+	public void testGetResultForNineDigits() {
+		int[] nbrs = { 1, 1, 0, 1, 0, 1, 0, 1, 0 };
+		int expected = 426;
+		int actual = problem.getResult(nbrs);
 		assertEquals(expected, actual);
 	}
 
