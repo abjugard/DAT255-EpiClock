@@ -10,8 +10,8 @@
         android:layout_alignLeft="@+id/activity_math_answer_text"
         android:layout_alignRight="@+id/activity_math_answer_text"
         android:layout_centerVertical="true"
-        android:text="@string/activity_math_submit_btn"
-        android:onClick="onSubmitButtonPressed" />
+        android:onClick="onSubmitButtonPressed"
+        android:text="@string/activity_math_submit_btn" />
 
     <EditText
         android:id="@+id/activity_math_answer_text"
@@ -20,7 +20,7 @@
         android:layout_above="@+id/activity_math_submit_btn"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:inputType="number" >
+        android:inputType="numberSigned" >
 
         <requestFocus />
     </EditText>
