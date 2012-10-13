@@ -21,6 +21,9 @@ import android.widget.ImageView;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 
 /**
+ * A wrapper gui class for the models card class. This class is responsible for
+ * handling the setting and getting of the image and if the instance if disabled
+ * or not in the game plan.
  * 
  * @author Joakim Persson
  * 
@@ -31,6 +34,14 @@ public class CardImage extends ImageView {
 	private Card card;
 	private boolean disabled = false;
 
+	/**
+	 * Create a new Card Image instance.
+	 * 
+	 * @param context
+	 *            The android context.
+	 * @param card
+	 *            A card to create a wrapper around.
+	 */
 	public CardImage(Context context, Card card) {
 		super(context);
 
@@ -38,16 +49,27 @@ public class CardImage extends ImageView {
 		this.card = card;
 	}
 
-	public void toggleStatus() {
+	/**
+	 * Handle the logic if the card was pressed.
+	 */
+	public void cardPressed() {
 		card.toggleStatus();
 		setImageResource(card.getImageResource());
 	}
 
+	/**
+	 * Disable the card image.
+	 */
 	public void setDisabled() {
 		disabled = true;
 		setImageResource(edu.chalmers.dat255.group09.Alarmed.R.drawable.sample_image_1);
 	}
 
+	/**
+	 * Get the status of the card image, if is disabled or not.
+	 * 
+	 * @return If it is disabled or not.
+	 */
 	public boolean isDisabled() {
 		return disabled;
 	}

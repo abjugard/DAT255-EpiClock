@@ -127,7 +127,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 *            The first pressed card image.
 	 */
 	private void handleFirstCardPressed(CardImage cardImage) {
-		cardImage.toggleStatus();
+		cardImage.cardPressed();
 		firstCard = cardImage;
 		isFirstCard = false;
 	}
@@ -140,7 +140,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 */
 	private void handleSecondCardPressed(CardImage cardImage) {
 		CardImage secondCard = cardImage;
-		secondCard.toggleStatus();
+		secondCard.cardPressed();
 
 		timer.schedule(new MemoryTask(firstCard, secondCard), DELAY);
 
@@ -181,8 +181,8 @@ public class MemoryActivity extends BaseActivationActivity implements
 						cardTwo.setDisabled();
 
 					} else {
-						cardOne.toggleStatus();
-						cardTwo.toggleStatus();
+						cardOne.cardPressed();
+						cardTwo.cardPressed();
 					}
 
 					if (controller.isGameOver()) {
