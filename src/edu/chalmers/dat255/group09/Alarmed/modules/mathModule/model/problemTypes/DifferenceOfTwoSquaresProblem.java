@@ -24,7 +24,6 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  * @author Joakim Persson
  * 
  */
-// TODO add documentation
 // TODO figure out how to handle more than two numbers
 public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 

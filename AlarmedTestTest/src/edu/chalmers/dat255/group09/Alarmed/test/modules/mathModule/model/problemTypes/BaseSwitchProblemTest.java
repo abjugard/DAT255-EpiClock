@@ -16,7 +16,6 @@
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.BaseSwitchProblem;
 
