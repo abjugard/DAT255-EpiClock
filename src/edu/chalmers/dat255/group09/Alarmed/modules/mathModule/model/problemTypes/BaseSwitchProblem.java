@@ -17,8 +17,6 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
-//Convert from binary 01010101
-
 /**
  * 
  * @author Joakim Persson
@@ -64,8 +62,65 @@ public class BaseSwitchProblem implements MathProblemType {
 
 	@Override
 	public int[] generateNumbers(Difficulty difficulty) {
-		// TODO Auto-generated method stub
-		return null;
+
+		int[] nbrs = null;
+
+		switch (difficulty) {
+		case EASY:
+			nbrs = generateEasyProblem();
+			break;
+		case MEDIUM:
+			nbrs = generateMediumProblem();
+			break;
+		case HARD:
+			nbrs = generateHardProblem();
+			break;
+		}
+
+		return nbrs;
+
+	}
+
+	private int[] generateEasyProblem() {
+		int lowerLimit = 1;
+		int upperLimit = 30;
+		return generateRandomNumbers(lowerLimit, upperLimit);
+	}
+
+	private int[] generateMediumProblem() {
+		int lowerLimit = 30;
+		int upperLimit = 80;
+		return generateRandomNumbers(lowerLimit, upperLimit);
+	}
+
+	private int[] generateHardProblem() {
+		int lowerLimit = 80;
+		int upperLimit = 120;
+		return generateRandomNumbers(lowerLimit, upperLimit);
+	}
+
+	private int[] generateRandomNumbers(int lowerLimit, int upperLimit) {
+		int randomNumber = getRandomNumber(lowerLimit, upperLimit);
+		return convertNumberToBaseTwo(randomNumber);
+	}
+
+	private int[] convertNumberToBaseTwo(int randomNumber) {
+		String baseTwoNumber = converBaseTenToTwo(randomNumber);
+
+		String[] stringNumbers = baseTwoNumber.split(" ");
+
+		int[] numbers = new int[stringNumbers.length];
+
+		for (int i = 0; i < stringNumbers.length; i++) {
+			numbers[i] = Integer.parseInt(stringNumbers[i]);
+		}
+
+		return numbers;
+	}
+
+	private int getRandomNumber(int lowerLimit, int upperLimit) {
+		int diff = upperLimit - lowerLimit;
+		return (int) (lowerLimit + diff * Math.random());
 	}
 
 	private String converBaseTenToTwo(int number) {
@@ -76,9 +131,9 @@ public class BaseSwitchProblem implements MathProblemType {
 			return "-" + converBaseTenToTwo(-number);
 		}
 		if (number < base) {
-			return Integer.toString(number);
+			return Integer.toString(number) + " ";
 		} else {
-			return converBaseTenToTwo(number / 2) + number % 2;
+			return converBaseTenToTwo(number / 2) + number % 2 + " ";
 		}
 	}
 
