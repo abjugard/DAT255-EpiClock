@@ -20,16 +20,20 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.controller.Memor
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
+/**
+ * 
+ * @author Joakim Persson
+ *
+ */
 public class MemoryControllerTest extends AndroidTestCase {
 
 	private MemoryController controller;
-	private int nbrOfPairs;
+	private static final int NBR_OF_PAIRS = 8;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		nbrOfPairs = 8;
-		controller = new MemoryController(nbrOfPairs);
+		controller = new MemoryController(NBR_OF_PAIRS);
 	}
 
 	public void testGameOver() {
@@ -39,7 +43,7 @@ public class MemoryControllerTest extends AndroidTestCase {
 	}
 
 	private void simulateGameOver() {
-		for (int i = 0; i < nbrOfPairs; i++) {
+		for (int i = 0; i < NBR_OF_PAIRS; i++) {
 			controller.correctGuess();
 		}
 	}
@@ -57,9 +61,9 @@ public class MemoryControllerTest extends AndroidTestCase {
 	}
 
 	public void testCorrectGuess() {
-		assertEquals(nbrOfPairs, controller.getPairsLeft());
+		assertEquals(NBR_OF_PAIRS, controller.getPairsLeft());
 		controller.correctGuess();
-		assertEquals(nbrOfPairs - 1, controller.getPairsLeft());
+		assertEquals(NBR_OF_PAIRS - 1, controller.getPairsLeft());
 	}
 
 	@Override

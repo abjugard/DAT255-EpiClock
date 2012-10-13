@@ -29,6 +29,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 public class GameboardGeneratorTest extends AndroidTestCase {
 
 	private GameboardGenerator generator;
+	private static final int NBR_OF_PAIRS = 8;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -37,10 +38,9 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 	}
 
 	public void testCorrectNbrOfPairs() {
-		int nbrOfPairs = 8;
-		List<CardImage> cards = generator.getGameBoard(nbrOfPairs, true);
+		List<CardImage> cards = generator.getGameBoard(NBR_OF_PAIRS, true);
 
-		assertEquals(nbrOfPairs, getNbrOfPairs(cards));
+		assertEquals(NBR_OF_PAIRS, getNbrOfPairs(cards));
 	}
 
 	private int getNbrOfPairs(List<CardImage> cards) {
@@ -56,10 +56,9 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 	}
 
 	public void testIsGeneratingRandomGameBoards() {
-		int nbrOfpairs = 8;
-		List<CardImage> cards = generator.getGameBoard(nbrOfpairs, false);
-		List<CardImage> otherCards = generator.getGameBoard(nbrOfpairs,
-				false);
+		List<CardImage> cards = generator.getGameBoard(NBR_OF_PAIRS, false);
+		List<CardImage> otherCards = generator
+				.getGameBoard(NBR_OF_PAIRS, false);
 
 		assertFalse(cards.equals(otherCards));
 	}

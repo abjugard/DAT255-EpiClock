@@ -28,13 +28,12 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardS
 public class CardTest extends AndroidTestCase {
 
 	private Card card;
-	private int imageResource;
+	private static final int IMAGE_RESOURCE = 55;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		imageResource = 55;
-		card = new Card(imageResource);
+		card = new Card(IMAGE_RESOURCE);
 	}
 
 	public void testChangeStatus() {
@@ -61,7 +60,7 @@ public class CardTest extends AndroidTestCase {
 	public void testGetImageResourceIfVisable() {
 		card.toggleStatus();
 		assertTrue(card.getStatus().equals(CardStatus.Visable));
-		assertEquals(imageResource, card.getImageResource());
+		assertEquals(IMAGE_RESOURCE, card.getImageResource());
 	}
 
 	public void testCopyConstructor() {
@@ -79,12 +78,12 @@ public class CardTest extends AndroidTestCase {
 	}
 
 	public void testHashCodeAgainstSameImage() {
-		Card otherCard = new Card(imageResource);
+		Card otherCard = new Card(IMAGE_RESOURCE);
 		assertEquals(card.hashCode(), otherCard.hashCode());
 	}
 
 	public void testHashCodeAgainstSameImageOtherCardStatus() {
-		Card otherCard = new Card(imageResource);
+		Card otherCard = new Card(IMAGE_RESOURCE);
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
 		assertFalse(card.hashCode() == otherCard.hashCode());
@@ -104,12 +103,12 @@ public class CardTest extends AndroidTestCase {
 	}
 
 	public void testEqualsSameImage() {
-		Card otherCard = new Card(imageResource);
+		Card otherCard = new Card(IMAGE_RESOURCE);
 		assertTrue(card.equals(otherCard));
 	}
 
 	public void testEqualsSameImagerOtherCardStatus() {
-		Card otherCard = new Card(imageResource);
+		Card otherCard = new Card(IMAGE_RESOURCE);
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
 		assertFalse(card.equals(otherCard));
