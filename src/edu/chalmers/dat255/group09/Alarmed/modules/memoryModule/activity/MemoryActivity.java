@@ -41,9 +41,9 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 public class MemoryActivity extends BaseActivationActivity implements
 		OnItemClickListener {
 
-	private final static int NBR_OF_PAIRS = 8;
-	private final static int GRID_COLUMNS = 4;
-	private final static int DELAY = 500;
+	private static final int NBR_OF_PAIRS = 8;
+	private static final int GRID_COLUMNS = 4;
+	private static final int DELAY = 500;
 	private boolean isFirstCard = true;
 	private Timer timer;
 	private CardImage firstCard = null;
@@ -69,8 +69,8 @@ public class MemoryActivity extends BaseActivationActivity implements
 	 */
 	private void initGridView() {
 		GridView gridView = (GridView) findViewById(R.id.activity_memory_grid_view);
-		List<CardImage> images = gameboardGenerator.getGameBoard(
-				NBR_OF_PAIRS, false);
+		List<CardImage> images = gameboardGenerator.getGameBoard(NBR_OF_PAIRS,
+				false);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
 		gridView.setAdapter(memoryAdapter);
 		gridView.setNumColumns(GRID_COLUMNS);
@@ -163,6 +163,14 @@ public class MemoryActivity extends BaseActivationActivity implements
 		private final CardImage cardTwo;
 		private Handler handler = new Handler();
 
+		/**
+		 * Create a new instance the memory task.
+		 * 
+		 * @param firstCard
+		 *            The first card that was pressed.
+		 * @param secondCard
+		 *            The second card that was pressed.
+		 */
 		public MemoryTask(CardImage firstCard, CardImage secondCard) {
 			this.cardOne = firstCard;
 			this.cardTwo = secondCard;
