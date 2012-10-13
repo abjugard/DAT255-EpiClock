@@ -18,6 +18,9 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
+ * * A class representing a base switch problem. All the problems is of a base 2
+ * number. The user solves the problem by converting the base two number into an
+ * base 10 number.
  * 
  * @author Joakim Persson
  * 
@@ -32,6 +35,13 @@ public class BaseSwitchProblem implements MathProblemType {
 		return convertBaseTwoToTen(numbers);
 	}
 
+	/**
+	 * Covert an array representing an base two number into an base ten number
+	 * 
+	 * @param nbrs
+	 *            The array representing a base two number
+	 * @return The number in base ten
+	 */
 	private int convertBaseTwoToTen(int[] nbrs) {
 		// reverse the array
 		int[] reversedNbrs = reverseArray(nbrs);
@@ -46,6 +56,13 @@ public class BaseSwitchProblem implements MathProblemType {
 		return sum;
 	}
 
+	/**
+	 * A util method for reversing the position of the numbers in an array
+	 * 
+	 * @param nbrs
+	 *            The array to be reversed
+	 * @return The same array but in an reversed order
+	 */
 	private int[] reverseArray(int[] nbrs) {
 		int size = nbrs.length;
 		int mid = size / 2;
@@ -99,13 +116,30 @@ public class BaseSwitchProblem implements MathProblemType {
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generates an array representing a random base two numbers. Ex: if the
+	 * array is {1,1} then the base two number is 11.
+	 * 
+	 * @param lowerLimit
+	 *            The lower limit for the random number
+	 * @param upperLimit
+	 *            The upper limit for the random number
+	 * @return An array representing an random base 2 number
+	 */
 	private int[] generateRandomNumbers(int lowerLimit, int upperLimit) {
 		int randomNumber = getRandomNumber(lowerLimit, upperLimit);
 		return convertNumberToBaseTwo(randomNumber);
 	}
 
-	private int[] convertNumberToBaseTwo(int randomNumber) {
-		String baseTwoNumber = converBaseTenToTwo(randomNumber);
+	/**
+	 * Convert a base ten number into an base two or binary number
+	 * 
+	 * @param number
+	 *            The number to be converted into base 2
+	 * @return An array representing an base two number
+	 */
+	private int[] convertNumberToBaseTwo(int number) {
+		String baseTwoNumber = converBaseTenToTwo(number);
 
 		String[] stringNumbers = baseTwoNumber.split(" ");
 
@@ -123,13 +157,18 @@ public class BaseSwitchProblem implements MathProblemType {
 		return (int) (lowerLimit + diff * Math.random());
 	}
 
+	/**
+	 * Converts a base ten number into an base two number and return it as a
+	 * string containing a whitespace between the number. Ex: 23 = 1 0 1 1 1.
+	 * 
+	 * @param number
+	 *            The number to be converted into base two
+	 * @return A string of the base two number
+	 */
 	private String converBaseTenToTwo(int number) {
 
 		int base = 2;
 
-		if (number < 0) {
-			return "-" + converBaseTenToTwo(-number);
-		}
 		if (number < base) {
 			return Integer.toString(number) + " ";
 		} else {
