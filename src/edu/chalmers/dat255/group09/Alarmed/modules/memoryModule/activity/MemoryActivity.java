@@ -42,19 +42,19 @@ public class MemoryActivity extends BaseActivationActivity implements
 		OnItemClickListener {
 
 	private final static int NBR_OF_PAIRS = 8;
-	private final static int COLUMNS = 4;
+	private final static int GRID_COLUMNS = 4;
 	private final static int DELAY = 500;
 	private boolean isFirstCard = true;
 	private Timer timer;
 	private CardImageButton firstCard = null;
 	private MemoryController controller;
-	private GameboardGenerator generator;
+	private GameboardGenerator gameboardGenerator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_memory);
-		generator = new GameboardGenerator(this);
+		gameboardGenerator = new GameboardGenerator(this);
 		controller = new MemoryController(NBR_OF_PAIRS);
 
 		initGridView();
@@ -62,13 +62,18 @@ public class MemoryActivity extends BaseActivationActivity implements
 		timer = new Timer();
 	}
 
+	/**
+	 * Init the gridview, by generating the card images and then via an adapter
+	 * pushing them to the view. Also configured the number of columns and
+	 * attached an otItemClickListener.
+	 */
 	private void initGridView() {
-		GridView gridView = (GridView) findViewById(R.id.activity_math_grid_view);
-		List<CardImageButton> images = generator.getGameBoard(NBR_OF_PAIRS,
-				false);
+		GridView gridView = (GridView) findViewById(R.id.activity_memory_grid_view);
+		List<CardImageButton> images = gameboardGenerator.getGameBoard(
+				NBR_OF_PAIRS, false);
 		MemoryAdapter memoryAdapter = new MemoryAdapter(images);
 		gridView.setAdapter(memoryAdapter);
-		gridView.setNumColumns(COLUMNS);
+		gridView.setNumColumns(GRID_COLUMNS);
 		gridView.setOnItemClickListener(this);
 	}
 
@@ -79,17 +84,32 @@ public class MemoryActivity extends BaseActivationActivity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> adapter, View view, int id, long numb) {
-		CardImageButton btn = (CardImageButton) view;
-		if (isValidPress(btn)) {
-			handleButtonPressed(btn);
+	public void onItemClick(AdapterView<?> adapter, View view, int position,
+			long id) {
+		CardImageButton cardImage = (CardImageButton) view;
+		if (isValidPress(cardImage)) {
+			handleButtonPressed(cardImage);
 		}
 	}
 
-	private boolean isValidPress(CardImageButton btn) {
-		return !btn.isDisabled() && !btn.equals(firstCard);
+	/**
+	 * Determines of the pressed card image was an valid press, by checking if
+	 * the card had been pressed before or it it was disabled.
+	 * 
+	 * @param cardImage
+	 *            The pressed card image.
+	 * @return If it was an valid press.
+	 */
+	private boolean isValidPress(CardImageButton cardImage) {
+		return !cardImage.isDisabled() && !cardImage.equals(firstCard);
 	}
 
+	/**
+	 * Handle the logic for when an card image was pressed in the view.
+	 * 
+	 * @param cardImage
+	 *            The pressed card image.
+	 */
 	private void handleButtonPressed(CardImageButton cardImage) {
 
 		if (isFirstCard) {
@@ -100,12 +120,24 @@ public class MemoryActivity extends BaseActivationActivity implements
 
 	}
 
+	/**
+	 * Handle the logic for the first pressed card image.
+	 * 
+	 * @param cardImage
+	 *            The first pressed card image.
+	 */
 	private void handleFirstCardPressed(CardImageButton cardImage) {
 		cardImage.toggleStatus();
 		firstCard = cardImage;
 		isFirstCard = false;
 	}
 
+	/**
+	 * Handle the logic for the second pressed card image.
+	 * 
+	 * @param cardImage
+	 *            The second pressed card image.
+	 */
 	private void handleSecondCardPressed(CardImageButton cardImage) {
 		CardImageButton secondCard = cardImage;
 		secondCard.toggleStatus();
@@ -117,6 +149,14 @@ public class MemoryActivity extends BaseActivationActivity implements
 		secondCard = null;
 	}
 
+	/**
+	 * A timertask for handling the logic when two card images has been pressed
+	 * in a row. The timertask is responsible for updating the game by checking
+	 * if the cards where equal and update the card images status.
+	 * 
+	 * @author Joakim Persson
+	 * 
+	 */
 	private class MemoryTask extends TimerTask {
 
 		private final CardImageButton cardOne;
@@ -130,7 +170,7 @@ public class MemoryActivity extends BaseActivationActivity implements
 
 		@Override
 		public void run() {
-			// Must use an handler to make the changes to the ui thread
+			// Must use an handler to make changes to the ui thread
 			handler.post(new Runnable() {
 
 				@Override
@@ -148,11 +188,9 @@ public class MemoryActivity extends BaseActivationActivity implements
 					if (controller.isGameOver()) {
 						MemoryActivity.super.stopAlarm();
 					}
+
 				}
-
 			});
-
 		}
 	}
-
 }
