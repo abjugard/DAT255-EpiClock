@@ -33,6 +33,13 @@ import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 
+/**
+ * Activity to create a new alarm.
+ * 
+ * @author Daniel Augurell
+ * @author Joakim Persson
+ * 
+ */
 public class CreateAlarm extends Activity {
 
 	@Override
@@ -48,11 +55,17 @@ public class CreateAlarm extends Activity {
 		initTaskSpinner();
 	}
 
+	/**
+	 * If the platform is Honeycomb or greater the ActionBarBackButton is enabled.
+	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void enableActionbarBackButton() {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
+	/**
+	 * Initiates the TimePicker as an 24h view and sets it to the current time.
+	 */
 	private void initTimePicker() {
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
 
@@ -60,6 +73,13 @@ public class CreateAlarm extends Activity {
 		setTimepickerToCurrentTime(timePicker);
 	}
 
+	/**
+	 * Sets the time of a TimePicker to the current time or the time of the
+	 * alarm to be edited.
+	 * 
+	 * @param timePicker
+	 *            The TimePicker to be changed
+	 */
 	private void setTimepickerToCurrentTime(TimePicker timePicker) {
 		Calendar calendar = Calendar.getInstance();
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -74,6 +94,9 @@ public class CreateAlarm extends Activity {
 		timePicker.setCurrentMinute(minute);
 	}
 
+	/**
+	 * Initiates the TaskSpinner with all the modulenames.
+	 */
 	private void initTaskSpinner() {
 		Spinner spinner = (Spinner) findViewById(R.id.activity_create_alarm_task_spinner);
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
@@ -97,8 +120,10 @@ public class CreateAlarm extends Activity {
 		case android.R.id.home:
 			onBackPressed();
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+
 	}
 
 	@Override
@@ -107,6 +132,13 @@ public class CreateAlarm extends Activity {
 		overrideTransition();
 	}
 
+	/**
+	 * Finishes the activity and return to the previous activity with the given
+	 * result.
+	 * 
+	 * @param view
+	 *            The button that was pressed.
+	 */
 	public void onSetAlarmBtnPressed(View view) {
 
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
@@ -130,6 +162,16 @@ public class CreateAlarm extends Activity {
 
 	}
 
+	/**
+	 * Returns a integer representation of the days that the alarm should be
+	 * recurring on.
+	 * 
+	 * @param daysOfWeek
+	 *            The boolean array that represents the days that the alarms
+	 *            should be recurring on
+	 * @return The days of the week that should be recurring as bits in a
+	 *         integer
+	 */
 	private int getIntegerFromBooleanArray(boolean[] daysOfWeek) {
 		StringBuilder days = new StringBuilder();
 		for (int i = daysOfWeek.length - 1; i >= 0; i--) {
@@ -143,6 +185,9 @@ public class CreateAlarm extends Activity {
 
 	}
 
+	/**
+	 * Flashy transition between views.
+	 */
 	private void overrideTransition() {
 		int fadeIn = android.R.anim.fade_in;
 		int fadeOut = android.R.anim.fade_out;
@@ -156,6 +201,14 @@ public class CreateAlarm extends Activity {
 		setTimepickerToCurrentTime(timePicker);
 	}
 
+	/**
+	 * Creates a dialog with a list of the days of the week. You can enable and
+	 * disable every day and the selected days will be the days that is
+	 * recurring.
+	 * 
+	 * @param view
+	 *            The button that is pressed.
+	 */
 	public void onDayOfWeekClick(View view) {
 		new AlertDialog.Builder(this)
 				.setTitle(R.string.recurring_alarms)
@@ -171,6 +224,12 @@ public class CreateAlarm extends Activity {
 
 	}
 
+	/**
+	 * A listener that changes the state of the selected days of the week.
+	 * 
+	 * @author Daniel Augurell
+	 * 
+	 */
 	private class MultiClickListener implements
 			DialogInterface.OnMultiChoiceClickListener {
 
