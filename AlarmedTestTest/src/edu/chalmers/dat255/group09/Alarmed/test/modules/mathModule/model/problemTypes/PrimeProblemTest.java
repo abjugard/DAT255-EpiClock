@@ -31,6 +31,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 public class PrimeProblemTest extends AndroidTestCase {
 
 	private PrimeProblem primeProblem;
+	private static final int ITERATIONS = 100;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -70,10 +71,9 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 0;
 		int upperLimit = 30;
 		int deltaToPrime = 10;
-		int iterations = 1000;
 		int[] nbrs = null;
 
-		for (int i = 0; i < iterations; i++) {
+		for (int i = 0; i < ITERATIONS; i++) {
 			nbrs = primeProblem.generateNumbers(Difficulty.EASY);
 			assertTrue(isOnlyOnePrimeNumber(nbrs));
 			assertTrue(isOnlyUniqueNumbers(nbrs));
@@ -87,10 +87,9 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 30;
 		int upperLimit = 50;
 		int deltaToPrime = 15;
-		int iterations = 1000;
 		int[] nbrs = null;
 
-		for (int i = 0; i < iterations; i++) {
+		for (int i = 0; i < ITERATIONS; i++) {
 			nbrs = primeProblem.generateNumbers(Difficulty.MEDIUM);
 			assertTrue(isOnlyOnePrimeNumber(nbrs));
 			assertTrue(isOnlyUniqueNumbers(nbrs));
@@ -103,10 +102,9 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 50;
 		int upperLimit = 100;
 		int deltaToPrime = 20;
-		int iterations = 1000;
 		int[] nbrs = null;
 
-		for (int i = 0; i < iterations; i++) {
+		for (int i = 0; i < ITERATIONS; i++) {
 			nbrs = primeProblem.generateNumbers(Difficulty.HARD);
 			assertTrue(isOnlyOnePrimeNumber(nbrs));
 			assertTrue(isOnlyUniqueNumbers(nbrs));
@@ -116,11 +114,10 @@ public class PrimeProblemTest extends AndroidTestCase {
 	}
 
 	private boolean isOnlyOnePrimeNumber(int[] nbrs) {
-		int iterations = 1000;
 		int expectedNbrOfPrimes = 1;
 		int actualNbrOfPrimes = 1;
 
-		for (int i = 0; i < iterations; i++) {
+		for (int i = 0; i < ITERATIONS; i++) {
 			actualNbrOfPrimes = getNbrsOfPrimes(nbrs);
 		}
 		return expectedNbrOfPrimes == actualNbrOfPrimes;
