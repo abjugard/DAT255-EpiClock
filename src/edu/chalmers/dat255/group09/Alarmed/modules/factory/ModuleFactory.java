@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.activity.MathActivity;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.activity.MemoryActivity;
 
 /**
  * 
@@ -33,6 +34,7 @@ public class ModuleFactory {
 	static {
 		modules = new HashMap<String, Class<?>>();
 		modules.put("MathModule", MathActivity.class);
+		modules.put("MemoryModule", MemoryActivity.class);
 	}
 
 	public static String[] getModuleNames() {
