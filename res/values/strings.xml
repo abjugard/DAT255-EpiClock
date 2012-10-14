@@ -15,5 +15,6 @@
     <string name="activity_math_header_holder">What Is The Product?</string>
     <string name="recurring_alarms">Select recurring days</string>
     <string name="ok_button">OK</string>
+    <string name="title_activity_memory">MemoryActivity</string>
 
 </resources>
