@@ -17,6 +17,8 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.BaseSwitchProblem;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.DifferenceOfTwoSquaresProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FactorialProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FibonacciProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
@@ -32,7 +34,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  */
 public class MathProblemGenerator {
 
-	private static final int NBR_OF_OPERATORS = 6;
+	private static final int NBR_OF_OPERATORS = 8;
 
 	/**
 	 * Generate a new math problem with an specified difficulty.
@@ -82,6 +84,13 @@ public class MathProblemGenerator {
 			problemType = new ModularProblem();
 		}
 
+		if (rand == 6) {
+			problemType = new DifferenceOfTwoSquaresProblem();
+		}
+
+		if (rand == 7) {
+			problemType = new BaseSwitchProblem();
+		}
 		return problemType;
 	}
 }

@@ -67,9 +67,9 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 	public void testOperatorProbability() {
 		int iterations = 100;
 		int numberOfAdditionOperators = 0;
-		int expectedNumberOfAdditionOperators = 15;
+		int expectedNumberOfAdditionOperators = 10;
 		int numberOfMultiplicationOperators = 0;
-		int expectedNumberOfMultiplicationOperators = 15;
+		int expectedNumberOfMultiplicationOperators = 10;
 		int delta = 10;
 
 		MathProblem problem = null;
