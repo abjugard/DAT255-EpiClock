@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>144</x>
+      <y>96</y>
+      <w>344</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Activity&gt;&gt;
+MemoryActivity
+--
+-handleButtonPressed(): void
+-handleFirstCardPressed(): void
+-handleSecondCardPressed(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>144</x>
+      <y>208</y>
+      <w>344</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>MemoryController
+--
++isGameOver(): boolean
++isCardsEqual(firstCard: CardImage, secondCard: CardImage)
++correctGuess(): void
++getPairsLeft(): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>464</x>
+      <y>112</y>
+      <w>72</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>56;24;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>576</x>
+      <y>216</y>
+      <w>264</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>CardImage
+--
+-visableImageResource: int
+-HIDDEN_IMAGE: int
+-disabled: boolean
+--
++cardPressed(): void
++setDisabled(): void
++isDisabled(): boolean
++getImageResource(): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>656</x>
+      <y>152</y>
+      <w>86</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+Creates</panel_attributes>
+    <additional_attributes>48;64;48;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>296</x>
+      <y>152</y>
+      <w>40</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;56;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>576</x>
+      <y>368</y>
+      <w>264</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Card
+--
++toggleStatus(): void
++getStatus(); CurrentStatus</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>680</x>
+      <y>312</y>
+      <w>40</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;56;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>144</x>
+      <y>8</y>
+      <w>344</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Activity&gt;&gt;
+BaseActivationActivity
+--
++stopAlarm(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>296</x>
+      <y>48</y>
+      <w>40</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;48</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>96</y>
+      <w>104</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>MemoryAdapter
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>80</x>
+      <y>112</y>
+      <w>80</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;64;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>520</x>
+      <y>96</y>
+      <w>368</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>GameboardGenerator
+--
++getGameBoard(nbrOfpairs: int, isTest: boolean): List&lt;CardImage&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>920</x>
+      <y>96</y>
+      <w>184</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ImageLoader
+--
++getImageResource(key: int): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>864</x>
+      <y>112</y>
+      <w>72</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>56;24;24;24</additional_attributes>
+  </element>
+</diagram>
