@@ -57,6 +57,9 @@ public class Alarm implements Comparable<Alarm> {
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
 		this.alarmId = id;
+
+		this.alarmEnabled = true;
+		this.daysOfWeek = 0;
 	}
 
 	/**
@@ -76,9 +79,7 @@ public class Alarm implements Comparable<Alarm> {
 	public Alarm(int hours, int minutes, int id, String module, int volume) {
 		this(hours, minutes, id);
 		this.alarmModule = module;
-		this.alarmEnabled = true;
 		this.alarmVolume = volume;
-		this.daysOfWeek = 0;
 	}
 
 	/**

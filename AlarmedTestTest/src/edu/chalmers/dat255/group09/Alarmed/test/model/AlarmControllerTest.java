@@ -18,8 +18,8 @@ package edu.chalmers.dat255.group09.Alarmed.test.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.test.AndroidTestCase;
-import android.test.mock.MockContext;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
@@ -27,19 +27,19 @@ import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 /**
  * 
  * @author Daniel Augurell
- * @modified Joakim Persson
+ * @author Joakim Persson
  * 
  */
 public class AlarmControllerTest extends AndroidTestCase {
 	private AlarmController ac;
-	private MockContext context;
+	private Context context;
 	private AlarmHandler handler;
 
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		ac = AlarmController.getInstance();
-		context = new MockContext();
+		context = getContext();
+		ac = AlarmController.getInstance(context);
 		handler = new MockAlarmHandler().openCon();
 		ac.init(context, handler);
 		ac.createAlarm(10, 10, 0, "");
