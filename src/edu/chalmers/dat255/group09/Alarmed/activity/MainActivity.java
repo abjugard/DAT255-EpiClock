@@ -108,6 +108,7 @@ public class MainActivity extends Activity {
 		intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
 		intent.putExtra("time",
 				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
+		intent.putExtra("volume", alarm.getVolume());
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 		overrideTransition();
 	}
@@ -144,11 +145,11 @@ public class MainActivity extends Activity {
 		if (isResonseValid(resultCode)) {
 			if (requestCode == ADD_ALARM_REQUEST_CODE) {
 				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1), data.getStringExtra("module"));
+						data.getIntExtra("minutes", -1), data.getStringExtra("module"), data.getIntExtra("volume", 6));
 			} else if (requestCode == EDIT_ALARM_REQUEST_CODE) {
 				aControl.deleteAlarm(data.getIntExtra("ID", -1));
 				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1), data.getStringExtra("module"));
+						data.getIntExtra("minutes", -1), data.getStringExtra("module"), data.getIntExtra("volume", 6));
 			}
 
 		}
@@ -174,8 +175,8 @@ public class MainActivity extends Activity {
 	 *            The minute of the new alarm
 	 */
 
-	private void createAlarm(int hour, int minute, String module) {
-		aControl.createAlarm(hour, minute, module);
+	private void createAlarm(int hour, int minute, String module, int volume) {
+		aControl.createAlarm(hour, minute, module, volume);
 		Toast.makeText(this, new Alarm(hour, minute, 0).toString(),
 				Toast.LENGTH_LONG).show();
 		updateList();

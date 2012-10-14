@@ -15,5 +15,6 @@
     <string name="activity_math_submit_btn">Submit</string>
     <string name="activity_math_header_holder">What Is The Product?</string>
     <string name="activity_create_alarm_tone_selector_button">Select alarm sound</string>
+    <string name="text_enable_vibration">Enable vibration</string>
 
 </resources>

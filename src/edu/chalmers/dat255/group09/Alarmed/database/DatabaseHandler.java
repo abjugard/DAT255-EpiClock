@@ -112,13 +112,14 @@ public class DatabaseHandler implements AlarmHandler {
 	}
 
 	public long createAlarm(int hour, int minute, boolean recurring,
-			String module) {
+			String module, int volume) {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
 		alarmTime.put(KEY_RECURRING, recurring);
 		alarmTime.put(KEY_ENABLED, true);
 		alarmTime.put(KEY_TIME, hour + ":" + minute);
 		alarmTime.put(KEY_MODULE, module);
+		alarmTime.put(KEY_VOLUME, volume);
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
 

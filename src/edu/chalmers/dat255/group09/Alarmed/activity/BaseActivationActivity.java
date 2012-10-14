@@ -31,8 +31,6 @@ import android.os.PowerManager.WakeLock;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -127,15 +125,11 @@ public abstract class BaseActivationActivity extends Activity {
 	private void startAudio() {
 		try {
 			mediaPlayer.setDataSource(this, getAlarmTone());
-			audioManager.setStreamVolume(AudioManager.STREAM_ALARM,
-					6 /* 7 is max */, 0);
-			if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
-				// TODO adrian: this should eventually check for desired volume
-				// saved in database
-				mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-				mediaPlayer.prepare();
-				mediaPlayer.start();
-			}
+			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, getIntent()
+					.getIntExtra("volume", 6), 0);
+			mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+			mediaPlayer.prepare();
+			mediaPlayer.start();
 		} catch (IOException e) {
 			Log.d("Sound", "Sound I/O error");
 		}

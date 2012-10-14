@@ -46,11 +46,12 @@ public interface AlarmHandler {
 	 *            True if the alarm is set to be recurring.
 	 * @param module
 	 *            The name of the module to be set
+	 * @param volume 
 	 * @return the id of the created Alarm, or -1 if an error occurred
 	 */
 
 	public long createAlarm(int hour, int minute, boolean recurring,
-			String module);
+			String module, int volume);
 
 	/**
 	 * Deletes an Alarm with a specified id.

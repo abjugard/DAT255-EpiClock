@@ -51,8 +51,8 @@ public class AlarmController {
 		alarmHandler = handler.openCon();
 	}
 
-	public void createAlarm(int hour, int minute, String module) {
-		alarmHandler.createAlarm(hour, minute, false, module);
+	public void createAlarm(int hour, int minute, String module, int volume) {
+		alarmHandler.createAlarm(hour, minute, false, module, volume);
 		setAlarm();
 	}
 
@@ -64,6 +64,7 @@ public class AlarmController {
 			Intent intent = new Intent(context, AlarmReceiver.class);
 			intent.setData(Uri.parse("" + nextAlarm.getId()));
 			intent.putExtra("module", nextAlarm.getModule());
+			intent.putExtra("volume", nextAlarm.getVolume());
 			PendingIntent sender = PendingIntent.getBroadcast(context, 0,
 					intent, Intent.FILL_IN_DATA);
 
