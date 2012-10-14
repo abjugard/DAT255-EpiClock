@@ -52,8 +52,10 @@ public class CardImage extends ImageView {
 	 */
 	public CardImage(Context context, Card c, int imageResource) {
 		super(context);
-		visableImageResource = imageResource;
 		this.card = c;
+		visableImageResource = imageResource;
+		setImageResource(getImageResource());
+		
 	}
 
 	/**

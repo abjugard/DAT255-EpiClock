@@ -48,7 +48,7 @@ public final class AlarmController {
 	 */
 	private AlarmController(Context ctx) {
 		this.context = ctx;
-		alarmHandler = new DatabaseHandler(ctx).openCon();
+		init();
 	}
 
 	/**
@@ -63,7 +63,13 @@ public final class AlarmController {
 		}
 		return instance;
 	}
-
+	/**
+	 * Init method to initiate the controller.
+	 * 
+	 */
+	public void init() {
+		alarmHandler = new DatabaseHandler(context).openCon();
+	}
 	/**
 	 * Init method the change the handler to a handler that is not the default.
 	 * 

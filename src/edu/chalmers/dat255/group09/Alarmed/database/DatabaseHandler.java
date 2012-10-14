@@ -75,7 +75,9 @@ public class DatabaseHandler implements AlarmHandler {
 
 		/**
 		 * Constructor to the DatabaseHelper.
-		 * @param context The android context
+		 * 
+		 * @param context
+		 *            The android context
 		 */
 		DatabaseHelper(Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
@@ -103,7 +105,9 @@ public class DatabaseHandler implements AlarmHandler {
 
 	/**
 	 * Constructor for the DatabaseHandler.
-	 * @param ctx The android context
+	 * 
+	 * @param ctx
+	 *            The android context
 	 */
 	public DatabaseHandler(Context ctx) {
 		aCtx = ctx;
@@ -111,6 +115,10 @@ public class DatabaseHandler implements AlarmHandler {
 
 	@Override
 	public AlarmHandler openCon() {
+		if (aDbHelper != null) {
+			closeCon();
+		}
+
 		aDbHelper = new DatabaseHelper(aCtx);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;

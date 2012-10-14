@@ -64,6 +64,7 @@ public class MainActivity extends Activity {
 	 */
 	private void initController() {
 		aControl = AlarmController.getInstance(this);
+		aControl.init();
 	}
 
 	/**
