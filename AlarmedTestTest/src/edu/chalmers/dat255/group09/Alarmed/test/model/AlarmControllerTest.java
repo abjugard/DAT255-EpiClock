@@ -39,7 +39,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		context = getContext();
-		ac = AlarmController.getInstance(context);
+		ac = AlarmController.getInstance();
 		handler = new MockAlarmHandler().openCon();
 		ac.init(context, handler);
 		ac.createAlarm(10, 10, 0, "", 0);
