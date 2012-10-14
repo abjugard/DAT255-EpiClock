@@ -24,7 +24,6 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  * @author Joakim Persson
  * 
  */
-// TODO figure out how to handle more than two numbers
 public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 
 	private static final String PROBLEM_HEADER = "What is the product?";
@@ -32,7 +31,7 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 
 	@Override
 	public int getResult(int[] numbers) {
-		// calculate a^2-b^2
+		// calculates a^2-b^2
 		int a = numbers[0];
 		int b = numbers[1];
 		int power = 2;
@@ -62,12 +61,24 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 		return nbrs;
 	}
 
+	/**
+	 * Generate an array of numbers, with respect to being an easy problem.
+	 * 
+	 * @return An random array of numbers, with respect to being an easy
+	 *         problem.
+	 */
 	private int[] generateEasyProblem() {
 		int lowerLimit = 1;
 		int upperLimit = 5;
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generate an array of numbers, with respect to being an medium problem.
+	 * 
+	 * @return An random array of numbers, with respect to being an easy
+	 *         problem.
+	 */
 	private int[] generateMediumProblem() {
 		int lowerLimit = 4;
 		int upperLimit = 8;
@@ -75,6 +86,12 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generate an array of numbers, with respect to being an hard problem.
+	 * 
+	 * @return An random array of numbers, with respect to being an hard
+	 *         problem.
+	 */
 	private int[] generateHardProblem() {
 		int lowerLimit = 7;
 		int upperLimit = 11;

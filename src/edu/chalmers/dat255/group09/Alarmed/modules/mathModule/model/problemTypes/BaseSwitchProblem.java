@@ -18,15 +18,14 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
- * * A class representing a base switch problem. All the problems is of a base 2
+ * A class representing a base switch problem. All the problems is of a base 2
  * number. The user solves the problem by converting the base two number into an
  * base 10 number.
  * 
  * @author Joakim Persson
  * 
  */
-// TODO complete felhantering
-public class BaseSwitchProblem implements MathProblemType {
+public final class BaseSwitchProblem implements MathProblemType {
 
 	private static final String PROBLEM_HEADER = "Convert to base ten";
 
@@ -100,18 +99,36 @@ public class BaseSwitchProblem implements MathProblemType {
 
 	}
 
+	/**
+	 * Generate an easy base switch problem.
+	 * 
+	 * @return An array of numbers in base 2 representing an easy random base 10
+	 *         number.
+	 */
 	private int[] generateEasyProblem() {
 		int lowerLimit = 1;
 		int upperLimit = 30;
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generate an medium base switch problem.
+	 * 
+	 * @return An array of numbers in base 2 representing an medium level random
+	 *         base 10 number.
+	 */
 	private int[] generateMediumProblem() {
 		int lowerLimit = 30;
 		int upperLimit = 80;
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generate an easy hard switch problem.
+	 * 
+	 * @return An array of numbers in base 2 representing an hard random base 10
+	 *         number.
+	 */
 	private int[] generateHardProblem() {
 		int lowerLimit = 80;
 		int upperLimit = 120;
