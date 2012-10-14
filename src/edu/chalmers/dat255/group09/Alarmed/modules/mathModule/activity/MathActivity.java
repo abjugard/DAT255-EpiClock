@@ -29,6 +29,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemG
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
+ * An activity that lets the user solve different kinds of math problem in order
+ * to turn of their alarm.
  * 
  * @author Joakim Persson
  * 
@@ -71,6 +73,14 @@ public class MathActivity extends BaseActivationActivity {
 		answerField.setText("");
 	}
 
+	/**
+	 * Checks if the user has entered an valid string. A string is valid if its
+	 * length is greater than zero.
+	 * 
+	 * @param text
+	 *            The text the user has enterted.
+	 * @return If the input was valid.
+	 */
 	private boolean isInputValid(String text) {
 		return text.length() != 0;
 	}
@@ -98,7 +108,7 @@ public class MathActivity extends BaseActivationActivity {
 	}
 
 	/**
-	 * Evaluate if the user entered right or wrong answer
+	 * Evaluate if the user entered right or wrong answer.
 	 * 
 	 * @param answer
 	 *            The users answer
@@ -109,7 +119,7 @@ public class MathActivity extends BaseActivationActivity {
 	}
 
 	/**
-	 * Display an error message to the user
+	 * Display an error message to the user.
 	 * 
 	 * @param message
 	 *            The message to the user
@@ -120,7 +130,7 @@ public class MathActivity extends BaseActivationActivity {
 
 	/**
 	 * Generate a new MathProblem and update the view with the problem text from
-	 * the new problem
+	 * the new problem.
 	 */
 	private void generateNewMathProblem() {
 		MathProblem problem = controller.generateNewProblem();
@@ -132,11 +142,25 @@ public class MathActivity extends BaseActivationActivity {
 		setProblemText(nbrs, problemType);
 	}
 
+	/**
+	 * Set the problem description to match the current problem and numbers.
+	 * 
+	 * @param nbrs
+	 *            The current numbers in the problem.
+	 * @param problemType
+	 *            The current problem type in the problem.
+	 */
 	private void setProblemText(int[] nbrs, MathProblemType problemType) {
 		TextView textView = (TextView) findViewById(R.id.math_activity_problem_text);
 		textView.setText(problemType.getFormattedProblem(nbrs));
 	}
 
+	/**
+	 * Set the current problem types problem header to the user.
+	 * 
+	 * @param problemType
+	 *            The current math problem type.
+	 */
 	private void setProblemHeader(MathProblemType problemType) {
 		TextView textHeader = (TextView) findViewById(R.id.math_activity_problem_header);
 		textHeader.setText(problemType.getProblemHeader());
