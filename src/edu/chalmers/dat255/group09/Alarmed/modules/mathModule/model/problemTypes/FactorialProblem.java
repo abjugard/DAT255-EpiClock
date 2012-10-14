@@ -27,7 +27,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  */
 public final class FactorialProblem implements MathProblemType {
 
-	private final static String PROBLEM_HEADER = "What is the sum?";
+	private static final String PROBLEM_HEADER = "What is the sum?";
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -41,7 +41,7 @@ public final class FactorialProblem implements MathProblemType {
 	}
 
 	/**
-	 * Calculates the factorial of a specified number
+	 * Calculates the factorial of a specified number.
 	 * 
 	 * @param number
 	 *            The factorial number
@@ -70,29 +70,48 @@ public final class FactorialProblem implements MathProblemType {
 		case HARD:
 			nbrs = generateHardProblem();
 			break;
+		default:
+			break;
 		}
 
 		return nbrs;
 	}
 
+	/**
+	 * Generate numbers for an easy factorial problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an easy
+	 *         problem.
+	 */
 	private int[] generateEasyProblem() {
-		int lowerLimit = 0;
+		int lowerLimit = 4;
 		int upperLimit = 6;
 		int nbrOfFactors = 2;
 
 		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generate numbers for an medium factorial problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an medium
+	 *         problem.
+	 */
 	private int[] generateMediumProblem() {
-		int lowerLimit = 0;
+		int lowerLimit = 4;
 		int upperLimit = 6;
 		int nbrOfFactors = 3;
 
 		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generate numbers for an hard factorial problem.
+	 * 
+	 * @return An array of random numbers, with resect to being an hard problem.
+	 */
 	private int[] generateHardProblem() {
-		int lowerLimit = 0;
+		int lowerLimit = 6;
 		int upperLimit = 8;
 		int nbrOfFactors = 2;
 		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
