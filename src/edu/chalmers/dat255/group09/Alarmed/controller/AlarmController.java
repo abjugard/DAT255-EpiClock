@@ -37,6 +37,7 @@ public final class AlarmController {
 
 	private static AlarmController instance;
 	private AlarmHandler alarmHandler;
+	private NotificationController notificationController;
 
 	private Context context;
 
@@ -69,6 +70,7 @@ public final class AlarmController {
 	 */
 	public void init() {
 		alarmHandler = new DatabaseHandler(context).openCon();
+		notificationController = new NotificationController(context);
 	}
 	/**
 	 * Init method the change the handler to a handler that is not the default.
@@ -81,6 +83,7 @@ public final class AlarmController {
 	public void init(Context ctx, AlarmHandler handler) {
 		this.context = ctx;
 		alarmHandler = handler.openCon();
+		notificationController = new NotificationController(context);
 	}
 
 	/**
@@ -110,7 +113,7 @@ public final class AlarmController {
 		if (nextAlarm != null) {
 			addAlarmToAlarmManager(nextAlarm);
 		}
-
+		notificationController.addNotification(nextAlarm);
 	}
 
 	/**
@@ -125,6 +128,7 @@ public final class AlarmController {
 				.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP,
 				alarm.getTimeInMilliSeconds(), sender);
+
 	}
 
 	/**
