@@ -18,7 +18,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="edu.chalmers.dat255.group09.Alarmed.activity.MainActivity"
-            android:label="@string/title_activity_browse_alarms" >
+            android:label="@string/title_activity_browse_alarms"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +28,8 @@
         </activity>
         <activity
             android:name="edu.chalmers.dat255.group09.Alarmed.activity.CreateAlarm"
-            android:label="@string/title_activity_create_alarm" >
+            android:label="@string/title_activity_create_alarm"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.chalmers.dat255.group09.Alarmed.activity.MainActivity" />
