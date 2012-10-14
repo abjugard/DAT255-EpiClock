@@ -27,35 +27,63 @@ import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.receiver.AlarmReceiver;
 
-public class AlarmController {
+/**
+ * Controller that handles all the alarms.
+ * @author Daniel Augurell
+ *
+ */
+public final class AlarmController {
 
 	private static AlarmController instance;
 	private AlarmHandler alarmHandler;
 
 	private Context context;
 
-	public static AlarmController getInstance() {
+	/**
+	 * A singleton shouldn't be accessed outside of the class.
+	 * @param ctx The android context
+	 */
+	private AlarmController(Context ctx) { 
+		this.context = ctx;
+		alarmHandler = new DatabaseHandler(ctx).openCon();
+	}
+	/**
+	 * 
+	 * @param context The android context
+	 * @return An instance of AlarmController
+	 */
+	public static AlarmController getInstance(Context context) {
 		if (instance == null) {
-			instance = new AlarmController();
+			instance = new AlarmController(context);
 		}
 		return instance;
 	}
 
-	public void init(Context context) {
-		this.context = context;
-		alarmHandler = new DatabaseHandler(context).openCon();
-	}
-
-	public void init(Context context, AlarmHandler handler) {
-		this.context = context;
+	/**
+	 * Init method the change the handler to a handler that is not the default.
+	 * @param ctx The android context
+	 * @param handler The handler to handle the alarms
+	 */
+	public void init(Context ctx, AlarmHandler handler) {
+		this.context = ctx;
 		alarmHandler = handler.openCon();
 	}
 
+	/**
+	 * Creates an alarm with the parameters and then sets the first enabled alarm.
+	 * @param hour The hour of the alarm
+	 * @param minute The minute of the alarm
+	 * @param dayOfWeek The days that the alarm should be recurring
+	 * @param module The module that the alarm should activate
+	 */
 	public void createAlarm(int hour, int minute, int dayOfWeek, String module) {
 		alarmHandler.createAlarm(hour, minute, dayOfWeek, module);
 		setAlarm();
 	}
 
+	/**
+	 * Gets the first enabled alarm from the handler and then adds it to the AlarmManager.
+	 */
 	private void setAlarm() {
 		Alarm nextAlarm = alarmHandler.fetchFirstEnabledAlarm();
 		if (nextAlarm != null) {
@@ -64,6 +92,10 @@ public class AlarmController {
 
 	}
 
+	/**
+	 * Adds an alarm to the AlarmManager with the alarms specified time.
+	 * @param alarm The alarm that would be added
+	 */
 	private void addAlarmToAlarmManager(Alarm alarm) {
 		PendingIntent sender = createAlarmPendingIntent(alarm);
 		AlarmManager alarmManager = (AlarmManager) context
@@ -72,6 +104,10 @@ public class AlarmController {
 				alarm.getTimeInMilliSeconds(), sender);
 	}
 
+	/**
+	 * Removes an alarm from the AlarmManager with the alarms specified time.
+	 * @param alarm The alarm that would be removed.
+	 */
 	private void removeAlarmFromAlarmManager(Alarm alarm) {
 		PendingIntent sender = createAlarmPendingIntent(alarm);
 		AlarmManager alarmManager = (AlarmManager) context
@@ -79,15 +115,25 @@ public class AlarmController {
 		alarmManager.cancel(sender);
 	}
 
-	private PendingIntent createAlarmPendingIntent(Alarm nextAlarm) {
+	/**
+	 * Creates an PendingIntent to be sent with the AlarmManager.
+	 * @param alarm The alarm to to be associated with the PendingIntent.
+	 * @return A PendingIntent with the data from the alarm.
+	 */
+	private PendingIntent createAlarmPendingIntent(Alarm alarm) {
 		Intent intent = new Intent(context, AlarmReceiver.class);
-		intent.setData(Uri.parse("" + nextAlarm.getId()));
-		intent.putExtra("module", nextAlarm.getModule());
+		intent.setData(Uri.parse("" + alarm.getId()));
+		intent.putExtra("module", alarm.getModule());
 		PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent,
 				Intent.FILL_IN_DATA);
 		return sender;
 	}
 
+	/**
+	 * Disables the received alarm, if it is not recurring, and then sets a new alarm.
+	 * @param id The id of the alarm
+	 * @return true if there is an alarm, else false
+	 */
 	public boolean alarmReceived(int id) {
 		Alarm alarm = alarmHandler.fetchAlarm(id);
 		if (alarm != null && alarm.isEnabled() && alarm.getDaysOfWeek() == 0) {
@@ -102,6 +148,11 @@ public class AlarmController {
 		return true;
 	}
 
+	/**
+	 * Deletes the alarm and then sets a new alarm.
+	 * @param id The id of the alarm
+	 * @return true if deleted, else false
+	 */
 	public boolean deleteAlarm(int id) {
 		removeAlarmFromAlarmManager(alarmHandler.fetchAlarm(id));
 		boolean removed = alarmHandler.deleteAlarm(id);
@@ -109,10 +160,21 @@ public class AlarmController {
 		return removed;
 	}
 
+	/**
+	 * 
+	 * @param id The id of the alarm
+	 * @return true if the alarm is enabled
+	 */
 	public boolean isAlarmEnabled(int id) {
 		return alarmHandler.isEnabled(id);
 	}
 
+	/**
+	 * Disable an alarm and then sets a new alarm.
+	 * @param id The id of the alarm
+	 * @param enable the new state of the alarm
+	 * @return true if the state is changed
+	 */
 	public boolean enableAlarm(int id, boolean enable) {
 		removeAlarmFromAlarmManager(alarmHandler.fetchAlarm(id));
 		boolean enabled = alarmHandler.setAlarmEnabled(id, enable);
@@ -120,10 +182,17 @@ public class AlarmController {
 		return enabled;
 	}
 
+	/**
+	 * 
+	 * @return A list of all the alarms
+	 */
 	public List<Alarm> getAllAlarms() {
 		return alarmHandler.fetchAllAlarms();
 	}
 
+	/**
+	 * Closes the connection to the handler.
+	 */
 	public void destroy() {
 		alarmHandler.closeCon();
 	}
