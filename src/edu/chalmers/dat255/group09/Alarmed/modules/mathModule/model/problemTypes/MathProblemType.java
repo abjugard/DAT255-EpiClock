@@ -18,6 +18,7 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
+ * An interface for the math problem types used in the math problem module.
  * 
  * @author Joakim Persson
  * 
@@ -25,37 +26,37 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 public interface MathProblemType {
 
 	/**
-	 * Evalutate the entered numbers using the decided operator
+	 * Evalutate the entered numbers using the decided operator.
 	 * 
 	 * @param numbers
 	 *            An array containing the numbers to evaluate
 	 * @return The evaluate result of the two numbers
 	 */
-	public int getResult(int[] numbers);
+	int getResult(int[] numbers);
 
 	/**
-	 * Generate numbers customized for the problem based on the difficulty
+	 * Generate numbers customized for the problem based on the difficulty.
 	 * 
 	 * @param difficulty
 	 *            The difficulty of the problem
 	 * @return An array of numbers
 	 */
-	public int[] generateNumbers(Difficulty difficulty);
+	int[] generateNumbers(Difficulty difficulty);
 
 	/**
-	 * Get The Header/Title for the problem
+	 * Get The Header/Title for the problem.
 	 * 
 	 * @return The Title of the problem
 	 */
-	public String getProblemHeader();
+	String getProblemHeader();
 
 	/**
-	 * Get a formatted output of the current problem
+	 * Get a formatted output of the current problem.
 	 * 
 	 * @param nbrs
 	 *            The numbers in the current problem
 	 * @return A formatted String
 	 */
-	public String getFormattedProblem(int[] nbrs);
+	String getFormattedProblem(int[] nbrs);
 
 }
