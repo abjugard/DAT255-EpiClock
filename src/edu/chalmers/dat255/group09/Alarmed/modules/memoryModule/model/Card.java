@@ -20,6 +20,7 @@ package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model;
  * A class representing the logic code for a card in an memory game.
  * 
  * @author Joakim Persson
+ * @author Daniel Augurell
  * 
  */
 public final class Card {

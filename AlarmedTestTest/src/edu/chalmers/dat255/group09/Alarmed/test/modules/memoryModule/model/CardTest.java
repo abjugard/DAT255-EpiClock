@@ -24,19 +24,17 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 /**
  * 
  * @author Joakim Persson
+ * @author Daniel Augurell
  * 
  */
 public class CardTest extends AndroidTestCase {
 
 	private Card card;
-	private CardImage cardImage;
-	private static final int IMAGE_RESOURCE = 55;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		card = new Card();
-		cardImage = new CardImage(getContext(), card, IMAGE_RESOURCE);
 	}
 
 	public void testChangeStatus() {
@@ -54,18 +52,6 @@ public class CardTest extends AndroidTestCase {
 		assertEquals(CardStatus.Hidden, actual);
 
 	}
-
-	public void testGetImageResourceIfHidden() {
-		assertTrue(card.getStatus().equals(CardStatus.Hidden));
-		assertEquals(R.drawable.ic_launcher, cardImage.getImageResource());
-	}
-
-	public void testGetImageResourceIfVisable() {
-		card.toggleStatus();
-		assertTrue(card.getStatus().equals(CardStatus.Visable));
-		assertEquals(IMAGE_RESOURCE, cardImage.getImageResource());
-	}
-
 	public void testCopyConstructor() {
 		Card otherCard = new Card(card);
 		assertEquals(card, otherCard);
@@ -75,19 +61,7 @@ public class CardTest extends AndroidTestCase {
 		assertEquals(card.hashCode(), card.hashCode());
 	}
 
-	public void testHashCodeAgainstOtherImage() {
-		Card otherCard = new Card();
-		CardImage otherImage= new CardImage(getContext(), otherCard, 0);
-		assertFalse(cardImage.hashCode() == otherImage.hashCode());
-	}
-
-	public void testHashCodeAgainstSameImage() {
-		Card otherCard = new Card();
-		CardImage otherImage= new CardImage(getContext(), otherCard, IMAGE_RESOURCE);
-		assertEquals(cardImage.hashCode(), otherImage.hashCode());
-	}
-
-	public void testHashCodeAgainstSameImageOtherCardStatus() {
+	public void testHashCodeAgainstOtherCardStatus() {
 		Card otherCard = new Card();
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
@@ -102,12 +76,12 @@ public class CardTest extends AndroidTestCase {
 		assertTrue(card.equals(card));
 	}
 
-	public void testEqualsAgainstOtherImage() {
+	public void testEqualsAgainstOtherCard() {
 		Card otherCard = new Card();
 		assertTrue(card.equals(otherCard));
 	}
 
-	public void testEqualsSameImagerOtherCardStatus() {
+	public void testEqualsOtherCardStatus() {
 		Card otherCard = new Card();
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
@@ -118,6 +92,5 @@ public class CardTest extends AndroidTestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		card = null;
-		cardImage = null;
 	}
 }

@@ -28,6 +28,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardS
  * or not in the game plan.
  * 
  * @author Joakim Persson
+ * @author Daniel Augurell
  * 
  */
 @SuppressLint("ViewConstructor")
@@ -68,7 +69,7 @@ public class CardImage extends ImageView {
 	 */
 	public void setDisabled() {
 		disabled = true;
-		setImageResource(edu.chalmers.dat255.group09.Alarmed.R.drawable.sample_image_1);
+		setImageResource(R.drawable.sample_image_1);
 	}
 
 	/**
