@@ -79,11 +79,11 @@ public class GameboardGenerator {
 	 */
 	private List<CardImage> getUniqueImagePair(int i) {
 		List<CardImage> pair = new ArrayList<CardImage>();
-		Card card = new Card(imageLoader.getImageResource(i));
-		Card otherCard = new Card(card);
+		Card card = new Card();
+		Card otherCard = new Card();
 
-		pair.add(new CardImage(context, card));
-		pair.add(new CardImage(context, otherCard));
+		pair.add(new CardImage(context, card, imageLoader.getImageResource(i)));
+		pair.add(new CardImage(context, otherCard, imageLoader.getImageResource(i)));
 		return pair;
 	}
 }

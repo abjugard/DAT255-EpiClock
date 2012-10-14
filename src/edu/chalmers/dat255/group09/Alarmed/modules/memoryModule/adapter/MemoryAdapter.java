@@ -63,14 +63,14 @@ public class MemoryAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CardImage view;
-		if (convertView == null) {
+		if (convertView instanceof CardImage) {
+			view = (CardImage) convertView;
+		} else {
 			view = images.get(position);
 			view.setLayoutParams(new GridView.LayoutParams(160, 160));
 			view.setAdjustViewBounds(false);
 			view.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			view.setPadding(8, 8, 8, 8);
-		} else {
-			view = (CardImage) convertView;
 		}
 
 		return view;

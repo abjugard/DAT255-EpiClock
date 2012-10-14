@@ -29,6 +29,7 @@ public class MemoryControllerTest extends AndroidTestCase {
 
 	private MemoryController controller;
 	private static final int NBR_OF_PAIRS = 8;
+	private static final int IMAGE_RESOURCE = 55;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -49,14 +50,14 @@ public class MemoryControllerTest extends AndroidTestCase {
 	}
 
 	public void testCardsEqual() {
-		CardImage cardOne = new CardImage(getContext(), new Card(0));
-		CardImage cardTwo = new CardImage(getContext(), new Card(0));
+		CardImage cardOne = new CardImage(getContext(), new Card(), IMAGE_RESOURCE);
+		CardImage cardTwo = new CardImage(getContext(), new Card(), IMAGE_RESOURCE);
 		assertTrue(controller.isCardsEqual(cardOne, cardTwo));
 	}
 
 	public void testCardsNotEqual() {
-		CardImage cardOne = new CardImage(getContext(), new Card(0));
-		CardImage cardTwo = new CardImage(getContext(), new Card(1));
+		CardImage cardOne = new CardImage(getContext(), new Card(), IMAGE_RESOURCE);
+		CardImage cardTwo = new CardImage(getContext(), new Card(), 0);
 		assertFalse(controller.isCardsEqual(cardOne, cardTwo));
 	}
 

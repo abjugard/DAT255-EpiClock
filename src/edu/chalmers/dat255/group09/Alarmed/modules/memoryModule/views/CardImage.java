@@ -18,7 +18,9 @@ package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.ImageView;
+import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
+import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardStatus;
 
 /**
  * A wrapper gui class for the models card class. This class is responsible for
@@ -31,6 +33,9 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 @SuppressLint("ViewConstructor")
 public class CardImage extends ImageView {
 
+	private static final int HIDDEN_IMAGE = R.drawable.ic_launcher;
+
+	private int visableImageResource;
 	private Card card;
 	private boolean disabled = false;
 
@@ -39,14 +44,15 @@ public class CardImage extends ImageView {
 	 * 
 	 * @param context
 	 *            The android context.
-	 * @param card
+	 * @param c
 	 *            A card to create a wrapper around.
+	 * @param imageResource
+	 *            The resource of image to be shown
 	 */
-	public CardImage(Context context, Card card) {
+	public CardImage(Context context, Card c, int imageResource) {
 		super(context);
-
-		this.setImageResource(card.getImageResource());
-		this.card = card;
+		visableImageResource = imageResource;
+		this.card = c;
 	}
 
 	/**
@@ -54,7 +60,7 @@ public class CardImage extends ImageView {
 	 */
 	public void cardPressed() {
 		card.toggleStatus();
-		setImageResource(card.getImageResource());
+		setImageResource(getImageResource());
 	}
 
 	/**
@@ -74,12 +80,25 @@ public class CardImage extends ImageView {
 		return disabled;
 	}
 
+	/**
+	 * 
+	 * @return The image resource
+	 */
+	public int getImageResource() {
+		if (card.getStatus() == CardStatus.Hidden) {
+			return HIDDEN_IMAGE;
+		} else {
+			return visableImageResource;
+		}
+	}
+
 	@Override
 	public boolean equals(Object o) {
 
 		if (o instanceof CardImage) {
 			CardImage other = (CardImage) o;
-			return card.equals(other.card);
+			return card.equals(other.card)
+					&& visableImageResource == other.visableImageResource;
 		} else {
 			return false;
 		}
@@ -87,6 +106,6 @@ public class CardImage extends ImageView {
 
 	@Override
 	public int hashCode() {
-		return card.hashCode();
+		return card.hashCode() + visableImageResource * 13;
 	}
 }

@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model;
 
-import edu.chalmers.dat255.group09.Alarmed.R;
 
 /**
  * A class representing the logic code for a card in an memory game.
@@ -33,19 +32,14 @@ public final class Card {
 		Hidden, Visable;
 	}
 
-	private static final int HIDDEN_IMAGE = R.drawable.ic_launcher;
 	private CardStatus currentStatus;
-	private int visableImageResource;
 
 	/**
 	 * Create a new instance of the card class.
 	 * 
-	 * @param imageResource
-	 *            The image resource to be used by the card
 	 */
-	public Card(int imageResource) {
+	public Card() {
 		this.currentStatus = CardStatus.Hidden;
-		this.visableImageResource = imageResource;
 	}
 
 	/**
@@ -55,7 +49,7 @@ public final class Card {
 	 *            The card to copy.
 	 */
 	public Card(Card card) {
-		this(card.visableImageResource);
+		this.currentStatus = card.currentStatus;
 	}
 
 	/**
@@ -69,18 +63,6 @@ public final class Card {
 			currentStatus = CardStatus.Hidden;
 		}
 
-	}
-
-	/**
-	 * 
-	 * @return The image resource
-	 */
-	public int getImageResource() {
-		if (currentStatus == CardStatus.Hidden) {
-			return HIDDEN_IMAGE;
-		} else {
-			return visableImageResource;
-		}
 	}
 
 	/**
@@ -101,16 +83,13 @@ public final class Card {
 		}
 		Card other = (Card) obj;
 
-		return this.visableImageResource == other.visableImageResource
-				&& this.currentStatus.equals(other.currentStatus);
+		return this.currentStatus.equals(other.currentStatus);
 
 	}
 
 	@Override
 	public int hashCode() {
 		int sum = 0;
-
-		sum += visableImageResource * 13;
 		sum += currentStatus.hashCode();
 		return sum;
 	}
