@@ -26,10 +26,16 @@ import java.util.List;
  * @author Joakim Persson
  * 
  */
-public class PrimeUtil {
+public final class PrimeUtil {
 
 	/**
-	 * Finds out if a number is a prime number or not
+	 * A singleton and cannot be instantiated.
+	 */
+	private PrimeUtil() {
+	}
+
+	/**
+	 * Finds out if a number is a prime number or not.
 	 * 
 	 * @param number
 	 *            The possible prime number
@@ -60,7 +66,8 @@ public class PrimeUtil {
 	}
 
 	/**
-	 * Get a list of prime numbers between a lower and upper limit [lower,upper)
+	 * Get a list of prime numbers between a lower and upper limit
+	 * [lower,upper).
 	 * 
 	 * @param lowerLimit
 	 *            The lower limit
@@ -79,6 +86,16 @@ public class PrimeUtil {
 		return primes;
 	}
 
+	/**
+	 * Create a new boolean array with all the prime numbers marked as true and
+	 * the non prime numbers marked an false. It finds all prime numbers under a
+	 * the specified number.
+	 * 
+	 * @param numbers
+	 *            The max number to find primes under.
+	 * @return An boolean array with prime numbers marked as true and non prime
+	 *         as false.
+	 */
 	private static Boolean[] createArray(int numbers) {
 		Boolean[] prime = new Boolean[numbers + 1];
 
@@ -92,6 +109,15 @@ public class PrimeUtil {
 		return prime;
 	}
 
+	/**
+	 * This method starts as two and then marks all the multiples of two as
+	 * false, and then continues and does the same thing for three, five etc.
+	 * 
+	 * @param integers
+	 *            An boolean array of numbers.
+	 * @return An boolean array with prime numbers marked as true and their
+	 *         multiples as false.
+	 */
 	private static Boolean[] removeMultiples(Boolean[] integers) {
 		Boolean[] prime = integers;
 
