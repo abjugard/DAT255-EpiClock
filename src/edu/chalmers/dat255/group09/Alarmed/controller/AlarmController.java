@@ -100,9 +100,10 @@ public final class AlarmController {
 	 *            The days that the alarm should be recurring
 	 * @param module
 	 *            The module that the alarm should activate
+	 * @param volume The volume of the alarm
 	 */
-	public void createAlarm(int hour, int minute, int dayOfWeek, String module) {
-		alarmHandler.createAlarm(hour, minute, dayOfWeek, module);
+	public void createAlarm(int hour, int minute, int dayOfWeek, String module, int volume) {
+		alarmHandler.createAlarm(hour, minute, dayOfWeek, module, volume);
 		setAlarm();
 	}
 
@@ -157,6 +158,8 @@ public final class AlarmController {
 		Intent intent = new Intent(context, AlarmReceiver.class);
 		intent.setData(Uri.parse("" + alarm.getId()));
 		intent.putExtra("module", alarm.getModule());
+		intent.putExtra("volume", alarm.getVolume());
+		
 		PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent,
 				Intent.FILL_IN_DATA);
 		return sender;

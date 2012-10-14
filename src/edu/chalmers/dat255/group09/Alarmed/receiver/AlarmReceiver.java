@@ -22,7 +22,8 @@ import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 
 /**
- * A class that would be activated when an alarm activates and then set the module to be started.
+ * A class that would be activated when an alarm activates and then set the
+ * module to be started.
  * 
  * @author Daniel Augurell
  * @author Joakim Persson
@@ -39,6 +40,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 			Intent activateIntent = new Intent(context,
 					ModuleFactory.getModule(intent.getStringExtra("module")));
 			activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			activateIntent.putExtra("volume", intent.getIntExtra("volume", 1));
 			context.startActivity(activateIntent);
 		}
 		aControll.destroy();

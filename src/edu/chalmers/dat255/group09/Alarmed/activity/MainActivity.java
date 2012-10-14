@@ -136,6 +136,7 @@ public class MainActivity extends Activity {
 		intent.putExtra("time",
 				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
 		intent.putExtra("daysOfWeek", alarm.getBooleanArrayDayOfWeek());
+		intent.putExtra("volume", alarm.getVolume());
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 		overrideTransition();
 	}
@@ -180,7 +181,8 @@ public class MainActivity extends Activity {
 				createAlarm(data.getIntExtra("hours", -1),
 						data.getIntExtra("minutes", -1),
 						data.getIntExtra("days", 0),
-						data.getStringExtra("module"));
+						data.getStringExtra("module"),
+						data.getIntExtra("volume", 1));
 			}
 
 		}
@@ -208,10 +210,13 @@ public class MainActivity extends Activity {
 	 *            The days the be recurring as bits in a integer
 	 * @param module
 	 *            The module to be started on the alarms activation
+	 * @param volume
+	 *            Volume of the alarm
 	 */
 
-	private void createAlarm(int hour, int minute, int dayOfWeek, String module) {
-		aControl.createAlarm(hour, minute, dayOfWeek, module);
+	private void createAlarm(int hour, int minute, int dayOfWeek,
+			String module, int volume) {
+		aControl.createAlarm(hour, minute, dayOfWeek, module, volume);
 		Alarm toastAlarm = new Alarm(hour, minute, 0);
 		toastAlarm.setDaysOfWeek(dayOfWeek);
 		Toast.makeText(this, toastAlarm.toString(), Toast.LENGTH_LONG).show();

@@ -48,7 +48,7 @@ public class DatabaseHandler implements AlarmHandler {
 	private static final String DB_TABLE = "alarms";
 
 	public static final String KEY_TIME = "time";
-	public static final String KEY_DAYSOFWEEK = "recurring";
+	public static final String KEY_DAYSOFWEEK = "daysofweek";
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_ENABLED = "enabled";
 	public static final String KEY_MODULE = "module";
@@ -62,7 +62,7 @@ public class DatabaseHandler implements AlarmHandler {
 			+ KEY_DAYSOFWEEK + " INTEGER," + KEY_ENABLED + " BOOLEAN,"
 			+ KEY_MODULE + " STRING," + KEY_VOLUME + " INTEGER);";
 
-	private static final int DB_VERSION = 7;
+	private static final int DB_VERSION = 8;
 
 	/**
 	 * 
@@ -130,13 +130,15 @@ public class DatabaseHandler implements AlarmHandler {
 	}
 
 	@Override
-	public long createAlarm(int hour, int minute, int daysOfWeek, String module) {
+	public long createAlarm(int hour, int minute, int daysOfWeek,
+			String module, int volume) {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
 		alarmTime.put(KEY_DAYSOFWEEK, daysOfWeek);
 		alarmTime.put(KEY_ENABLED, true);
 		alarmTime.put(KEY_TIME, hour + ":" + minute);
 		alarmTime.put(KEY_MODULE, module);
+		alarmTime.put(KEY_VOLUME, volume);
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
 

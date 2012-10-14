@@ -51,11 +51,12 @@ public interface AlarmHandler {
 	 *            days which the alarm is set to be repeated in as a bitmap
 	 * @param module
 	 *            The name of the module to be set
+	 * @param volume 
 	 * @return the id of the created Alarm, or -1 if an error occurred
 	 */
 
-	long createAlarm(int hour, int minute, int daysOfWeek,
-			String module);
+	public long createAlarm(int hour, int minute, int daysOfWeek,
+			String module, int volume);
 
 	/**
 	 * Deletes an Alarm with a specified id.

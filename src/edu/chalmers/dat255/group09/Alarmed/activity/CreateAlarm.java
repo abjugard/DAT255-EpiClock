@@ -16,18 +16,26 @@
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
@@ -41,6 +49,9 @@ import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
  * 
  */
 public class CreateAlarm extends Activity {
+	private View volumeDialogView;
+	private AlertDialog volumeDialog;
+	private Map<Uri, String> alarmTones;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,10 +64,50 @@ public class CreateAlarm extends Activity {
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
 		initTaskSpinner();
+		initAlarmTones();
+		initVolumeDialog();
+	}
+
+	private void initVolumeDialog() {
+		LayoutInflater inflater = getLayoutInflater();
+		volumeDialogView = inflater
+				.inflate(R.layout.custom_volume_dialog, null);
+		Intent intent = this.getIntent();
+		((SeekBar) volumeDialogView.findViewById(R.id.volume_dialog_seekbar))
+				.setMax(7);
+		((SeekBar) volumeDialogView.findViewById(R.id.volume_dialog_seekbar))
+				.setProgress(intent.getIntExtra("volume", 6));
+		((CheckBox) volumeDialogView.findViewById(R.id.volume_dialog_checkbox))
+				.setChecked(intent.getBooleanExtra("vibration", true));
+
+		volumeDialog = new AlertDialog.Builder(this)
+				.setTitle("Set volume options")
+				.setView(volumeDialogView)
+				.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int i) {
+								Intent intent = getIntent();
+								intent.putExtra(
+										"vibration",
+										((CheckBox) volumeDialogView
+												.findViewById(R.id.volume_dialog_checkbox))
+												.isChecked());
+								intent.putExtra(
+										"volume",
+										((SeekBar) volumeDialogView
+												.findViewById(R.id.volume_dialog_seekbar))
+												.getProgress());
+							}
+						}).create();
+	}
+
+	private void initAlarmTones() {
+		alarmTones = getAlarmTones();
 	}
 
 	/**
-	 * If the platform is Honeycomb or greater the ActionBarBackButton is enabled.
+	 * If the platform is Honeycomb or greater the ActionBarBackButton is
+	 * enabled.
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void enableActionbarBackButton() {
@@ -92,6 +143,7 @@ public class CreateAlarm extends Activity {
 		}
 		timePicker.setCurrentHour(hour);
 		timePicker.setCurrentMinute(minute);
+
 	}
 
 	/**
@@ -132,6 +184,50 @@ public class CreateAlarm extends Activity {
 		overrideTransition();
 	}
 
+	public void onAlarmToneBtnPressed(View view) {
+		String[] array = new String[alarmTones.size()];
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, alarmTones.values()
+						.toArray(array));
+		onVolumeBtnPressed(view);
+		new AlertDialog.Builder(this).setTitle("Pick alarm tone")
+				.setAdapter(adapter, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int index) {
+						getIntent()
+								.putExtra(
+										"toneuri",
+										alarmTones.keySet().toArray()[index]
+												.toString());
+					}
+				}).create().show();
+	}
+
+	private Map<Uri, String> getAlarmTones() {
+		RingtoneManager ringMan = new RingtoneManager(this);
+		ringMan.setType(RingtoneManager.TYPE_ALARM);
+
+		Cursor cur = ringMan.getCursor();
+
+		int tonesAvailable = cur.getCount();
+		if (tonesAvailable == 0) {
+			return new HashMap<Uri, String>();
+		}
+
+		Map<Uri, String> tones = new HashMap<Uri, String>();
+		while (!cur.isAfterLast() && cur.moveToNext()) {
+			int pos = cur.getPosition();
+			tones.put(ringMan.getRingtoneUri(pos), ringMan.getRingtone(pos)
+					.getTitle(this));
+		}
+		cur.close();
+
+		return tones;
+	}
+
+	public void onVolumeBtnPressed(View view) {
+		volumeDialog.show();
+	}
+
 	/**
 	 * Finishes the activity and return to the previous activity with the given
 	 * result.
@@ -140,7 +236,6 @@ public class CreateAlarm extends Activity {
 	 *            The button that was pressed.
 	 */
 	public void onSetAlarmBtnPressed(View view) {
-
 		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
 		Spinner spinner = (Spinner) findViewById(R.id.activity_create_alarm_task_spinner);
 
