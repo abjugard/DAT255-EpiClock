@@ -64,6 +64,7 @@ public final class AlarmController {
 		}
 		return instance;
 	}
+
 	/**
 	 * Init method to initiate the controller.
 	 * 
@@ -72,6 +73,7 @@ public final class AlarmController {
 		alarmHandler = new DatabaseHandler(context).openCon();
 		notificationController = new NotificationController(context);
 	}
+
 	/**
 	 * Init method the change the handler to a handler that is not the default.
 	 * 
@@ -173,9 +175,7 @@ public final class AlarmController {
 		if (alarm != null && alarm.isEnabled() && alarm.getDaysOfWeek() == 0) {
 			alarmHandler.setAlarmEnabled(id, false);
 		}
-		if (alarmHandler.getNumberOfAlarms() > 0) {
-			setAlarm();
-		}
+		setAlarm();
 		if (alarm == null) {
 			return false;
 		}
