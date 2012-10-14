@@ -21,6 +21,9 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
+ * A controller for an mathproblem. It keeps tracks of the users progress and is
+ * also responsible for generating new math problems and validate if the user
+ * has answerd correctly.
  * 
  * @author Joakim Persson
  * 
@@ -31,12 +34,12 @@ public class MathController {
 	private int completedProblemsInARow;
 	private MathProblemGenerator problemGenerator;
 	private Difficulty currentDifficulty;
-	private final static int problemsThatMustBeCompleted = 5;
-	private final static int MEDIUM_DIFFICULTY_LEVEL = 3;
-	private final static int HARD_DIFFICULTY_LEVEL = 4;
+	private static final int PROBLEMS_TO_COMPLETE = 5;
+	private static final int MEDIUM_DIFFICULTY_LEVEL = 3;
+	private static final int HARD_DIFFICULTY_LEVEL = 4;
 
 	/**
-	 * Create a new MathController Object
+	 * Create a new MathController Object.
 	 * 
 	 * @param generator
 	 *            The ProblemGenerator to be used
@@ -48,7 +51,7 @@ public class MathController {
 	}
 
 	/**
-	 * Checks if the user has answered the current problem correctly
+	 * Checks if the user has answered the current problem correctly.
 	 * 
 	 * @param answer
 	 *            The Users Answer
@@ -71,12 +74,21 @@ public class MathController {
 		return correctAnswer;
 	}
 
+	/**
+	 * Generate a new math problem.
+	 * 
+	 * @return A new mathproblem.
+	 */
 	public MathProblem generateNewProblem() {
 
 		currentProblem = problemGenerator.generateProblem(currentDifficulty);
 		return currentProblem;
 	}
 
+	/**
+	 * Set the next problems difficulty based on how many problems in a row the
+	 * users has completed.
+	 */
 	private void setDifficulty() {
 		if (completedProblemsInARow >= HARD_DIFFICULTY_LEVEL) {
 			currentDifficulty = Difficulty.HARD;
@@ -89,7 +101,7 @@ public class MathController {
 	}
 
 	/**
-	 * Get the current difficulty of the active problem
+	 * Get the current difficulty of the active problem.
 	 * 
 	 * @return The current difficulty
 	 */
@@ -99,16 +111,16 @@ public class MathController {
 
 	/**
 	 * Returns true if the user has completed enough problems in a row and false
-	 * otherwise
+	 * otherwise.
 	 * 
 	 * @return If the user has answered correctly on enough problems
 	 */
 	public boolean isComplete() {
-		return completedProblemsInARow == problemsThatMustBeCompleted;
+		return completedProblemsInARow == PROBLEMS_TO_COMPLETE;
 	}
 
 	/**
-	 * Returns how many problems the user has solved in a row
+	 * Returns how many problems the user has solved in a row.
 	 * 
 	 * @return Numbers of problems solved in a row
 	 */
