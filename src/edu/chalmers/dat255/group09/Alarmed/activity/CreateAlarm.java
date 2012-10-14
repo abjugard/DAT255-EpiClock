@@ -22,9 +22,11 @@ import java.util.Map;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -64,17 +66,22 @@ public class CreateAlarm extends Activity {
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
 		initTaskSpinner();
-		initAlarmTones();
+//		initAlarmTones();
 		initVolumeDialog();
 	}
 
+	/**
+	 * Initialises the volume dialog
+	 */
 	private void initVolumeDialog() {
 		LayoutInflater inflater = getLayoutInflater();
+		AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		volumeDialogView = inflater
 				.inflate(R.layout.custom_volume_dialog, null);
 		Intent intent = this.getIntent();
 		((SeekBar) volumeDialogView.findViewById(R.id.volume_dialog_seekbar))
-				.setMax(7);
+				.setMax(audioManager
+						.getStreamMaxVolume(AudioManager.STREAM_ALARM));
 		((SeekBar) volumeDialogView.findViewById(R.id.volume_dialog_seekbar))
 				.setProgress(intent.getIntExtra("volume", 6));
 		((CheckBox) volumeDialogView.findViewById(R.id.volume_dialog_checkbox))
@@ -84,25 +91,33 @@ public class CreateAlarm extends Activity {
 				.setTitle("Set volume options")
 				.setView(volumeDialogView)
 				.setPositiveButton(android.R.string.ok,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int i) {
-								Intent intent = getIntent();
-								intent.putExtra(
-										"vibration",
-										((CheckBox) volumeDialogView
-												.findViewById(R.id.volume_dialog_checkbox))
-												.isChecked());
-								intent.putExtra(
-										"volume",
-										((SeekBar) volumeDialogView
-												.findViewById(R.id.volume_dialog_seekbar))
-												.getProgress());
-							}
-						}).create();
+						new VolumeDialogListener()).create();
 	}
 
+	/**
+	 * Sets up a map of alarm tone URIs to their human readable titles
+	 */
 	private void initAlarmTones() {
-		alarmTones = getAlarmTones();
+		RingtoneManager ringMan = new RingtoneManager(this);
+		ringMan.setType(RingtoneManager.TYPE_ALARM);
+
+		Cursor cur = ringMan.getCursor();
+
+		int tonesAvailable = cur.getCount();
+		if (tonesAvailable == 0) {
+			alarmTones = new HashMap<Uri, String>();
+			return;
+		}
+
+		Map<Uri, String> tones = new HashMap<Uri, String>();
+		while (!cur.isAfterLast() && cur.moveToNext()) {
+			int pos = cur.getPosition();
+			tones.put(ringMan.getRingtoneUri(pos), ringMan.getRingtone(pos)
+					.getTitle(this));
+		}
+		cur.close();
+		
+		alarmTones = tones;
 	}
 
 	/**
@@ -184,6 +199,11 @@ public class CreateAlarm extends Activity {
 		overrideTransition();
 	}
 
+	/**
+	 * Opens the alarm tone selector
+	 * 
+	 * @param view The parent View of the dialog
+	 */
 	public void onAlarmToneBtnPressed(View view) {
 		String[] array = new String[alarmTones.size()];
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -202,28 +222,11 @@ public class CreateAlarm extends Activity {
 				}).create().show();
 	}
 
-	private Map<Uri, String> getAlarmTones() {
-		RingtoneManager ringMan = new RingtoneManager(this);
-		ringMan.setType(RingtoneManager.TYPE_ALARM);
-
-		Cursor cur = ringMan.getCursor();
-
-		int tonesAvailable = cur.getCount();
-		if (tonesAvailable == 0) {
-			return new HashMap<Uri, String>();
-		}
-
-		Map<Uri, String> tones = new HashMap<Uri, String>();
-		while (!cur.isAfterLast() && cur.moveToNext()) {
-			int pos = cur.getPosition();
-			tones.put(ringMan.getRingtoneUri(pos), ringMan.getRingtone(pos)
-					.getTitle(this));
-		}
-		cur.close();
-
-		return tones;
-	}
-
+	/**
+	 * Opens the volume and vibration control dialog
+	 * 
+	 * @param view
+	 */
 	public void onVolumeBtnPressed(View view) {
 		volumeDialog.show();
 	}
@@ -336,6 +339,23 @@ public class CreateAlarm extends Activity {
 
 		}
 
+	}
+
+	/**
+	 * A listner that activates when the OK button is clicked in the volume dialog
+	 * 
+	 * @author Adrian Bjugård
+	 *
+	 */
+	private class VolumeDialogListener implements
+			DialogInterface.OnClickListener {
+		public void onClick(DialogInterface dialog, int i) {
+			Intent intent = getIntent();
+			intent.putExtra("vibration", ((CheckBox) volumeDialogView
+					.findViewById(R.id.volume_dialog_checkbox)).isChecked());
+			intent.putExtra("volume", ((SeekBar) volumeDialogView
+					.findViewById(R.id.volume_dialog_seekbar)).getProgress());
+		}
 	}
 
 }

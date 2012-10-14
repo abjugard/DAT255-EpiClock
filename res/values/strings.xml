@@ -19,5 +19,7 @@
     <string name="title_activity_memory">MemoryActivity</string>
     <string name="activity_create_alarm_tone_selector_button">Select alarm sound</string>
     <string name="text_enable_vibration">Enable vibration</string>
+    <string name="text_select_ringtone_button">Select alarm tone</string>
+    <string name="text_select_volume_settings_button">Select volume</string>
 
 </resources>

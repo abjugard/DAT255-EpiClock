@@ -40,4 +40,25 @@
         android:layout_marginTop="22dp"
         android:onClick="onDayOfWeekClick"
         android:text="@string/recurring_alarms" />
+
+<!--     <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:onClick="onAlarmToneBtnPressed"
+        android:text="@string/text_select_ringtone_button" /> -->
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:onClick="onVolumeBtnPressed"
+        android:text="@string/text_select_volume_settings_button" />
+
 </RelativeLayout>
