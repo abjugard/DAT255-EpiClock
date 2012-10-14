@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * A class representing a ModularProblem. The problem generates a problem on the
@@ -146,7 +147,7 @@ public class ModularProblem implements MathProblemType {
 
 		int[] nbrs = new int[NBR_OF_NUMBERS];
 
-		nbrs[0] = getRandomNumberWithInRange(lowerLimit, upperLimit);
+		nbrs[0] = RandomUtil.generateRandomNumber(lowerLimit, upperLimit);
 		nbrs[1] = getRandomModulusNumber(upperLimit);
 
 		return nbrs;
@@ -161,12 +162,7 @@ public class ModularProblem implements MathProblemType {
 	 * @return An random modulus number.
 	 */
 	private int getRandomModulusNumber(int upperLimit) {
-		return getRandomNumberWithInRange(0, upperLimit);
-	}
-
-	private int getRandomNumberWithInRange(int lowerLimit, int upperLimit) {
-		int diff = upperLimit - lowerLimit;
-		return (int) (lowerLimit + diff * Math.random());
+		return RandomUtil.generateRandomNumber(0, upperLimit);
 	}
 
 	@Override

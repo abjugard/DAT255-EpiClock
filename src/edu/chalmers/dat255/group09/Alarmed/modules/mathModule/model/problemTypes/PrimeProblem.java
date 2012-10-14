@@ -19,6 +19,7 @@ import java.util.List;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * 
@@ -150,7 +151,7 @@ public final class PrimeProblem implements MathProblemType {
 		int lowerLimit = 0;
 		int diff = listLength - lowerLimit;
 
-		return getRandomNumberWithInRange(lowerLimit, diff);
+		return RandomUtil.generateRandomNumber(lowerLimit, diff);
 	}
 
 	/**
@@ -194,24 +195,10 @@ public final class PrimeProblem implements MathProblemType {
 		int number = 0;
 
 		do {
-			number = getRandomNumberWithInRange(lowerLimit, upperLimit);
+			number = RandomUtil.generateRandomNumber(lowerLimit, upperLimit);
 		} while (!isValidNumber(previousNumbers, number));
 
 		return number;
-	}
-
-	/**
-	 * Get a random number within and interval [lowerLimit, upperLimit).
-	 * 
-	 * @param lowerLimit
-	 *            The problems lowerlimit
-	 * @param upperLimit
-	 *            The problems upperlimit
-	 * @return An random integer within the interval
-	 */
-	private int getRandomNumberWithInRange(int lowerLimit, int upperLimit) {
-		int diff = upperLimit - lowerLimit;
-		return (int) (lowerLimit + diff * Math.random());
 	}
 
 	/**
@@ -249,7 +236,7 @@ public final class PrimeProblem implements MathProblemType {
 
 		while (index < nbrsToPlace) {
 
-			int newIndex = getRandomNumberWithInRange(0, nbrs.length);
+			int newIndex = RandomUtil.generateRandomNumber(0, nbrs.length);
 
 			if (randomizedArray[newIndex] == -1) {
 				randomizedArray[newIndex] = nbrs[index];

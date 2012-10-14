@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * A class representing a base switch problem. All the problems is of a base 2
@@ -146,7 +147,7 @@ public final class BaseSwitchProblem implements MathProblemType {
 	 * @return An array representing an random base 2 number
 	 */
 	private int[] generateRandomNumbers(int lowerLimit, int upperLimit) {
-		int randomNumber = getRandomNumber(lowerLimit, upperLimit);
+		int randomNumber = RandomUtil.generateRandomNumber(lowerLimit, upperLimit);
 		return convertNumberToBaseTwo(randomNumber);
 	}
 
@@ -169,11 +170,6 @@ public final class BaseSwitchProblem implements MathProblemType {
 		}
 
 		return numbers;
-	}
-
-	private int getRandomNumber(int lowerLimit, int upperLimit) {
-		int diff = upperLimit - lowerLimit;
-		return (int) (lowerLimit + diff * Math.random());
 	}
 
 	/**

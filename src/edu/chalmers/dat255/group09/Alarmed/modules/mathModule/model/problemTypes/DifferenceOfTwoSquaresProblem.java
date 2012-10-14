@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * A class representing a Difference Of Two Squares Problem. The problem is on
@@ -70,7 +71,8 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 	private int[] generateEasyProblem() {
 		int lowerLimit = 1;
 		int upperLimit = 5;
-		return generateRandomNumbers(lowerLimit, upperLimit);
+		return RandomUtil.generateRandomNumbers(NBR_OF_NUMBERS, lowerLimit,
+				upperLimit);
 	}
 
 	/**
@@ -83,7 +85,8 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 		int lowerLimit = 4;
 		int upperLimit = 8;
 
-		return generateRandomNumbers(lowerLimit, upperLimit);
+		return RandomUtil.generateRandomNumbers(NBR_OF_NUMBERS, lowerLimit,
+				upperLimit);
 	}
 
 	/**
@@ -96,22 +99,8 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 		int lowerLimit = 7;
 		int upperLimit = 11;
 
-		return generateRandomNumbers(lowerLimit, upperLimit);
-	}
-
-	private int[] generateRandomNumbers(int lowerLimit, int upperLimit) {
-		int[] nbrs = new int[NBR_OF_NUMBERS];
-
-		for (int i = 0; i < NBR_OF_NUMBERS; i++) {
-			nbrs[i] = getRandomNumber(lowerLimit, upperLimit);
-		}
-
-		return nbrs;
-	}
-
-	private int getRandomNumber(int lowerLimit, int upperLimit) {
-		int diff = upperLimit - lowerLimit;
-		return (int) (lowerLimit + diff * Math.random());
+		return RandomUtil.generateRandomNumbers(NBR_OF_NUMBERS, lowerLimit,
+				upperLimit);
 	}
 
 	@Override

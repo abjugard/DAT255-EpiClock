@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * A class representing an AdditionProblem. The problem generates two or more
@@ -77,7 +78,8 @@ public final class AdditionProblem implements MathProblemType {
 		int upperLimit = 10;
 		int lowerLimit = 0;
 
-		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
+		return RandomUtil.generateRandomNumbers(numberOfNumbers, lowerLimit,
+				upperLimit);
 
 	}
 
@@ -93,7 +95,8 @@ public final class AdditionProblem implements MathProblemType {
 		int upperLimit = 10;
 		int lowerLimit = 0;
 
-		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
+		return RandomUtil.generateRandomNumbers(numberOfNumbers, lowerLimit,
+				upperLimit);
 	}
 
 	/**
@@ -107,24 +110,8 @@ public final class AdditionProblem implements MathProblemType {
 		int upperLimit = 50;
 		int lowerLimit = 10;
 
-		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
-	}
-
-	private int[] generateRandomNumbers(int numberOfNumbers, int upperLimit,
-			int lowerLimit) {
-		int[] numbers;
-		numbers = new int[numberOfNumbers];
-
-		for (int i = 0; i < numberOfNumbers; i++) {
-			numbers[i] = generateRandomNumber(lowerLimit, upperLimit);
-		}
-		return numbers;
-	}
-
-	private int generateRandomNumber(int lowerLimit, int upperLimit) {
-		int diff = upperLimit - lowerLimit;
-
-		return (int) (lowerLimit + diff * Math.random());
+		return RandomUtil.generateRandomNumbers(numberOfNumbers, lowerLimit,
+				upperLimit);
 	}
 
 	@Override

@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * A class representing a FactorialProblem. The problem generates two or more
@@ -88,7 +89,7 @@ public final class FactorialProblem implements MathProblemType {
 		int upperLimit = 6;
 		int nbrOfFactors = 2;
 
-		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
+		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
 	/**
@@ -102,7 +103,7 @@ public final class FactorialProblem implements MathProblemType {
 		int upperLimit = 6;
 		int nbrOfFactors = 3;
 
-		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
+		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
 	/**
@@ -114,23 +115,7 @@ public final class FactorialProblem implements MathProblemType {
 		int lowerLimit = 6;
 		int upperLimit = 8;
 		int nbrOfFactors = 2;
-		return generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
-	}
-
-	private int[] generateRandomNumbers(int nbrOfFactors, int lowerLimit,
-			int upperLimit) {
-		int[] nbrs = new int[nbrOfFactors];
-
-		for (int i = 1; i < nbrOfFactors; i++) {
-			nbrs[i] = getRandomNumber(lowerLimit, upperLimit);
-		}
-
-		return nbrs;
-	}
-
-	private int getRandomNumber(int lowerLimit, int upperLimit) {
-		int diff = upperLimit - lowerLimit;
-		return (int) (lowerLimit + diff * Math.random());
+		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
 	}
 
 	@Override

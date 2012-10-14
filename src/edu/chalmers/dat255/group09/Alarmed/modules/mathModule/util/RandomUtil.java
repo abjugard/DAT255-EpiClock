@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util;
 
 /**
+ * A util class for generating random numbers.
  * 
  * @author Joakim Persson
  * 
@@ -28,6 +29,17 @@ public final class RandomUtil {
 	private RandomUtil() {
 	}
 
+	/**
+	 * Create an array of random numbers.
+	 * 
+	 * @param numberOfNumbers
+	 *            The number of numbers in the array
+	 * @param upperLimit
+	 *            The maximum number to be generated
+	 * @param lowerLimit
+	 *            The smallest number to be created
+	 * @return An array of random numbers
+	 */
 	public static int[] generateRandomNumbers(int numberOfNumbers,
 			int upperLimit, int lowerLimit) {
 		int[] numbers;
@@ -39,7 +51,16 @@ public final class RandomUtil {
 		return numbers;
 	}
 
-	private static int generateRandomNumber(int lowerLimit, int upperLimit) {
+	/**
+	 * Get a random number within and interval [lowerLimit, upperLimit).
+	 * 
+	 * @param lowerLimit
+	 *            The problems lowerlimit
+	 * @param upperLimit
+	 *            The problems upperlimit
+	 * @return An random integer within the interval
+	 */
+	public static int generateRandomNumber(int lowerLimit, int upperLimit) {
 		int diff = upperLimit - lowerLimit;
 
 		return (int) (lowerLimit + diff * Math.random());

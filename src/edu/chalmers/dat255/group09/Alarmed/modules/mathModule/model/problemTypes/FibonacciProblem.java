@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * A class representing a FibonacciProblem. The problem generates a subset of
@@ -145,21 +146,7 @@ public class FibonacciProblem implements MathProblemType {
 		int lowerLimit = 0;
 		int diff = size - lowerLimit;
 
-		return getRandomNumberWithInRange(lowerLimit, diff);
-	}
-
-	/**
-	 * Get a random number within and interval [lowerLimit, upperLimit).
-	 * 
-	 * @param lowerLimit
-	 *            The problems lowerlimit
-	 * @param upperLimit
-	 *            The problems upperlimit
-	 * @return An random integer within the interval
-	 */
-	private int getRandomNumberWithInRange(int lowerLimit, int upperLimit) {
-		int diff = upperLimit - lowerLimit;
-		return (int) (lowerLimit + diff * Math.random());
+		return RandomUtil.generateRandomNumber(lowerLimit, diff);
 	}
 
 	/**
