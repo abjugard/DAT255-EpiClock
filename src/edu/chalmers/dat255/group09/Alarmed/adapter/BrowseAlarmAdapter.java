@@ -28,13 +28,26 @@ import android.widget.TextView;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
+/**
+ * Adapter to set the view of alarms. 
+ * 
+ * @author Daniel Augurell
+ * @author Joakim Persson
+ *
+ */
 public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 
 	private OnCreateContextMenuListener listener;
 	
+	/**
+	 * Constructor for the BrowseAlarmAdapter.
+	 * @param context The android context
+	 * @param textViewResourceId The id of the TextView
+	 * @param alarms The alarms to be shown
+	 */
 	public BrowseAlarmAdapter(Context context, int textViewResourceId,
-			List<Alarm> objects) {
-		super(context, textViewResourceId, objects);
+			List<Alarm> alarms) {
+		super(context, textViewResourceId, alarms);
 	}
 
 	@Override
@@ -57,6 +70,10 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 		return view;
 	}
 
+	/**
+	 * Updates the views with a new list.
+	 * @param list The new list to be shown
+	 */
 	public void updateList(List<Alarm> list) {
 		clear();
 		for (Alarm a : list) {
@@ -65,8 +82,12 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 		notifyDataSetChanged();
 	}
 
-	public void setContexMenuListner(OnCreateContextMenuListener listener) {
-		this.listener = listener;
+	/**
+	 * Sets a listener to listen on clicks on the views.
+	 * @param contextListener Listener to listen on clicks
+	 */
+	public void setContexMenuListner(OnCreateContextMenuListener contextListener) {
+		this.listener = contextListener;
 	}
 
 }
