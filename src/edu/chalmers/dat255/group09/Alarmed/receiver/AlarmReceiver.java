@@ -21,15 +21,22 @@ import android.content.Intent;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 
+/**
+ * A class that would be activated when an alarm activates and then set the module to be started.
+ * 
+ * @author Daniel Augurell
+ * @author Joakim Persson
+ * 
+ */
 public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		AlarmController aControll = AlarmController.getInstance();
-		aControll.init(context);
-		if (aControll.alarmReceived(Integer
-				.parseInt(intent.getData().toString()))) {
-			Intent activateIntent = new Intent(context, ModuleFactory.getModule(intent.getStringExtra("module")));
+		AlarmController aControll = AlarmController.getInstance(context);
+		if (aControll.alarmReceived(Integer.parseInt(intent.getData()
+				.toString()))) {
+			Intent activateIntent = new Intent(context,
+					ModuleFactory.getModule(intent.getStringExtra("module")));
 			activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(activateIntent);
 		}
