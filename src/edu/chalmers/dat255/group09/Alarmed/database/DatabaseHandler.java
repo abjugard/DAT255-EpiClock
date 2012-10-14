@@ -41,7 +41,7 @@ public class DatabaseHandler implements AlarmHandler {
 	private SQLiteDatabase aDb;
 
 	/**
-	 * Database SQL statements
+	 * Database SQL statements.
 	 */
 
 	private static final String DB_NAME = "data";
@@ -54,7 +54,7 @@ public class DatabaseHandler implements AlarmHandler {
 	public static final String KEY_MODULE = "module";
 	public static final String KEY_VOLUME = "volume";
 
-	public static final String[] KEYS = { KEY_ROWID, KEY_TIME, KEY_DAYSOFWEEK,
+	public static final String[] KEYS = {KEY_ROWID, KEY_TIME, KEY_DAYSOFWEEK,
 			KEY_ENABLED, KEY_MODULE, KEY_VOLUME };
 
 	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
@@ -73,6 +73,10 @@ public class DatabaseHandler implements AlarmHandler {
 	 */
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 
+		/**
+		 * Constructor to the DatabaseHelper.
+		 * @param context The android context
+		 */
 		DatabaseHelper(Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
 		}
@@ -97,20 +101,27 @@ public class DatabaseHandler implements AlarmHandler {
 		}
 	}
 
+	/**
+	 * Constructor for the DatabaseHandler.
+	 * @param ctx The android context
+	 */
 	public DatabaseHandler(Context ctx) {
 		aCtx = ctx;
 	}
 
+	@Override
 	public AlarmHandler openCon() {
 		aDbHelper = new DatabaseHelper(aCtx);
 		aDb = aDbHelper.getWritableDatabase();
 		return this;
 	}
 
+	@Override
 	public void closeCon() {
 		aDbHelper.close();
 	}
 
+	@Override
 	public long createAlarm(int hour, int minute, int daysOfWeek, String module) {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
@@ -121,10 +132,12 @@ public class DatabaseHandler implements AlarmHandler {
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
 
+	@Override
 	public boolean deleteAlarm(int alarmID) {
 		return aDb.delete(DB_TABLE, KEY_ROWID + "=" + alarmID, null) > 0;
 	}
 
+	@Override
 	public Alarm fetchFirstEnabledAlarm() {
 		List<Alarm> list = fetchAllAlarms();
 		Collections.sort(list);
@@ -137,7 +150,7 @@ public class DatabaseHandler implements AlarmHandler {
 	}
 
 	/**
-	 * Fetches all alarms as Cursor to the database
+	 * Fetches all alarms as Cursor to the database.
 	 * 
 	 * @return Cursor with all the alarmdata
 	 */
@@ -147,6 +160,7 @@ public class DatabaseHandler implements AlarmHandler {
 				null);
 	}
 
+	@Override
 	public Alarm fetchAlarm(int alarmID) {
 		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "="
 				+ alarmID, null, null, null, null, null);
@@ -156,10 +170,12 @@ public class DatabaseHandler implements AlarmHandler {
 		return null;
 	}
 
+	@Override
 	public int getNumberOfAlarms() {
 		return getAlarms().getCount();
 	}
 
+	@Override
 	public List<Alarm> fetchAllAlarms() {
 		Cursor cursor = getAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
@@ -194,12 +210,14 @@ public class DatabaseHandler implements AlarmHandler {
 		return a;
 	}
 
+	@Override
 	public boolean isEnabled(int id) {
 		Cursor cursor = aDb.query(true, DB_TABLE, KEYS, KEY_ROWID + "=" + id,
 				null, null, null, null, null);
 		return cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0;
 	}
 
+	@Override
 	public boolean setAlarmEnabled(int id, boolean enable) {
 		ContentValues values = new ContentValues();
 		values.put(KEY_ENABLED, enable);
