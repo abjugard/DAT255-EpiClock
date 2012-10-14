@@ -16,9 +16,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/createAlarmTimePicker"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/createAlarmTimePicker"
-        android:layout_below="@+id/createAlarmTimePicker"
-        android:text="@string/createAlarmSaveButtonText" 
-        android:onClick="onSetAlarmBtnPressed"/>
+        android:layout_marginBottom="41dp"
+        android:onClick="onSetAlarmBtnPressed"
+        android:text="@string/createAlarmSaveButtonText" />
+
+    <Spinner
+        android:id="@+id/activity_create_alarm_task_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createAlarmTimePicker"
+        android:layout_alignRight="@+id/createAlarmTimePicker"
+        android:layout_below="@+id/createAlarmTimePicker" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/activity_create_alarm_task_spinner"
+        android:layout_alignRight="@+id/activity_create_alarm_task_spinner"
+        android:layout_below="@+id/activity_create_alarm_task_spinner"
+        android:layout_marginTop="22dp"
+        android:onClick="onDayOfWeekClick"
+        android:text="@string/recurring_alarms" />
 
 </RelativeLayout>

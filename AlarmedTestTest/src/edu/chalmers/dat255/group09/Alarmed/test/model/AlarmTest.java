@@ -312,4 +312,22 @@ public class AlarmTest extends AndroidTestCase {
 
 		assertTrue(alarm.isEnabled());
 	}
+	public void testModule(){
+		String moduleName = "module";
+		Alarm alarm = new Alarm(20, 20, 1, moduleName, 0);
+
+		assertEquals(alarm.getModule(), moduleName);
+
+		alarm.setModule("module2");
+
+		assertFalse(alarm.getModule().equals(moduleName));
+	}
+	public void testVolume(){
+		int volume = 6;
+		Alarm alarm = new Alarm(20, 20, 1, "", volume);
+		assertTrue(volume == alarm.getVolume());
+		alarm.setVolume(5);
+		assertTrue(volume != alarm.getVolume());
+		
+	}
 }

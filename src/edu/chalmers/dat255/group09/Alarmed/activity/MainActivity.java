@@ -15,6 +15,8 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -108,6 +110,7 @@ public class MainActivity extends Activity {
 		intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
 		intent.putExtra("time",
 				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
+		intent.putExtra("daysOfWeek", alarm.getBooleanArrayDayOfWeek());
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 		overrideTransition();
 	}
@@ -120,10 +123,12 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
 		if (item.getItemId() == R.id.menu_add_alarm) {
-			startActivityForResult(new Intent(this, CreateAlarm.class),
-					ADD_ALARM_REQUEST_CODE);
+			boolean[] days = new boolean[7];
+			Arrays.fill(days, false);
+			startActivityForResult(
+					new Intent(this, CreateAlarm.class).putExtra("daysOfWeek",
+							days), ADD_ALARM_REQUEST_CODE);
 			overrideTransition();
 			return true;
 		}
@@ -142,13 +147,15 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (isResonseValid(resultCode)) {
-			if (requestCode == ADD_ALARM_REQUEST_CODE) {
-				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1));
-			} else if (requestCode == EDIT_ALARM_REQUEST_CODE) {
+			if (requestCode == EDIT_ALARM_REQUEST_CODE) {
 				aControl.deleteAlarm(data.getIntExtra("ID", -1));
+			}
+			if (requestCode == ADD_ALARM_REQUEST_CODE
+					|| requestCode == EDIT_ALARM_REQUEST_CODE) {
 				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1));
+						data.getIntExtra("minutes", -1),
+						data.getIntExtra("days", 0),
+						data.getStringExtra("module"));
 			}
 
 		}
@@ -174,9 +181,11 @@ public class MainActivity extends Activity {
 	 *            The minute of the new alarm
 	 */
 
-	private void createAlarm(int hour, int minute) {
-		aControl.createAlarm(hour, minute);
-		Toast.makeText(this, new Alarm(hour, minute, 0).toString(),
+	private void createAlarm(int hour, int minute, int dayOfWeek, String module) {
+		aControl.createAlarm(hour, minute, dayOfWeek, module);
+		Alarm toastAlarm = new Alarm(hour, minute, 0);
+		toastAlarm.setDaysOfWeek(dayOfWeek);
+		Toast.makeText(this, toastAlarm.toString(),
 				Toast.LENGTH_LONG).show();
 		updateList();
 	}

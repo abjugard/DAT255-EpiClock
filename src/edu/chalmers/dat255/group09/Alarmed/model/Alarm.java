@@ -23,18 +23,27 @@ public class Alarm implements Comparable<Alarm> {
 	private final int alarmMinutes;
 	private final int id;
 	private boolean enabled;
+	private String module;
+	private int volume;
+	private int daysOfWeek;
 
 	public Alarm(int hours, int minutes, int id)
 			throws IllegalArgumentException {
-
 		if (isIllegalHour(hours) || isIllegalMinutes(minutes)) {
 			throw new IllegalArgumentException("Illegal constructor argument!");
 		}
-
 		this.alarmHours = hours;
 		this.alarmMinutes = minutes;
 		this.id = id;
+	}
+
+	public Alarm(int hours, int minutes, int id, String module, int volume)
+			throws IllegalArgumentException {
+		this(hours, minutes, id);
+		this.module = module;
 		this.enabled = true;
+		this.volume = volume;
+		this.daysOfWeek = 0;
 	}
 
 	public long getTimeInMilliSeconds() {
@@ -43,6 +52,9 @@ public class Alarm implements Comparable<Alarm> {
 		if (isHourTomorrow() || isMinuteThisHourTomorrow()) {
 			cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) + 1);
 		}
+		if (this.getDaysOfWeek() != 0) {
+			setNextOccuringDay(cal);
+		}
 
 		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
 		cal.set(Calendar.MINUTE, alarmMinutes);
@@ -50,6 +62,37 @@ public class Alarm implements Comparable<Alarm> {
 		cal.set(Calendar.MILLISECOND, 0);
 
 		return cal.getTimeInMillis();
+	}
+
+	private void setNextOccuringDay(Calendar cal) {
+		int currentDay = cal.get(Calendar.DAY_OF_WEEK);
+		int nextDay = getDaysToNextAlarm(currentDay);
+		if (nextDay == -1) {
+			return;
+		}
+		cal.add(Calendar.DAY_OF_YEAR, nextDay);
+	}
+
+	private int getDaysToNextAlarm(int currentDay) {
+		boolean[] days = changeToCalendar(getBooleanArrayDayOfWeek());
+		for (int i = 0; i < 7; i++) {
+			if (days[(currentDay + i) % 7]) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private boolean[] changeToCalendar(boolean[] booleanArrayDayOfWeek) {
+		boolean[] calendarDays = new boolean[7];
+		for (int i = 0; i < calendarDays.length; i++) {
+			if (i == 0) {
+				calendarDays[i] = booleanArrayDayOfWeek[6];
+			} else {
+				calendarDays[i] = booleanArrayDayOfWeek[i - 1];
+			}
+		}
+		return calendarDays;
 	}
 
 	private boolean isMinuteThisHourTomorrow() {
@@ -81,6 +124,10 @@ public class Alarm implements Comparable<Alarm> {
 	@Override
 	public String toString() {
 		// Format
+		int daysLeft = getDaysToNextAlarm(Calendar.getInstance().get(
+				Calendar.DAY_OF_WEEK));
+		boolean day = daysLeft > 0;
+		boolean days = daysLeft > 1;
 		boolean hour = getHoursToAlarm() > 0;
 		boolean hours = getHoursToAlarm() > 1;
 		boolean minute = getMinutesToAlarm() > 0;
@@ -89,10 +136,16 @@ public class Alarm implements Comparable<Alarm> {
 		StringBuilder strBuilder = new StringBuilder();
 
 		strBuilder.append("Alarm is set for ");
+		if (day) {
+			strBuilder.append(daysLeft + " day" + (days ? "s" : ""));
+		}
+		if (day && hour) {
+			strBuilder.append(" and ");
+		}
 		if (hour) {
 			strBuilder.append(getHoursToAlarm() + " hour" + (hours ? "s" : ""));
 		}
-		if (hour && minute) {
+		if ((day || hour) && minute) {
 			strBuilder.append(" and ");
 		}
 		if (minute) {
@@ -163,4 +216,37 @@ public class Alarm implements Comparable<Alarm> {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
+
+	public int getVolume() {
+		return volume;
+	}
+
+	public void setVolume(int volume) {
+		this.volume = volume;
+	}
+
+	public boolean[] getBooleanArrayDayOfWeek() {
+		boolean[] days = new boolean[7];
+		for (int i = 0; i < 7; i++) {
+			days[i] = (daysOfWeek & (1 << i)) > 0;
+		}
+		return days;
+	}
+
+	public int getDaysOfWeek() {
+		return daysOfWeek;
+	}
+
+	public void setDaysOfWeek(int daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
+	}
+
 }
