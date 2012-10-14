@@ -27,8 +27,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  */
 public final class MultiplicationProblem implements MathProblemType {
 
-	private final static String OPERATOR = "*";
-	private final static String PROBLEM_HEADER = "What Is The Product?";
+	private static final String OPERATOR = "*";
+	private static final String PROBLEM_HEADER = "What Is The Product?";
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -59,11 +59,18 @@ public final class MultiplicationProblem implements MathProblemType {
 		case HARD:
 			nbrs = generateHardProblem();
 			break;
+		default:
+			break;
 		}
 
 		return nbrs;
 	}
 
+	/**
+	 * Generate numbers for an easy multiplication problem.
+	 * 
+	 * @return An array with random numbers with respect to an easy problem.
+	 */
 	private int[] generateEasyProblem() {
 		int numberOfNumbers = 2;
 		int upperLimit = 10;
@@ -73,6 +80,11 @@ public final class MultiplicationProblem implements MathProblemType {
 
 	}
 
+	/**
+	 * Generate numbers for an medium multiplication problem.
+	 * 
+	 * @return An array with random numbers with respect to an medium problem.
+	 */
 	private int[] generateMediumProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 10;
@@ -81,6 +93,11 @@ public final class MultiplicationProblem implements MathProblemType {
 		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
 	}
 
+	/**
+	 * Generate numbers for an hard multiplication problem.
+	 * 
+	 * @return An array with random numbers with respect to an hard problem.
+	 */
 	private int[] generateHardProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 15;
