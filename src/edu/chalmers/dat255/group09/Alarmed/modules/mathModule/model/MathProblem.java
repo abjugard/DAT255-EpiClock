@@ -19,13 +19,20 @@ import java.util.Arrays;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
-public class MathProblem {
+/**
+ * A class representing a math problem consisting of an mathproblem type and
+ * numbers customized for the problem.
+ * 
+ * @author Joakim Persson
+ * 
+ */
+public final class MathProblem {
 
 	private int[] numbers;
 	private MathProblemType mathProblemType;
 
 	/**
-	 * Create a new mathproblem instance
+	 * Create a new mathproblem instance.
 	 * 
 	 * @param numbers
 	 *            The numbers to be used in this problem
@@ -39,7 +46,7 @@ public class MathProblem {
 	}
 
 	/**
-	 * Get a copy of the numbers used in the problem
+	 * Get a copy of the numbers used in the problem.
 	 * 
 	 * @return An array of the numbers
 	 */
@@ -48,7 +55,7 @@ public class MathProblem {
 	}
 
 	/**
-	 * Get the problemtype
+	 * Get the problemtype.
 	 * 
 	 * @return A MathOperator used in the problem
 	 */

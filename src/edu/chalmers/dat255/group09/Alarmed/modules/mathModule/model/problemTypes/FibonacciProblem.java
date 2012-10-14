@@ -30,8 +30,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  */
 public class FibonacciProblem implements MathProblemType {
 
-	private final static String PROBLEM_HEADER = "What is the next term?";
-	private final static int NBR_OF_NUMBERS = 4;
+	private static final String PROBLEM_HEADER = "What is the next term?";
+	private static final int NBR_OF_NUMBERS = 4;
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -53,11 +53,20 @@ public class FibonacciProblem implements MathProblemType {
 		case HARD:
 			nbrs = generateHardProblem();
 			break;
+		default:
+			break;
 		}
 
 		return nbrs;
 	}
 
+	/**
+	 * Create an array of random numbers generated with respect to being an easy
+	 * problem. The numbers are a subset from the fibonacci sequence.
+	 * 
+	 * @return An array of random numbers, with respect to being an easy
+	 *         problem.
+	 */
 	private int[] generateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 10;
@@ -65,6 +74,14 @@ public class FibonacciProblem implements MathProblemType {
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Create an array of random numbers generated with respect to being an
+	 * medium level problem. The numbers are a subset from the fibonacci
+	 * sequence.
+	 * 
+	 * @return An array of random numbers, with respect to being an medium
+	 *         problem.
+	 */
 	private int[] generateMediumProblem() {
 		int lowerLimit = 8;
 		int upperLimit = 30;
@@ -72,6 +89,13 @@ public class FibonacciProblem implements MathProblemType {
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Create an array of random numbers generated with respect to being an hard
+	 * problem. The numbers are a subset from the fibonacci sequence.
+	 * 
+	 * @return An array of random numbers, with respect to being an hard
+	 *         problem.
+	 */
 	private int[] generateHardProblem() {
 		int lowerLimit = 30;
 		int upperLimit = 100;
@@ -79,12 +103,16 @@ public class FibonacciProblem implements MathProblemType {
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
 
-	//TODO add missing comment
 	/**
-	 *
+	 * Generates an random subset of the fibonacci sequence. The sequence is
+	 * staring with an random number form the sequence in the interval
+	 * [lowerLimit,upperLimit).
+	 * 
 	 * @param lowerLimit
+	 *            The lower limit for the starting number.
 	 * @param upperLimit
-	 * @return
+	 *            The upper limit for starting number.
+	 * @return An array with numbers from an subset of the fibonacci sequence.
 	 */
 	private int[] generateRandomSequence(int lowerLimit, int upperLimit) {
 
@@ -107,9 +135,9 @@ public class FibonacciProblem implements MathProblemType {
 	}
 
 	/**
-	 * Get an random index of a list
+	 * Get an random index of a list.
 	 * 
-	 * @param listLength
+	 * @param size
 	 *            The length of the list
 	 * @return An random index within the size of an list
 	 */
@@ -121,7 +149,7 @@ public class FibonacciProblem implements MathProblemType {
 	}
 
 	/**
-	 * Get a random number within and interval [lowerLimit, upperLimit)
+	 * Get a random number within and interval [lowerLimit, upperLimit).
 	 * 
 	 * @param lowerLimit
 	 *            The problems lowerlimit
@@ -135,7 +163,7 @@ public class FibonacciProblem implements MathProblemType {
 	}
 
 	/**
-	 * Create a subset of the fibonacci sequence around two starting numbers
+	 * Create a subset of the fibonacci sequence around two starting numbers.
 	 * 
 	 * @param startingNumber
 	 *            The first term in the sequence
@@ -162,7 +190,7 @@ public class FibonacciProblem implements MathProblemType {
 	}
 
 	/**
-	 * Get a list of the terms in the fibonacci sequence between two limits
+	 * Get a list of the terms in the fibonacci sequence between two limits.
 	 * 
 	 * @param lowerLimit
 	 *            The lower limit
@@ -194,7 +222,7 @@ public class FibonacciProblem implements MathProblemType {
 	}
 
 	/**
-	 * Removes any term in an list which is less than the lower limit
+	 * Removes any term in an list which is less than the lower limit.
 	 * 
 	 * @param sequence
 	 *            An list of integers

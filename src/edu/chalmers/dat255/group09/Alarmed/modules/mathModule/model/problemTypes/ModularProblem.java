@@ -29,11 +29,10 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  * @author Joakim Persson
  * 
  */
-// TODO add better method documentation
 public class ModularProblem implements MathProblemType {
 
-	private final static String PROBLEM_HEADER = "Solve for x!";
-	private final static int NBR_OF_NUMBERS = 2;
+	private static final String PROBLEM_HEADER = "Solve for x!";
+	private static final int NBR_OF_NUMBERS = 2;
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -50,6 +49,16 @@ public class ModularProblem implements MathProblemType {
 		return result;
 	}
 
+	/**
+	 * Calculate modulus on the form a = b mod n. This method calculates and
+	 * returns a.
+	 * 
+	 * @param b
+	 *            The b integer in the form a = b mod n.
+	 * @param n
+	 *            The n integer in the form a = b mod n.
+	 * @return The calculated modulus.
+	 */
 	private int getModulus(int b, int n) {
 		// a = b mod n
 		int a = b % n;
@@ -74,11 +83,20 @@ public class ModularProblem implements MathProblemType {
 		case HARD:
 			nbrs = generateHardProblem();
 			break;
+		default:
+			break;
 		}
 
 		return nbrs;
 	}
 
+	/**
+	 * Create an array of random numbers generated with respect to being an easy
+	 * problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an easy
+	 *         problem.
+	 */
 	private int[] generateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 30;
@@ -86,6 +104,13 @@ public class ModularProblem implements MathProblemType {
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Create an array of random numbers generated with respect to being an
+	 * medium problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an medium level
+	 *         problem.
+	 */
 	private int[] generateMediumProblem() {
 		int lowerLimit = -30;
 		int upperLimit = 30;
@@ -93,6 +118,13 @@ public class ModularProblem implements MathProblemType {
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Create an array of random numbers generated with respect to being an hard
+	 * problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an hard
+	 *         problem.
+	 */
 	private int[] generateHardProblem() {
 		int lowerLimit = -50;
 		int upperLimit = 50;
@@ -100,6 +132,16 @@ public class ModularProblem implements MathProblemType {
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Generate random numbers for a modulus problem between a lower limit and
+	 * an upper limit.
+	 * 
+	 * @param lowerLimit
+	 *            The lower limit for the numbers
+	 * @param upperLimit
+	 *            The upper limit for the numbers
+	 * @return An array with random numbers, with respect to an modulus problem.
+	 */
 	private int[] generateRandomNumbers(int lowerLimit, int upperLimit) {
 
 		int[] nbrs = new int[NBR_OF_NUMBERS];
@@ -110,6 +152,14 @@ public class ModularProblem implements MathProblemType {
 		return nbrs;
 	}
 
+	/**
+	 * Generate the random modulus number. The modulus problem is on the form: a
+	 * = b mon n. This method generates a random n, between 0 and upper limit.
+	 * 
+	 * @param upperLimit
+	 *            The upper limit for the problem.
+	 * @return An random modulus number.
+	 */
 	private int getRandomModulusNumber(int upperLimit) {
 		return getRandomNumberWithInRange(0, upperLimit);
 	}
@@ -134,6 +184,13 @@ public class ModularProblem implements MathProblemType {
 
 	}
 
+	/**
+	 * Generates a problem description string suited for two numbers.
+	 * 
+	 * @param nbrs
+	 *            An array of two numbers.
+	 * @return A string describing the current problem.
+	 */
 	private String getFormattedStringForTwoNumbers(int[] nbrs) {
 		StringBuilder builder = new StringBuilder("");
 		builder.append("x = ");
@@ -143,6 +200,14 @@ public class ModularProblem implements MathProblemType {
 		return builder.toString();
 	}
 
+	/**
+	 * Generates a problem description string suited for problems with more than
+	 * two numbers.
+	 * 
+	 * @param nbrs
+	 *            An array of more than two numbers.
+	 * @return A string describing the current problem.
+	 */
 	private String getFormattedStringForMorThanTwoNumbers(int[] nbrs) {
 		StringBuilder builder = new StringBuilder("");
 		String operatorSign = "+";

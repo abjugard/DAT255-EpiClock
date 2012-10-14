@@ -26,8 +26,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  */
 public final class AdditionProblem implements MathProblemType {
 
-	private final static String PROBLEM_HEADER = "What Is The Sum?";
-	private final static String OPERATOR = "+";
+	private static final String PROBLEM_HEADER = "What Is The Sum?";
+	private static final String OPERATOR = "+";
 
 	@Override
 	public String getProblemHeader() {
@@ -59,11 +59,19 @@ public final class AdditionProblem implements MathProblemType {
 		case HARD:
 			nbrs = generateHardProblem();
 			break;
+		default:
+			break;
 		}
 
 		return nbrs;
 	}
 
+	/**
+	 * Generate an easy addition problem with respect to being an easy problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an easy
+	 *         problem.
+	 */
 	private int[] generateEasyProblem() {
 		int numberOfNumbers = 2;
 		int upperLimit = 10;
@@ -73,6 +81,13 @@ public final class AdditionProblem implements MathProblemType {
 
 	}
 
+	/**
+	 * Generate an medium addition problem with respect to being an easy
+	 * problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an medium level
+	 *         problem.
+	 */
 	private int[] generateMediumProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 10;
@@ -81,6 +96,12 @@ public final class AdditionProblem implements MathProblemType {
 		return generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
 	}
 
+	/**
+	 * Generate an easy addition problem with respect to being an hard problem.
+	 * 
+	 * @return An array of random numbers, with respect to being an hard
+	 *         problem.
+	 */
 	private int[] generateHardProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 50;

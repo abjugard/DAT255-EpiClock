@@ -25,14 +25,22 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.PrimeProblem;
 
 /**
+ * A class that generates new math problems.
  * 
  * @author Joakim Persson
  * 
  */
 public class MathProblemGenerator {
 
-	private final static int NBR_OF_OPERATORS = 6;
+	private static final int NBR_OF_OPERATORS = 6;
 
+	/**
+	 * Generate a new math problem with an specified difficulty.
+	 * 
+	 * @param difficulty
+	 *            The difficulty to use in the problem.
+	 * @return A new mathproblem.
+	 */
 	public MathProblem generateProblem(Difficulty difficulty) {
 		MathProblemType operator = generateProblemType();
 		int[] numbers = operator.generateNumbers(difficulty);
@@ -40,6 +48,11 @@ public class MathProblemGenerator {
 		return new MathProblem(numbers, operator);
 	}
 
+	/**
+	 * Generate a random math problem type.
+	 * 
+	 * @return A random math problem type.
+	 */
 	private MathProblemType generateProblemType() {
 
 		MathProblemType problemType = null;
