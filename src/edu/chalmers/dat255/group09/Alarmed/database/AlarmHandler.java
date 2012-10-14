@@ -19,6 +19,11 @@ import java.util.List;
 
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
+/**
+ * The interface to handle the storage of alarms.
+ * @author Daniel Augurell
+ *
+ */
 public interface AlarmHandler {
 
 	/**
@@ -27,12 +32,12 @@ public interface AlarmHandler {
 	 * @return this, a self reference
 	 */
 
-	public AlarmHandler openCon();
+	AlarmHandler openCon();
 
 	/**
-	 * Closes the connection to the handler
+	 * Closes the connection to the handler.
 	 */
-	public void closeCon();
+	void closeCon();
 
 	/**
 	 * Creates an alarm in the handler given the time and if it should be
@@ -49,7 +54,7 @@ public interface AlarmHandler {
 	 * @return the id of the created Alarm, or -1 if an error occurred
 	 */
 
-	public long createAlarm(int hour, int minute, int daysOfWeek,
+	long createAlarm(int hour, int minute, int daysOfWeek,
 			String module);
 
 	/**
@@ -60,7 +65,7 @@ public interface AlarmHandler {
 	 * @return true if deleted else false
 	 */
 
-	public abstract boolean deleteAlarm(int alarmID);
+	boolean deleteAlarm(int alarmID);
 
 	/**
 	 * Fetches the first alarm given by the time to the next occurring alarm.
@@ -68,15 +73,15 @@ public interface AlarmHandler {
 	 * @return The next alarm to activate.
 	 */
 
-	public Alarm fetchFirstEnabledAlarm();
+	Alarm fetchFirstEnabledAlarm();
 
 	/**
-	 * Fetches all the alarm data and makes a list of Alarms
+	 * Fetches all the alarm data and makes a list of Alarms.
 	 * 
 	 * @return A list of all the alarms
 	 */
 
-	public List<Alarm> fetchAllAlarms();
+	List<Alarm> fetchAllAlarms();
 
 	/**
 	 * Fetches an alarm from the handler given an specified id.
@@ -85,14 +90,14 @@ public interface AlarmHandler {
 	 *            the id of the alarm to retrieve
 	 * @return the alarm with the specified id, if not found null
 	 */
-	public Alarm fetchAlarm(int alarmID);
+	Alarm fetchAlarm(int alarmID);
 
 	/**
 	 * 
 	 * @return The number of alarms.
 	 */
 
-	public int getNumberOfAlarms();
+	int getNumberOfAlarms();
 
 	/**
 	 * 
@@ -101,10 +106,10 @@ public interface AlarmHandler {
 	 * @return true if the alarm is enabled
 	 */
 
-	public boolean isEnabled(int id);
+	boolean isEnabled(int id);
 
 	/**
-	 * Updates the alarm given the id and the state to set the alarm to
+	 * Updates the alarm given the id and the state to set the alarm to.
 	 * 
 	 * @param id
 	 *            The id of the alarm
@@ -113,6 +118,6 @@ public interface AlarmHandler {
 	 * @return true if changed
 	 */
 
-	public boolean setAlarmEnabled(int id, boolean enable);
+	boolean setAlarmEnabled(int id, boolean enable);
 
 }
