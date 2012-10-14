@@ -131,15 +131,15 @@ public class CreateAlarm extends Activity {
 	}
 
 	private int getIntegerFromBooleanArray(boolean[] daysOfWeek) {
-		String days = "";
+		StringBuilder days = new StringBuilder();
 		for (int i = daysOfWeek.length - 1; i >= 0; i--) {
 			if (daysOfWeek[i]) {
-				days += "1";
+				days.append("1");
 			} else {
-				days += "0";
+				days.append("0");
 			}
 		}
-		return Integer.valueOf(days, 2);
+		return Integer.valueOf(days.toString(), 2);
 
 	}
 
