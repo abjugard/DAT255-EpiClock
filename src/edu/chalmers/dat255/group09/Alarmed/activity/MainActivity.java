@@ -34,6 +34,13 @@ import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
+/**
+ * The main activity of Alarmed.
+ * 
+ * @author Daniel Augurell
+ * @author Joakim Persson
+ * 
+ */
 public class MainActivity extends Activity {
 
 	public static final int ADD_ALARM_REQUEST_CODE = 1;
@@ -52,11 +59,16 @@ public class MainActivity extends Activity {
 		initAdapter();
 	}
 
+	/**
+	 * Init method to initiate controllers.
+	 */
 	private void initController() {
-		aControl = AlarmController.getInstance();
-		aControl.init(this);
+		aControl = AlarmController.getInstance(this);
 	}
 
+	/**
+	 * Init method to initiate adapters.
+	 */
 	private void initAdapter() {
 		ListView listView = (ListView) findViewById(R.id.alarms_list);
 		alarmAdapter = new BrowseAlarmAdapter(this, R.layout.alarms_list_item,
@@ -66,6 +78,12 @@ public class MainActivity extends Activity {
 		registerForContextMenu(listView);
 	}
 
+	/**
+	 * Toggle the alarms state to be the same as the view when changed.
+	 * 
+	 * @param view
+	 *            The view that has been pressed.
+	 */
 	public void onAlarmEnable(View view) {
 		if (view instanceof CheckBox) {
 			CheckBox box = (CheckBox) view;
@@ -104,6 +122,12 @@ public class MainActivity extends Activity {
 		return false;
 	}
 
+	/**
+	 * Starts a new activity to edit an alarms settings.
+	 * 
+	 * @param alarm
+	 *            The alarm to be edited
+	 */
 	private void editAlarm(Alarm alarm) {
 		Intent intent = new Intent(this, CreateAlarm.class);
 		intent.putExtra("ID", alarm.getId());
@@ -124,7 +148,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_add_alarm) {
-			boolean[] days = new boolean[7];
+			boolean[] days = new boolean[Alarm.DAYS_OF_WEEK];
 			Arrays.fill(days, false);
 			startActivityForResult(
 					new Intent(this, CreateAlarm.class).putExtra("daysOfWeek",
@@ -173,20 +197,23 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Creates a new alarm and then updates the view
+	 * Creates a new alarm and then updates the view.
 	 * 
 	 * @param hour
 	 *            The hour of the new alarm
 	 * @param minute
 	 *            The minute of the new alarm
+	 * @param dayOfWeek
+	 *            The days the be recurring as bits in a integer
+	 * @param module
+	 *            The module to be started on the alarms activation
 	 */
 
 	private void createAlarm(int hour, int minute, int dayOfWeek, String module) {
 		aControl.createAlarm(hour, minute, dayOfWeek, module);
 		Alarm toastAlarm = new Alarm(hour, minute, 0);
 		toastAlarm.setDaysOfWeek(dayOfWeek);
-		Toast.makeText(this, toastAlarm.toString(),
-				Toast.LENGTH_LONG).show();
+		Toast.makeText(this, toastAlarm.toString(), Toast.LENGTH_LONG).show();
 		updateList();
 	}
 
@@ -203,7 +230,7 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Updates the list of the alarms to the newest
+	 * Updates the list of the alarms to the current list.
 	 */
 	private void updateList() {
 		alarmAdapter.updateList(aControl.getAllAlarms());
