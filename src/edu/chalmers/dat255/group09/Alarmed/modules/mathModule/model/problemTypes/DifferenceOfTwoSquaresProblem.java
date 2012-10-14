@@ -27,8 +27,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 // TODO figure out how to handle more than two numbers
 public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 
-	private final static String PROBLEM_HEADER = "What is the product?";
-	private final static int NBR_OF_NUMBERS = 2;
+	private static final String PROBLEM_HEADER = "What is the product?";
+	private static final int NBR_OF_NUMBERS = 2;
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -54,6 +54,8 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 			break;
 		case HARD:
 			nbrs = generateHardProblem();
+			break;
+		default:
 			break;
 		}
 

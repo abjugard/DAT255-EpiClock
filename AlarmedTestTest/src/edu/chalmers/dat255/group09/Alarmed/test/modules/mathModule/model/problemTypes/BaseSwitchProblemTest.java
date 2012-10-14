@@ -26,7 +26,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  */
 public class BaseSwitchProblemTest extends AndroidTestCase {
 
-	private final static int ITERATIONS = 100;
+	private static final int ITERATIONS = 100;
 	private BaseSwitchProblem problem;
 
 	@Override

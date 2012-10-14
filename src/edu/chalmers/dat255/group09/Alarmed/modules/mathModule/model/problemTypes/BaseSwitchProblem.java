@@ -28,7 +28,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 // TODO complete felhantering
 public class BaseSwitchProblem implements MathProblemType {
 
-	private final static String PROBLEM_HEADER = "Convert to base ten";
+	private static final String PROBLEM_HEADER = "Convert to base ten";
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -36,7 +36,7 @@ public class BaseSwitchProblem implements MathProblemType {
 	}
 
 	/**
-	 * Covert an array representing an base two number into an base ten number
+	 * Covert an array representing an base two number into an base ten number.
 	 * 
 	 * @param nbrs
 	 *            The array representing a base two number
@@ -57,7 +57,7 @@ public class BaseSwitchProblem implements MathProblemType {
 	}
 
 	/**
-	 * A util method for reversing the position of the numbers in an array
+	 * A util method for reversing the position of the numbers in an array.
 	 * 
 	 * @param nbrs
 	 *            The array to be reversed
@@ -91,6 +91,8 @@ public class BaseSwitchProblem implements MathProblemType {
 			break;
 		case HARD:
 			nbrs = generateHardProblem();
+			break;
+		default:
 			break;
 		}
 
@@ -132,7 +134,7 @@ public class BaseSwitchProblem implements MathProblemType {
 	}
 
 	/**
-	 * Convert a base ten number into an base two or binary number
+	 * Convert a base ten number into an base two or binary number.
 	 * 
 	 * @param number
 	 *            The number to be converted into base 2

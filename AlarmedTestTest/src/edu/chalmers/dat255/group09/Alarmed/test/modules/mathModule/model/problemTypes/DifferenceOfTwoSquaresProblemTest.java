@@ -26,8 +26,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  */
 public class DifferenceOfTwoSquaresProblemTest extends AndroidTestCase {
 
-	private final static int ITERATIONS = 100;
-	private final static int NBR_OF_NUMBERS = 2;
+	private static final int ITERATIONS = 100;
+	private static final int NBR_OF_NUMBERS = 2;
 	private DifferenceOfTwoSquaresProblem problem;
 
 	@Override
