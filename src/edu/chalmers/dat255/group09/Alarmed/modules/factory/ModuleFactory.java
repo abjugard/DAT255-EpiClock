@@ -23,11 +23,18 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.activity.MathActiv
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.activity.MemoryActivity;
 
 /**
+ * A factory class for fetching the different kind of AlarmActivation modules.
  * 
  * @author Joakim Persson
  * 
  */
-public class ModuleFactory {
+public final class ModuleFactory {
+
+	/**
+	 * A singleton and cannot be instantiated.
+	 */
+	private ModuleFactory() {
+	}
 
 	private static Map<String, Class<?>> modules;
 
@@ -37,11 +44,23 @@ public class ModuleFactory {
 		modules.put("MemoryModule", MemoryActivity.class);
 	}
 
+	/**
+	 * Get the names of all the modules used in this application.
+	 * 
+	 * @return An array of all the module names.
+	 */
 	public static String[] getModuleNames() {
 		Set<String> names = modules.keySet();
 		return names.toArray(new String[0]);
 	}
 
+	/**
+	 * Load a new module.
+	 * 
+	 * @param moduleName
+	 *            The name of the module.
+	 * @return The selected module.
+	 */
 	public static Class<?> getModule(String moduleName) {
 		return modules.get(moduleName);
 	}
