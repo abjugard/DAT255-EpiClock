@@ -33,8 +33,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		AlarmController aControll = AlarmController.getInstance(context);
-		aControll.init();
+		AlarmController aControll = AlarmController.getInstance();
+		aControll.init(context);
 		if (aControll.alarmReceived(Integer.parseInt(intent.getData()
 				.toString()))) {
 			Intent activateIntent = new Intent(context,

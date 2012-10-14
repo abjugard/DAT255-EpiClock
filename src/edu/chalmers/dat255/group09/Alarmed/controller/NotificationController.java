@@ -21,14 +21,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.activity.MainActivity;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 /**
  * Controller class for the notifications.
+ * 
  * @author Andreas Rolen
- *
+ * 
  */
 public class NotificationController {
 
@@ -37,17 +39,22 @@ public class NotificationController {
 	private Alarm currentNotification;
 
 	/**
-	 * Constructor for the NotificationController. 
-	 * @param ctx The android context
+	 * Constructor for the NotificationController.
+	 * 
+	 * @param ctx
+	 *            The android context
 	 */
 	public NotificationController(Context ctx) {
 		this.context = ctx;
 		this.notificationManager = (NotificationManager) ctx
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 	}
+
 	/**
 	 * Adds a new notification with the specified alarm.
-	 * @param alarm The alarm which should be set as the current notification.
+	 * 
+	 * @param alarm
+	 *            The alarm which should be set as the current notification.
 	 */
 	public void addNotification(Alarm alarm) {
 		deleteCurrentNotification();
@@ -60,15 +67,18 @@ public class NotificationController {
 
 	/**
 	 * Creates a new Notification with the data from the alarm.
-	 * @param alarm The alarm to be set as the current notification.
+	 * 
+	 * @param alarm
+	 *            The alarm to be set as the current notification.
 	 * @return a Notification with the data from the alarm.
 	 */
 	private Notification buildNotification(Alarm alarm) {
-		Intent notificationIntent = new Intent(context, MainActivity.class);
+		//context.getClass() gives us the context of the MainClass, MainActivity
+		Intent notificationIntent = new Intent(context, context.getClass());
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 				notificationIntent, 0);
-		String contentTitle = "Next alarm set at: "
-				+ alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes();
+		String contentTitle = "Next alarm set at: " + alarm.getAlarmHours()
+				+ ":" + alarm.getAlarmMinutes();
 		String contentText = "Click here to see all your alarms.";
 		String tickerText = "A New Alarm is Scheduled!";
 
@@ -81,6 +91,7 @@ public class NotificationController {
 
 		return notification;
 	}
+
 	/**
 	 * Deletes the current Notification.
 	 */

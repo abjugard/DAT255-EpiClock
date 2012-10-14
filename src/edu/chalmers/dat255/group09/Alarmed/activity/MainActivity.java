@@ -63,8 +63,8 @@ public class MainActivity extends Activity {
 	 * Init method to initiate controllers.
 	 */
 	private void initController() {
-		aControl = AlarmController.getInstance(this);
-		aControl.init();
+		aControl = AlarmController.getInstance();
+		aControl.init(this);
 	}
 
 	/**

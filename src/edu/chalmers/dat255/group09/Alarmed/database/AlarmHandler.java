@@ -55,7 +55,7 @@ public interface AlarmHandler {
 	 * @return the id of the created Alarm, or -1 if an error occurred
 	 */
 
-	public long createAlarm(int hour, int minute, int daysOfWeek,
+	long createAlarm(int hour, int minute, int daysOfWeek,
 			String module, int volume);
 
 	/**

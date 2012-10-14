@@ -44,23 +44,17 @@ public final class AlarmController {
 	/**
 	 * A singleton shouldn't be accessed outside of the class.
 	 * 
-	 * @param ctx
-	 *            The android context
 	 */
-	private AlarmController(Context ctx) {
-		this.context = ctx;
-		init();
+	private AlarmController() {
 	}
 
 	/**
-	 * 
-	 * @param context
-	 *            The android context
+	 * Gets the instance of the AlarmController.
 	 * @return An instance of AlarmController
 	 */
-	public static AlarmController getInstance(Context context) {
+	public static AlarmController getInstance() {
 		if (instance == null) {
-			instance = new AlarmController(context);
+			instance = new AlarmController();
 		}
 		return instance;
 	}
@@ -68,8 +62,10 @@ public final class AlarmController {
 	/**
 	 * Init method to initiate the controller.
 	 * 
+	 * @param ctx The android context
 	 */
-	public void init() {
+	public void init(Context ctx) {
+		this.context = ctx;
 		alarmHandler = new DatabaseHandler(context).openCon();
 		notificationController = new NotificationController(context);
 	}
