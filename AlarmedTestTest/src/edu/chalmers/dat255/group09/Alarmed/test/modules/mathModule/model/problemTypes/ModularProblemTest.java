@@ -27,7 +27,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  */
 public class ModularProblemTest extends AndroidTestCase {
 
-	private final static int ITERATIONS = 100;
+	private static final int ITERATIONS = 100;
 	private ModularProblem modularProblem;
 
 	@Override
@@ -48,7 +48,7 @@ public class ModularProblemTest extends AndroidTestCase {
 		String actual = modularProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
-	
+
 	public void testGetFormattedStringForMoreThanTwoNumbers() {
 		int[] nbrs = { 3, 4, 8 };
 		String expected = "x = 3 + 4 mod 8";
@@ -56,7 +56,7 @@ public class ModularProblemTest extends AndroidTestCase {
 		Log.d("CreateAlarm", actual);
 		assertEquals(expected, actual);
 	}
-	
+
 	public void testZeroModOne() {
 		int actualResult = modularProblem.getResult(new int[] { 0, 1 });
 		int expectedResult = 0;
