@@ -126,7 +126,8 @@ public final class BaseSwitchProblem extends MathProblemType {
 	 * @return An array representing an random base 2 number
 	 */
 	private int[] generateRandomNumbers(int lowerLimit, int upperLimit) {
-		int randomNumber = RandomUtil.generateRandomNumber(lowerLimit, upperLimit);
+		int randomNumber = RandomUtil.generateRandomNumber(lowerLimit,
+				upperLimit);
 		return convertNumberToBaseTwo(randomNumber);
 	}
 

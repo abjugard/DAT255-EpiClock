@@ -19,8 +19,8 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
  * A class representing a FactorialProblem. The problem generates two or more
- * factorial factors. The user solves the problem by adding upp the sum of the
- * factorials
+ * factorial factors. The user solves the problem by adding the sum of the
+ * factorials.
  * 
  * @author Joakim Persson
  * 

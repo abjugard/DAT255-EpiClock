@@ -26,20 +26,21 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 public abstract class MathProblemType {
 
 	/**
-	 * Evalutate the entered numbers using the decided operator.
+	 * For these numbers calculate the correct answer to the problem.
 	 * 
 	 * @param numbers
 	 *            An array containing the numbers to evaluate
-	 * @return The evaluate result of the two numbers
+	 * @return The result of the numbers in the array.
 	 */
 	public abstract int getResult(int[] numbers);
 
 	/**
-	 * Generate numbers customized for the problem based on the difficulty.
+	 * Generate random numbers customized for the problem based on the
+	 * difficulty.
 	 * 
 	 * @param difficulty
 	 *            The difficulty of the problem
-	 * @return An array of numbers
+	 * @return An array of random numbers
 	 */
 	public int[] generateNumbers(Difficulty difficulty) {
 		int[] nbrs = null;
@@ -62,7 +63,8 @@ public abstract class MathProblemType {
 	}
 
 	/**
-	 * Generate an array of numbers, with respect to being an easy problem.
+	 * Generate an array of random numbers, with respect to being an easy
+	 * problem.
 	 * 
 	 * @return An random array of numbers, with respect to being an easy
 	 *         problem.
@@ -70,7 +72,8 @@ public abstract class MathProblemType {
 	protected abstract int[] generateEasyProblem();
 
 	/**
-	 * Generate an array of numbers, with respect to being an medium problem.
+	 * Generate an array of random numbers, with respect to being an medium
+	 * problem.
 	 * 
 	 * @return An random array of numbers, with respect to being an easy
 	 *         problem.
@@ -78,9 +81,10 @@ public abstract class MathProblemType {
 	protected abstract int[] generateMediumProblem();
 
 	/**
-	 * Generate an array of numbers, with respect to being an hard problem.
+	 * Generate an array of random numbers, with respect to being an medium
+	 * problem.
 	 * 
-	 * @return An random array of numbers, with respect to being an hard
+	 * @return An random array of numbers, with respect to being an medium
 	 *         problem.
 	 */
 	protected abstract int[] generateHardProblem();

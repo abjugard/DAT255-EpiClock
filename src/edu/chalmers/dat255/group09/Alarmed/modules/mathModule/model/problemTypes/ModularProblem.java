@@ -29,7 +29,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public class ModularProblem extends MathProblemType {
+public final class ModularProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "Solve for x!";
 	private static final int NBR_OF_NUMBERS = 2;
