@@ -31,6 +31,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +55,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 public class CreateAlarm extends Activity {
 	private View volumeDialogView;
 	private AlertDialog volumeDialog;
-	private Map<Uri, String> alarmTones;
+	private Map<String, String> alarmTones;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +67,13 @@ public class CreateAlarm extends Activity {
 
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
+		long begin = System.currentTimeMillis();
+
 		initTaskSpinner();
 		initAlarmToneMap();
+
+		long end = System.currentTimeMillis();
+		Log.d("DEBUG timer", end - begin + "ms");
 		initTone();
 		initVolumeDialog();
 	}
@@ -125,15 +131,13 @@ public class CreateAlarm extends Activity {
 
 		int tonesAvailable = cur.getCount();
 		if (tonesAvailable == 0) {
-			alarmTones = new HashMap<Uri, String>();
+			alarmTones = new HashMap<String, String>();
 			return;
 		}
 
-		Map<Uri, String> tones = new HashMap<Uri, String>();
+		Map<String, String> tones = new HashMap<String, String>();
 		while (!cur.isAfterLast() && cur.moveToNext()) {
-			int pos = cur.getPosition();
-			tones.put(ringMan.getRingtoneUri(pos), ringMan.getRingtone(pos)
-					.getTitle(this));
+			tones.put(cur.getString(RingtoneManager.URI_COLUMN_INDEX), cur.getString(RingtoneManager.TITLE_COLUMN_INDEX));
 		}
 		cur.close();
 
