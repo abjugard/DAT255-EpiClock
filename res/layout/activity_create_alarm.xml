@@ -1,64 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_alarm_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TimePicker
-        android:id="@+id/createAlarmTimePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/createAlarmSaveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/createAlarmTimePicker"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/createAlarmTimePicker"
-        android:layout_marginBottom="41dp"
-        android:onClick="onSetAlarmBtnPressed"
-        android:text="@string/createAlarmSaveButtonText" />
+        <TimePicker
+            android:id="@+id/createAlarmTimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="51dp" />
 
-    <Spinner
-        android:id="@+id/activity_create_alarm_task_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/createAlarmTimePicker"
-        android:layout_alignRight="@+id/createAlarmTimePicker"
-        android:layout_below="@+id/createAlarmTimePicker" />
+        <Spinner
+            android:id="@+id/activity_create_alarm_task_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/createAlarmTimePicker"
+            android:layout_alignRight="@+id/createAlarmTimePicker"
+            android:layout_below="@+id/createAlarmTimePicker" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/activity_create_alarm_task_spinner"
-        android:layout_alignRight="@+id/activity_create_alarm_task_spinner"
-        android:layout_below="@+id/activity_create_alarm_task_spinner"
-        android:layout_marginTop="22dp"
-        android:onClick="onDayOfWeekClick"
-        android:text="@string/recurring_alarms" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/activity_create_alarm_task_spinner"
+            android:layout_alignRight="@+id/activity_create_alarm_task_spinner"
+            android:layout_below="@+id/activity_create_alarm_task_spinner"
+            android:layout_marginTop="22dp"
+            android:onClick="onDayOfWeekClick"
+            android:text="@string/recurring_alarms" />
 
-<!--     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/button1"
-        android:onClick="onAlarmToneBtnPressed"
-        android:text="@string/text_select_ringtone_button" /> -->
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/button1"
+            android:layout_alignRight="@+id/button1"
+            android:layout_below="@+id/button1"
+            android:onClick="onVolumeBtnPressed"
+            android:text="@string/text_select_volume_settings_button" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/button1"
-        android:onClick="onVolumeBtnPressed"
-        android:text="@string/text_select_volume_settings_button" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/button3"
+            android:layout_alignRight="@+id/button3"
+            android:layout_below="@+id/button3"
+            android:onClick="onAlarmToneBtnPressed"
+            android:text="@string/text_select_ringtone_button" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/createAlarmSaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/button2"
+            android:layout_alignRight="@+id/button2"
+            android:layout_below="@+id/button2"
+            android:layout_marginTop="15dp"
+            android:onClick="onSetAlarmBtnPressed"
+            android:text="@string/createAlarmSaveButtonText" />
+
+    </RelativeLayout>
+
+</ScrollView>

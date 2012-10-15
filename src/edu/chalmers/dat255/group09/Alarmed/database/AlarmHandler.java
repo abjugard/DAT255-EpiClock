@@ -21,8 +21,9 @@ import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 /**
  * The interface to handle the storage of alarms.
+ * 
  * @author Daniel Augurell
- *
+ * 
  */
 public interface AlarmHandler {
 

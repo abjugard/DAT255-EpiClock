@@ -34,7 +34,9 @@ public class Alarm implements Comparable<Alarm> {
 	private final int alarmMinutes;
 	private final int alarmId;
 	private boolean alarmEnabled;
+	private boolean vibrationEnabled;
 	private String alarmModule;
+	private String toneUri;
 	private int alarmVolume;
 	private int daysOfWeek;
 
@@ -362,6 +364,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Sets the name of the module to be activated on the alarm activation.
+	 * 
 	 * @param module
 	 *            The name of the module
 	 */
@@ -371,6 +374,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Gets the volume of the alarm.
+	 * 
 	 * @return The volume of the alarm
 	 */
 	public int getVolume() {
@@ -379,6 +383,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Sets the volume of the alarm.
+	 * 
 	 * @param volume
 	 *            The volume to set the alarm to
 	 */
@@ -388,6 +393,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Gets the days of the alarm when it is recurring an as boolean array.
+	 * 
 	 * @return The days which the alarm is recurring as an boolean array
 	 */
 	public boolean[] getBooleanArrayDayOfWeek() {
@@ -400,6 +406,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Gets the days of the alarm when it is recurring an bits of an integer.
+	 * 
 	 * @return The days which the alarm is recurring as bits of an integer
 	 */
 	public int getDaysOfWeek() {
@@ -408,11 +415,50 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Sets the day of the week which the alarm should be recurring.
+	 * 
 	 * @param days
 	 *            The days which the alarm should be recurring
 	 */
 	public void setDaysOfWeek(int days) {
 		this.daysOfWeek = days;
+	}
+
+	/**
+	 * Gets the alarm tone URI
+	 * 
+	 * @return The alarm tone URI
+	 */
+	public String getToneUri() {
+		return toneUri;
+	}
+
+	/**
+	 * Sets the alarm tone URI
+	 * 
+	 * @param toneUri
+	 *            The alarm tone URI
+	 */
+	public void setToneUri(String toneUri) {
+		this.toneUri = toneUri;
+	}
+
+	/**
+	 * Method to check whether the alarm has vibration enabled or not
+	 * 
+	 * @return Whether or not vibration is enabled for this alarm
+	 */
+	public boolean isVibrationEnabled() {
+		return vibrationEnabled;
+	}
+
+	/**
+	 * Sets whether or not the alarm should engage the vibration motor
+	 * 
+	 * @param vibrationEnabled
+	 *            Requested status of vibration
+	 */
+	public void setVibrationEnabled(boolean vibrationEnabled) {
+		this.vibrationEnabled = vibrationEnabled;
 	}
 
 }

@@ -37,6 +37,12 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * Base activity for fired alarms.
+ * 
+ * @author Adrian Bjugård
+ * 
+ */
 public abstract class BaseActivationActivity extends Activity {
 
 	private final static String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity";
@@ -107,7 +113,9 @@ public abstract class BaseActivationActivity extends Activity {
 	 * Start the alarm
 	 */
 	private void startAlarm() {
-		startVibration();
+		if (getIntent().getBooleanExtra("vibration", false)) {
+			startVibration();
+		}
 		startAudio();
 	}
 
@@ -126,7 +134,7 @@ public abstract class BaseActivationActivity extends Activity {
 		try {
 			mediaPlayer.setDataSource(this, getAlarmTone());
 			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, getIntent()
-					.getIntExtra("volume", 6), 0);
+					.getIntExtra("volume", 0), 0);
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
 			mediaPlayer.prepare();
 			mediaPlayer.start();
@@ -142,14 +150,13 @@ public abstract class BaseActivationActivity extends Activity {
 	 * @return Returns alarm tone
 	 */
 	private Uri getAlarmTone() {
-		Uri alertTone = RingtoneManager
-				.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		Uri alertTone = Uri.parse(getIntent().getStringExtra("toneuri"));
 		if (alertTone == null) {
 			alertTone = RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+					.getDefaultUri(RingtoneManager.TYPE_ALARM);
 			if (alertTone == null) {
 				alertTone = RingtoneManager
-						.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 			}
 		}
 		return alertTone;
@@ -165,7 +172,7 @@ public abstract class BaseActivationActivity extends Activity {
 		finish();
 		overrideTransition();
 	}
-	
+
 	/**
 	 * Makes the transition between views smoother by animating them.
 	 */
@@ -174,7 +181,7 @@ public abstract class BaseActivationActivity extends Activity {
 		int fadeOut = android.R.anim.fade_out;
 		overridePendingTransition(fadeIn, fadeOut);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		// The user is not allowed to go back

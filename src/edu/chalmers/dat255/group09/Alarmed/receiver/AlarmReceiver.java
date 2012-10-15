@@ -33,17 +33,19 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		AlarmController aControll = AlarmController.getInstance();
-		aControll.init(context);
+		AlarmController aControl = AlarmController.getInstance();
+		aControl.init(context);
 		String[] data = intent.getData().toString().split(":");
-		if (aControll.alarmReceived(Integer.parseInt(data[0]))) {
+		if (aControl.alarmReceived(Integer.parseInt(data[0]))) {
 			Intent activateIntent = new Intent(context,
 					ModuleFactory.getModule(data[1]));
 			activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			activateIntent.putExtra("volume", data[2]);
+			activateIntent.putExtra("toneuri", data[3]);
+			activateIntent.putExtra("vibration", data[4]);
 			context.startActivity(activateIntent);
 		}
-		aControll.destroy();
+		aControl.destroy();
 	}
 
 }
