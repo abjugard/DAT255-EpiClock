@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
@@ -26,7 +25,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public final class MultiplicationProblem implements MathProblemType {
+public final class MultiplicationProblem extends MathProblemType {
 
 	private static final String OPERATOR = "*";
 	private static final String PROBLEM_HEADER = "What Is The Product?";
@@ -45,39 +44,19 @@ public final class MultiplicationProblem implements MathProblemType {
 		return PROBLEM_HEADER;
 	}
 
-	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-	}
-
 	/**
 	 * Generate numbers for an easy multiplication problem.
 	 * 
 	 * @return An array with random numbers with respect to an easy problem.
 	 */
-	private int[] generateEasyProblem() {
+	@Override
+	protected int[] generateEasyProblem() {
 		int numberOfNumbers = 2;
 		int upperLimit = 10;
 		int lowerLimit = 0;
 
-		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
+		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit,
+				lowerLimit);
 
 	}
 
@@ -86,12 +65,14 @@ public final class MultiplicationProblem implements MathProblemType {
 	 * 
 	 * @return An array with random numbers with respect to an medium problem.
 	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 10;
 		int lowerLimit = 0;
 
-		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
+		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit,
+				lowerLimit);
 	}
 
 	/**
@@ -99,12 +80,14 @@ public final class MultiplicationProblem implements MathProblemType {
 	 * 
 	 * @return An array with random numbers with respect to an hard problem.
 	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 15;
 		int lowerLimit = 10;
 
-		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit, lowerLimit);
+		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit,
+				lowerLimit);
 	}
 
 	@Override

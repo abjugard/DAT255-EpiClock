@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
@@ -26,7 +25,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public final class FactorialProblem implements MathProblemType {
+public final class FactorialProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "What is the sum?";
 
@@ -56,66 +55,51 @@ public final class FactorialProblem implements MathProblemType {
 		}
 	}
 
-	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-	}
-
 	/**
 	 * Generate numbers for an easy factorial problem.
 	 * 
 	 * @return An array of random numbers, with respect to being an easy
-	 *         problem.
+	 *         factorial problem.
 	 */
-	private int[] generateEasyProblem() {
+	@Override
+	protected int[] generateEasyProblem() {
 		int lowerLimit = 4;
 		int upperLimit = 6;
 		int nbrOfFactors = 2;
 
-		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
+		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit,
+				upperLimit);
 	}
 
 	/**
 	 * Generate numbers for an medium factorial problem.
 	 * 
 	 * @return An array of random numbers, with respect to being an medium
-	 *         problem.
+	 *         factorial problem.
 	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int lowerLimit = 4;
 		int upperLimit = 6;
 		int nbrOfFactors = 3;
 
-		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
+		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit,
+				upperLimit);
 	}
 
 	/**
 	 * Generate numbers for an hard factorial problem.
 	 * 
-	 * @return An array of random numbers, with resect to being an hard problem.
+	 * @return An array of random numbers, with respect to being an hard
+	 *         factorial problem.
 	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int lowerLimit = 6;
 		int upperLimit = 8;
 		int nbrOfFactors = 2;
-		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit, upperLimit);
+		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit,
+				upperLimit);
 	}
 
 	@Override

@@ -18,7 +18,6 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
@@ -29,7 +28,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public class FibonacciProblem implements MathProblemType {
+public class FibonacciProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "What is the next term?";
 	private static final int NBR_OF_NUMBERS = 4;
@@ -40,27 +39,6 @@ public class FibonacciProblem implements MathProblemType {
 		return numbers[index] + numbers[index - 1];
 	}
 
-	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-	}
-
 	/**
 	 * Create an array of random numbers generated with respect to being an easy
 	 * problem. The numbers are a subset from the fibonacci sequence.
@@ -68,7 +46,8 @@ public class FibonacciProblem implements MathProblemType {
 	 * @return An array of random numbers, with respect to being an easy
 	 *         problem.
 	 */
-	private int[] generateEasyProblem() {
+	@Override
+	protected int[] generateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 10;
 
@@ -83,7 +62,8 @@ public class FibonacciProblem implements MathProblemType {
 	 * @return An array of random numbers, with respect to being an medium
 	 *         problem.
 	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int lowerLimit = 8;
 		int upperLimit = 30;
 
@@ -97,7 +77,8 @@ public class FibonacciProblem implements MathProblemType {
 	 * @return An array of random numbers, with respect to being an hard
 	 *         problem.
 	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int lowerLimit = 30;
 		int upperLimit = 100;
 

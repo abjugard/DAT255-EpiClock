@@ -17,7 +17,6 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 
 import java.util.List;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
@@ -31,7 +30,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public final class PrimeProblem implements MathProblemType {
+public final class PrimeProblem extends MathProblemType {
 	private static final String PROBLEM_HEADER = "Which Number Is Prime?";
 	private static final int NBR_OF_NUMBERS = 4;
 
@@ -50,34 +49,13 @@ public final class PrimeProblem implements MathProblemType {
 		return primeNumber;
 	}
 
-	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-	}
-
 	/**
 	 * Generates numbers based on the easy difficulty.
 	 * 
 	 * @return An array of number, including one prime number
 	 */
-	private int[] generateEasyProblem() {
+	@Override
+	protected int[] generateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 30;
 		int deltaToPrime = 10;
@@ -91,7 +69,8 @@ public final class PrimeProblem implements MathProblemType {
 	 * 
 	 * @return An array of number, including one prime number
 	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int lowerLimit = 30;
 		int upperLimit = 50;
 		int deltaToPrime = 15;
@@ -105,7 +84,8 @@ public final class PrimeProblem implements MathProblemType {
 	 * 
 	 * @return An array of number, including one prime number
 	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int lowerLimit = 50;
 		int upperLimit = 100;
 		int deltaToPrime = 20;

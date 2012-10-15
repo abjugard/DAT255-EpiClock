@@ -18,12 +18,12 @@ package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemType
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
- * An interface for the math problem types used in the math problem module.
+ * An abstract class for the math problem types used in the math problem module.
  * 
  * @author Joakim Persson
  * 
  */
-public interface MathProblemType {
+public abstract class MathProblemType {
 
 	/**
 	 * Evalutate the entered numbers using the decided operator.
@@ -32,7 +32,7 @@ public interface MathProblemType {
 	 *            An array containing the numbers to evaluate
 	 * @return The evaluate result of the two numbers
 	 */
-	int getResult(int[] numbers);
+	public abstract int getResult(int[] numbers);
 
 	/**
 	 * Generate numbers customized for the problem based on the difficulty.
@@ -41,14 +41,56 @@ public interface MathProblemType {
 	 *            The difficulty of the problem
 	 * @return An array of numbers
 	 */
-	int[] generateNumbers(Difficulty difficulty);
+	public int[] generateNumbers(Difficulty difficulty) {
+		int[] nbrs = null;
+
+		switch (difficulty) {
+		case EASY:
+			nbrs = generateEasyProblem();
+			break;
+		case MEDIUM:
+			nbrs = generateMediumProblem();
+			break;
+		case HARD:
+			nbrs = generateHardProblem();
+			break;
+		default:
+			break;
+		}
+
+		return nbrs;
+	}
+
+	/**
+	 * Generate an array of numbers, with respect to being an easy problem.
+	 * 
+	 * @return An random array of numbers, with respect to being an easy
+	 *         problem.
+	 */
+	protected abstract int[] generateEasyProblem();
+
+	/**
+	 * Generate an array of numbers, with respect to being an medium problem.
+	 * 
+	 * @return An random array of numbers, with respect to being an easy
+	 *         problem.
+	 */
+	protected abstract int[] generateMediumProblem();
+
+	/**
+	 * Generate an array of numbers, with respect to being an hard problem.
+	 * 
+	 * @return An random array of numbers, with respect to being an hard
+	 *         problem.
+	 */
+	protected abstract int[] generateHardProblem();
 
 	/**
 	 * Get The Header/Title for the problem.
 	 * 
 	 * @return The Title of the problem
 	 */
-	String getProblemHeader();
+	public abstract String getProblemHeader();
 
 	/**
 	 * Get a formatted output of the current problem.
@@ -57,6 +99,6 @@ public interface MathProblemType {
 	 *            The numbers in the current problem
 	 * @return A formatted String
 	 */
-	String getFormattedProblem(int[] nbrs);
+	public abstract String getFormattedProblem(int[] nbrs);
 
 }

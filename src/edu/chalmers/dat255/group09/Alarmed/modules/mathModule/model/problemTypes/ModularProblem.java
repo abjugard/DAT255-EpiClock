@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
@@ -30,7 +29,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public class ModularProblem implements MathProblemType {
+public class ModularProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "Solve for x!";
 	private static final int NBR_OF_NUMBERS = 2;
@@ -71,62 +70,23 @@ public class ModularProblem implements MathProblemType {
 	}
 
 	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-	}
-
-	/**
-	 * Create an array of random numbers generated with respect to being an easy
-	 * problem.
-	 * 
-	 * @return An array of random numbers, with respect to being an easy
-	 *         problem.
-	 */
-	private int[] generateEasyProblem() {
+	protected int[] generateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 30;
 
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
-	/**
-	 * Create an array of random numbers generated with respect to being an
-	 * medium problem.
-	 * 
-	 * @return An array of random numbers, with respect to being an medium level
-	 *         problem.
-	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int lowerLimit = -30;
 		int upperLimit = 30;
 
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
-	/**
-	 * Create an array of random numbers generated with respect to being an hard
-	 * problem.
-	 * 
-	 * @return An array of random numbers, with respect to being an hard
-	 *         problem.
-	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int lowerLimit = -50;
 		int upperLimit = 50;
 

@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
@@ -25,7 +24,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
+public final class DifferenceOfTwoSquaresProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "What is the product?";
 	private static final int NBR_OF_NUMBERS = 2;
@@ -41,47 +40,15 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 	}
 
 	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-	}
-
-	/**
-	 * Generate an array of numbers, with respect to being an easy problem.
-	 * 
-	 * @return An random array of numbers, with respect to being an easy
-	 *         problem.
-	 */
-	private int[] generateEasyProblem() {
+	protected int[] generateEasyProblem() {
 		int lowerLimit = 1;
 		int upperLimit = 5;
 		return RandomUtil.generateRandomNumbers(NBR_OF_NUMBERS, lowerLimit,
 				upperLimit);
 	}
 
-	/**
-	 * Generate an array of numbers, with respect to being an medium problem.
-	 * 
-	 * @return An random array of numbers, with respect to being an easy
-	 *         problem.
-	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int lowerLimit = 4;
 		int upperLimit = 8;
 
@@ -89,13 +56,8 @@ public final class DifferenceOfTwoSquaresProblem implements MathProblemType {
 				upperLimit);
 	}
 
-	/**
-	 * Generate an array of numbers, with respect to being an hard problem.
-	 * 
-	 * @return An random array of numbers, with respect to being an hard
-	 *         problem.
-	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int lowerLimit = 7;
 		int upperLimit = 11;
 

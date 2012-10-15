@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
@@ -25,7 +24,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public final class AdditionProblem implements MathProblemType {
+public final class AdditionProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "What Is The Sum?";
 	private static final String OPERATOR = "+";
@@ -45,35 +44,14 @@ public final class AdditionProblem implements MathProblemType {
 
 	}
 
-	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-	}
-
 	/**
 	 * Generate an easy addition problem with respect to being an easy problem.
 	 * 
 	 * @return An array of random numbers, with respect to being an easy
 	 *         problem.
 	 */
-	private int[] generateEasyProblem() {
+	@Override
+	protected int[] generateEasyProblem() {
 		int numberOfNumbers = 2;
 		int upperLimit = 10;
 		int lowerLimit = 0;
@@ -90,7 +68,8 @@ public final class AdditionProblem implements MathProblemType {
 	 * @return An array of random numbers, with respect to being an medium level
 	 *         problem.
 	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 10;
 		int lowerLimit = 0;
@@ -105,7 +84,8 @@ public final class AdditionProblem implements MathProblemType {
 	 * @return An array of random numbers, with respect to being an hard
 	 *         problem.
 	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int numberOfNumbers = 3;
 		int upperLimit = 50;
 		int lowerLimit = 10;

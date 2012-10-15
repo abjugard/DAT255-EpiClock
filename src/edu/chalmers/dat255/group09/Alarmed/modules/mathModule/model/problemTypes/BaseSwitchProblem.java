@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes;
 
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 
 /**
@@ -26,7 +25,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public final class BaseSwitchProblem implements MathProblemType {
+public final class BaseSwitchProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "Convert to base ten";
 
@@ -77,36 +76,14 @@ public final class BaseSwitchProblem implements MathProblemType {
 		return nbrs;
 	}
 
-	@Override
-	public int[] generateNumbers(Difficulty difficulty) {
-
-		int[] nbrs = null;
-
-		switch (difficulty) {
-		case EASY:
-			nbrs = generateEasyProblem();
-			break;
-		case MEDIUM:
-			nbrs = generateMediumProblem();
-			break;
-		case HARD:
-			nbrs = generateHardProblem();
-			break;
-		default:
-			break;
-		}
-
-		return nbrs;
-
-	}
-
 	/**
 	 * Generate an easy base switch problem.
 	 * 
 	 * @return An array of numbers in base 2 representing an easy random base 10
 	 *         number.
 	 */
-	private int[] generateEasyProblem() {
+	@Override
+	protected int[] generateEasyProblem() {
 		int lowerLimit = 1;
 		int upperLimit = 30;
 		return generateRandomNumbers(lowerLimit, upperLimit);
@@ -118,7 +95,8 @@ public final class BaseSwitchProblem implements MathProblemType {
 	 * @return An array of numbers in base 2 representing an medium level random
 	 *         base 10 number.
 	 */
-	private int[] generateMediumProblem() {
+	@Override
+	protected int[] generateMediumProblem() {
 		int lowerLimit = 30;
 		int upperLimit = 80;
 		return generateRandomNumbers(lowerLimit, upperLimit);
@@ -130,7 +108,8 @@ public final class BaseSwitchProblem implements MathProblemType {
 	 * @return An array of numbers in base 2 representing an hard random base 10
 	 *         number.
 	 */
-	private int[] generateHardProblem() {
+	@Override
+	protected int[] generateHardProblem() {
 		int lowerLimit = 80;
 		int upperLimit = 120;
 		return generateRandomNumbers(lowerLimit, upperLimit);
