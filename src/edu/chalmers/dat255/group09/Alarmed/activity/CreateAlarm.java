@@ -48,6 +48,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
  * 
  * @author Daniel Augurell
  * @author Joakim Persson
+ * @author Adrian Bjugård
  * 
  */
 public class CreateAlarm extends Activity {
@@ -66,8 +67,27 @@ public class CreateAlarm extends Activity {
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
 		initTaskSpinner();
-//		initAlarmTones();
+		initAlarmToneMap();
+		initTone();
 		initVolumeDialog();
+	}
+
+	/**
+	 * Since the alarm tone dialog isn't guaranteed to spawn during the lifetime
+	 * of the activity, this method sets the default value unless one already
+	 * exists in the intent (in edit mode)
+	 */
+	private void initTone() {
+		String previousTone = getIntent().getStringExtra("toneuri");
+		if (previousTone == null) {
+			Uri tone = RingtoneManager
+					.getDefaultUri(RingtoneManager.TYPE_ALARM);
+			if (tone == null) {
+				tone = RingtoneManager
+						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+			}
+			getIntent().putExtra("toneuri", tone.toString());
+		}
 	}
 
 	/**
@@ -97,7 +117,7 @@ public class CreateAlarm extends Activity {
 	/**
 	 * Sets up a map of alarm tone URIs to their human readable titles
 	 */
-	private void initAlarmTones() {
+	private void initAlarmToneMap() {
 		RingtoneManager ringMan = new RingtoneManager(this);
 		ringMan.setType(RingtoneManager.TYPE_ALARM);
 
@@ -116,7 +136,7 @@ public class CreateAlarm extends Activity {
 					.getTitle(this));
 		}
 		cur.close();
-		
+
 		alarmTones = tones;
 	}
 
@@ -196,14 +216,15 @@ public class CreateAlarm extends Activity {
 	/**
 	 * Opens the alarm tone selector
 	 * 
-	 * @param view The parent View of the dialog
+	 * @param view
+	 *            The parent View of the dialog
 	 */
 	public void onAlarmToneBtnPressed(View view) {
 		String[] array = new String[alarmTones.size()];
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, alarmTones.values()
 						.toArray(array));
-		onVolumeBtnPressed(view);
+
 		new AlertDialog.Builder(this).setTitle("Pick alarm tone")
 				.setAdapter(adapter, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int index) {
@@ -336,10 +357,11 @@ public class CreateAlarm extends Activity {
 	}
 
 	/**
-	 * A listner that activates when the OK button is clicked in the volume dialog
+	 * A listner that activates when the OK button is clicked in the volume
+	 * dialog
 	 * 
 	 * @author Adrian Bjugård
-	 *
+	 * 
 	 */
 	private class VolumeDialogListener implements
 			DialogInterface.OnClickListener {

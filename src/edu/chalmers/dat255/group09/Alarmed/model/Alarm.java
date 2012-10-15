@@ -32,7 +32,9 @@ public class Alarm implements Comparable<Alarm> {
 	private final int alarmMinutes;
 	private final int alarmId;
 	private boolean alarmEnabled;
+	private boolean vibrationEnabled;
 	private String alarmModule;
+	private String toneUri;
 	private int alarmVolume;
 	private int daysOfWeek;
 
@@ -326,6 +328,44 @@ public class Alarm implements Comparable<Alarm> {
 	 */
 	public void setDaysOfWeek(int days) {
 		this.daysOfWeek = days;
+	}
+
+	/**
+	 * Gets the alarm tone URI
+	 * 
+	 * @return The alarm tone URI
+	 */
+	public String getToneUri() {
+		return toneUri;
+	}
+
+	/**
+	 * Sets the alarm tone URI
+	 * 
+	 * @param toneUri
+	 *            The alarm tone URI
+	 */
+	public void setToneUri(String toneUri) {
+		this.toneUri = toneUri;
+	}
+
+	/**
+	 * Method to check whether the alarm has vibration enabled or not
+	 * 
+	 * @return Whether or not vibration is enabled for this alarm
+	 */
+	public boolean isVibrationEnabled() {
+		return vibrationEnabled;
+	}
+
+	/**
+	 * Sets whether or not the alarm should engage the vibration motor
+	 * 
+	 * @param vibrationEnabled
+	 *            Requested status of vibration
+	 */
+	public void setVibrationEnabled(boolean vibrationEnabled) {
+		this.vibrationEnabled = vibrationEnabled;
 	}
 
 }

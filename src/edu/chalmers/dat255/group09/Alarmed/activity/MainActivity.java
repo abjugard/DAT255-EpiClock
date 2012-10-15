@@ -140,6 +140,8 @@ public class MainActivity extends Activity {
 				AlarmUtils.getBooleanArray(alarm.getDaysOfWeek()));
 		intent.putExtra("volume", alarm.getVolume());
 		intent.putExtra("module", alarm.getModule());
+		intent.putExtra("vibration", alarm.isVibrationEnabled());
+		intent.putExtra("toneuri", alarm.getToneUri());
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 		overrideTransition();
 	}
@@ -185,7 +187,9 @@ public class MainActivity extends Activity {
 						data.getIntExtra("minutes", -1),
 						data.getIntExtra("days", 0),
 						data.getStringExtra("module"),
-						data.getIntExtra("volume", 1));
+						data.getIntExtra("volume", 1),
+						data.getBooleanExtra("vibration", false),
+						data.getStringExtra("toneuri"));
 			}
 
 		}
@@ -215,11 +219,15 @@ public class MainActivity extends Activity {
 	 *            The module to be started on the alarms activation
 	 * @param volume
 	 *            Volume of the alarm
+	 * @param vibrationEnabled
+	 *            Whether or not vibration is enabled
+	 * @param toneUri
+	 *            The alarm tone to use
 	 */
-
-	private void createAlarm(int hour, int minute, int dayOfWeek,
-			String module, int volume) {
+	private void createAlarm(int hour, int minute, int dayOfWeek, String module, int volume, boolean vibrationEnabled, String toneUri) {
 		Alarm alarm = new Alarm(hour, minute, 0, module, volume);
+		alarm.setToneUri(toneUri);
+		alarm.setVibrationEnabled(vibrationEnabled);
 		alarm.setDaysOfWeek(dayOfWeek);
 		aControl.addAlarm(alarm);
 		Toast.makeText(this, alarm.getTimeToNextAlarmString(),
