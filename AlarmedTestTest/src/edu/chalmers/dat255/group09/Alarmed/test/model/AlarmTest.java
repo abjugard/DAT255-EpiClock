@@ -88,7 +88,8 @@ public class AlarmTest extends AndroidTestCase {
 		}
 
 		int hours = (currentTime + hoursToAdd) % AlarmTest.HOURS_OF_DAY;
-		int minutes = (currentMinute + minutesToAdd) % AlarmTest.MINUTES_OF_HOUR;
+		int minutes = (currentMinute + minutesToAdd)
+				% AlarmTest.MINUTES_OF_HOUR;
 
 		return new Alarm(hours, minutes, 0).getTimeInMilliSeconds();
 	}
@@ -116,67 +117,75 @@ public class AlarmTest extends AndroidTestCase {
 		if (minuteToTrigger >= AlarmTest.MINUTES_OF_HOUR) {
 			hourToTrigger++;
 		}
-		return new Alarm((hourToTrigger % AlarmTest.HOURS_OF_DAY), (minuteToTrigger % AlarmTest.MINUTES_OF_HOUR), 0);
+		return new Alarm((hourToTrigger % AlarmTest.HOURS_OF_DAY),
+				(minuteToTrigger % AlarmTest.MINUTES_OF_HOUR), 0);
 	}
 
 	public void testOneMinuteToString() {
 		Alarm at = alarmTimeFromNow(1, 0);
 		String toMatch = "Alarm is set for 1 minute from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(30, 0);
 		String toMatch = "Alarm is set for 30 minutes from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testOneHourToString() {
 		Alarm at = alarmTimeFromNow(0, 1);
 		String toMatch = "Alarm is set for 1 hour from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testFiveHoursToString() {
 		Alarm at = alarmTimeFromNow(0, 5);
 		String toMatch = "Alarm is set for 5 hours from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testOneHourOneMinuteToString() {
 		Alarm at = alarmTimeFromNow(1, 1);
 		String toMatch = "Alarm is set for 1 hour and 1 minute from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testOneHourThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(30, 1);
 		String toMatch = "Alarm is set for 1 hour and 30 minutes from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testFiveHourOneMinuteToString() {
 		Alarm at = alarmTimeFromNow(1, 5);
 		String toMatch = "Alarm is set for 5 hours and 1 minute from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testFiveHourThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(30, 5);
 		String toMatch = "Alarm is set for 5 hours and 30 minutes from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testTwentyThreeHourThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(30, 23);
 		String toMatch = "Alarm is set for 23 hours and 30 minutes from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testTwentyFourHourToString() {
 		Alarm at = alarmTimeFromNow(0, AlarmTest.HOURS_OF_DAY);
 		String toMatch = "Alarm is set for 24 hours from now.";
-		assertEquals(at.toString(), toMatch);
+		assertEquals(at.getTimeToNextAlarmString(), toMatch);
+	}
+
+	public void testToString() {
+		Alarm at = new Alarm(23, 23, 0);
+		assertEquals(at.toString(), "23:23");
+		Alarm at2 = new Alarm(3,3,0);
+		assertEquals(at2.toString(), "03:03");
 	}
 
 	public void testIllegalHourInput() {
@@ -315,7 +324,8 @@ public class AlarmTest extends AndroidTestCase {
 
 		assertTrue(alarm.isEnabled());
 	}
-	public void testModule(){
+
+	public void testModule() {
 		String moduleName = "module";
 		Alarm alarm = new Alarm(20, 20, 1, moduleName, 0);
 
@@ -325,12 +335,13 @@ public class AlarmTest extends AndroidTestCase {
 
 		assertFalse(alarm.getModule().equals(moduleName));
 	}
-	public void testVolume(){
+
+	public void testVolume() {
 		int volume = 6;
 		Alarm alarm = new Alarm(20, 20, 1, "", volume);
 		assertTrue(volume == alarm.getVolume());
 		alarm.setVolume(5);
 		assertTrue(volume != alarm.getVolume());
-		
+
 	}
 }

@@ -33,6 +33,7 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
+import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
 
 /**
  * The main activity of Alarmed.
@@ -135,7 +136,8 @@ public class MainActivity extends Activity {
 		intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
 		intent.putExtra("time",
 				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
-		intent.putExtra("daysOfWeek", alarm.getBooleanArrayDayOfWeek());
+		intent.putExtra("daysOfWeek",
+				AlarmUtils.getBooleanArray(alarm.getDaysOfWeek()));
 		intent.putExtra("volume", alarm.getVolume());
 		intent.putExtra("module", alarm.getModule());
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
@@ -151,7 +153,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_add_alarm) {
-			boolean[] days = new boolean[Alarm.DAYS_OF_WEEK];
+			boolean[] days = new boolean[AlarmUtils.DAYS_OF_WEEK];
 			Arrays.fill(days, false);
 			startActivityForResult(
 					new Intent(this, CreateAlarm.class).putExtra("daysOfWeek",
@@ -220,7 +222,8 @@ public class MainActivity extends Activity {
 		Alarm alarm = new Alarm(hour, minute, 0, module, volume);
 		alarm.setDaysOfWeek(dayOfWeek);
 		aControl.addAlarm(alarm);
-		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, alarm.getTimeToNextAlarmString(),
+				Toast.LENGTH_LONG).show();
 		updateList();
 	}
 
