@@ -17,6 +17,8 @@ package edu.chalmers.dat255.group09.Alarmed.model;
 
 import java.util.Calendar;
 
+import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
+
 /**
  * The model of the alarm.
  * 
@@ -25,10 +27,6 @@ import java.util.Calendar;
  * 
  */
 public class Alarm implements Comparable<Alarm> {
-
-	public static final int DAYS_OF_WEEK = 7;
-	public static final int HOUR_OF_DAY = 24;
-	public static final int MINUTES_OF_HOUR = 60;
 
 	private final int alarmHours;
 	private final int alarmMinutes;
@@ -95,7 +93,7 @@ public class Alarm implements Comparable<Alarm> {
 			cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) + 1);
 		}
 		if (this.getDaysOfWeek() != 0) {
-			setNextOccuringDay(cal);
+			AlarmUtils.addDaysUntilNextAlarm(cal, daysOfWeek);
 		}
 
 		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
@@ -104,57 +102,6 @@ public class Alarm implements Comparable<Alarm> {
 		cal.set(Calendar.MILLISECOND, 0);
 
 		return cal.getTimeInMillis();
-	}
-
-	/**
-	 * Add days to the next occurring alarm.
-	 * 
-	 * @param cal
-	 *            The calendar associated with the alarm.
-	 */
-	private void setNextOccuringDay(Calendar cal) {
-		int currentDay = cal.get(Calendar.DAY_OF_WEEK);
-		int nextDay = getDaysToNextAlarm(currentDay);
-		if (nextDay == -1) {
-			return;
-		}
-		cal.add(Calendar.DAY_OF_YEAR, nextDay);
-	}
-
-	/**
-	 * Gets the number of days until the next alarm.
-	 * 
-	 * @param currentDay
-	 *            The calendars integer representation of the current day
-	 * @return days until next alarm
-	 */
-	private int getDaysToNextAlarm(int currentDay) {
-		boolean[] days = changeToCalendar(getBooleanArrayDayOfWeek());
-		for (int i = 0; i < Alarm.DAYS_OF_WEEK; i++) {
-			if (days[(currentDay + i) % Alarm.DAYS_OF_WEEK]) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	/**
-	 * Changes an boolean array so the first day is Sunday instead of Monday.
-	 * 
-	 * @param dayOfWeek
-	 *            The days of week which is set to be recurring
-	 * @return The array but with the Sunday as the first day of the week.
-	 */
-	private boolean[] changeToCalendar(boolean[] dayOfWeek) {
-		boolean[] calendarDays = new boolean[Alarm.DAYS_OF_WEEK];
-		for (int i = 0; i < calendarDays.length; i++) {
-			if (i == 0) {
-				calendarDays[i] = dayOfWeek[calendarDays.length - 1];
-			} else {
-				calendarDays[i] = dayOfWeek[i - 1];
-			}
-		}
-		return calendarDays;
 	}
 
 	/**
@@ -185,7 +132,7 @@ public class Alarm implements Comparable<Alarm> {
 	 * @return true if the minute is illegal
 	 */
 	private boolean isIllegalMinutes(int minutes) {
-		return minutes >= Alarm.MINUTES_OF_HOUR || minutes < 0;
+		return minutes >= AlarmUtils.MINUTES_OF_HOUR || minutes < 0;
 	}
 
 	/**
@@ -196,7 +143,7 @@ public class Alarm implements Comparable<Alarm> {
 	 * @return true if the hour is illegal
 	 */
 	private boolean isIllegalHour(int hours) {
-		return hours >= Alarm.HOUR_OF_DAY || hours < 0;
+		return hours >= AlarmUtils.HOUR_OF_DAY || hours < 0;
 	}
 
 	/**
@@ -219,15 +166,26 @@ public class Alarm implements Comparable<Alarm> {
 
 	@Override
 	public String toString() {
+		return String.format("%02d:%02d", alarmHours, alarmMinutes);
+	}
+
+	/**
+	 * Constructs a string with the time left to the next alarm.
+	 * 
+	 * @return A string with the time to the next alarm.
+	 */
+	public String getTimeToNextAlarmString() {
 		// Format
-		int daysLeft = getDaysToNextAlarm(Calendar.getInstance().get(
-				Calendar.DAY_OF_WEEK));
+		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		int daysLeft = AlarmUtils.getDaysToNextAlarm(currentDay, daysOfWeek);
+		int hoursLeft = AlarmUtils.getHoursToAlarm(alarmHours, alarmMinutes);
+		int minutesLeft = AlarmUtils.getMinutesToAlarm(alarmMinutes);
 		boolean day = daysLeft > 0;
 		boolean days = daysLeft > 1;
-		boolean hour = getHoursToAlarm() > 0;
-		boolean hours = getHoursToAlarm() > 1;
-		boolean minute = getMinutesToAlarm() > 0;
-		boolean minutes = getMinutesToAlarm() > 1;
+		boolean hour = hoursLeft > 0;
+		boolean hours = hoursLeft > 1;
+		boolean minute = minutesLeft > 0;
+		boolean minutes = minutesLeft > 1;
 
 		StringBuilder strBuilder = new StringBuilder();
 
@@ -242,7 +200,7 @@ public class Alarm implements Comparable<Alarm> {
 			strBuilder.append(" and ");
 		}
 		if (hour) {
-			strBuilder.append(getHoursToAlarm() + " hour");
+			strBuilder.append(hoursLeft + " hour");
 			if (hours) {
 				strBuilder.append("s");
 			}
@@ -251,7 +209,7 @@ public class Alarm implements Comparable<Alarm> {
 			strBuilder.append(" and ");
 		}
 		if (minute) {
-			strBuilder.append(getMinutesToAlarm() + " minute");
+			strBuilder.append(minutesLeft + " minute");
 			if (minutes) {
 				strBuilder.append("s");
 			}
@@ -259,44 +217,6 @@ public class Alarm implements Comparable<Alarm> {
 		strBuilder.append(" from now.");
 
 		return strBuilder.toString();
-	}
-
-	/**
-	 * Gets the minutes to the alarm from the current time.
-	 * 
-	 * @return Minutes to the alarm's minute from now.
-	 */
-	private int getMinutesToAlarm() {
-		int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
-		int minutesToAlarm = (alarmMinutes - currentMinute + Alarm.MINUTES_OF_HOUR)
-				% Alarm.MINUTES_OF_HOUR;
-
-		return minutesToAlarm;
-	}
-
-	/**
-	 * Gets the hours to the alarm from the current time.
-	 * 
-	 * @return Hours to the alarm's hour from now.
-	 */
-	private int getHoursToAlarm() {
-		int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
-		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		int hoursToAlarm = (alarmHours - currentHour + Alarm.HOUR_OF_DAY)
-				% Alarm.HOUR_OF_DAY;
-
-		if (getMinutesToAlarm() == 0 && hoursToAlarm == 0) {
-			return Alarm.HOUR_OF_DAY;
-		}
-
-		if (currentMinute > alarmMinutes) {
-			if (hoursToAlarm == 0) {
-				hoursToAlarm = Alarm.HOUR_OF_DAY;
-			}
-			hoursToAlarm--;
-		}
-
-		return hoursToAlarm;
 	}
 
 	/**
@@ -310,7 +230,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	@Override
 	public int hashCode() {
-		return (int) getTimeInMilliSeconds() * Alarm.DAYS_OF_WEEK;
+		return (int) getTimeInMilliSeconds() * AlarmUtils.DAYS_OF_WEEK;
 	}
 
 	@Override
@@ -362,6 +282,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Sets the name of the module to be activated on the alarm activation.
+	 * 
 	 * @param module
 	 *            The name of the module
 	 */
@@ -371,6 +292,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Gets the volume of the alarm.
+	 * 
 	 * @return The volume of the alarm
 	 */
 	public int getVolume() {
@@ -379,6 +301,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Sets the volume of the alarm.
+	 * 
 	 * @param volume
 	 *            The volume to set the alarm to
 	 */
@@ -387,19 +310,8 @@ public class Alarm implements Comparable<Alarm> {
 	}
 
 	/**
-	 * Gets the days of the alarm when it is recurring an as boolean array.
-	 * @return The days which the alarm is recurring as an boolean array
-	 */
-	public boolean[] getBooleanArrayDayOfWeek() {
-		boolean[] days = new boolean[Alarm.DAYS_OF_WEEK];
-		for (int i = 0; i < Alarm.DAYS_OF_WEEK; i++) {
-			days[i] = (daysOfWeek & (1 << i)) > 0;
-		}
-		return days;
-	}
-
-	/**
 	 * Gets the days of the alarm when it is recurring an bits of an integer.
+	 * 
 	 * @return The days which the alarm is recurring as bits of an integer
 	 */
 	public int getDaysOfWeek() {
@@ -408,6 +320,7 @@ public class Alarm implements Comparable<Alarm> {
 
 	/**
 	 * Sets the day of the week which the alarm should be recurring.
+	 * 
 	 * @param days
 	 *            The days which the alarm should be recurring
 	 */
