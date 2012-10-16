@@ -22,6 +22,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.GameboardGe
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
+ * A test class for the GameboaardGenerator class.
  * 
  * @author Joakim Persson
  * 
@@ -43,6 +44,13 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 		assertEquals(NBR_OF_PAIRS, getNbrOfPairs(cards));
 	}
 
+	/**
+	 * Checks a list of cards for duplicates/pairs.
+	 * 
+	 * @param cards
+	 *            A list of cards.
+	 * @return The number of pairs of cards in the list.
+	 */
 	private int getNbrOfPairs(List<CardImage> cards) {
 		int nbrOfPairs = 0;
 

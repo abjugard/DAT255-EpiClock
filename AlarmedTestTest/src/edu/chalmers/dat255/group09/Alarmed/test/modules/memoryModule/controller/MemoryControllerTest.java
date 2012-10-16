@@ -21,9 +21,10 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
+ * A test class for the MemoryController.
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class MemoryControllerTest extends AndroidTestCase {
 
@@ -50,13 +51,16 @@ public class MemoryControllerTest extends AndroidTestCase {
 	}
 
 	public void testCardsEqual() {
-		CardImage cardOne = new CardImage(getContext(), new Card(), IMAGE_RESOURCE);
-		CardImage cardTwo = new CardImage(getContext(), new Card(), IMAGE_RESOURCE);
+		CardImage cardOne = new CardImage(getContext(), new Card(),
+				IMAGE_RESOURCE);
+		CardImage cardTwo = new CardImage(getContext(), new Card(),
+				IMAGE_RESOURCE);
 		assertTrue(controller.isCardsEqual(cardOne, cardTwo));
 	}
 
 	public void testCardsNotEqual() {
-		CardImage cardOne = new CardImage(getContext(), new Card(), IMAGE_RESOURCE);
+		CardImage cardOne = new CardImage(getContext(), new Card(),
+				IMAGE_RESOURCE);
 		CardImage cardTwo = new CardImage(getContext(), new Card(), 0);
 		assertFalse(controller.isCardsEqual(cardOne, cardTwo));
 	}

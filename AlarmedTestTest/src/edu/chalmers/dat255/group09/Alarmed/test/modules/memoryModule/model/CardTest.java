@@ -16,12 +16,11 @@
 package edu.chalmers.dat255.group09.Alarmed.test.modules.memoryModule.model;
 
 import android.test.AndroidTestCase;
-import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardStatus;
-import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
+ * A test class for the Card class.
  * 
  * @author Joakim Persson
  * @author Daniel Augurell
@@ -52,6 +51,7 @@ public class CardTest extends AndroidTestCase {
 		assertEquals(CardStatus.Hidden, actual);
 
 	}
+
 	public void testCopyConstructor() {
 		Card otherCard = new Card(card);
 		assertEquals(card, otherCard);
