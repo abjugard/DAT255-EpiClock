@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,17 +49,22 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testGetResult() {
+	public void testGetResultForSixTimesSix() {
 		int actualResult = multiProblem.getResult(new int[] { 6, 6 });
 		int expectedResult = 36;
 		assertEquals(expectedResult, actualResult);
+	}
 
-		actualResult = multiProblem.getResult(new int[] { 2, -1 });
-		expectedResult = -2;
+	public void testGetResultForTwoTimesMinusOne() {
+		int actualResult = multiProblem.getResult(new int[] { 2, -1 });
+		int expectedResult = -2;
 		assertEquals(expectedResult, actualResult);
 
-		actualResult = multiProblem.getResult(new int[] { 5, -5, -1 });
-		expectedResult = 25;
+	}
+
+	public void testGetResultForThreeNumbers() {
+		int actualResult = multiProblem.getResult(new int[] { 5, -5, -1 });
+		int expectedResult = 25;
 		assertEquals(expectedResult, actualResult);
 	}
 

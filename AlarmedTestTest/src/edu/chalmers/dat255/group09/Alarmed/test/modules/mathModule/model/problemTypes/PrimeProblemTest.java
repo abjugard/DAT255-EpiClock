@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int upperLimit = 30;
 		int deltaToPrime = 10;
 
-		testPrimeProblem(Difficulty.EASY, lowerLimit, upperLimit, deltaToPrime);
+		testProblemGenerateNumbers(Difficulty.EASY, lowerLimit, upperLimit, deltaToPrime);
 
 	}
 
@@ -82,7 +82,7 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int upperLimit = 50;
 		int deltaToPrime = 15;
 
-		testPrimeProblem(Difficulty.MEDIUM, lowerLimit, upperLimit,
+		testProblemGenerateNumbers(Difficulty.MEDIUM, lowerLimit, upperLimit,
 				deltaToPrime);
 	}
 
@@ -91,7 +91,7 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int upperLimit = 100;
 		int deltaToPrime = 20;
 
-		testPrimeProblem(Difficulty.HARD, lowerLimit, upperLimit, deltaToPrime);
+		testProblemGenerateNumbers(Difficulty.HARD, lowerLimit, upperLimit, deltaToPrime);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class PrimeProblemTest extends AndroidTestCase {
 	 * @param deltaToPrime
 	 *            The allowed delta for other numbers than the prime number v
 	 */
-	private void testPrimeProblem(Difficulty difficulty, int lowerLimit,
+	private void testProblemGenerateNumbers(Difficulty difficulty, int lowerLimit,
 			int upperLimit, int deltaToPrime) {
 
 		for (int i = 0; i < ITERATIONS; i++) {
