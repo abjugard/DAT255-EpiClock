@@ -20,6 +20,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.DifferenceOfTwoSquaresProblem;
 
 /**
+ * A test class for the DifferenceOfTwoSquaresProblem class.
  * 
  * @author Joakim Persson
  * 
@@ -121,6 +122,18 @@ public class DifferenceOfTwoSquaresProblemTest extends AndroidTestCase {
 				upperLimit);
 	}
 
+	/**
+	 * Runs several tests several times for the generateNumbers method on the
+	 * problem and performs various checks on the random numbers, with regard to
+	 * the problems difficulty.
+	 * 
+	 * @param difficulty
+	 *            The problems difficulty.
+	 * @param lowerLimit
+	 *            The lower limit for the generated numbers.
+	 * @param upperLimit
+	 *            The upper limit for the generated numbers.
+	 */
 	private void testDifferenceOfTwoSquaresProblems(Difficulty difficulty,
 			int lowerLimit, int upperLimit) {
 		int[] nbrs = null;
@@ -132,6 +145,17 @@ public class DifferenceOfTwoSquaresProblemTest extends AndroidTestCase {
 
 	}
 
+	/**
+	 * Checks that the numbers in an array is within two specified limits.
+	 * 
+	 * @param nbrs
+	 *            An array of numbers.
+	 * @param lowerLimit
+	 *            The lower limit for the numbers.
+	 * @param upperLimit
+	 *            The upper limit for the numbers.
+	 * @return If the numbers in the array is within the limits.
+	 */
 	private boolean isNumbersWithInRange(int[] nbrs, int lowerLimit,
 			int upperLimit) {
 		for (int number : nbrs) {
@@ -142,6 +166,13 @@ public class DifferenceOfTwoSquaresProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * Checks that the array consist of the expected number of numbers.
+	 * 
+	 * @param nbrs
+	 *            The array of numbers.
+	 * @return If the array consists of the expected number of numbers.
+	 */
 	private boolean isExpectedNbrOfNumbers(int[] nbrs) {
 		return nbrs.length == NBR_OF_NUMBERS;
 	}
