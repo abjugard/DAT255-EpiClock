@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
 
 /**
+ * A test class for the MathController class.
  * 
  * @author Joakim Persson
  * 
@@ -34,7 +35,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 public class MathControllerTest extends AndroidTestCase {
 
 	private MathController controller;
-	private int[] correctAnswers = null;
+	private final int[] correctAnswers = new int[] { 1, 4 };
 	private int problemIndex = 0;
 
 	@Override
@@ -42,7 +43,6 @@ public class MathControllerTest extends AndroidTestCase {
 		super.setUp();
 		MockMathProblemGenerator mockGenerator = new MockMathProblemGenerator();
 		controller = new MathController(mockGenerator);
-		correctAnswers = new int[] { 1, 4 };
 		problemIndex = 0;
 	}
 
@@ -66,6 +66,11 @@ public class MathControllerTest extends AndroidTestCase {
 
 	}
 
+	/**
+	 * Simulate that the user has completed five problems in a row correctly and
+	 * that the method MathController#isComplete() only returns true after five
+	 * completed problems in a row.
+	 */
 	public void testFiveCorrectAnswerInARow() {
 
 		int expectedCorrectAnswers = 0;
@@ -149,12 +154,11 @@ public class MathControllerTest extends AndroidTestCase {
 		for (int i = 0; i < 3; i++) {
 			simulateCorrectAnswers();
 		}
-		
+
 		Difficulty expected = Difficulty.MEDIUM;
 		Difficulty actual = controller.getDifficulty();
 		assertEquals(expected, actual);
 
-		
 		/*
 		 * Simulate One Wrong Answer
 		 */
@@ -174,11 +178,20 @@ public class MathControllerTest extends AndroidTestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Using the MockMathProblemgenerators implementation to simulate that the
+	 * user answered one problem correctly.
+	 */
 	private void simulateCorrectAnswers() {
 		int answer = getCorrectAnswer();
 		controller.checkAnswer(answer);
 	}
 
+	/**
+	 * Generate a new problem and get the answer to the same problem.
+	 * 
+	 * @return The correct answer to the newly generated problem.
+	 */
 	private int getCorrectAnswer() {
 		MathProblem problem = controller.generateNewProblem();
 		int answer = 0;
@@ -197,7 +210,6 @@ public class MathControllerTest extends AndroidTestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		controller = null;
-		correctAnswers = null;
 	}
 
 	/**
@@ -212,6 +224,10 @@ public class MathControllerTest extends AndroidTestCase {
 		private int index = 0;
 		private List<MathProblem> problems;
 
+		/**
+		 * Create a new instance of the MockMathProblemGenerator and init the
+		 * pregenerated list of problems.
+		 */
 		public MockMathProblemGenerator() {
 			super();
 			problems = new ArrayList<MathProblem>();

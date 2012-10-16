@@ -22,9 +22,10 @@ import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 
 /**
+ * A test class for the PrimeUtil class.
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public class PrimeUtilTest extends AndroidTestCase {
 
@@ -86,6 +87,16 @@ public class PrimeUtilTest extends AndroidTestCase {
 
 	}
 
+	/**
+	 * Creates a list of all primes between two limits. [lowerLimit,
+	 * upperLimit).
+	 * 
+	 * @param lowerLimit
+	 *            The lower limit for the smallest prime.
+	 * @param upperLimit
+	 *            The upper limit for the biggest prime.
+	 * @return A list of all primes in the interval.
+	 */
 	private List<Integer> getPrimeList(int lowerLimit, int upperLimit) {
 		List<Integer> primes = new ArrayList<Integer>();
 
@@ -103,6 +114,12 @@ public class PrimeUtilTest extends AndroidTestCase {
 		return primes;
 	}
 
+	/***
+	 * Creates a new list containing all the prime numbers between 2 and 100,
+	 * from an predefinded string of prime numbers.
+	 * 
+	 * @return A list off all prime numbers between 2 and 100
+	 */
 	private List<Integer> initPrimeList() {
 		List<Integer> primeList = new ArrayList<Integer>();
 		String primeNumbers = "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97";
