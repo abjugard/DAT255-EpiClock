@@ -71,14 +71,10 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 0;
 		int upperLimit = 30;
 		int deltaToPrime = 10;
-		int[] nbrs = null;
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			nbrs = primeProblem.generateNumbers(Difficulty.EASY);
-			assertTrue(isOnlyOnePrimeNumber(nbrs));
-			assertTrue(isOnlyUniqueNumbers(nbrs));
-			assertTrue(isPrimeInRange(nbrs, lowerLimit, upperLimit));
-			assertTrue(isNumbersWithInDelta(nbrs, deltaToPrime));
+			testPrimeProblem(Difficulty.EASY, lowerLimit, upperLimit,
+					deltaToPrime);
 		}
 
 	}
@@ -87,14 +83,10 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 30;
 		int upperLimit = 50;
 		int deltaToPrime = 15;
-		int[] nbrs = null;
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			nbrs = primeProblem.generateNumbers(Difficulty.MEDIUM);
-			assertTrue(isOnlyOnePrimeNumber(nbrs));
-			assertTrue(isOnlyUniqueNumbers(nbrs));
-			assertTrue(isPrimeInRange(nbrs, lowerLimit, upperLimit));
-			assertTrue(isNumbersWithInDelta(nbrs, deltaToPrime));
+			testPrimeProblem(Difficulty.MEDIUM, lowerLimit, upperLimit,
+					deltaToPrime);
 		}
 	}
 
@@ -102,15 +94,20 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 50;
 		int upperLimit = 100;
 		int deltaToPrime = 20;
-		int[] nbrs = null;
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			nbrs = primeProblem.generateNumbers(Difficulty.HARD);
-			assertTrue(isOnlyOnePrimeNumber(nbrs));
-			assertTrue(isOnlyUniqueNumbers(nbrs));
-			assertTrue(isPrimeInRange(nbrs, lowerLimit, upperLimit));
-			assertTrue(isNumbersWithInDelta(nbrs, deltaToPrime));
+			testPrimeProblem(Difficulty.HARD, lowerLimit, upperLimit,
+					deltaToPrime);
 		}
+	}
+
+	private void testPrimeProblem(Difficulty difficulty, int lowerLimit,
+			int upperLimit, int deltaToPrime) {
+		int[] nbrs = primeProblem.generateNumbers(difficulty);
+		assertTrue(isOnlyOnePrimeNumber(nbrs));
+		assertTrue(isOnlyUniqueNumbers(nbrs));
+		assertTrue(isPrimeInRange(nbrs, lowerLimit, upperLimit));
+		assertTrue(isNumbersWithInDelta(nbrs, deltaToPrime));
 	}
 
 	private boolean isOnlyOnePrimeNumber(int[] nbrs) {
@@ -170,6 +167,7 @@ public class PrimeProblemTest extends AndroidTestCase {
 
 		return true;
 	}
+
 
 	private int getPrimeNumber(int[] nbrs) {
 		int primeNumber = 0;
