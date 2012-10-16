@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,14 +34,14 @@ public final class MathProblem {
 	/**
 	 * Create a new mathproblem instance.
 	 * 
-	 * @param numbers
+	 * @param problemNumbers
 	 *            The numbers to be used in this problem
 	 * @param problemType
 	 *            The MathProblemType to be used is this problem
 	 */
-	public MathProblem(int[] numbers, MathProblemType problemType) {
-		this.numbers = new int[numbers.length];
-		System.arraycopy(numbers, 0, this.numbers, 0, numbers.length);
+	public MathProblem(int[] problemNumbers, MathProblemType problemType) {
+		this.numbers = new int[problemNumbers.length];
+		System.arraycopy(problemNumbers, 0, this.numbers, 0, problemNumbers.length);
 		this.mathProblemType = problemType;
 	}
 
