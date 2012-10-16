@@ -166,14 +166,14 @@ public class MemoryActivity extends BaseActivationActivity implements
 		/**
 		 * Create a new instance the memory task.
 		 * 
-		 * @param firstCard
+		 * @param firstCardPressed
 		 *            The first card that was pressed.
-		 * @param secondCard
+		 * @param secondCardPressed
 		 *            The second card that was pressed.
 		 */
-		public MemoryTask(CardImage firstCard, CardImage secondCard) {
-			this.cardOne = firstCard;
-			this.cardTwo = secondCard;
+		public MemoryTask(CardImage firstCardPressed, CardImage secondCardPressed) {
+			this.cardOne = firstCardPressed;
+			this.cardTwo = secondCardPressed;
 		}
 
 		@Override

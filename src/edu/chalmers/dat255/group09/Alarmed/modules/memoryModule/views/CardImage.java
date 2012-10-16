@@ -55,7 +55,7 @@ public class CardImage extends ImageView {
 		this.card = c;
 		visableImageResource = imageResource;
 		setImageResource(getImageResource());
-		
+
 	}
 
 	/**
@@ -109,6 +109,7 @@ public class CardImage extends ImageView {
 
 	@Override
 	public int hashCode() {
-		return card.hashCode() + visableImageResource * 13;
+		final int prime = 13;
+		return card.hashCode() + visableImageResource * prime;
 	}
 }

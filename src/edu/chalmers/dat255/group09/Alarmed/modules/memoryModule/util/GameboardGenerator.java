@@ -39,11 +39,11 @@ public class GameboardGenerator {
 	/**
 	 * Create a new instance of the Gameboard generator.
 	 * 
-	 * @param context
+	 * @param ctx
 	 *            The android context
 	 */
-	public GameboardGenerator(Context context) {
-		this.context = context;
+	public GameboardGenerator(Context ctx) {
+		this.context = ctx;
 		imageLoader = new ImageLoader();
 	}
 

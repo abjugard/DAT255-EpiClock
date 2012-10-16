@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,8 +90,9 @@ public final class Card {
 
 	@Override
 	public int hashCode() {
+		final int prime = 19;
 		int sum = 0;
-		sum += currentStatus.hashCode();
+		sum += currentStatus.hashCode() * prime;
 		return sum;
 	}
 }
