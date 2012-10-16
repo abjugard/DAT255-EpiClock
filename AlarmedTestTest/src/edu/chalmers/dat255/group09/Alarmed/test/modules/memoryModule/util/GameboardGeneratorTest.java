@@ -66,5 +66,6 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		generator = null;
 	}
 }

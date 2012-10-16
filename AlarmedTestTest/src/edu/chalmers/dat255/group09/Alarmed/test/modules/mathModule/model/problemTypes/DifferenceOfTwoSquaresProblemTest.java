@@ -149,5 +149,6 @@ public class DifferenceOfTwoSquaresProblemTest extends AndroidTestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		problem = null;
 	}
 }
