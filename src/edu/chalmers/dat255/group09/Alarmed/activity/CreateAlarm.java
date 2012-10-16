@@ -16,33 +16,25 @@
 package edu.chalmers.dat255.group09.Alarmed.activity;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
+import edu.chalmers.dat255.group09.Alarmed.utils.AudioHelper;
 
 /**
  * Activity to create a new alarm.
@@ -53,9 +45,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
  * 
  */
 public class CreateAlarm extends Activity {
-	private View volumeDialogView;
-	private AlertDialog volumeDialog;
-	private Map<String, String> alarmTones;
+	private AudioHelper hAudio;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,81 +57,9 @@ public class CreateAlarm extends Activity {
 
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
-		long begin = System.currentTimeMillis();
-
 		initTaskSpinner();
-		initAlarmToneMap();
-
-		long end = System.currentTimeMillis();
-		Log.d("DEBUG timer", end - begin + "ms");
-		initTone();
-		initVolumeDialog();
-	}
-
-	/**
-	 * Since the alarm tone dialog isn't guaranteed to spawn during the lifetime
-	 * of the activity, this method sets the default value unless one already
-	 * exists in the intent (in edit mode)
-	 */
-	private void initTone() {
-		String previousTone = getIntent().getStringExtra("toneuri");
-		if (previousTone == null) {
-			Uri tone = RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_ALARM);
-			if (tone == null) {
-				tone = RingtoneManager
-						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-			}
-			getIntent().putExtra("toneuri", tone.toString());
-		}
-	}
-
-	/**
-	 * Initialises the volume dialog
-	 */
-	private void initVolumeDialog() {
-		LayoutInflater inflater = getLayoutInflater();
-		AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-		volumeDialogView = inflater
-				.inflate(R.layout.custom_volume_dialog, null);
-		Intent intent = this.getIntent();
-		((SeekBar) volumeDialogView.findViewById(R.id.volume_dialog_seekbar))
-				.setMax(audioManager
-						.getStreamMaxVolume(AudioManager.STREAM_ALARM));
-		((SeekBar) volumeDialogView.findViewById(R.id.volume_dialog_seekbar))
-				.setProgress(intent.getIntExtra("volume", 6));
-		((CheckBox) volumeDialogView.findViewById(R.id.volume_dialog_checkbox))
-				.setChecked(intent.getBooleanExtra("vibration", true));
-
-		volumeDialog = new AlertDialog.Builder(this)
-				.setTitle("Set volume options")
-				.setView(volumeDialogView)
-				.setPositiveButton(android.R.string.ok,
-						new VolumeDialogListener()).create();
-	}
-
-	/**
-	 * Sets up a map of alarm tone URIs to their human readable titles
-	 */
-	private void initAlarmToneMap() {
-		RingtoneManager ringMan = new RingtoneManager(this);
-		ringMan.setType(RingtoneManager.TYPE_ALARM);
-
-		Cursor cur = ringMan.getCursor();
-
-		int tonesAvailable = cur.getCount();
-		if (tonesAvailable == 0) {
-			alarmTones = new HashMap<String, String>();
-			return;
-		}
-
-		Map<String, String> tones = new HashMap<String, String>();
-		while (!cur.isAfterLast() && cur.moveToNext()) {
-			tones.put(cur.getString(RingtoneManager.URI_COLUMN_INDEX), cur.getString(RingtoneManager.TITLE_COLUMN_INDEX));
-		}
-		cur.close();
-
-		alarmTones = tones;
+		setAlarmTone();
+		hAudio = new AudioHelper(this, getIntent());
 	}
 
 	/**
@@ -218,27 +136,31 @@ public class CreateAlarm extends Activity {
 	}
 
 	/**
+	 * Since the alarm tone dialog isn't guaranteed to spawn during the lifetime
+	 * of the activity, this method sets the default value unless one already
+	 * exists in the intent (in edit mode)
+	 */
+	private void setAlarmTone() {
+		String previousTone = getIntent().getStringExtra("toneuri");
+		if (previousTone == null) {
+			Uri tone = RingtoneManager
+					.getDefaultUri(RingtoneManager.TYPE_ALARM);
+			if (tone == null) {
+				tone = RingtoneManager
+						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+			}
+			getIntent().putExtra("toneuri", tone.toString());
+		}
+	}
+
+	/**
 	 * Opens the alarm tone selector
 	 * 
 	 * @param view
 	 *            The parent View of the dialog
 	 */
 	public void onAlarmToneBtnPressed(View view) {
-		String[] array = new String[alarmTones.size()];
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, alarmTones.values()
-						.toArray(array));
-
-		new AlertDialog.Builder(this).setTitle("Pick alarm tone")
-				.setAdapter(adapter, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int index) {
-						getIntent()
-								.putExtra(
-										"toneuri",
-										alarmTones.keySet().toArray()[index]
-												.toString());
-					}
-				}).create().show();
+		hAudio.getAlarmToneDialog().show();
 	}
 
 	/**
@@ -247,7 +169,7 @@ public class CreateAlarm extends Activity {
 	 * @param view
 	 */
 	public void onVolumeBtnPressed(View view) {
-		volumeDialog.show();
+		hAudio.getVolumeDialog().show();
 	}
 
 	/**
@@ -276,7 +198,6 @@ public class CreateAlarm extends Activity {
 		this.setResult(RESULT_OK, intent);
 		finish();
 		overrideTransition();
-
 	}
 
 	/**
@@ -358,24 +279,6 @@ public class CreateAlarm extends Activity {
 
 		}
 
-	}
-
-	/**
-	 * A listner that activates when the OK button is clicked in the volume
-	 * dialog
-	 * 
-	 * @author Adrian Bjugård
-	 * 
-	 */
-	private class VolumeDialogListener implements
-			DialogInterface.OnClickListener {
-		public void onClick(DialogInterface dialog, int i) {
-			Intent intent = getIntent();
-			intent.putExtra("vibration", ((CheckBox) volumeDialogView
-					.findViewById(R.id.volume_dialog_checkbox)).isChecked());
-			intent.putExtra("volume", ((SeekBar) volumeDialogView
-					.findViewById(R.id.volume_dialog_seekbar)).getProgress());
-		}
 	}
 
 }

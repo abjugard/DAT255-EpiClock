@@ -5,19 +5,21 @@
     android:layout_height="match_parent" >
 
     <SeekBar
-        android:id="@+id/volume_dialog_seekbar"
+        android:id="@+id/selector_volume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="23dp" />
+        android:layout_marginTop="24dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
 
     <CheckBox
-        android:id="@+id/volume_dialog_checkbox"
+        android:id="@+id/selector_vibration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/volume_dialog_seekbar"
+        android:layout_below="@+id/selector_volume"
         android:layout_marginLeft="47dp"
         android:text="@string/text_enable_vibration" />
 
