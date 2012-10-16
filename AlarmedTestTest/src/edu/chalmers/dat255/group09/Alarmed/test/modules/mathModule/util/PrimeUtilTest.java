@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 public class PrimeUtilTest extends AndroidTestCase {
 
 	private List<Integer> primeNumbers;
+	private static final int MAX_LIMIT = 100;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -37,6 +38,10 @@ public class PrimeUtilTest extends AndroidTestCase {
 		primeNumbers = initPrimeList();
 	}
 
+	/**
+	 * Tests the isPrime method for numbers between two and MAX_LIMIT and then
+	 * checks with a pre generated list if the method works correctly.
+	 */
 	public void testIsPrime() {
 
 		for (int number : primeNumbers) {
@@ -45,42 +50,45 @@ public class PrimeUtilTest extends AndroidTestCase {
 
 		List<Integer> actualPrimes = new ArrayList<Integer>();
 
-		for (int i = 2; i <= 100; i++) {
+		for (int i = 2; i <= MAX_LIMIT; i++) {
 			if (PrimeUtil.isPrime(i)) {
 				actualPrimes.add(i);
 			}
 		}
 
-		List<Integer> expectedPrimes = PrimeUtil.getPrimeList(0, 100);
+		List<Integer> expectedPrimes = PrimeUtil.getPrimeList(0, MAX_LIMIT);
 
 		assertEquals(expectedPrimes.size(), actualPrimes.size());
 		assertEquals(expectedPrimes, actualPrimes);
 	}
 
-	public void testGeneratePrimeList() {
+	public void testGeneratePrimeListBetweenZeroAndMaxLimit() {
 		int lowerLimit = 0;
-		int upperLimit = 100;
 		int nbrOfPrimes = primeNumbers.size();
 
+		List<Integer> primes = PrimeUtil.getPrimeList(lowerLimit, MAX_LIMIT);
+
+		assertEquals(nbrOfPrimes, primes.size());
+		assertEquals(getPrimeList(lowerLimit, MAX_LIMIT), primes);
+	}
+
+	public void testGeneratePrimeListBetweenFiftyAndMaxLimit() {
+		int lowerLimit = 50;
+
+		List<Integer> primes = PrimeUtil.getPrimeList(lowerLimit, MAX_LIMIT);
+		int nbrOfPrimes = getPrimeList(lowerLimit, MAX_LIMIT).size();
+
+		assertEquals(nbrOfPrimes, primes.size());
+		assertEquals(getPrimeList(lowerLimit, MAX_LIMIT), primes);
+	}
+
+	public void testGeneratePrimeListBetweenThiryAndSixty() {
+
+		int lowerLimit = 30;
+		int upperLimit = 60;
+
 		List<Integer> primes = PrimeUtil.getPrimeList(lowerLimit, upperLimit);
-
-		assertEquals(nbrOfPrimes, primes.size());
-		assertEquals(getPrimeList(lowerLimit, upperLimit), primes);
-
-		lowerLimit = 50;
-		upperLimit = 100;
-
-		primes = PrimeUtil.getPrimeList(lowerLimit, upperLimit);
-		nbrOfPrimes = getPrimeList(lowerLimit, upperLimit).size();
-
-		assertEquals(nbrOfPrimes, primes.size());
-		assertEquals(getPrimeList(lowerLimit, upperLimit), primes);
-
-		lowerLimit = 30;
-		upperLimit = 60;
-
-		primes = PrimeUtil.getPrimeList(lowerLimit, upperLimit);
-		nbrOfPrimes = getPrimeList(lowerLimit, upperLimit).size();
+		int nbrOfPrimes = getPrimeList(lowerLimit, upperLimit).size();
 
 		assertEquals(nbrOfPrimes, primes.size());
 		assertEquals(getPrimeList(lowerLimit, upperLimit), primes);
@@ -122,9 +130,9 @@ public class PrimeUtilTest extends AndroidTestCase {
 	 */
 	private List<Integer> initPrimeList() {
 		List<Integer> primeList = new ArrayList<Integer>();
-		String primeNumbers = "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97";
+		String primeNbrs = "2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97";
 
-		String[] primes = primeNumbers.replaceAll(" ", "").split(",");
+		String[] primes = primeNbrs.replaceAll(" ", "").split(",");
 		for (String string : primes) {
 			primeList.add(Integer.parseInt(string));
 		}
