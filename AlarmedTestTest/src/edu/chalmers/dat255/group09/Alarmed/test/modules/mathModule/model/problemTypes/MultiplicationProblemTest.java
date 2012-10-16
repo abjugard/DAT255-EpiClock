@@ -20,6 +20,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
 
 /**
+ * A test class for the MultiplicationProblem class.
  * 
  * @author Joakim Persson
  * 
@@ -67,8 +68,8 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		int upperLimit = 10;
 		int expectedNbrOfNumbers = 2;
 
-		testMultiplicationProblem(Difficulty.EASY, lowerLimit, upperLimit,
-				expectedNbrOfNumbers);
+		testGenerateNumbersMultiplicationProblem(Difficulty.EASY, lowerLimit,
+				upperLimit, expectedNbrOfNumbers);
 	}
 
 	public void testGenerateMediumProblems() {
@@ -76,8 +77,8 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		int upperLimit = 10;
 		int expectedNbrOfNumbers = 3;
 
-		testMultiplicationProblem(Difficulty.MEDIUM, lowerLimit, upperLimit,
-				expectedNbrOfNumbers);
+		testGenerateNumbersMultiplicationProblem(Difficulty.MEDIUM, lowerLimit,
+				upperLimit, expectedNbrOfNumbers);
 	}
 
 	public void testGenerateHardProblems() {
@@ -85,12 +86,29 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		int upperLimit = 15;
 		int expectedNbrOfNumbers = 3;
 
-		testMultiplicationProblem(Difficulty.HARD, lowerLimit, upperLimit,
-				expectedNbrOfNumbers);
+		testGenerateNumbersMultiplicationProblem(Difficulty.HARD, lowerLimit,
+				upperLimit, expectedNbrOfNumbers);
 	}
 
-	private void testMultiplicationProblem(Difficulty difficulty,
-			int lowerLimit, int upperLimit, int expectedNbrOfNumbers) {
+	/**
+	 * A method that runs several tests on the problems generateNumbers method.
+	 * For example it checks if the problem returns the expected number of
+	 * number, if they are in range or if the numbers are non negative. The
+	 * method carries out the test by running the same tests on different set of
+	 * random numbers.
+	 * 
+	 * @param difficulty
+	 *            The problems difficulty
+	 * @param lowerLimit
+	 *            The lower limit for the numbers in the problem.
+	 * @param upperLimit
+	 *            The upper limit for the numbers in the problem.
+	 * @param expectedNbrOfNumbers
+	 *            The expected numbers of numbers to be generated.
+	 */
+	private void testGenerateNumbersMultiplicationProblem(
+			Difficulty difficulty, int lowerLimit, int upperLimit,
+			int expectedNbrOfNumbers) {
 		int[] nbrs = null;
 
 		for (int i = 0; i < ITERATIONS; i++) {
@@ -102,10 +120,31 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 
 	}
 
+	/**
+	 * Checks if an array contains the correct number of numbers.
+	 * 
+	 * @param expectedNbrOfNumbers
+	 *            The expected number of numbers.
+	 * @param nbrs
+	 *            The array to check.
+	 * @return If the array contains the expected number of numbers.
+	 */
 	private boolean isCorrectNbrOfNumbers(int expectedNbrOfNumbers, int[] nbrs) {
 		return expectedNbrOfNumbers == nbrs.length;
 	}
 
+	/**
+	 * If the numbers in an array is within an specified limit. [lowerLimit,
+	 * upperLimit).
+	 * 
+	 * @param nbrs
+	 *            The array of numbers.
+	 * @param lowerLimit
+	 *            The lower limit for the numbers.
+	 * @param upperLimit
+	 *            The upper limit for the numbers.
+	 * @return If the numbers is located with the limits.
+	 */
 	private boolean isNumbersInRange(int[] nbrs, int lowerLimit, int upperLimit) {
 		for (int number : nbrs) {
 			if (number < lowerLimit || number >= upperLimit) {
@@ -116,6 +155,13 @@ public class MultiplicationProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * Checks that the numbers in array is not negative.
+	 * 
+	 * @param numbers
+	 *            The array of numbers.
+	 * @return If the array contains negative numbers.
+	 */
 	private boolean isNumbersNonNegative(int[] numbers) {
 		for (int number : numbers) {
 			if (number < 0) {
