@@ -24,6 +24,12 @@ import android.widget.CheckBox;
 import android.widget.SeekBar;
 import edu.chalmers.dat255.group09.Alarmed.R;
 
+/**
+ * Helper class which takes care of everything to do with vibration and audio
+ * while creating an alarm
+ * 
+ * @author Adrian Bjugard
+ */
 public class AudioHelper {
 	private Context context;
 	private Intent intent;
@@ -33,14 +39,41 @@ public class AudioHelper {
 	private AlertDialog volumeDialog, alarmToneDialog;
 	private Map<String, String> alarmTones;
 
+	/**
+	 * Constructor for the AudioHelper object
+	 * 
+	 * @param c
+	 *            Context holding the helper
+	 * @param i
+	 *            Intent containing information about the alarm
+	 */
 	public AudioHelper(Context c, Intent i) {
 		context = c;
 		intent = i;
 
+		setInitialAlarmTone();
 		setupAlarmToneMap();
 		createVolumeDialog();
 		createAlarmToneDialog();
 		mediaPlayer = new MediaPlayer();
+	}
+
+	/**
+	 * Since the alarm tone dialog isn't guaranteed to spawn during the lifetime
+	 * of the CreateAlarm activity, this method sets the default value unless
+	 * one already exists in the intent (in edit mode)
+	 */
+	private void setInitialAlarmTone() {
+		String previousTone = intent.getStringExtra("toneuri");
+		if (previousTone == null) {
+			Uri tone = RingtoneManager
+					.getDefaultUri(RingtoneManager.TYPE_ALARM);
+			if (tone == null) {
+				tone = RingtoneManager
+						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+			}
+			intent.putExtra("toneuri", tone.toString());
+		}
 	}
 
 	/**
@@ -133,7 +166,7 @@ public class AudioHelper {
 	/**
 	 * Creates the alarm tone selector dialog
 	 */
-	public void createAlarmToneDialog() {
+	private void createAlarmToneDialog() {
 		String selectedTone = intent.getStringExtra("toneuri");
 		int selection = -1;
 		for (int i = 0; i < alarmTones.size(); i++) {
@@ -142,7 +175,7 @@ public class AudioHelper {
 			}
 		}
 		final boolean noMatchFound = (selection == -1);
-		
+
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
 				android.R.layout.simple_list_item_single_choice,
 				getAlarmToneNames());
@@ -155,7 +188,7 @@ public class AudioHelper {
 						new AlarmToneCancelListener())
 				.setPositiveButton(android.R.string.ok,
 						new AlarmToneOkListener()).create();
-		
+
 		alarmToneDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 			public void onShow(DialogInterface dialog) {
 				if (noMatchFound) {
@@ -179,7 +212,7 @@ public class AudioHelper {
 	 * A listener that activates when the OK button is clicked in the volume
 	 * dialog
 	 * 
-	 * @author Adrian Bjugård
+	 * @author Adrian Bjugard
 	 * 
 	 */
 	private class VolumeDialogListener implements
@@ -196,7 +229,7 @@ public class AudioHelper {
 	 * Listener for clicks on alarm tones, responsible for playing the alarm
 	 * sound selected, to give the user a demo
 	 * 
-	 * @author Adrian Bjugård
+	 * @author Adrian Bjugard
 	 * 
 	 */
 	private class AlarmToneClickListener implements
@@ -222,7 +255,7 @@ public class AudioHelper {
 	 * Listener for clicks on the cancel button in the alarm tone dialog, stops
 	 * any playing sound created by the dialog
 	 * 
-	 * @author Adrian Bjugård
+	 * @author Adrian Bjugard
 	 * 
 	 */
 	private class AlarmToneCancelListener implements
@@ -236,7 +269,7 @@ public class AudioHelper {
 	 * Listener for clicks on the OK button in the alarm tone dialog, stops any
 	 * playing sound created by the dialog
 	 * 
-	 * @author Adrian Bjugård
+	 * @author Adrian Bjugard
 	 * 
 	 */
 	private class AlarmToneOkListener implements
@@ -253,10 +286,10 @@ public class AudioHelper {
 	/**
 	 * A comparator that sorts the alarm tone map
 	 * 
-	 * @author Adrian Bjugård
+	 * @author Adrian Bjugard
 	 * 
 	 */
-	class MapSorter implements Comparator<String> {
+	private class MapSorter implements Comparator<String> {
 		Map<String, String> map;
 
 		public MapSorter(Map<String, String> map) {

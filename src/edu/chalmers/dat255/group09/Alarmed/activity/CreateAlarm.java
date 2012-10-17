@@ -22,8 +22,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -58,7 +56,6 @@ public class CreateAlarm extends Activity {
 		setContentView(R.layout.activity_create_alarm);
 		initTimePicker();
 		initTaskSpinner();
-		setAlarmTone();
 		hAudio = new AudioHelper(this, getIntent());
 	}
 
@@ -133,24 +130,6 @@ public class CreateAlarm extends Activity {
 	public void onBackPressed() {
 		super.onBackPressed();
 		overrideTransition();
-	}
-
-	/**
-	 * Since the alarm tone dialog isn't guaranteed to spawn during the lifetime
-	 * of the activity, this method sets the default value unless one already
-	 * exists in the intent (in edit mode)
-	 */
-	private void setAlarmTone() {
-		String previousTone = getIntent().getStringExtra("toneuri");
-		if (previousTone == null) {
-			Uri tone = RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_ALARM);
-			if (tone == null) {
-				tone = RingtoneManager
-						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-			}
-			getIntent().putExtra("toneuri", tone.toString());
-		}
 	}
 
 	/**
