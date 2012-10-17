@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +50,7 @@ public final class AlarmController {
 
 	/**
 	 * Gets the instance of the AlarmController.
+	 * 
 	 * @return An instance of AlarmController
 	 */
 	public static AlarmController getInstance() {
@@ -62,7 +63,8 @@ public final class AlarmController {
 	/**
 	 * Init method to initiate the controller.
 	 * 
-	 * @param ctx The android context
+	 * @param ctx
+	 *            The android context
 	 */
 	public void init(Context ctx) {
 		this.context = ctx;
@@ -96,9 +98,11 @@ public final class AlarmController {
 	 *            The days that the alarm should be recurring
 	 * @param module
 	 *            The module that the alarm should activate
-	 * @param volume The volume of the alarm
+	 * @param volume
+	 *            The volume of the alarm
 	 */
-	public void createAlarm(int hour, int minute, int dayOfWeek, String module, int volume) {
+	public void createAlarm(int hour, int minute, int dayOfWeek, String module,
+			int volume) {
 		alarmHandler.createAlarm(hour, minute, dayOfWeek, module, volume);
 		setAlarm();
 	}
@@ -152,10 +156,9 @@ public final class AlarmController {
 	 */
 	private PendingIntent createAlarmPendingIntent(Alarm alarm) {
 		Intent intent = new Intent(context, AlarmReceiver.class);
-		intent.setData(Uri.parse("" + alarm.getId()));
-		intent.putExtra("module", alarm.getModule());
-		intent.putExtra("volume", alarm.getVolume());
-		
+		intent.setData(Uri.parse(alarm.getId() + ":" + alarm.getModule() + ":"
+				+ alarm.getVolume()));
+
 		PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent,
 				Intent.FILL_IN_DATA);
 		return sender;

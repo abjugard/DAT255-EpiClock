@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,12 +35,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		AlarmController aControll = AlarmController.getInstance();
 		aControll.init(context);
-		if (aControll.alarmReceived(Integer.parseInt(intent.getData()
-				.toString()))) {
+		String[] data = intent.getData().toString().split(":");
+		if (aControll.alarmReceived(Integer.parseInt(data[0]))) {
 			Intent activateIntent = new Intent(context,
-					ModuleFactory.getModule(intent.getStringExtra("module")));
+					ModuleFactory.getModule(data[1]));
 			activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			activateIntent.putExtra("volume", intent.getIntExtra("volume", 1));
+			activateIntent.putExtra("volume", data[2]);
 			context.startActivity(activateIntent);
 		}
 		aControll.destroy();
