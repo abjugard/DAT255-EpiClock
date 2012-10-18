@@ -66,11 +66,11 @@ public class AudioHelper {
 	private void setInitialAlarmTone() {
 		String previousTone = intent.getStringExtra("toneuri");
 		if (previousTone == null) {
-			Uri tone = RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_ALARM);
+			Uri tone = RingtoneManager.getActualDefaultRingtoneUri(context,
+					RingtoneManager.TYPE_ALARM);
 			if (tone == null) {
-				tone = RingtoneManager
-						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+				tone = RingtoneManager.getActualDefaultRingtoneUri(context,
+						RingtoneManager.TYPE_RINGTONE);
 			}
 			intent.putExtra("toneuri", tone.toString());
 		}
