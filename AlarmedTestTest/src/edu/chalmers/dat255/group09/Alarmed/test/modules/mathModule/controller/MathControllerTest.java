@@ -36,6 +36,9 @@ public class MathControllerTest extends AndroidTestCase {
 
 	private MathController controller;
 	private final int[] correctAnswers = new int[] { 1, 4 };
+	private static final int CORRECT_ANSWERS_TO_COMPLETE = 5;
+	private static final int CORRECT_ANSWERS_TO_HARD = 4;
+	private static final int CORRECT_ANSWERS_TO_MEDIUM = 3;
 	private int problemIndex = 0;
 
 	@Override
@@ -76,9 +79,9 @@ public class MathControllerTest extends AndroidTestCase {
 		int expectedCorrectAnswers = 0;
 		int actualCorrectAnswers = 0;
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < CORRECT_ANSWERS_TO_COMPLETE; i++) {
 			assertFalse(controller.isComplete());
-			simulateCorrectAnswers();
+			simulateCorrectAnswer();
 			expectedCorrectAnswers++;
 			actualCorrectAnswers = controller.getCompletedProblems();
 			assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
@@ -87,29 +90,43 @@ public class MathControllerTest extends AndroidTestCase {
 		assertTrue(controller.isComplete());
 	}
 
-	public void testGetCorrectAnswers() {
-
+	/**
+	 * Tests the getCompletedProblems method works as expected and that the
+	 * number of corrects answers increases every time there is an correct
+	 * answer.
+	 */
+	public void testGetCorrectAnswersAfterTwoCorrectAnswers() {
 		int expectedCorrectAnswers = 0;
 		int actualCorrectAnswers = 0;
-		int answer = 0;
-
-		/*
-		 * Two correct answers in a row
-		 */
 
 		for (int i = 0; i < 2; i++) {
-			simulateCorrectAnswers();
+			simulateCorrectAnswer();
 			expectedCorrectAnswers++;
 			actualCorrectAnswers = controller.getCompletedProblems();
 			assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 		}
+	}
+
+	/**
+	 * Tests the getCompletedProblems method works as expected and that the
+	 * number of corrects answers increases every time there is an correct
+	 * answer. This method also tests that the count is reset after an incorrect
+	 * answer.
+	 */
+	public void testGetCorrectAnswersAfterOneCorrectAndOneWrong() {
+		int expectedCorrectAnswers = 1;
+		int actualCorrectAnswers = 0;
+
+		simulateCorrectAnswer();
+
+		actualCorrectAnswers = controller.getCompletedProblems();
+		assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 
 		/*
-		 * Simulate one wrong answer
+		 * Enter a faulty answer
 		 */
 		controller.generateNewProblem();
-		answer = -1;
-		controller.checkAnswer(answer);
+		controller.checkAnswer(-1);
 
 		expectedCorrectAnswers = 0;
 		actualCorrectAnswers = controller.getCompletedProblems();
@@ -117,43 +134,58 @@ public class MathControllerTest extends AndroidTestCase {
 		assertEquals(expectedCorrectAnswers, actualCorrectAnswers);
 	}
 
-	public void testIncreaseDifficulty() {
+	/**
+	 * Tests that the controllers starting difficulty is easy.
+	 */
+	public void testStartingDifficultyIsEasy() {
+		Difficulty actual = controller.getDifficulty();
+		Difficulty expected = Difficulty.EASY;
+
+		assertEquals(expected, actual);
+	}
+
+	/**
+	 * Tests that the controller increases the difficulty to medium after the
+	 * users has completed enough answers in a row.
+	 */
+	public void testIncreaseDifficultyToMedium() {
 		Difficulty actual = controller.getDifficulty();
 		Difficulty expected = Difficulty.EASY;
 		assertEquals(expected, actual);
 
-		/*
-		 * Simulate three correct answers
-		 */
-		for (int i = 0; i < 3; i++) {
-			simulateCorrectAnswers();
-		}
+		simulateCorrectAnswers(CORRECT_ANSWERS_TO_MEDIUM);
 
 		expected = Difficulty.MEDIUM;
 		actual = controller.getDifficulty();
 		assertEquals(expected, actual);
 
-		/*
-		 * Simulate One More Correct Answer
-		 */
-		simulateCorrectAnswers();
-
-		// Stimulate difficulty change
-		controller.generateNewProblem();
-
-		expected = Difficulty.HARD;
-		actual = controller.getDifficulty();
-		assertEquals(expected, actual);
-
 	}
 
+	/**
+	 * Tests that the controller increases the difficulty to hard after the
+	 * users has completed enough answers in a row.
+	 */
+	public void testIncreaseDifficultyToHard() {
+		Difficulty actual;
+		Difficulty expected = Difficulty.HARD;
+
+		simulateCorrectAnswers(CORRECT_ANSWERS_TO_HARD);
+
+		// Simulate difficulty to change
+		controller.generateNewProblem();
+
+		actual = controller.getDifficulty();
+		assertEquals(expected, actual);
+	}
+
+	/**
+	 * First simulates enough correct problems in a row to reach medium level
+	 * and then simulates an incorrect answer to should set the current
+	 * difficulty to easy.
+	 */
 	public void testDifficultyReset() {
-		/*
-		 * Simulate three correct answers
-		 */
-		for (int i = 0; i < 3; i++) {
-			simulateCorrectAnswers();
-		}
+
+		simulateCorrectAnswers(CORRECT_ANSWERS_TO_MEDIUM);
 
 		Difficulty expected = Difficulty.MEDIUM;
 		Difficulty actual = controller.getDifficulty();
@@ -163,26 +195,31 @@ public class MathControllerTest extends AndroidTestCase {
 		 * Simulate One Wrong Answer
 		 */
 		controller.generateNewProblem();
-		int answer = -1;
-		controller.checkAnswer(answer);
+		controller.checkAnswer(-1);
 
 		expected = Difficulty.EASY;
 		actual = controller.getDifficulty();
 		assertEquals(expected, actual);
 	}
 
-	public void testGetDifficulty() {
-		Difficulty actual = controller.getDifficulty();
-		Difficulty expected = Difficulty.EASY;
-
-		assertEquals(expected, actual);
+	/**
+	 * Simulate that the user has completed a specified numbers of problems in a
+	 * row.
+	 * 
+	 * @param nbrOfAnsers
+	 *            The number of correct answers to simulate.
+	 */
+	private void simulateCorrectAnswers(int nbrOfAnsers) {
+		for (int i = 0; i < nbrOfAnsers; i++) {
+			simulateCorrectAnswer();
+		}
 	}
 
 	/**
 	 * Using the MockMathProblemgenerators implementation to simulate that the
 	 * user answered one problem correctly.
 	 */
-	private void simulateCorrectAnswers() {
+	private void simulateCorrectAnswer() {
 		int answer = getCorrectAnswer();
 		controller.checkAnswer(answer);
 	}
@@ -225,7 +262,7 @@ public class MathControllerTest extends AndroidTestCase {
 		private List<MathProblem> problems;
 
 		/**
-		 * Create a new instance of the MockMathProblemGenerator and init the
+		 * Create a new instance of the MockMathProblemGenerator and creates the
 		 * pregenerated list of problems.
 		 */
 		public MockMathProblemGenerator() {
