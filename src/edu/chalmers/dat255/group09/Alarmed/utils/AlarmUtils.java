@@ -77,7 +77,7 @@ public final class AlarmUtils {
 	 *            the given minute
 	 * @return The number of minutes left.
 	 */
-	public static int getMinutesToAlarm(int minutes) {
+	public static int getMinutesToTime(int minutes) {
 		int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 		int minutesToAlarm = (minutes - currentMinute + AlarmUtils.MINUTES_OF_HOUR)
 				% AlarmUtils.MINUTES_OF_HOUR;
@@ -95,13 +95,13 @@ public final class AlarmUtils {
 	 *            The given minute
 	 * @return The number of hours left.
 	 */
-	public static int getHoursToAlarm(int hour, int minute) {
+	public static int getHoursToTime(int hour, int minute) {
 		int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 		int hoursToAlarm = (hour - currentHour + AlarmUtils.HOUR_OF_DAY)
 				% AlarmUtils.HOUR_OF_DAY;
 
-		if (getMinutesToAlarm(minute) == 0 && hoursToAlarm == 0) {
+		if (getMinutesToTime(minute) == 0 && hoursToAlarm == 0) {
 			return AlarmUtils.HOUR_OF_DAY;
 		}
 
@@ -116,16 +116,17 @@ public final class AlarmUtils {
 	}
 
 	/**
-	 * Add days to the next occurring alarm.
+	 * Add days to a given calendar according to an integer representing all
+	 * days of the week.
 	 * 
 	 * @param cal
-	 *            The calendar associated with the alarm.
+	 *            The calendar
 	 * @param allDays
-	 *            Integer that represents every recurring alarm as bits
+	 *            Integer that represents every day of a week as a bit.
 	 */
-	public static void addDaysUntilNextAlarm(Calendar cal, int allDays) {
+	public static void addDays(Calendar cal, int allDays) {
 		int currentDay = cal.get(Calendar.DAY_OF_WEEK);
-		int nextDay = getDaysToNextAlarm(currentDay, allDays);
+		int nextDay = getDaysToNextDay(currentDay, allDays);
 		if (nextDay == -1) {
 			return;
 		}
@@ -133,15 +134,16 @@ public final class AlarmUtils {
 	}
 
 	/**
-	 * Gets the number of days until the next alarm.
+	 * Gets the number of days until the given day according to an integer representing all
+	 * days of the week.
 	 * 
 	 * @param currentDay
 	 *            The calendars integer representation of the current day
 	 * @param allDays
-	 *            Integer that represents every recurring alarm as bits
-	 * @return days until next alarm
+	 *            Integer that represents every day of a week as a bit.
+	 * @return days left
 	 */
-	public static int getDaysToNextAlarm(int currentDay, int allDays) {
+	public static int getDaysToNextDay(int currentDay, int allDays) {
 		boolean[] days = AlarmUtils.changeToCalendar(AlarmUtils
 				.getBooleanArray(allDays));
 		for (int i = 0; i < AlarmUtils.DAYS_OF_WEEK; i++) {
