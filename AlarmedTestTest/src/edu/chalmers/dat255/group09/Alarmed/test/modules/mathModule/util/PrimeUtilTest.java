@@ -62,6 +62,11 @@ public class PrimeUtilTest extends AndroidTestCase {
 		assertEquals(expectedPrimes, actualPrimes);
 	}
 
+	/**
+	 * Tests against a pre generated list of known prime numbers that the
+	 * generatePrimeList method is working correctly with numbers between zero
+	 * and MAX_SIZE.
+	 */
 	public void testGeneratePrimeListBetweenZeroAndMaxLimit() {
 		int lowerLimit = 0;
 		int nbrOfPrimes = primeNumbers.size();
@@ -72,6 +77,11 @@ public class PrimeUtilTest extends AndroidTestCase {
 		assertEquals(getPrimeList(lowerLimit, MAX_LIMIT), primes);
 	}
 
+	/**
+	 * Tests against a pre generated list of known prime numbers that the
+	 * generatePrimeList method is working correctly with numbers between fifty
+	 * and MAX_SIZE.
+	 */
 	public void testGeneratePrimeListBetweenFiftyAndMaxLimit() {
 		int lowerLimit = 50;
 
@@ -82,6 +92,11 @@ public class PrimeUtilTest extends AndroidTestCase {
 		assertEquals(getPrimeList(lowerLimit, MAX_LIMIT), primes);
 	}
 
+	/**
+	 * Tests against a pre generated list of known prime numbers that the
+	 * generatePrimeList method is working correctly with numbers between thiry
+	 * and sixty.
+	 */
 	public void testGeneratePrimeListBetweenThiryAndSixty() {
 
 		int lowerLimit = 30;
