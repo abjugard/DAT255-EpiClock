@@ -93,7 +93,7 @@ public class Alarm implements Comparable<Alarm> {
 			cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) + 1);
 		}
 		if (this.getDaysOfWeek() != 0) {
-			AlarmUtils.addDaysUntilNextAlarm(cal, daysOfWeek);
+			AlarmUtils.addDays(cal, daysOfWeek);
 		}
 
 		cal.set(Calendar.HOUR_OF_DAY, alarmHours);
@@ -177,9 +177,9 @@ public class Alarm implements Comparable<Alarm> {
 	public String getTimeToNextAlarmString() {
 		// Format
 		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-		int daysLeft = AlarmUtils.getDaysToNextAlarm(currentDay, daysOfWeek);
-		int hoursLeft = AlarmUtils.getHoursToAlarm(alarmHours, alarmMinutes);
-		int minutesLeft = AlarmUtils.getMinutesToAlarm(alarmMinutes);
+		int daysLeft = AlarmUtils.getDaysToNextDay(currentDay, daysOfWeek);
+		int hoursLeft = AlarmUtils.getHoursToTime(alarmHours, alarmMinutes);
+		int minutesLeft = AlarmUtils.getMinutesToTime(alarmMinutes);
 		boolean day = daysLeft > 0;
 		boolean days = daysLeft > 1;
 		boolean hour = hoursLeft > 0;
