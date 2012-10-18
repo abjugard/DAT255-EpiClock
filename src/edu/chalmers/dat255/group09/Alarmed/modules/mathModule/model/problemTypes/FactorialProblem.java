@@ -41,7 +41,8 @@ public final class FactorialProblem extends MathProblemType {
 	}
 
 	/**
-	 * Calculates the factorial of a specified number.
+	 * Calculates the factorial of a specified number. A factorial is an number
+	 * n in n!. n! = n * (n-1) * (n-2) * ... * 1; For example 3! = 3*2*1;
 	 * 
 	 * @param number
 	 *            The factorial number
@@ -63,9 +64,9 @@ public final class FactorialProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateEasyProblem() {
-		int lowerLimit = 4;
-		int upperLimit = 6;
-		int nbrOfFactors = 2;
+		final int lowerLimit = 4;
+		final int upperLimit = 6;
+		final int nbrOfFactors = 2;
 
 		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit,
 				upperLimit);
@@ -79,9 +80,9 @@ public final class FactorialProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateMediumProblem() {
-		int lowerLimit = 4;
-		int upperLimit = 6;
-		int nbrOfFactors = 3;
+		final int lowerLimit = 4;
+		final int upperLimit = 6;
+		final int nbrOfFactors = 3;
 
 		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit,
 				upperLimit);
@@ -95,9 +96,9 @@ public final class FactorialProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		int lowerLimit = 6;
-		int upperLimit = 8;
-		int nbrOfFactors = 2;
+		final int lowerLimit = 6;
+		final int upperLimit = 8;
+		final int nbrOfFactors = 2;
 		return RandomUtil.generateRandomNumbers(nbrOfFactors, lowerLimit,
 				upperLimit);
 	}
