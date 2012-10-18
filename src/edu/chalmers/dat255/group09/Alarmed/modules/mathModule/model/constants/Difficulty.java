@@ -16,9 +16,10 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants;
 
 /**
+ * An Enum representing different difficulty's in MathProblemTypes.
  * 
  * @author Joakim Persson
- *
+ * 
  */
 public enum Difficulty {
 	EASY, MEDIUM, HARD;
