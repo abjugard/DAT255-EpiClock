@@ -51,9 +51,9 @@ public final class MultiplicationProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateEasyProblem() {
-		int numberOfNumbers = 2;
-		int upperLimit = 10;
-		int lowerLimit = 0;
+		final int numberOfNumbers = 2;
+		final int upperLimit = 10;
+		final int lowerLimit = 0;
 
 		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit,
 				lowerLimit);
@@ -67,9 +67,9 @@ public final class MultiplicationProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateMediumProblem() {
-		int numberOfNumbers = 3;
-		int upperLimit = 10;
-		int lowerLimit = 0;
+		final int numberOfNumbers = 3;
+		final int upperLimit = 10;
+		final int lowerLimit = 0;
 
 		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit,
 				lowerLimit);
@@ -82,9 +82,9 @@ public final class MultiplicationProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		int numberOfNumbers = 3;
-		int upperLimit = 15;
-		int lowerLimit = 10;
+		final int numberOfNumbers = 3;
+		final int upperLimit = 15;
+		final int lowerLimit = 10;
 
 		return RandomUtil.generateRandomNumbers(numberOfNumbers, upperLimit,
 				lowerLimit);

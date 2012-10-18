@@ -52,9 +52,9 @@ public final class AdditionProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateEasyProblem() {
-		int numberOfNumbers = 2;
-		int upperLimit = 10;
-		int lowerLimit = 0;
+		final int numberOfNumbers = 2;
+		final int lowerLimit = 0;
+		final int upperLimit = 10;
 
 		return RandomUtil.generateRandomNumbers(numberOfNumbers, lowerLimit,
 				upperLimit);
@@ -70,9 +70,9 @@ public final class AdditionProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateMediumProblem() {
-		int numberOfNumbers = 3;
-		int upperLimit = 10;
-		int lowerLimit = 0;
+		final int numberOfNumbers = 3;
+		final int lowerLimit = 0;
+		final int upperLimit = 10;
 
 		return RandomUtil.generateRandomNumbers(numberOfNumbers, lowerLimit,
 				upperLimit);
@@ -86,9 +86,9 @@ public final class AdditionProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		int numberOfNumbers = 3;
-		int upperLimit = 50;
-		int lowerLimit = 10;
+		final int numberOfNumbers = 3;
+		final int lowerLimit = 10;
+		final int upperLimit = 50;
 
 		return RandomUtil.generateRandomNumbers(numberOfNumbers, lowerLimit,
 				upperLimit);

@@ -28,29 +28,29 @@ public final class DifferenceOfTwoSquaresProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "What is the product?";
 	private static final int NBR_OF_NUMBERS = 2;
+	private static final int POWER = 2;
 
 	@Override
 	public int getResult(int[] numbers) {
 		// calculates a^2-b^2
 		int a = numbers[0];
 		int b = numbers[1];
-		int power = 2;
 
-		return (int) (Math.pow(a, power) - Math.pow(b, power));
+		return (int) (Math.pow(a, POWER) - Math.pow(b, POWER));
 	}
 
 	@Override
 	protected int[] generateEasyProblem() {
-		int lowerLimit = 1;
-		int upperLimit = 5;
+		final int lowerLimit = 1;
+		final int upperLimit = 5;
 		return RandomUtil.generateRandomNumbers(NBR_OF_NUMBERS, lowerLimit,
 				upperLimit);
 	}
 
 	@Override
 	protected int[] generateMediumProblem() {
-		int lowerLimit = 4;
-		int upperLimit = 8;
+		final int lowerLimit = 4;
+		final int upperLimit = 8;
 
 		return RandomUtil.generateRandomNumbers(NBR_OF_NUMBERS, lowerLimit,
 				upperLimit);
@@ -58,8 +58,8 @@ public final class DifferenceOfTwoSquaresProblem extends MathProblemType {
 
 	@Override
 	protected int[] generateHardProblem() {
-		int lowerLimit = 7;
-		int upperLimit = 11;
+		final int lowerLimit = 7;
+		final int upperLimit = 11;
 
 		return RandomUtil.generateRandomNumbers(NBR_OF_NUMBERS, lowerLimit,
 				upperLimit);

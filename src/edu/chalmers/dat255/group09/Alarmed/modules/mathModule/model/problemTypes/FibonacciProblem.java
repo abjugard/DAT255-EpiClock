@@ -48,8 +48,8 @@ public final class FibonacciProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateEasyProblem() {
-		int lowerLimit = 0;
-		int upperLimit = 10;
+		final int lowerLimit = 0;
+		final int upperLimit = 10;
 
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
@@ -64,8 +64,8 @@ public final class FibonacciProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateMediumProblem() {
-		int lowerLimit = 8;
-		int upperLimit = 30;
+		final int lowerLimit = 8;
+		final int upperLimit = 30;
 
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
@@ -79,8 +79,8 @@ public final class FibonacciProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		int lowerLimit = 30;
-		int upperLimit = 100;
+		final int lowerLimit = 30;
+		final int upperLimit = 100;
 
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}

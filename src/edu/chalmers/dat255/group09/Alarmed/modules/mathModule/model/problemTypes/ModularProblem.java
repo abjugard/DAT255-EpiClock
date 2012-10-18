@@ -71,24 +71,24 @@ public final class ModularProblem extends MathProblemType {
 
 	@Override
 	protected int[] generateEasyProblem() {
-		int lowerLimit = 0;
-		int upperLimit = 30;
+		final int lowerLimit = 0;
+		final int upperLimit = 30;
 
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
 	@Override
 	protected int[] generateMediumProblem() {
-		int lowerLimit = -30;
-		int upperLimit = 30;
+		final int lowerLimit = -30;
+		final int upperLimit = 30;
 
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
 	@Override
 	protected int[] generateHardProblem() {
-		int lowerLimit = -50;
-		int upperLimit = 50;
+		final int lowerLimit = -50;
+		final int upperLimit = 50;
 
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}

@@ -28,6 +28,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
 public final class BaseSwitchProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "Convert to base ten";
+	private static final int BASE = 2;
 
 	@Override
 	public int getResult(int[] numbers) {
@@ -44,12 +45,11 @@ public final class BaseSwitchProblem extends MathProblemType {
 	private int convertBaseTwoToTen(int[] nbrs) {
 		// reverse the array
 		int[] reversedNbrs = reverseArray(nbrs);
-		int base = 2;
 		int sum = 0;
 		// then sum every position:
 		// the the number at the position * 2^i
 		for (int i = 0; i < reversedNbrs.length; i++) {
-			sum += reversedNbrs[i] * Math.pow(base, i);
+			sum += reversedNbrs[i] * Math.pow(BASE, i);
 		}
 
 		return sum;
@@ -84,8 +84,8 @@ public final class BaseSwitchProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateEasyProblem() {
-		int lowerLimit = 1;
-		int upperLimit = 30;
+		final int lowerLimit = 1;
+		final int upperLimit = 30;
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
@@ -97,8 +97,8 @@ public final class BaseSwitchProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateMediumProblem() {
-		int lowerLimit = 30;
-		int upperLimit = 80;
+		final int lowerLimit = 30;
+		final int upperLimit = 80;
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
@@ -110,8 +110,8 @@ public final class BaseSwitchProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		int lowerLimit = 80;
-		int upperLimit = 120;
+		final int lowerLimit = 80;
+		final int upperLimit = 120;
 		return generateRandomNumbers(lowerLimit, upperLimit);
 	}
 
@@ -162,9 +162,7 @@ public final class BaseSwitchProblem extends MathProblemType {
 	 */
 	private String converBaseTenToTwo(int number) {
 
-		int base = 2;
-
-		if (number < base) {
+		if (number < BASE) {
 			return Integer.toString(number) + " ";
 		} else {
 			return converBaseTenToTwo(number / 2) + number % 2 + " ";
