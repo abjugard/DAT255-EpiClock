@@ -36,6 +36,9 @@ public class CardTest extends AndroidTestCase {
 		card = new Card();
 	}
 
+	/**
+	 * Tests that the cards toggleStatus method is switching between the two different states.
+	 */
 	public void testChangeStatus() {
 		CardStatus actual = card.getStatus();
 		assertEquals(CardStatus.Hidden, actual);
@@ -52,36 +55,73 @@ public class CardTest extends AndroidTestCase {
 
 	}
 
-	public void testCopyConstructor() {
+	/**
+	 * Tests that the copy constructor is working correctly and is copying the
+	 * card:s status when the status is hidden, which it is when the object is
+	 * created.
+	 */
+	public void testCopyConstructorWhenStatusIsHidden() {
 		Card otherCard = new Card(card);
 		assertEquals(card, otherCard);
 	}
 
+	/**
+	 * Tests that the copy constructor is working correctly and is copying the
+	 * card:s status when the status is visible.
+	 */
+	public void testCopyConstructorWhenStatusIsVisible() {
+		card.toggleStatus();
+		Card otherCard = new Card(card);
+		assertEquals(card, otherCard);
+	}
+
+	/**
+	 * Testing the the hashCode method is returning true when a card is compared
+	 * against itself.
+	 */
 	public void testHashCodeAgainstItself() {
 		assertEquals(card.hashCode(), card.hashCode());
 	}
 
-	public void testHashCodeAgainstOtherCardStatus() {
+	/**
+	 * Tests that two cards with different statues does not have the same
+	 * hashcode.
+	 */
+	public void testHashCodeAgainstOtherCardDifferentStatus() {
 		Card otherCard = new Card();
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());
 		assertFalse(card.hashCode() == otherCard.hashCode());
 	}
 
+	/**
+	 * Tests that the cards equal method returns false when compared against
+	 * null.
+	 */
 	public void testEqualsNull() {
 		assertFalse(card.equals(null));
 	}
 
+	/**
+	 * Testing the the equal method is returning true when a card is compared
+	 * against itself.
+	 */
 	public void testEqualsItself() {
 		assertTrue(card.equals(card));
 	}
 
+	/**
+	 * Tests that two cards with the same status is equal each other.
+	 */
 	public void testEqualsAgainstOtherCard() {
 		Card otherCard = new Card();
 		assertTrue(card.equals(otherCard));
 	}
 
-	public void testEqualsOtherCardStatus() {
+	/**
+	 * Tests that two cards with different statues is not equal.
+	 */
+	public void testEqualsOtherCardDifferentStatus() {
 		Card otherCard = new Card();
 		otherCard.toggleStatus();
 		assertTrue(card.getStatus() != otherCard.getStatus());

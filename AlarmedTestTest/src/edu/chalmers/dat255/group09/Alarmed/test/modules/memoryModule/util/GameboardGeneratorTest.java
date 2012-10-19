@@ -38,6 +38,10 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 		generator = new GameboardGenerator(getContext());
 	}
 
+	/**
+	 * Tests that the generator is generating the specified number of pairs for
+	 * the gameboard.
+	 */
 	public void testCorrectNbrOfPairs() {
 		List<CardImage> cards = generator.getGameBoard(NBR_OF_PAIRS, true);
 
@@ -63,6 +67,11 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 		return nbrOfPairs;
 	}
 
+	/**
+	 * Tests that the generator is actually always returning a new gameboard, by
+	 * generating two gameboards directly after each other and then checks that
+	 * they are not equal.
+	 */
 	public void testIsGeneratingRandomGameBoards() {
 		List<CardImage> cards = generator.getGameBoard(NBR_OF_PAIRS, false);
 		List<CardImage> otherCards = generator
