@@ -136,6 +136,7 @@ public abstract class BaseActivationActivity extends Activity {
 			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, getIntent()
 					.getIntExtra("volume", 0), 0);
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+			mediaPlayer.setLooping(true);
 			mediaPlayer.prepare();
 			mediaPlayer.start();
 		} catch (IOException e) {
