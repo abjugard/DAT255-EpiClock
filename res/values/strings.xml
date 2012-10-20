@@ -2,7 +2,6 @@
 
     <string name="app_name">Alarmed+</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_create_alarm">Create alarm</string>
     <string name="createAlarmSaveButtonText">Set alarm</string>
     <string name="stop_alarm">Stop the ALARM!</string>
     <string name="title_activity_browse_alarms">Alarmed+</string>
@@ -10,7 +9,6 @@
     <string name="delete_alarm">Delete Alarm</string>
     <string name="add_alarm_btn">Add alarm</string>
     <string name="title_activity_math">U mad bro?</string>
-    <string name="title_pick_ringtone">Pick ringtone</string>
     <string name="activity_math_text_holder">3 * 3 = ?</string>
     <string name="activity_math_submit_btn">Submit</string>
     <string name="activity_math_header_holder">What Is The Product?</string>
@@ -21,5 +19,7 @@
     <string name="text_enable_vibration">Enable vibration</string>
     <string name="text_select_ringtone_button">Select alarm tone</string>
     <string name="text_select_volume_settings_button">Select volume</string>
+    <string name="title_alarm_tone_selector">Pick alarm tone</string>
+    <string name="toast_user_cheating">No cheating!</string>
 
 </resources>

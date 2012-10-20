@@ -20,6 +20,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.BaseSwitchProblem;
 
 /**
+ * A test class for the BaseSwitchProblem class.
  * 
  * @author Joakim Persson
  * 
@@ -73,34 +74,52 @@ public class BaseSwitchProblemTest extends AndroidTestCase {
 		int lowerLimit = 1;
 		int upperLimit = 30;
 
-		testProblem(Difficulty.EASY, lowerLimit, upperLimit);
+		testProblemGenerateNumbers(Difficulty.EASY, lowerLimit, upperLimit);
 	}
 
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 30;
 		int upperLimit = 80;
 
-		testProblem(Difficulty.MEDIUM, lowerLimit, upperLimit);
+		testProblemGenerateNumbers(Difficulty.MEDIUM, lowerLimit, upperLimit);
 	}
 
 	public void testGenerateHardProblems() {
 		int lowerLimit = 80;
 		int upperLimit = 120;
 
-		testProblem(Difficulty.HARD, lowerLimit, upperLimit);
+		testProblemGenerateNumbers(Difficulty.HARD, lowerLimit, upperLimit);
 	}
 
-	private void testProblem(Difficulty difficulty, int lowerLimit,
-			int upperLimit) {
+	/**
+	 * Runs several tests on different sets of the problems generate numbers
+	 * method, with regard to the problems difficulty.
+	 * 
+	 * @param difficulty
+	 *            The problems difficulty.
+	 * @param lowerLimit
+	 *            The lower limit for the problem.
+	 * @param upperLimit
+	 *            The upper limit for the problem.F
+	 */
+	private void testProblemGenerateNumbers(Difficulty difficulty,
+			int lowerLimit, int upperLimit) {
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			int nbrs[] = problem.generateNumbers(difficulty);
+			int[] nbrs = problem.generateNumbers(difficulty);
 			assertTrue(isBaseTwoNumber(nbrs));
 			assertTrue(isNumbersWithInRange(nbrs, lowerLimit, upperLimit));
 		}
 
 	}
 
+	/**
+	 * Checks that the array represents an base two number.
+	 * 
+	 * @param nbrs
+	 *            An array of numbers.
+	 * @return If it is an base two number or not.
+	 */
 	private boolean isBaseTwoNumber(int[] nbrs) {
 		for (int number : nbrs) {
 			if (number != 1 && number != 0) {
@@ -110,6 +129,18 @@ public class BaseSwitchProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * Checks if the generated number is within two limits. [lowerLimit,
+	 * upperLimit).
+	 * 
+	 * @param nbrs
+	 *            An array of numbers representing an base two number.
+	 * @param lowerLimit
+	 *            The lower limit for the number.
+	 * @param upperLimit
+	 *            The upper limit for the number.
+	 * @return If the number is within the limits.
+	 */
 	private boolean isNumbersWithInRange(int[] nbrs, int lowerLimit,
 			int upperLimit) {
 

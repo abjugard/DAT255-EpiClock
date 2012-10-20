@@ -34,7 +34,6 @@ public class NotificationController {
 
 	private NotificationManager notificationManager;
 	private Context context;
-	private Alarm currentNotification;
 
 	/**
 	 * Constructor for the NotificationController.
@@ -59,7 +58,6 @@ public class NotificationController {
 		if (alarm != null) {
 			this.notificationManager.notify(alarm.getId(),
 					buildNotification(alarm));
-			currentNotification = alarm;
 		}
 	}
 
@@ -71,7 +69,8 @@ public class NotificationController {
 	 * @return a Notification with the data from the alarm.
 	 */
 	private Notification buildNotification(Alarm alarm) {
-		//context.getClass() gives us the context of the MainClass, MainActivity
+		// context.getClass() gives us the context of the MainClass,
+		// MainActivity
 		Intent notificationIntent = new Intent(context, context.getClass());
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 				notificationIntent, 0);
@@ -94,9 +93,8 @@ public class NotificationController {
 	 * Deletes the current Notification.
 	 */
 	private void deleteCurrentNotification() {
-		if (currentNotification != null) {
-			notificationManager.cancel(currentNotification.getId());
-		}
+		notificationManager.cancelAll();
+
 	}
 
 }

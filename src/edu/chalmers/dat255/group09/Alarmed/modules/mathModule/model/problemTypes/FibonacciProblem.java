@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.RandomUtil;
  * @author Joakim Persson
  * 
  */
-public class FibonacciProblem extends MathProblemType {
+public final class FibonacciProblem extends MathProblemType {
 
 	private static final String PROBLEM_HEADER = "What is the next term?";
 	private static final int NBR_OF_NUMBERS = 4;
@@ -48,8 +48,8 @@ public class FibonacciProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateEasyProblem() {
-		int lowerLimit = 0;
-		int upperLimit = 10;
+		final int lowerLimit = 0;
+		final int upperLimit = 10;
 
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
@@ -64,8 +64,8 @@ public class FibonacciProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateMediumProblem() {
-		int lowerLimit = 8;
-		int upperLimit = 30;
+		final int lowerLimit = 8;
+		final int upperLimit = 30;
 
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}
@@ -79,8 +79,8 @@ public class FibonacciProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		int lowerLimit = 30;
-		int upperLimit = 100;
+		final int lowerLimit = 30;
+		final int upperLimit = 100;
 
 		return generateRandomSequence(lowerLimit, upperLimit);
 	}

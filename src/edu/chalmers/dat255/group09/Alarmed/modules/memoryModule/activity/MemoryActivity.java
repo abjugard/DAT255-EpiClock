@@ -21,7 +21,6 @@ import java.util.TimerTask;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -78,17 +77,14 @@ public class MemoryActivity extends BaseActivationActivity implements
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_memory, menu);
-		return true;
-	}
-
-	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position,
 			long id) {
-		CardImage cardImage = (CardImage) view;
-		if (isValidPress(cardImage)) {
-			handleButtonPressed(cardImage);
+
+		if (view instanceof CardImage) {
+			CardImage cardImage = (CardImage) view;
+			if (isValidPress(cardImage)) {
+				handleButtonPressed(cardImage);
+			}
 		}
 	}
 

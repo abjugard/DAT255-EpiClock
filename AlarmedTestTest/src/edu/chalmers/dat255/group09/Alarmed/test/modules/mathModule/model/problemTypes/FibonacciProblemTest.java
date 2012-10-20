@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FibonacciProblem;
 
 /**
+ * A test class for the FibonacciProblem class.
  * 
  * @author Joakim Persson
  * 
@@ -72,25 +73,42 @@ public class FibonacciProblemTest extends AndroidTestCase {
 		int lowerLimit = 0;
 		int upperLimit = 10;
 
-		testFibonacciProblems(Difficulty.EASY, lowerLimit, upperLimit);
+		testFibonacciProblemsGenerateNumbers(Difficulty.EASY, lowerLimit,
+				upperLimit);
 	}
 
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 8;
 		int upperLimit = 30;
 
-		testFibonacciProblems(Difficulty.MEDIUM, lowerLimit, upperLimit);
+		testFibonacciProblemsGenerateNumbers(Difficulty.MEDIUM, lowerLimit,
+				upperLimit);
 	}
 
 	public void testGenerateHardProblems() {
 		int lowerLimit = 30;
 		int upperLimit = 100;
 
-		testFibonacciProblems(Difficulty.HARD, lowerLimit, upperLimit);
+		testFibonacciProblemsGenerateNumbers(Difficulty.HARD, lowerLimit,
+				upperLimit);
 	}
 
-	private void testFibonacciProblems(Difficulty difficulty, int lowerLimit,
-			int upperLimit) {
+	/**
+	 * Runs several tests for the fibonacciproblems generateNumbers function.
+	 * For example the tests checks that the numbers only are fibonacci numbers.
+	 * The methods runs the same tests several times on different random
+	 * numbers. The method also takes into consideration the difficulty of the
+	 * problem.
+	 * 
+	 * @param difficulty
+	 *            The difficulty of the problem.
+	 * @param lowerLimit
+	 *            The lower limit for the starting number in the sequence.
+	 * @param upperLimit
+	 *            The upper limit for the starting number in the sequence.
+	 */
+	private void testFibonacciProblemsGenerateNumbers(Difficulty difficulty,
+			int lowerLimit, int upperLimit) {
 		int[] nbrs = null;
 		for (int i = 0; i < ITERATIONS; i++) {
 			nbrs = fibonacciProblem.generateNumbers(difficulty);
@@ -100,6 +118,13 @@ public class FibonacciProblemTest extends AndroidTestCase {
 		}
 	}
 
+	/**
+	 * Performs a check on an array that it only consists of fibonacci numbers.
+	 * 
+	 * @param numbers
+	 *            An array of numbers.
+	 * @return If the array only consists of fibonacci numbers.
+	 */
 	private boolean isOnlyFibonacciNumbers(int[] numbers) {
 		for (int number : numbers) {
 			if (!fibonacciNumbers.contains(number)) {
@@ -109,6 +134,13 @@ public class FibonacciProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * Checks if the numbers in an array is increasing in size. Ex: 2, 3 if ok.
+	 * 
+	 * @param nbrs
+	 *            An array of numbers.
+	 * @return If the numbers is increasing in size.
+	 */
 	private boolean isNumbersInIncreasingOrder(int[] nbrs) {
 		for (int i = 1; i < nbrs.length; i++) {
 			if (nbrs[i] < nbrs[i - 1]) {
@@ -118,23 +150,41 @@ public class FibonacciProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * Checks if the first number in the array is within two limits.
+	 * [lowerLimit, upperLimit);
+	 * 
+	 * @param nbrs
+	 *            The array of numbers.
+	 * @param lowerLimit
+	 *            The lower limit for the starting number.
+	 * @param upperLimit
+	 *            The upper limit for the starting number.
+	 * @return If the starting number is within the limit.
+	 */
 	private boolean isStartingNbrWithinLimits(int[] nbrs, int lowerLimit,
 			int upperLimit) {
 		int startingNumber = nbrs[0];
 		return (startingNumber < upperLimit || startingNumber >= lowerLimit);
 	}
 
+	/**
+	 * Creates a new list containing only of the first 20 elements in the
+	 * fibonacci sequence.
+	 * 
+	 * @return An list of the first twenty elements in the fibonacci sequence.
+	 */
 	private List<Integer> initFibonacciList() {
-		List<Integer> fibonacciNumbers = new ArrayList<Integer>();
-		String numbers = "0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181,6765";
+		List<Integer> fibNumbers = new ArrayList<Integer>();
+		String numbs = "0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181,6765";
 
-		String[] stringArray = numbers.replaceAll(" ", "").split(",");
+		String[] stringArray = numbs.replaceAll(" ", "").split(",");
 
 		for (String string : stringArray) {
-			fibonacciNumbers.add(Integer.parseInt(string));
+			fibNumbers.add(Integer.parseInt(string));
 		}
 
-		return fibonacciNumbers;
+		return fibNumbers;
 	}
 
 	@Override

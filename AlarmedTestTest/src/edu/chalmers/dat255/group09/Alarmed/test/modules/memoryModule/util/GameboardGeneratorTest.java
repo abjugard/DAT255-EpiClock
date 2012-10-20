@@ -22,6 +22,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.GameboardGe
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
+ * A test class for the GameboaardGenerator class.
  * 
  * @author Joakim Persson
  * 
@@ -37,12 +38,23 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 		generator = new GameboardGenerator(getContext());
 	}
 
+	/**
+	 * Tests that the generator is generating the specified number of pairs for
+	 * the gameboard.
+	 */
 	public void testCorrectNbrOfPairs() {
 		List<CardImage> cards = generator.getGameBoard(NBR_OF_PAIRS, true);
 
 		assertEquals(NBR_OF_PAIRS, getNbrOfPairs(cards));
 	}
 
+	/**
+	 * Checks a list of cards for duplicates/pairs.
+	 * 
+	 * @param cards
+	 *            A list of cards.
+	 * @return The number of pairs of cards in the list.
+	 */
 	private int getNbrOfPairs(List<CardImage> cards) {
 		int nbrOfPairs = 0;
 
@@ -55,6 +67,11 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 		return nbrOfPairs;
 	}
 
+	/**
+	 * Tests that the generator is actually always returning a new gameboard, by
+	 * generating two gameboards directly after each other and then checks that
+	 * they are not equal.
+	 */
 	public void testIsGeneratingRandomGameBoards() {
 		List<CardImage> cards = generator.getGameBoard(NBR_OF_PAIRS, false);
 		List<CardImage> otherCards = generator
@@ -66,5 +83,6 @@ public class GameboardGeneratorTest extends AndroidTestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		generator = null;
 	}
 }

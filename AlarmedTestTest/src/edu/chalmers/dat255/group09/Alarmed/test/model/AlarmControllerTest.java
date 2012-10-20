@@ -32,18 +32,18 @@ import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
  */
 public class AlarmControllerTest extends AndroidTestCase {
 	private AlarmController ac;
-	private Context context;
 	private AlarmHandler handler;
 
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		context = getContext();
 		ac = AlarmController.getInstance();
 		handler = new MockAlarmHandler().openCon();
-		ac.init(context, handler);
-		ac.createAlarm(10, 10, 0, "", 0);
-		ac.createAlarm(20, 20, 0, "", 0);
+		ac.init(getContext(), handler);
+		Alarm a1 = new Alarm(10, 10, 0, "", 0);
+		Alarm a2 = new Alarm(20, 20, 0, "", 0);
+		ac.addAlarm(a1);
+		ac.addAlarm(a2);
 	}
 
 	public void testDestroy() {
@@ -112,10 +112,12 @@ public class AlarmControllerTest extends AndroidTestCase {
 			nbrID = 0;
 		}
 
-		public long createAlarm(int hour, int minute, int daysOfWeek, String module, int volume) {
-			Alarm alarm = new Alarm(hour, minute, ++nbrID, module, volume);
-			alarms.add(alarm);
-			return alarm.getId();
+		public long addAlarm(Alarm alarm) {
+			Alarm addAlarm = new Alarm(alarm.getAlarmHours(),
+					alarm.getAlarmMinutes(), ++nbrID, alarm.getModule(),
+					alarm.getVolume());
+			alarms.add(addAlarm);
+			return addAlarm.getId();
 		}
 
 		public boolean deleteAlarm(int alarmID) {

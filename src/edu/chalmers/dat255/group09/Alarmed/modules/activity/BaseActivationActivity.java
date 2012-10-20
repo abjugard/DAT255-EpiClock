@@ -37,9 +37,27 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * Base activity for alarm activation activitys.
+ * 
+ * @author Adrian Bjugard
+ * @author Joakim Persson
+ * 
+ */
 public abstract class BaseActivationActivity extends Activity {
 
-	private final static String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity";
+	/**
+	 * The maximum value for the volume of the alarm tone.
+	 */
+	public static final int VOLUME_MAX_LIMIT = 7;
+
+	/**
+	 * The minimum value for the volume of the alarm tone.
+	 */
+	public static final int VOLUME_MIN_LIMIT = 1;
+
+	private static final int SCHEDULE_DELAY = 5000;
+	private static final String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity";
 	private WakeLock wakeLock;
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
@@ -57,6 +75,11 @@ public abstract class BaseActivationActivity extends Activity {
 		startAlarm();
 	}
 
+	/**
+	 * A util method for the view to enter fullscreen mode and override
+	 * lockscreen if the phone is locked. This method also disables the window
+	 * title.
+	 */
 	private void enterFullScreen() {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Window window = getWindow();
@@ -66,7 +89,8 @@ public abstract class BaseActivationActivity extends Activity {
 	}
 
 	/**
-	 * Sets up wake lock
+	 * Creates an wakelock for the activity which allows it to wake up the phone
+	 * and then keep the screen on until the user has completed the task.
 	 */
 	private void initWakeLock() {
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -80,7 +104,7 @@ public abstract class BaseActivationActivity extends Activity {
 	}
 
 	/**
-	 * Sets up touch listener to detect input
+	 * Initiate an touch listener and attach it to the view.
 	 */
 	private void initTouchListener() {
 		View v = (View) this.findViewById(android.R.id.content);
@@ -94,7 +118,9 @@ public abstract class BaseActivationActivity extends Activity {
 	}
 
 	/**
-	 * Initialises services
+	 * Init services required for the alarm activity. It fetches androids
+	 * audiomanager and vibrator. It is also responsible for creating the
+	 * mediaplayer instance.
 	 */
 	private void initServices() {
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -104,15 +130,17 @@ public abstract class BaseActivationActivity extends Activity {
 	}
 
 	/**
-	 * Start the alarm
+	 * A method for starting the alarm and trigger the audio.
 	 */
 	private void startAlarm() {
-		startVibration();
+		if (Boolean.parseBoolean(getIntent().getStringExtra("vibration"))) {
+			startVibration();
+		}
 		startAudio();
 	}
 
 	/**
-	 * Starts the vibration
+	 * Makes the phone start vibrating after an specified pattern.
 	 */
 	private void startVibration() {
 		long[] vibPattern = { 0, 200, 500 };
@@ -120,14 +148,16 @@ public abstract class BaseActivationActivity extends Activity {
 	}
 
 	/**
-	 * Starts the audio
+	 * Starts playing the specified alarm tone and sets it on repeat until the
+	 * alarm is terminated.
 	 */
 	private void startAudio() {
 		try {
 			mediaPlayer.setDataSource(this, getAlarmTone());
-			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, getIntent()
-					.getIntExtra("volume", 6), 0);
+			int volume = Integer.parseInt(getIntent().getStringExtra("volume"));
+			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, volume, 0);
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+			mediaPlayer.setLooping(true);
 			mediaPlayer.prepare();
 			mediaPlayer.start();
 		} catch (IOException e) {
@@ -137,26 +167,26 @@ public abstract class BaseActivationActivity extends Activity {
 	}
 
 	/**
-	 * Method for getting an alarm tone
+	 * Get the ringtone URI.
 	 * 
 	 * @return Returns alarm tone
 	 */
 	private Uri getAlarmTone() {
-		Uri alertTone = RingtoneManager
-				.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		Uri alertTone = Uri.parse(getIntent().getStringExtra("toneuri"));
 		if (alertTone == null) {
 			alertTone = RingtoneManager
-					.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+					.getDefaultUri(RingtoneManager.TYPE_ALARM);
 			if (alertTone == null) {
 				alertTone = RingtoneManager
-						.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+						.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 			}
 		}
 		return alertTone;
 	}
 
 	/**
-	 * Stops the alarm
+	 * Stops the ongoning alarm services and when its done it also kills the
+	 * current activity.
 	 */
 	public void stopAlarm() {
 		vibrator.cancel();
@@ -165,7 +195,7 @@ public abstract class BaseActivationActivity extends Activity {
 		finish();
 		overrideTransition();
 	}
-	
+
 	/**
 	 * Makes the transition between views smoother by animating them.
 	 */
@@ -174,23 +204,27 @@ public abstract class BaseActivationActivity extends Activity {
 		int fadeOut = android.R.anim.fade_out;
 		overridePendingTransition(fadeIn, fadeOut);
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		// The user is not allowed to go back
+		// Therefore does not call super implementation
+		inputDetected();
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
 			// The user is not allowed to lower the volume
+			inputDetected();
+			return true;
 		}
 		inputDetected();
 		return true;
 	}
 
 	/**
-	 * Increase the alarm audio streams volume one step
+	 * Increase the alarm audio streams volume one step.
 	 */
 	public void increaseVolume() {
 		audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM,
@@ -199,10 +233,10 @@ public abstract class BaseActivationActivity extends Activity {
 
 	/**
 	 * Decrease the alarm audio streams volume one step (if volume greater than
-	 * one)
+	 * the VOLUME_MIN_LIMIT).
 	 */
 	public void decreaseVolume() {
-		if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) > 1) {
+		if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) > VOLUME_MIN_LIMIT) {
 			audioManager.adjustStreamVolume(AudioManager.STREAM_ALARM,
 					AudioManager.ADJUST_LOWER, 0);
 		}
@@ -212,27 +246,29 @@ public abstract class BaseActivationActivity extends Activity {
 	 * Sets the volume for the alarm audio stream to the desired level.
 	 * 
 	 * @param desiredVol
-	 *            An integer between 0 and 7
+	 *            An integer between VOLUME_MIN_LIMIT and VOLUME_MAX_LIMIT
 	 */
 	public void setVolume(int desiredVol) {
-		if (desiredVol > 7) {
-			desiredVol = 7;
-		} else if (desiredVol < 1) {
-			desiredVol = 1;
+		int newVolume = desiredVol;
+		if (desiredVol > VOLUME_MAX_LIMIT) {
+			newVolume = VOLUME_MAX_LIMIT;
+		} else if (desiredVol < VOLUME_MIN_LIMIT) {
+			newVolume = VOLUME_MIN_LIMIT;
 		}
-		audioManager.setStreamVolume(AudioManager.STREAM_ALARM, desiredVol, 0);
+		audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newVolume, 0);
 	}
 
 	/**
-	 * Methd which is run when input is detected
+	 * Method which is run when input is detected. If input is detected the
+	 * alarm tone volume is set to the minimum limit.
 	 */
 	public void inputDetected() {
-		setVolume(1);
-		refreshTimer(5000);
+		setVolume(VOLUME_MIN_LIMIT);
+		refreshTimer(SCHEDULE_DELAY);
 	}
 
 	/**
-	 * Refreshes the input timer
+	 * Refreshes the input timer.
 	 * 
 	 * @param millis
 	 *            Amount of seconds until timer runs task
@@ -245,14 +281,15 @@ public abstract class BaseActivationActivity extends Activity {
 
 	/**
 	 * Timer-task that is used for scheduling what happens no input is detected
-	 * for a while
+	 * for a while.
 	 */
 	private class InputTimerTask extends TimerTask {
+
 		@Override
 		public void run() {
 			increaseVolume();
 
-			refreshTimer(5000);
+			refreshTimer(SCHEDULE_DELAY);
 		}
 	}
 }

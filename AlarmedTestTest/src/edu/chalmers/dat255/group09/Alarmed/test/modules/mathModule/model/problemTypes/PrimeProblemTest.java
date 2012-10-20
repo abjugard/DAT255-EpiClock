@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 
 /**
+ * A test class for the PrimeProblem class.
  * 
  * @author Joakim Persson
  * 
@@ -71,15 +72,8 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 0;
 		int upperLimit = 30;
 		int deltaToPrime = 10;
-		int[] nbrs = null;
 
-		for (int i = 0; i < ITERATIONS; i++) {
-			nbrs = primeProblem.generateNumbers(Difficulty.EASY);
-			assertTrue(isOnlyOnePrimeNumber(nbrs));
-			assertTrue(isOnlyUniqueNumbers(nbrs));
-			assertTrue(isPrimeInRange(nbrs, lowerLimit, upperLimit));
-			assertTrue(isNumbersWithInDelta(nbrs, deltaToPrime));
-		}
+		testProblemGenerateNumbers(Difficulty.EASY, lowerLimit, upperLimit, deltaToPrime);
 
 	}
 
@@ -87,25 +81,39 @@ public class PrimeProblemTest extends AndroidTestCase {
 		int lowerLimit = 30;
 		int upperLimit = 50;
 		int deltaToPrime = 15;
-		int[] nbrs = null;
 
-		for (int i = 0; i < ITERATIONS; i++) {
-			nbrs = primeProblem.generateNumbers(Difficulty.MEDIUM);
-			assertTrue(isOnlyOnePrimeNumber(nbrs));
-			assertTrue(isOnlyUniqueNumbers(nbrs));
-			assertTrue(isPrimeInRange(nbrs, lowerLimit, upperLimit));
-			assertTrue(isNumbersWithInDelta(nbrs, deltaToPrime));
-		}
+		testProblemGenerateNumbers(Difficulty.MEDIUM, lowerLimit, upperLimit,
+				deltaToPrime);
 	}
 
 	public void testGenerateHardProblems() {
 		int lowerLimit = 50;
 		int upperLimit = 100;
 		int deltaToPrime = 20;
-		int[] nbrs = null;
+
+		testProblemGenerateNumbers(Difficulty.HARD, lowerLimit, upperLimit, deltaToPrime);
+	}
+
+	/**
+	 * This method runs several tests on generated numbers from an prime
+	 * problem. For example this method tests that the array only contains one
+	 * prime number, is only unique numbers.
+	 * 
+	 * @param difficulty
+	 *            The difficulty of the problem that generates the numbers
+	 * @param lowerLimit
+	 *            The lower limit for the prime number in the array.
+	 * @param upperLimit
+	 *            The upper limit for the prime number in the array.
+	 * @param deltaToPrime
+	 *            The allowed delta for other numbers than the prime number v
+	 */
+	private void testProblemGenerateNumbers(Difficulty difficulty, int lowerLimit,
+			int upperLimit, int deltaToPrime) {
 
 		for (int i = 0; i < ITERATIONS; i++) {
-			nbrs = primeProblem.generateNumbers(Difficulty.HARD);
+
+			int[] nbrs = primeProblem.generateNumbers(difficulty);
 			assertTrue(isOnlyOnePrimeNumber(nbrs));
 			assertTrue(isOnlyUniqueNumbers(nbrs));
 			assertTrue(isPrimeInRange(nbrs, lowerLimit, upperLimit));
@@ -113,6 +121,14 @@ public class PrimeProblemTest extends AndroidTestCase {
 		}
 	}
 
+	/**
+	 * This method tests that an array of numbers only contains one prime
+	 * number.
+	 * 
+	 * @param nbrs
+	 *            An array of numbers.
+	 * @return If the array only contains one prime number.
+	 */
 	private boolean isOnlyOnePrimeNumber(int[] nbrs) {
 		int expectedNbrOfPrimes = 1;
 		int actualNbrOfPrimes = 1;
@@ -123,6 +139,14 @@ public class PrimeProblemTest extends AndroidTestCase {
 		return expectedNbrOfPrimes == actualNbrOfPrimes;
 	}
 
+	/**
+	 * A utility method for calculating how many prime numbers that an array
+	 * consist of.
+	 * 
+	 * @param nbrs
+	 *            An array of numbers.
+	 * @return How many prime numbers that exist in the array.
+	 */
 	private int getNbrsOfPrimes(int[] nbrs) {
 
 		int nbrOfPrimes = 0;
@@ -137,11 +161,34 @@ public class PrimeProblemTest extends AndroidTestCase {
 		return nbrOfPrimes;
 	}
 
+	/**
+	 * Checks that the prime number is located within an specified limit:
+	 * [lowerLimit, upperLimit).
+	 * 
+	 * @param nbrs
+	 *            An array of number containing only one prime number.
+	 * @param lowerLimit
+	 *            The lower limit for the prime number
+	 * @param upperLimit
+	 *            The upper limit for the prime number.
+	 * @return If the prime number is located within delta.
+	 */
 	private boolean isPrimeInRange(int[] nbrs, int lowerLimit, int upperLimit) {
 		int primeNumber = getPrimeNumber(nbrs);
 		return primeNumber >= lowerLimit && primeNumber < upperLimit;
 	}
 
+	/**
+	 * Checks that an array of only one prime number, this method checks that
+	 * the other numbers in the array is located around the prime number within
+	 * an specified delta.
+	 * 
+	 * @param nbrs
+	 *            An array of number, containing only one prime number.
+	 * @param deltaToPrime
+	 *            The allowed delta to the prime number
+	 * @return If the other numbers is located within delta to the prime number
+	 */
 	private boolean isNumbersWithInDelta(int[] nbrs, int deltaToPrime) {
 		int primeNumber = getPrimeNumber(nbrs);
 		int upperLimit = primeNumber + deltaToPrime;
@@ -157,6 +204,14 @@ public class PrimeProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * Tests if the array only contains unique numbers. Which means that an
+	 * number only can occur once.
+	 * 
+	 * @param nbrs
+	 *            An array of numbers.
+	 * @return If the array only contains unique numbers or not.
+	 */
 	private boolean isOnlyUniqueNumbers(int[] nbrs) {
 		List<Integer> previousNumbers = new ArrayList<Integer>();
 
@@ -171,6 +226,14 @@ public class PrimeProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * From an array of random numbers containing one prime number, this method
+	 * will find and return that number.
+	 * 
+	 * @param nbrs
+	 *            An array of random numbers, containing one prime
+	 * @return The prime number in the array
+	 */
 	private int getPrimeNumber(int[] nbrs) {
 		int primeNumber = 0;
 
@@ -187,7 +250,6 @@ public class PrimeProblemTest extends AndroidTestCase {
 
 	@Override
 	protected void tearDown() throws Exception {
-
 		super.tearDown();
 		primeProblem = null;
 	}

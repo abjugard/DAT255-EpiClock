@@ -53,16 +53,19 @@ public class DatabaseHandler implements AlarmHandler {
 	public static final String KEY_ENABLED = "enabled";
 	public static final String KEY_MODULE = "module";
 	public static final String KEY_VOLUME = "volume";
+	public static final String KEY_VIBRATION = "vibration";
+	public static final String KEY_ALARMTONE = "alarmtone";
 
 	public static final String[] KEYS = {KEY_ROWID, KEY_TIME, KEY_DAYSOFWEEK,
-			KEY_ENABLED, KEY_MODULE, KEY_VOLUME };
+			KEY_ENABLED, KEY_MODULE, KEY_VOLUME, KEY_VIBRATION, KEY_ALARMTONE };
 
 	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
 			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME + " DATETIME, "
 			+ KEY_DAYSOFWEEK + " INTEGER," + KEY_ENABLED + " BOOLEAN,"
-			+ KEY_MODULE + " STRING," + KEY_VOLUME + " INTEGER);";
+			+ KEY_MODULE + " STRING," + KEY_VOLUME + " INTEGER,"
+			+ KEY_VIBRATION + " BOOLEAN," + KEY_ALARMTONE + " STRING);";
 
-	private static final int DB_VERSION = 8;
+	private static final int DB_VERSION = 9;
 
 	/**
 	 * 
@@ -92,7 +95,7 @@ public class DatabaseHandler implements AlarmHandler {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + DB_TABLE);
 			onCreate(db);
-			Log.w("DATABASE:", "The database is changed from version "
+			Log.w("DATABASE", "The database is changed from version "
 					+ oldVersion + " to version " + newVersion);
 		}
 
@@ -130,15 +133,17 @@ public class DatabaseHandler implements AlarmHandler {
 	}
 
 	@Override
-	public long createAlarm(int hour, int minute, int daysOfWeek,
-			String module, int volume) {
+	public long addAlarm(Alarm alarm) {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
-		alarmTime.put(KEY_DAYSOFWEEK, daysOfWeek);
-		alarmTime.put(KEY_ENABLED, true);
-		alarmTime.put(KEY_TIME, hour + ":" + minute);
-		alarmTime.put(KEY_MODULE, module);
-		alarmTime.put(KEY_VOLUME, volume);
+		alarmTime.put(KEY_DAYSOFWEEK, alarm.getDaysOfWeek());
+		alarmTime.put(KEY_ENABLED, alarm.isEnabled());
+		alarmTime.put(KEY_TIME,
+				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
+		alarmTime.put(KEY_MODULE, alarm.getModule());
+		alarmTime.put(KEY_VOLUME, alarm.getVolume());
+		alarmTime.put(KEY_VIBRATION, alarm.isVibrationEnabled());
+		alarmTime.put(KEY_ALARMTONE, alarm.getToneUri());
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
 
@@ -217,6 +222,9 @@ public class DatabaseHandler implements AlarmHandler {
 						.getColumnIndex(KEY_VOLUME)));
 		a.setEnabled(cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0);
 		a.setDaysOfWeek(cursor.getInt(cursor.getColumnIndex(KEY_DAYSOFWEEK)));
+		a.setVibrationEnabled(cursor.getInt(cursor
+				.getColumnIndex(KEY_VIBRATION)) > 0);
+		a.setToneUri(cursor.getString(cursor.getColumnIndex(KEY_ALARMTONE)));
 		return a;
 	}
 

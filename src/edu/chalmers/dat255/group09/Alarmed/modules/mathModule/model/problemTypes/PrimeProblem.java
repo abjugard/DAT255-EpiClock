@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,9 +56,9 @@ public final class PrimeProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateEasyProblem() {
-		int lowerLimit = 0;
-		int upperLimit = 30;
-		int deltaToPrime = 10;
+		final int lowerLimit = 0;
+		final int upperLimit = 30;
+		final int deltaToPrime = 10;
 
 		return generateRandomNumbersAndPrime(lowerLimit, upperLimit,
 				deltaToPrime);
@@ -71,9 +71,9 @@ public final class PrimeProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateMediumProblem() {
-		int lowerLimit = 30;
-		int upperLimit = 50;
-		int deltaToPrime = 15;
+		final int lowerLimit = 30;
+		final int upperLimit = 50;
+		final int deltaToPrime = 15;
 
 		return generateRandomNumbersAndPrime(lowerLimit, upperLimit,
 				deltaToPrime);
@@ -86,9 +86,9 @@ public final class PrimeProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		int lowerLimit = 50;
-		int upperLimit = 100;
-		int deltaToPrime = 20;
+		final int lowerLimit = 50;
+		final int upperLimit = 100;
+		final int deltaToPrime = 20;
 
 		return generateRandomNumbersAndPrime(lowerLimit, upperLimit,
 				deltaToPrime);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugqrd, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.ModularProblem;
 
 /**
+ * A test class for the ModularProblem class.
  * 
  * @author Joakim Persson
  * 
@@ -103,25 +104,41 @@ public class ModularProblemTest extends AndroidTestCase {
 		int lowerLimit = 0;
 		int upperLimit = 30;
 
-		testModulusProblems(Difficulty.EASY, lowerLimit, upperLimit);
+		testModulusProblemsgenerateNumbers(Difficulty.EASY, lowerLimit,
+				upperLimit);
 	}
 
 	public void testGenerateMediumProblems() {
 		int lowerLimit = -30;
 		int upperLimit = 30;
 
-		testModulusProblems(Difficulty.MEDIUM, lowerLimit, upperLimit);
+		testModulusProblemsgenerateNumbers(Difficulty.MEDIUM, lowerLimit,
+				upperLimit);
 	}
 
 	public void testGenerateHardProblems() {
 		int lowerLimit = -50;
 		int upperLimit = 50;
 
-		testModulusProblems(Difficulty.HARD, lowerLimit, upperLimit);
+		testModulusProblemsgenerateNumbers(Difficulty.HARD, lowerLimit,
+				upperLimit);
 	}
 
-	private void testModulusProblems(Difficulty difficulty, int lowerLimit,
-			int upperLimit) {
+	/**
+	 * A method that runs tests on the number generator method and performs
+	 * checks on the returned numbers, based on which difficulty is selected.
+	 * The test is running several iterations and testing for a selected set of
+	 * random number sets.
+	 * 
+	 * @param difficulty
+	 *            The problems difficulty
+	 * @param lowerLimit
+	 *            The lower limit for the numbers in the problem.
+	 * @param upperLimit
+	 *            The upper limit for the numbers in the problem.
+	 */
+	private void testModulusProblemsgenerateNumbers(Difficulty difficulty,
+			int lowerLimit, int upperLimit) {
 		int[] nbrs = null;
 		for (int i = 0; i < ITERATIONS; i++) {
 			nbrs = modularProblem.generateNumbers(difficulty);
@@ -131,6 +148,18 @@ public class ModularProblemTest extends AndroidTestCase {
 
 	}
 
+	/**
+	 * Checks if the numbers in an array is with two limits. [lowerLimit,
+	 * upperLimit).
+	 * 
+	 * @param nbrs
+	 *            The array of numbers.
+	 * @param lowerLimit
+	 *            The lower limit for the numbers.
+	 * @param upperLimit
+	 *            The upper limit for the numbers.
+	 * @return if the numbers is located within the limits or not.
+	 */
 	private boolean isNumbersWithInRange(int[] nbrs, int lowerLimit,
 			int upperLimit) {
 		for (int number : nbrs) {
@@ -141,6 +170,13 @@ public class ModularProblemTest extends AndroidTestCase {
 		return true;
 	}
 
+	/**
+	 * Checks if the n in a = b mod n, is positive.
+	 * 
+	 * @param number
+	 *            The modulus number n.
+	 * @return If it is positive or not.
+	 */
 	private boolean isModulusPositive(int number) {
 		return number >= 0;
 	}

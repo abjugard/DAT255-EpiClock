@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
- * A class representing a math problem consisting of an mathproblem type and
+ * A class representing a math problem consisting of an math problem type and
  * numbers customized for the problem.
  * 
  * @author Joakim Persson
@@ -32,16 +32,17 @@ public final class MathProblem {
 	private MathProblemType mathProblemType;
 
 	/**
-	 * Create a new mathproblem instance.
+	 * Create a new math problem instance.
 	 * 
-	 * @param numbers
+	 * @param problemNumbers
 	 *            The numbers to be used in this problem
 	 * @param problemType
 	 *            The MathProblemType to be used is this problem
 	 */
-	public MathProblem(int[] numbers, MathProblemType problemType) {
-		this.numbers = new int[numbers.length];
-		System.arraycopy(numbers, 0, this.numbers, 0, numbers.length);
+	public MathProblem(int[] problemNumbers, MathProblemType problemType) {
+		this.numbers = new int[problemNumbers.length];
+		System.arraycopy(problemNumbers, 0, this.numbers, 0,
+				problemNumbers.length);
 		this.mathProblemType = problemType;
 	}
 
@@ -55,9 +56,9 @@ public final class MathProblem {
 	}
 
 	/**
-	 * Get the problemtype.
+	 * Get the current problem type.
 	 * 
-	 * @return A MathOperator used in the problem
+	 * @return The current problem type used in the problem
 	 */
 	public MathProblemType getProblemType() {
 		return mathProblemType;

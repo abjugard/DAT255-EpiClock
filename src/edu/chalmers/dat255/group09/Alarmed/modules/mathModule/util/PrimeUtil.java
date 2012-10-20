@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ public final class PrimeUtil {
 
 		int root = (int) Math.sqrt((double) number);
 
-		for (int j = 3; j <= root; j++) {
+		for (int j = 2; j <= root; j++) {
 			if (number % j == 0) {
 				return false;
 			}

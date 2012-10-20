@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,8 +23,8 @@ import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.factory.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
@@ -43,14 +42,8 @@ public class MathActivity extends BaseActivationActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_math);
-		controller = new MathController(new MathProblemGenerator());
+		controller = new MathController(new MathProblemFactory());
 		generateNewMathProblem();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_math, menu);
-		return true;
 	}
 
 	/**

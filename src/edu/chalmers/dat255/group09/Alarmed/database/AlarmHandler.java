@@ -21,8 +21,9 @@ import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 /**
  * The interface to handle the storage of alarms.
+ * 
  * @author Daniel Augurell
- *
+ * 
  */
 public interface AlarmHandler {
 
@@ -40,23 +41,13 @@ public interface AlarmHandler {
 	void closeCon();
 
 	/**
-	 * Creates an alarm in the handler given the time and if it should be
-	 * recurring.
+	 * Adds an alarm in the handler.
 	 * 
-	 * @param hour
-	 *            The hour which the alarm has been set to trigger on
-	 * @param minute
-	 *            The minute which the alarm has been set to trigger on
-	 * @param daysOfWeek
-	 *            days which the alarm is set to be repeated in as a bitmap
-	 * @param module
-	 *            The name of the module to be set
-	 * @param volume 
-	 * @return the id of the created Alarm, or -1 if an error occurred
+	 * @param alarm The alarm to be added in the handler.
+	 * @return the id of the added Alarm, or -1 if an error occurred
 	 */
 
-	long createAlarm(int hour, int minute, int daysOfWeek,
-			String module, int volume);
+	long addAlarm(Alarm alarm);
 
 	/**
 	 * Deletes an Alarm with a specified id.
