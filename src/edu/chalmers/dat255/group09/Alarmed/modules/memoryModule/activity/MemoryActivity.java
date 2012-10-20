@@ -79,9 +79,12 @@ public class MemoryActivity extends BaseActivationActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position,
 			long id) {
-		CardImage cardImage = (CardImage) view;
-		if (isValidPress(cardImage)) {
-			handleButtonPressed(cardImage);
+
+		if (view instanceof CardImage) {
+			CardImage cardImage = (CardImage) view;
+			if (isValidPress(cardImage)) {
+				handleButtonPressed(cardImage);
+			}
 		}
 	}
 
