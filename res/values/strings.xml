@@ -2,7 +2,6 @@
 
     <string name="app_name">Alarmed+</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_create_alarm">Create alarm</string>
     <string name="createAlarmSaveButtonText">Set alarm</string>
     <string name="stop_alarm">Stop the ALARM!</string>
     <string name="title_activity_browse_alarms">Alarmed+</string>

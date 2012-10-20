@@ -137,6 +137,7 @@ public class MainActivity extends Activity {
 				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
 		intent.putExtra("daysOfWeek", alarm.getBooleanArrayDayOfWeek());
 		intent.putExtra("volume", alarm.getVolume());
+		intent.putExtra("module", alarm.getModule());
 		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
 		overrideTransition();
 	}
