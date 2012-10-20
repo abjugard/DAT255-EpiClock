@@ -224,7 +224,8 @@ public class MainActivity extends Activity {
 	 * @param toneUri
 	 *            The alarm tone to use
 	 */
-	private void createAlarm(int hour, int minute, int dayOfWeek, String module, int volume, boolean vibrationEnabled, String toneUri) {
+	private void createAlarm(int hour, int minute, int dayOfWeek,
+			String module, int volume, boolean vibrationEnabled, String toneUri) {
 		Alarm alarm = new Alarm(hour, minute, 0, module, volume);
 		alarm.setToneUri(toneUri);
 		alarm.setVibrationEnabled(vibrationEnabled);

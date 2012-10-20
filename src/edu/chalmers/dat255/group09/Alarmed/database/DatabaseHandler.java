@@ -62,7 +62,8 @@ public class DatabaseHandler implements AlarmHandler {
 	private static final String DB_CREATE = "CREATE TABLE " + DB_TABLE + " ("
 			+ KEY_ROWID + " INTEGER PRIMARY KEY , " + KEY_TIME + " DATETIME, "
 			+ KEY_DAYSOFWEEK + " INTEGER," + KEY_ENABLED + " BOOLEAN,"
-			+ KEY_MODULE + " STRING," + KEY_VOLUME + " INTEGER," + KEY_VIBRATION + " BOOLEAN," + KEY_ALARMTONE + " STRING);";
+			+ KEY_MODULE + " STRING," + KEY_VOLUME + " INTEGER,"
+			+ KEY_VIBRATION + " BOOLEAN," + KEY_ALARMTONE + " STRING);";
 
 	private static final int DB_VERSION = 9;
 
@@ -137,7 +138,8 @@ public class DatabaseHandler implements AlarmHandler {
 		alarmTime.putNull(KEY_ROWID);
 		alarmTime.put(KEY_DAYSOFWEEK, alarm.getDaysOfWeek());
 		alarmTime.put(KEY_ENABLED, alarm.isEnabled());
-		alarmTime.put(KEY_TIME, alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
+		alarmTime.put(KEY_TIME,
+				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
 		alarmTime.put(KEY_MODULE, alarm.getModule());
 		alarmTime.put(KEY_VOLUME, alarm.getVolume());
 		alarmTime.put(KEY_VIBRATION, alarm.isVibrationEnabled());
@@ -220,7 +222,8 @@ public class DatabaseHandler implements AlarmHandler {
 						.getColumnIndex(KEY_VOLUME)));
 		a.setEnabled(cursor.getInt(cursor.getColumnIndex(KEY_ENABLED)) > 0);
 		a.setDaysOfWeek(cursor.getInt(cursor.getColumnIndex(KEY_DAYSOFWEEK)));
-		a.setVibrationEnabled(cursor.getInt(cursor.getColumnIndex(KEY_VIBRATION)) > 0);
+		a.setVibrationEnabled(cursor.getInt(cursor
+				.getColumnIndex(KEY_VIBRATION)) > 0);
 		a.setToneUri(cursor.getString(cursor.getColumnIndex(KEY_ALARMTONE)));
 		return a;
 	}
