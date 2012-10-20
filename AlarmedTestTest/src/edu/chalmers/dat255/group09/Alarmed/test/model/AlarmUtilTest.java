@@ -57,4 +57,12 @@ public class AlarmUtilTest extends AndroidTestCase {
 				Integer.parseInt(bits, 2));
 		assertEquals(1, days);
 	}
+
+	public void testGetIntegerFromBooleanArray() {
+		boolean[] days = { true, false, false, false, false, false, true };
+		final int intDays = AlarmUtils.getIntegerFromBooleanArray(days);
+		final int expextedDays = Integer.parseInt("1000001", 2);
+		assertEquals(expextedDays, intDays);
+
+	}
 }

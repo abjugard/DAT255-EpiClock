@@ -154,4 +154,25 @@ public final class AlarmUtils {
 		}
 		return -1;
 	}
+	/**
+	 * Returns a integer representation of the days that the alarm should be
+	 * recurring on.
+	 * 
+	 * @param daysOfWeek
+	 *            The boolean array that represents the days that the alarms
+	 *            should be recurring on
+	 * @return The days of the week that should be recurring as bits in a
+	 *         integer
+	 */
+	public static int getIntegerFromBooleanArray(boolean[] daysOfWeek) {
+		StringBuilder days = new StringBuilder();
+		for (int i = daysOfWeek.length - 1; i >= 0; i--) {
+			if (daysOfWeek[i]) {
+				days.append("1");
+			} else {
+				days.append("0");
+			}
+		}
+		return Integer.valueOf(days.toString(), 2);
+	}
 }

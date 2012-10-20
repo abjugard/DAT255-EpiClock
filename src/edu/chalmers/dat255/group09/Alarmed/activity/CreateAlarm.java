@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
+import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
 import edu.chalmers.dat255.group09.Alarmed.utils.AudioHelper;
 
 /**
@@ -145,7 +145,7 @@ public class CreateAlarm extends Activity {
 	/**
 	 * Opens the volume and vibration control dialog.
 	 * 
-	 * @param view
+	 * @param view The view that has been pressed
 	 */
 	public void onVolumeBtnPressed(View view) {
 		hAudio.getVolumeDialog().show();
@@ -171,35 +171,12 @@ public class CreateAlarm extends Activity {
 		intent.putExtra("hours", hours);
 		intent.putExtra("minutes", minutes);
 		intent.putExtra("module", module);
-		intent.putExtra("days", getIntegerFromBooleanArray(intent
+		intent.putExtra("days", AlarmUtils.getIntegerFromBooleanArray(intent
 				.getBooleanArrayExtra("daysOfWeek")));
 
 		this.setResult(RESULT_OK, intent);
 		finish();
 		overrideTransition();
-	}
-
-	/**
-	 * Returns a integer representation of the days that the alarm should be
-	 * recurring on.
-	 * 
-	 * @param daysOfWeek
-	 *            The boolean array that represents the days that the alarms
-	 *            should be recurring on
-	 * @return The days of the week that should be recurring as bits in a
-	 *         integer
-	 */
-	private int getIntegerFromBooleanArray(boolean[] daysOfWeek) {
-		StringBuilder days = new StringBuilder();
-		for (int i = daysOfWeek.length - 1; i >= 0; i--) {
-			if (daysOfWeek[i]) {
-				days.append("1");
-			} else {
-				days.append("0");
-			}
-		}
-		return Integer.valueOf(days.toString(), 2);
-
 	}
 
 	/**
