@@ -41,7 +41,7 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 
 /**
  * Helper class which takes care of everything to do with vibration and audio
- * while creating an alarm
+ * while creating an alarm.
  * 
  * @author Adrian Bjugard
  */
@@ -56,7 +56,7 @@ public class AudioHelper {
 	private Map<String, String> alarmTones;
 
 	/**
-	 * Constructor for the AudioHelper object
+	 * Constructor for the AudioHelper object.
 	 * 
 	 * @param c
 	 *            Context holding the helper
@@ -77,6 +77,9 @@ public class AudioHelper {
 		createAlarmToneDialog();
 	}
 
+	/**
+	 * Sets default settings.
+	 */
 	private void initSettings() {
 		intent.putExtra("vibration", true);
 		intent.putExtra("volume",
@@ -87,7 +90,7 @@ public class AudioHelper {
 	/**
 	 * Since the alarm tone dialog isn't guaranteed to spawn during the lifetime
 	 * of the CreateAlarm activity, this method sets the default value unless
-	 * one already exists in the intent (in edit mode)
+	 * one already exists in the intent (in edit mode).
 	 */
 	private void setInitialAlarmTone() {
 		String previousTone = intent.getStringExtra("toneuri");
@@ -103,7 +106,7 @@ public class AudioHelper {
 	}
 
 	/**
-	 * Sets up a map of alarm tone URIs to their human readable titles
+	 * Sets up a map of alarm tone URIs to their human readable titles.
 	 */
 	private void setupAlarmToneMap() {
 		RingtoneManager ringMan = new RingtoneManager(context);
@@ -133,7 +136,7 @@ public class AudioHelper {
 	}
 
 	/**
-	 * Getter for alarm tone URIs as an array
+	 * Getter for alarm tone URIs as an array.
 	 * 
 	 * @return String array of alarm tone URIs
 	 */
@@ -142,7 +145,7 @@ public class AudioHelper {
 	}
 
 	/**
-	 * Getter for alarm tone names as an array
+	 * Getter for alarm tone names as an array.
 	 * 
 	 * @return String array of alarm tone names
 	 */
@@ -151,7 +154,7 @@ public class AudioHelper {
 	}
 
 	/**
-	 * Creates the volume dialog
+	 * Creates the volume dialog.
 	 */
 	private void createVolumeDialog() {
 		int defaultVolume = audioMan
@@ -176,7 +179,7 @@ public class AudioHelper {
 	}
 
 	/**
-	 * Getter for the alarm volume and vibration selection dialog
+	 * Getter for the alarm volume and vibration selection dialog.
 	 * 
 	 * @return Alarm volume and vibration selection dialog
 	 */
@@ -185,7 +188,7 @@ public class AudioHelper {
 	}
 
 	/**
-	 * Creates the alarm tone selector dialog
+	 * Creates the alarm tone selector dialog.
 	 */
 	private void createAlarmToneDialog() {
 		String selectedTone = intent.getStringExtra("toneuri");
@@ -213,15 +216,15 @@ public class AudioHelper {
 		alarmToneDialog.setOnShowListener(new DialogInterface.OnShowListener() {
 			public void onShow(DialogInterface dialog) {
 				if (noMatchFound) {
-					((AlertDialog) dialog).getButton(
-							AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+					int button = AlertDialog.BUTTON_POSITIVE;
+					((AlertDialog) dialog).getButton(button).setEnabled(false);
 				}
 			}
 		});
 	}
 
 	/**
-	 * Getter for the alarm tone selection dialog
+	 * Getter for the alarm tone selection dialog.
 	 * 
 	 * @return Alarm tone selection dialog
 	 */
@@ -231,10 +234,9 @@ public class AudioHelper {
 
 	/**
 	 * A listener that activates when the OK button is clicked in the volume
-	 * dialog
+	 * dialog.
 	 * 
 	 * @author Adrian Bjugard
-	 * 
 	 */
 	private class VolumeDialogListener implements
 			DialogInterface.OnClickListener {
@@ -248,10 +250,9 @@ public class AudioHelper {
 
 	/**
 	 * Listener for clicks on alarm tones, responsible for playing the alarm
-	 * sound selected, to give the user a demo
+	 * sound selected, to give the user a demo.
 	 * 
 	 * @author Adrian Bjugard
-	 * 
 	 */
 	private class AlarmToneClickListener implements
 			DialogInterface.OnClickListener {
@@ -275,10 +276,9 @@ public class AudioHelper {
 
 	/**
 	 * Listener for clicks on the cancel button in the alarm tone dialog, stops
-	 * any playing sound created by the dialog
+	 * any playing sound created by the dialog.
 	 * 
 	 * @author Adrian Bjugard
-	 * 
 	 */
 	private class AlarmToneCancelListener implements
 			DialogInterface.OnClickListener {
@@ -289,10 +289,9 @@ public class AudioHelper {
 
 	/**
 	 * Listener for clicks on the OK button in the alarm tone dialog, stops any
-	 * playing sound created by the dialog
+	 * playing sound created by the dialog.
 	 * 
 	 * @author Adrian Bjugard
-	 * 
 	 */
 	private class AlarmToneOkListener implements
 			DialogInterface.OnClickListener {
@@ -306,10 +305,9 @@ public class AudioHelper {
 	}
 
 	/**
-	 * A comparator that sorts the alarm tone map
+	 * A comparator that sorts the alarm tone map.
 	 * 
 	 * @author Adrian Bjugard
-	 * 
 	 */
 	private class MapSorter implements Comparator<String> {
 		Map<String, String> map;

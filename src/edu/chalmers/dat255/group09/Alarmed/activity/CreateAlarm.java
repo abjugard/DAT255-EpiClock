@@ -133,7 +133,7 @@ public class CreateAlarm extends Activity {
 	}
 
 	/**
-	 * Opens the alarm tone selector
+	 * Opens the alarm tone selector.
 	 * 
 	 * @param view
 	 *            The parent View of the dialog
@@ -143,7 +143,7 @@ public class CreateAlarm extends Activity {
 	}
 
 	/**
-	 * Opens the volume and vibration control dialog
+	 * Opens the volume and vibration control dialog.
 	 * 
 	 * @param view
 	 */
