@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
+package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.factory;
 
 import android.test.AndroidTestCase;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.factory.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
  * 
@@ -42,7 +41,7 @@ public class MathProblemFactoryTest extends AndroidTestCase {
 	 */
 	public void testGetProblem() {
 
-		int delta = 2;
+		final int delta = 3;
 		int nbrOfNumbers = delta;
 
 		MathProblem problem = generator.generateProblem(Difficulty.EASY);
@@ -51,17 +50,10 @@ public class MathProblemFactoryTest extends AndroidTestCase {
 
 		assertEquals(nbrOfNumbers, nbrs.length, delta);
 
-		MathProblemType operator = problem.getProblemType();
-
-		assertTrue(operator instanceof MathProblemType);
-
 		nbrs = problem.getNumbers();
 
 		assertEquals(nbrOfNumbers, nbrs.length, delta);
 
-		operator = problem.getProblemType();
-
-		assertTrue(operator instanceof MathProblemType);
 	}
 
 	@Override
