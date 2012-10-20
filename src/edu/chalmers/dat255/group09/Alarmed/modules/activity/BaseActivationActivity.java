@@ -186,12 +186,15 @@ public abstract class BaseActivationActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		// The user is not allowed to go back
+		inputDetected();
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
 			// The user is not allowed to lower the volume
+			inputDetected();
+			return true;
 		}
 		inputDetected();
 		return true;
