@@ -34,6 +34,7 @@ public class AudioHelper {
 	private Context context;
 	private Intent intent;
 	private MediaPlayer mediaPlayer;
+	private AudioManager audioMan;
 
 	private View volumeView;
 	private AlertDialog volumeDialog, alarmToneDialog;
@@ -51,11 +52,21 @@ public class AudioHelper {
 		context = c;
 		intent = i;
 
-		setInitialAlarmTone();
+		audioMan = (AudioManager) context
+				.getSystemService(Context.AUDIO_SERVICE);
+		mediaPlayer = new MediaPlayer();
+
+		initSettings();
 		setupAlarmToneMap();
 		createVolumeDialog();
 		createAlarmToneDialog();
-		mediaPlayer = new MediaPlayer();
+	}
+
+	private void initSettings() {
+		intent.putExtra("vibration", true);
+		intent.putExtra("volume",
+				audioMan.getStreamMaxVolume(AudioManager.STREAM_ALARM));
+		setInitialAlarmTone();
 	}
 
 	/**
@@ -81,10 +92,6 @@ public class AudioHelper {
 	 */
 	private void setupAlarmToneMap() {
 		RingtoneManager ringMan = new RingtoneManager(context);
-		/*
-		 * uncomment to only allow _alarm tones_ (as defined by the OS)
-		 */
-		// ringMan.setType(RingtoneManager.TYPE_ALARM);
 
 		Cursor cur = ringMan.getCursor();
 
@@ -131,10 +138,8 @@ public class AudioHelper {
 	 * Creates the volume dialog
 	 */
 	private void createVolumeDialog() {
-		AudioManager mAudio = (AudioManager) context
-				.getSystemService(Context.AUDIO_SERVICE);
-
-		int defaultVolume = 6;
+		int defaultVolume = audioMan
+				.getStreamMaxVolume(AudioManager.STREAM_ALARM);
 		LayoutInflater inflater = LayoutInflater.from(context);
 		volumeView = inflater.inflate(R.layout.volume_dialog, null);
 
@@ -143,7 +148,7 @@ public class AudioHelper {
 		CheckBox checkBox = ((CheckBox) volumeView
 				.findViewById(R.id.selector_vibration));
 
-		seekBar.setMax(mAudio.getStreamMaxVolume(AudioManager.STREAM_ALARM));
+		seekBar.setMax(defaultVolume);
 		seekBar.setProgress(intent.getIntExtra("volume", defaultVolume));
 		checkBox.setChecked(intent.getBooleanExtra("vibration", true));
 
