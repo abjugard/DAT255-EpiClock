@@ -60,8 +60,7 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 		TextView textView = (TextView) view.findViewById(R.id.alarm_time_text);
 		CheckBox checkBox = (CheckBox) view.findViewById(R.id.alarm_enabled);
 
-		textView.setText(getItem(position).getAlarmHours() + ":"
-				+ getItem(position).getAlarmMinutes());
+		textView.setText(getItem(position).toString());
 		checkBox.setChecked(getItem(position).isEnabled());
 		checkBox.setTag(getItem(position).getId());
 		
