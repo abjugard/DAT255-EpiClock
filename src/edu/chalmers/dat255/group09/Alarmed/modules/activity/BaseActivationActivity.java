@@ -249,12 +249,13 @@ public abstract class BaseActivationActivity extends Activity {
 	 *            An integer between VOLUME_MIN_LIMIT and VOLUME_MAX_LIMIT
 	 */
 	public void setVolume(int desiredVol) {
+		int newVolume = desiredVol;
 		if (desiredVol > VOLUME_MAX_LIMIT) {
-			desiredVol = VOLUME_MAX_LIMIT;
+			newVolume = VOLUME_MAX_LIMIT;
 		} else if (desiredVol < VOLUME_MIN_LIMIT) {
-			desiredVol = VOLUME_MIN_LIMIT;
+			newVolume = VOLUME_MIN_LIMIT;
 		}
-		audioManager.setStreamVolume(AudioManager.STREAM_ALARM, desiredVol, 0);
+		audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newVolume, 0);
 	}
 
 	/**
