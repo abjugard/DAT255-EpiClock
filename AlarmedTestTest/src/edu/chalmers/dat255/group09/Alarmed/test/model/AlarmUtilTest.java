@@ -55,7 +55,7 @@ public class AlarmUtilTest extends AndroidTestCase {
 		String bits = "1000101";
 		final int days = AlarmUtils.getDaysToNextDay(currentDay,
 				Integer.parseInt(bits, 2));
-		assertEquals(1, days);
+		assertEquals(2, days);
 	}
 
 	public void testGetIntegerFromBooleanArray() {

@@ -127,7 +127,7 @@ public final class AlarmUtils {
 	 */
 	public static void addDays(Calendar cal, int allDays) {
 		int currentDay = cal.get(Calendar.DAY_OF_WEEK);
-		int nextDay = getDaysToNextDay(currentDay - 1, allDays);
+		int nextDay = getDaysToNextDay(currentDay, allDays);
 		if (nextDay < 1) {
 			return;
 		}
@@ -148,7 +148,7 @@ public final class AlarmUtils {
 		boolean[] days = AlarmUtils.changeToCalendar(AlarmUtils
 				.getBooleanArray(allDays));
 		for (int i = 0; i < AlarmUtils.DAYS_OF_WEEK; i++) {
-			if (days[(currentDay + i) % AlarmUtils.DAYS_OF_WEEK]) {
+			if (days[(currentDay - 1 + i) % AlarmUtils.DAYS_OF_WEEK]) {
 				return i;
 			}
 		}

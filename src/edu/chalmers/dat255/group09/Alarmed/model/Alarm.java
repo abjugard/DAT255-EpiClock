@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -331,7 +331,7 @@ public class Alarm implements Comparable<Alarm> {
 	}
 
 	/**
-	 * Gets the alarm tone URI
+	 * Gets the alarm tone URI.
 	 * 
 	 * @return The alarm tone URI
 	 */
@@ -340,17 +340,17 @@ public class Alarm implements Comparable<Alarm> {
 	}
 
 	/**
-	 * Sets the alarm tone URI
+	 * Sets the alarm tone URI.
 	 * 
-	 * @param toneUri
+	 * @param uri
 	 *            The alarm tone URI
 	 */
-	public void setToneUri(String toneUri) {
-		this.toneUri = toneUri;
+	public void setToneUri(String uri) {
+		this.toneUri = uri;
 	}
 
 	/**
-	 * Method to check whether the alarm has vibration enabled or not
+	 * Method to check whether the alarm has vibration enabled or not.
 	 * 
 	 * @return Whether or not vibration is enabled for this alarm
 	 */
@@ -359,13 +359,13 @@ public class Alarm implements Comparable<Alarm> {
 	}
 
 	/**
-	 * Sets whether or not the alarm should engage the vibration motor
+	 * Sets whether or not the alarm should engage the vibration motor.
 	 * 
-	 * @param vibrationEnabled
+	 * @param enabled
 	 *            Requested status of vibration
 	 */
-	public void setVibrationEnabled(boolean vibrationEnabled) {
-		this.vibrationEnabled = vibrationEnabled;
+	public void setVibrationEnabled(boolean enabled) {
+		this.vibrationEnabled = enabled;
 	}
 
 }
