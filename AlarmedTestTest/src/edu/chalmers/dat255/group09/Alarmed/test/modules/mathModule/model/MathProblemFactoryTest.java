@@ -17,27 +17,29 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
 
 /**
  * 
  * @author Joakim Persson
  * 
  */
-public class MathProblemGeneratorTest extends AndroidTestCase {
+public class MathProblemFactoryTest extends AndroidTestCase {
 
-	private MathProblemGenerator generator;
+	private MathProblemFactory generator;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		generator = new MathProblemGenerator();
+		generator = new MathProblemFactory();
 	}
 
+	/**
+	 * Tests the get problem method. By testing that it returns mathproblems
+	 * types.
+	 */
 	public void testGetProblem() {
 
 		int delta = 2;
@@ -60,34 +62,6 @@ public class MathProblemGeneratorTest extends AndroidTestCase {
 		operator = problem.getProblemType();
 
 		assertTrue(operator instanceof MathProblemType);
-	}
-
-	// TODO improve
-	// test that every operator at least appear once as well
-	public void testOperatorProbability() {
-		int iterations = 100;
-		int numberOfAdditionOperators = 0;
-		int expectedNumberOfAdditionOperators = 10;
-		int numberOfMultiplicationOperators = 0;
-		int expectedNumberOfMultiplicationOperators = 10;
-		int delta = 10;
-
-		MathProblem problem = null;
-
-		for (int i = 0; i < iterations; i++) {
-			problem = generator.generateProblem(Difficulty.EASY);
-			if (problem.getProblemType() instanceof AdditionProblem) {
-				numberOfAdditionOperators++;
-			}
-			if (problem.getProblemType() instanceof MultiplicationProblem) {
-				numberOfMultiplicationOperators++;
-			}
-		}
-
-		assertEquals(expectedNumberOfAdditionOperators,
-				numberOfAdditionOperators, delta);
-		assertEquals(expectedNumberOfMultiplicationOperators,
-				numberOfMultiplicationOperators, delta);
 	}
 
 	@Override

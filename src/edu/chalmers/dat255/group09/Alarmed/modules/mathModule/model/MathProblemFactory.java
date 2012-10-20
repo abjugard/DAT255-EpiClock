@@ -15,6 +15,9 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.BaseSwitchProblem;
@@ -32,9 +35,26 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  * @author Joakim Persson
  * 
  */
-public class MathProblemGenerator {
+public class MathProblemFactory {
 
-	private static final int NBR_OF_OPERATORS = 8;
+	private List<Class<?>> mathProblemTypes;
+
+	/**
+	 * Create a new MathProblemGenerator.
+	 */
+	public MathProblemFactory() {
+		mathProblemTypes = new ArrayList<Class<?>>();
+
+		mathProblemTypes.add(AdditionProblem.class);
+		mathProblemTypes.add(MultiplicationProblem.class);
+		mathProblemTypes.add(PrimeProblem.class);
+		mathProblemTypes.add(FactorialProblem.class);
+		mathProblemTypes.add(FibonacciProblem.class);
+		mathProblemTypes.add(ModularProblem.class);
+		mathProblemTypes.add(DifferenceOfTwoSquaresProblem.class);
+		mathProblemTypes.add(BaseSwitchProblem.class);
+
+	}
 
 	/**
 	 * Generate a new math problem with an specified difficulty.
@@ -51,46 +71,25 @@ public class MathProblemGenerator {
 	}
 
 	/**
-	 * Generate a random math problem type.
+	 * Generate a random math problem type. If a problem arise with the random
+	 * selection an AdditionProblem is returned.
 	 * 
 	 * @return A random math problem type.
 	 */
 	private MathProblemType generateProblemType() {
+		int nbrOfOperators = mathProblemTypes.size();
+		
+		int rand = (int) Math.floor((Math.random() * nbrOfOperators));
 
-		MathProblemType problemType = null;
-		int rand = (int) Math.floor((Math.random() * NBR_OF_OPERATORS));
-
-		if (rand == 0) {
-			problemType = new AdditionProblem();
+		try {
+			return (MathProblemType) mathProblemTypes.get(rand).newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 		}
 
-		if (rand == 1) {
-			problemType = new MultiplicationProblem();
-		}
-
-		if (rand == 2) {
-			problemType = new PrimeProblem();
-		}
-
-		if (rand == 3) {
-			problemType = new FactorialProblem();
-		}
-
-		if (rand == 4) {
-			problemType = new FibonacciProblem();
-		}
-
-		if (rand == 5) {
-			problemType = new ModularProblem();
-		}
-
-		if (rand == 6) {
-			problemType = new DifferenceOfTwoSquaresProblem();
-		}
-
-		if (rand == 7) {
-			problemType = new BaseSwitchProblem();
-		}
-		return problemType;
+		// return default problem.
+		return new AdditionProblem();
 	}
 }

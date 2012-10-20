@@ -25,7 +25,7 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.activity.BaseActivationActivity;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
@@ -43,7 +43,7 @@ public class MathActivity extends BaseActivationActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_math);
-		controller = new MathController(new MathProblemGenerator());
+		controller = new MathController(new MathProblemFactory());
 		generateNewMathProblem();
 	}
 

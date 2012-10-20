@@ -21,7 +21,7 @@ import java.util.List;
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MultiplicationProblem;
@@ -256,7 +256,7 @@ public class MathControllerTest extends AndroidTestCase {
 	 * answer 1 and the seconds time 4 and the third 1 and so on
 	 * 
 	 */
-	private class MockMathProblemGenerator extends MathProblemGenerator {
+	private class MockMathProblemGenerator extends MathProblemFactory {
 
 		private int index = 0;
 		private List<MathProblem> problems;

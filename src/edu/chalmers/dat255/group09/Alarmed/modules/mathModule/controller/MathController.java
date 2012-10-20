@@ -16,7 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller;
 
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
-import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemGenerator;
+import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
@@ -32,7 +32,7 @@ public class MathController {
 
 	private MathProblem currentProblem;
 	private int completedProblemsInARow;
-	private MathProblemGenerator problemGenerator;
+	private MathProblemFactory problemGenerator;
 	private Difficulty currentDifficulty;
 	private static final int PROBLEMS_TO_COMPLETE = 5;
 	private static final int MEDIUM_DIFFICULTY_LEVEL = 3;
@@ -44,7 +44,7 @@ public class MathController {
 	 * @param generator
 	 *            The ProblemGenerator to be used
 	 */
-	public MathController(MathProblemGenerator generator) {
+	public MathController(MathProblemFactory generator) {
 		this.problemGenerator = generator;
 		this.completedProblemsInARow = 0;
 		this.currentDifficulty = Difficulty.EASY;
