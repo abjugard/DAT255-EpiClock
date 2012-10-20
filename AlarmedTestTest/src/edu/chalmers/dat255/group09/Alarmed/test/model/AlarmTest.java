@@ -333,4 +333,18 @@ public class AlarmTest extends AndroidTestCase {
 		assertTrue(volume != alarm.getVolume());
 		
 	}
+
+	public void testVibration() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		assertFalse(alarm.isVibrationEnabled());
+		alarm.setVibrationEnabled(true);
+		assertTrue(alarm.isVibrationEnabled());
+	}
+
+	public void testAlarmTone() {
+		Alarm alarm = new Alarm(20, 20, 1);
+		String toneUri = "super awesome ringtone";
+		alarm.setToneUri(toneUri);
+		assertEquals(alarm.getToneUri(), toneUri);
+	}
 }
