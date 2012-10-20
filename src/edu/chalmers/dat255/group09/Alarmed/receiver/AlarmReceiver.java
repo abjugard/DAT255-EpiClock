@@ -35,7 +35,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		AlarmController aControl = AlarmController.getInstance();
 		aControl.init(context);
-		String[] data = intent.getData().toString().split(":");
+		String[] data = intent.getData().toString().split(":::");
 		if (aControl.alarmReceived(Integer.parseInt(data[0]))) {
 			Intent activateIntent = new Intent(context,
 					ModuleFactory.getModule(data[1]));

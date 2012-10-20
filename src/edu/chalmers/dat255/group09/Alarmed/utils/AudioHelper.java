@@ -87,7 +87,7 @@ public class AudioHelper {
 		int maxVolume = audioMan.getStreamMaxVolume(AudioManager.STREAM_ALARM);
 		int volumeSetting = intent.getIntExtra("volume", maxVolume - 1);
 		intent.putExtra("volume", volumeSetting);
-		
+
 		setInitialAlarmTone();
 	}
 

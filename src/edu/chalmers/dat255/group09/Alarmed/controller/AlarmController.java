@@ -146,8 +146,9 @@ public final class AlarmController {
 	 */
 	private PendingIntent createAlarmPendingIntent(Alarm alarm) {
 		Intent intent = new Intent(context, AlarmReceiver.class);
-		intent.setData(Uri.parse(alarm.getId() + ":" + alarm.getModule() + ":"
-				+ alarm.getVolume() + ":" + alarm.getToneUri()+ ":" + alarm.isVibrationEnabled()));
+		String separator = ":::";
+		intent.setData(Uri.parse(alarm.getId() + separator + alarm.getModule() + separator
+				+ alarm.getVolume() + separator + alarm.getToneUri()+ separator + alarm.isVibrationEnabled()));
 
 		PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent,
 				Intent.FILL_IN_DATA);

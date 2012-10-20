@@ -113,7 +113,7 @@ public abstract class BaseActivationActivity extends Activity {
 	 * Start the alarm
 	 */
 	private void startAlarm() {
-		if (getIntent().getBooleanExtra("vibration", false)) {
+		if (Boolean.parseBoolean(getIntent().getStringExtra("vibration"))) {
 			startVibration();
 		}
 		startAudio();
@@ -133,8 +133,8 @@ public abstract class BaseActivationActivity extends Activity {
 	private void startAudio() {
 		try {
 			mediaPlayer.setDataSource(this, getAlarmTone());
-			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, getIntent()
-					.getIntExtra("volume", 0), 0);
+			int volume = Integer.parseInt(getIntent().getStringExtra("volume"));
+			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, volume, 0);
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
 			mediaPlayer.setLooping(true);
 			mediaPlayer.prepare();
