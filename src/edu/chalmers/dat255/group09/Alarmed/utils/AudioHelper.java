@@ -106,7 +106,10 @@ public class AudioHelper {
 				tone = RingtoneManager.getActualDefaultRingtoneUri(context,
 						RingtoneManager.TYPE_RINGTONE);
 			}
-			intent.putExtra("toneuri", tone.toString());
+			
+			if(tone != null) {
+				intent.putExtra("toneuri", tone.toString());
+			}
 		}
 	}
 
