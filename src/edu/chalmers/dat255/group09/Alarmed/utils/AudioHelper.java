@@ -265,7 +265,6 @@ public class AudioHelper {
 			try {
 				mediaPlayer.reset();
 				mediaPlayer.setDataSource(context, uri);
-				mediaPlayer.setLooping(true);
 				mediaPlayer.prepare();
 				mediaPlayer.start();
 			} catch (IOException e) {
