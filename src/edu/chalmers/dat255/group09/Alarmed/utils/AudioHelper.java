@@ -16,6 +16,7 @@
 package edu.chalmers.dat255.group09.Alarmed.utils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -243,6 +244,7 @@ public class AudioHelper {
 	 */
 	private class VolumeDialogListener implements
 			DialogInterface.OnClickListener {
+		@Override
 		public void onClick(DialogInterface dialog, int i) {
 			intent.putExtra("vibration", ((CheckBox) volumeView
 					.findViewById(R.id.selector_vibration)).isChecked());
@@ -259,6 +261,7 @@ public class AudioHelper {
 	 */
 	private class AlarmToneClickListener implements
 			DialogInterface.OnClickListener {
+		@Override
 		public void onClick(DialogInterface dialog, int index) {
 			if (index != -1) {
 				((AlertDialog) dialog).getButton(
@@ -284,6 +287,7 @@ public class AudioHelper {
 	 */
 	private class AlarmToneCancelListener implements
 			DialogInterface.OnClickListener {
+		@Override
 		public void onClick(DialogInterface dialog, int index) {
 			mediaPlayer.reset();
 		}
@@ -297,6 +301,7 @@ public class AudioHelper {
 	 */
 	private class AlarmToneOkListener implements
 			DialogInterface.OnClickListener {
+		@Override
 		public void onClick(DialogInterface dialog, int index) {
 			mediaPlayer.reset();
 			int pos = ((AlertDialog) dialog).getListView()
@@ -311,15 +316,24 @@ public class AudioHelper {
 	 * 
 	 * @author Adrian Bjugard
 	 */
-	private class MapSorter implements Comparator<String> {
-		Map<String, String> map;
+	private static class MapSorter implements Comparator<String>, Serializable {
+		/**
+		 * Serialversion for {@link Serializable}.
+		 */
+		private static final long serialVersionUID = 5520234573522494799L;
+		private Map<String, String> sortedMap;
 
+		/**
+		 * Creates a sorter to sort Strings.
+		 * @param map The map
+		 */
 		public MapSorter(Map<String, String> map) {
-			this.map = map;
+			this.sortedMap = map;
 		}
 
+		@Override
 		public int compare(String a, String b) {
-			return map.get(a).compareTo(map.get(b));
+			return sortedMap.get(a).compareTo(sortedMap.get(b));
 		}
 	}
 }
