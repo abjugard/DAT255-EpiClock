@@ -216,10 +216,10 @@ public class MainActivity extends Activity {
 
 	private void createAlarm(int hour, int minute, int dayOfWeek,
 			String module, int volume) {
-		aControl.createAlarm(hour, minute, dayOfWeek, module, volume);
-		Alarm toastAlarm = new Alarm(hour, minute, 0);
-		toastAlarm.setDaysOfWeek(dayOfWeek);
-		Toast.makeText(this, toastAlarm.toString(), Toast.LENGTH_LONG).show();
+		Alarm alarm = new Alarm(hour, minute, 0, module, volume);
+		alarm.setDaysOfWeek(dayOfWeek);
+		aControl.addAlarm(alarm);
+		Toast.makeText(this, alarm.toString(), Toast.LENGTH_LONG).show();
 		updateList();
 	}
 

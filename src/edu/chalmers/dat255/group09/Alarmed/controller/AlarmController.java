@@ -87,23 +87,13 @@ public final class AlarmController {
 	}
 
 	/**
-	 * Creates an alarm with the parameters and then sets the first enabled
-	 * alarm.
+	 * Add the alarm and then sets the first enabled alarm.
 	 * 
-	 * @param hour
-	 *            The hour of the alarm
-	 * @param minute
-	 *            The minute of the alarm
-	 * @param dayOfWeek
-	 *            The days that the alarm should be recurring
-	 * @param module
-	 *            The module that the alarm should activate
-	 * @param volume
-	 *            The volume of the alarm
+	 * @param alarm
+	 *            The alarm to set.
 	 */
-	public void createAlarm(int hour, int minute, int dayOfWeek, String module,
-			int volume) {
-		alarmHandler.createAlarm(hour, minute, dayOfWeek, module, volume);
+	public void addAlarm(Alarm alarm) {
+		alarmHandler.addAlarm(alarm);
 		setAlarm();
 	}
 

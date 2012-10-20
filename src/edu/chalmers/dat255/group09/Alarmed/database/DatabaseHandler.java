@@ -130,15 +130,14 @@ public class DatabaseHandler implements AlarmHandler {
 	}
 
 	@Override
-	public long createAlarm(int hour, int minute, int daysOfWeek,
-			String module, int volume) {
+	public long addAlarm(Alarm alarm) {
 		ContentValues alarmTime = new ContentValues();
 		alarmTime.putNull(KEY_ROWID);
-		alarmTime.put(KEY_DAYSOFWEEK, daysOfWeek);
-		alarmTime.put(KEY_ENABLED, true);
-		alarmTime.put(KEY_TIME, hour + ":" + minute);
-		alarmTime.put(KEY_MODULE, module);
-		alarmTime.put(KEY_VOLUME, volume);
+		alarmTime.put(KEY_DAYSOFWEEK, alarm.getDaysOfWeek());
+		alarmTime.put(KEY_ENABLED, alarm.isEnabled());
+		alarmTime.put(KEY_TIME, alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
+		alarmTime.put(KEY_MODULE, alarm.getModule());
+		alarmTime.put(KEY_VOLUME, alarm.getVolume());
 		return aDb.insert(DB_TABLE, null, alarmTime);
 	}
 
