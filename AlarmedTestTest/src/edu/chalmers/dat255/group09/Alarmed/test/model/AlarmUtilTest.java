@@ -65,4 +65,26 @@ public class AlarmUtilTest extends AndroidTestCase {
 		assertEquals(expextedDays, intDays);
 
 	}
+
+	public void testAddDaysNone() {
+		Calendar cal = Calendar.getInstance();
+		final int currentDay = cal.get(Calendar.DAY_OF_YEAR);
+		String bits1 = "0000000";
+		AlarmUtils.addDays(cal, Integer.parseInt(bits1, 2));
+		assertEquals(currentDay, cal.get(Calendar.DAY_OF_YEAR));
+	}
+
+	public void testAddDays() {
+		Calendar cal = Calendar.getInstance();
+		final int currentDay = cal.get(Calendar.DAY_OF_YEAR);
+		if (currentDay % 2 == 0) {
+			String bits = "1010101";
+			AlarmUtils.addDays(cal, Integer.parseInt(bits, 2));
+			assertEquals(currentDay + 1, cal.get(Calendar.DAY_OF_YEAR));
+		} else {
+			String bits = "0101010";
+			AlarmUtils.addDays(cal, Integer.parseInt(bits, 2));
+			assertEquals(currentDay + 1, cal.get(Calendar.DAY_OF_YEAR));
+		}
+	}
 }

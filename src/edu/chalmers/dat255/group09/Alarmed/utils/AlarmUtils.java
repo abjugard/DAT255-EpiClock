@@ -127,7 +127,7 @@ public final class AlarmUtils {
 	 */
 	public static void addDays(Calendar cal, int allDays) {
 		int currentDay = cal.get(Calendar.DAY_OF_WEEK);
-		int nextDay = getDaysToNextDay(currentDay, allDays);
+		int nextDay = getDaysToNextDay(currentDay - 1, allDays);
 		if (nextDay < 1) {
 			return;
 		}
@@ -154,6 +154,7 @@ public final class AlarmUtils {
 		}
 		return -1;
 	}
+
 	/**
 	 * Returns a integer representation of the days that the alarm should be
 	 * recurring on.
