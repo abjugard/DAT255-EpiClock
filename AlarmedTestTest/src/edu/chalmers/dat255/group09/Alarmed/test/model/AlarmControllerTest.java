@@ -32,16 +32,14 @@ import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
  */
 public class AlarmControllerTest extends AndroidTestCase {
 	private AlarmController ac;
-	private Context context;
 	private AlarmHandler handler;
 
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		context = getContext();
 		ac = AlarmController.getInstance();
 		handler = new MockAlarmHandler().openCon();
-		ac.init(context, handler);
+		ac.init(getContext(), handler);
 		Alarm a1 = new Alarm(10, 10, 0, "", 0);
 		Alarm a2 = new Alarm(20, 20, 0, "", 0);
 		ac.addAlarm(a1);
