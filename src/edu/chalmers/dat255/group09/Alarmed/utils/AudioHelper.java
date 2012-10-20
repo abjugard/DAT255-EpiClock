@@ -92,6 +92,7 @@ public class AudioHelper {
 	 */
 	private void setupAlarmToneMap() {
 		RingtoneManager ringMan = new RingtoneManager(context);
+		ringMan.setType(RingtoneManager.TYPE_ALL);
 
 		Cursor cur = ringMan.getCursor();
 
