@@ -55,7 +55,8 @@ public final class AlarmUtils {
 
 	/**
 	 * Generates a boolean array with every value representing a bit in an
-	 * integer. Only the seven last bits is checked.
+	 * integer. Only the seven last bits is checked. The first index of the
+	 * array represent the lowest bit.
 	 * 
 	 * @param bits
 	 *            Any integer with seven bits
@@ -127,15 +128,15 @@ public final class AlarmUtils {
 	public static void addDays(Calendar cal, int allDays) {
 		int currentDay = cal.get(Calendar.DAY_OF_WEEK);
 		int nextDay = getDaysToNextDay(currentDay, allDays);
-		if (nextDay == -1) {
+		if (nextDay < 1) {
 			return;
 		}
 		cal.add(Calendar.DAY_OF_YEAR, nextDay);
 	}
 
 	/**
-	 * Gets the number of days until the given day according to an integer representing all
-	 * days of the week.
+	 * Gets the number of days until the given day according to an integer
+	 * representing all days of the week.
 	 * 
 	 * @param currentDay
 	 *            The calendars integer representation of the current day
