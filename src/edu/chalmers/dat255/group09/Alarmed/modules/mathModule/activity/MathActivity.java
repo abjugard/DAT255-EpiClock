@@ -16,7 +16,6 @@
 package edu.chalmers.dat255.group09.Alarmed.modules.mathModule.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,12 +44,6 @@ public class MathActivity extends BaseActivationActivity {
 		setContentView(R.layout.activity_math);
 		controller = new MathController(new MathProblemFactory());
 		generateNewMathProblem();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_math, menu);
-		return true;
 	}
 
 	/**
