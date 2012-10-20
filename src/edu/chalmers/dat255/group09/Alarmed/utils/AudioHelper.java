@@ -81,9 +81,13 @@ public class AudioHelper {
 	 * Sets default settings.
 	 */
 	private void initSettings() {
-		intent.putExtra("vibration", true);
-		intent.putExtra("volume",
-				audioMan.getStreamMaxVolume(AudioManager.STREAM_ALARM));
+		boolean vibrationSetting = intent.getBooleanExtra("vibration", true);
+		intent.putExtra("vibration", vibrationSetting);
+
+		int maxVolume = audioMan.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+		int volumeSetting = intent.getIntExtra("volume", maxVolume - 1);
+		intent.putExtra("volume", volumeSetting);
+		
 		setInitialAlarmTone();
 	}
 
@@ -157,8 +161,7 @@ public class AudioHelper {
 	 * Creates the volume dialog.
 	 */
 	private void createVolumeDialog() {
-		int defaultVolume = audioMan
-				.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+		int maxVolume = audioMan.getStreamMaxVolume(AudioManager.STREAM_ALARM);
 		LayoutInflater inflater = LayoutInflater.from(context);
 		volumeView = inflater.inflate(R.layout.volume_dialog, null);
 
@@ -167,8 +170,8 @@ public class AudioHelper {
 		CheckBox checkBox = ((CheckBox) volumeView
 				.findViewById(R.id.selector_vibration));
 
-		seekBar.setMax(defaultVolume);
-		seekBar.setProgress(intent.getIntExtra("volume", defaultVolume));
+		seekBar.setMax(maxVolume);
+		seekBar.setProgress(intent.getIntExtra("volume", maxVolume - 1));
 		checkBox.setChecked(intent.getBooleanExtra("vibration", true));
 
 		volumeDialog = new AlertDialog.Builder(context)
