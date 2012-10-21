@@ -21,5 +21,6 @@
     <string name="text_select_volume_settings_button">Select volume</string>
     <string name="title_alarm_tone_selector">Pick alarm tone</string>
     <string name="toast_user_cheating">No cheating!</string>
+    <string name="select_alarm_tone">Select Alarmtone:</string>
 
 </resources>
