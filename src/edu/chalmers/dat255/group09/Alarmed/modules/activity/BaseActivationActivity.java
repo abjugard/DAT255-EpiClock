@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import edu.chalmers.dat255.group09.Alarmed.constants.Constants;
+
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
@@ -57,7 +59,8 @@ public abstract class BaseActivationActivity extends Activity {
 	public static final int VOLUME_MIN_LIMIT = 1;
 
 	private static final int SCHEDULE_DELAY = 5000;
-	private static final String WAKE_LOCK_TAG = "edu.chalmers.dat255.group09.Alarmed.activity.BaseActivationActivity";
+	private static final String WAKE_LOCK_TAG = Constants.PACKAGE
+			+ ".activity.BaseActivationActivity";
 	private WakeLock wakeLock;
 	private AudioManager audioManager;
 	private MediaPlayer mediaPlayer;
@@ -133,7 +136,8 @@ public abstract class BaseActivationActivity extends Activity {
 	 * A method for starting the alarm and trigger the audio.
 	 */
 	private void startAlarm() {
-		if (Boolean.parseBoolean(getIntent().getStringExtra("vibration"))) {
+		if (Boolean.parseBoolean(getIntent()
+				.getStringExtra(Constants.VIBRATION))) {
 			startVibration();
 		}
 		startAudio();
@@ -154,7 +158,8 @@ public abstract class BaseActivationActivity extends Activity {
 	private void startAudio() {
 		try {
 			mediaPlayer.setDataSource(this, getAlarmTone());
-			int volume = Integer.parseInt(getIntent().getStringExtra("volume"));
+			int volume = Integer.parseInt(getIntent().getStringExtra(
+					Constants.VOLUME));
 			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, volume, 0);
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
 			mediaPlayer.setLooping(true);
@@ -172,7 +177,8 @@ public abstract class BaseActivationActivity extends Activity {
 	 * @return Returns alarm tone
 	 */
 	private Uri getAlarmTone() {
-		Uri alertTone = Uri.parse(getIntent().getStringExtra("toneuri"));
+		Uri alertTone = Uri
+				.parse(getIntent().getStringExtra(Constants.TONEURI));
 		if (alertTone == null) {
 			alertTone = RingtoneManager
 					.getDefaultUri(RingtoneManager.TYPE_ALARM);

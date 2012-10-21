@@ -39,6 +39,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.constants.Constants;
 
 /**
  * Helper class which takes care of everything to do with vibration and audio
@@ -82,12 +83,12 @@ public class AudioHelper {
 	 * Sets default settings.
 	 */
 	private void initSettings() {
-		boolean vibrationSetting = intent.getBooleanExtra("vibration", true);
-		intent.putExtra("vibration", vibrationSetting);
+		boolean vibrationSetting = intent.getBooleanExtra(Constants.VIBRATION, true);
+		intent.putExtra(Constants.VIBRATION, vibrationSetting);
 
 		int maxVolume = audioMan.getStreamMaxVolume(AudioManager.STREAM_ALARM);
-		int volumeSetting = intent.getIntExtra("volume", maxVolume - 1);
-		intent.putExtra("volume", volumeSetting);
+		int volumeSetting = intent.getIntExtra(Constants.VOLUME, maxVolume - 1);
+		intent.putExtra(Constants.VOLUME, volumeSetting);
 
 		setInitialAlarmTone();
 	}
@@ -98,7 +99,7 @@ public class AudioHelper {
 	 * one already exists in the intent (in edit mode).
 	 */
 	private void setInitialAlarmTone() {
-		String previousTone = intent.getStringExtra("toneuri");
+		String previousTone = intent.getStringExtra(Constants.TONEURI);
 		if (previousTone == null) {
 			Uri tone = RingtoneManager.getActualDefaultRingtoneUri(context,
 					RingtoneManager.TYPE_ALARM);
@@ -107,8 +108,8 @@ public class AudioHelper {
 						RingtoneManager.TYPE_RINGTONE);
 			}
 			
-			if(tone != null) {
-				intent.putExtra("toneuri", tone.toString());
+			if (tone != null) {
+				intent.putExtra(Constants.TONEURI, tone.toString());
 			}
 		}
 	}
@@ -175,8 +176,8 @@ public class AudioHelper {
 				.findViewById(R.id.selector_vibration));
 
 		seekBar.setMax(maxVolume);
-		seekBar.setProgress(intent.getIntExtra("volume", maxVolume - 1));
-		checkBox.setChecked(intent.getBooleanExtra("vibration", true));
+		seekBar.setProgress(intent.getIntExtra(Constants.VOLUME, maxVolume - 1));
+		checkBox.setChecked(intent.getBooleanExtra(Constants.VIBRATION, true));
 
 		volumeDialog = new AlertDialog.Builder(context)
 				.setTitle("Set volume options")
@@ -198,7 +199,7 @@ public class AudioHelper {
 	 * Creates the alarm tone selector dialog.
 	 */
 	private void createAlarmToneDialog() {
-		String selectedTone = intent.getStringExtra("toneuri");
+		String selectedTone = intent.getStringExtra(Constants.TONEURI);
 		int selection = -1;
 		for (int i = 0; i < alarmTones.size(); i++) {
 			if (getAlarmToneUris()[i].equals(selectedTone)) {
@@ -249,9 +250,9 @@ public class AudioHelper {
 			DialogInterface.OnClickListener {
 		@Override
 		public void onClick(DialogInterface dialog, int i) {
-			intent.putExtra("vibration", ((CheckBox) volumeView
+			intent.putExtra(Constants.VIBRATION, ((CheckBox) volumeView
 					.findViewById(R.id.selector_vibration)).isChecked());
-			intent.putExtra("volume", ((SeekBar) volumeView
+			intent.putExtra(Constants.VOLUME, ((SeekBar) volumeView
 					.findViewById(R.id.selector_volume)).getProgress());
 		}
 	}
@@ -310,7 +311,7 @@ public class AudioHelper {
 			int pos = ((AlertDialog) dialog).getListView()
 					.getCheckedItemPosition();
 			String tone = getAlarmToneUris()[pos].toString();
-			intent.putExtra("toneuri", tone);
+			intent.putExtra(Constants.TONEURI, tone);
 		}
 	}
 

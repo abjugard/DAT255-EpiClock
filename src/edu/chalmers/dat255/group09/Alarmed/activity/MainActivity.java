@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.adapter.BrowseAlarmAdapter;
+import edu.chalmers.dat255.group09.Alarmed.constants.Constants;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
@@ -44,8 +45,7 @@ import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
  */
 public class MainActivity extends Activity {
 
-	public static final int ADD_ALARM_REQUEST_CODE = 1;
-	public static final int EDIT_ALARM_REQUEST_CODE = 2;
+
 	private static final int DELETE_ALARM_MENU = 1;
 	private static final int EDIT_ALARM_MENU = 2;
 	private BrowseAlarmAdapter alarmAdapter;
@@ -132,17 +132,17 @@ public class MainActivity extends Activity {
 	 */
 	private void editAlarm(Alarm alarm) {
 		Intent intent = new Intent(this, CreateAlarm.class);
-		intent.putExtra("ID", alarm.getId());
-		intent.putExtra("requestCode", EDIT_ALARM_REQUEST_CODE);
-		intent.putExtra("time",
-				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
-		intent.putExtra("daysOfWeek",
+		intent.putExtra(Constants.ID, alarm.getId());
+		intent.putExtra(Constants.REQUESTCODE, Constants.EDIT_ALARM_REQUEST_CODE);
+		intent.putExtra(Constants.HOURS, alarm.getAlarmHours());
+		intent.putExtra(Constants.MINUTES, alarm.getAlarmMinutes());
+		intent.putExtra(Constants.DAYSOFWEEK,
 				AlarmUtils.getBooleanArray(alarm.getDaysOfWeek()));
-		intent.putExtra("volume", alarm.getVolume());
-		intent.putExtra("module", alarm.getModule());
-		intent.putExtra("vibration", alarm.isVibrationEnabled());
-		intent.putExtra("toneuri", alarm.getToneUri());
-		startActivityForResult(intent, EDIT_ALARM_REQUEST_CODE);
+		intent.putExtra(Constants.VOLUME, alarm.getVolume());
+		intent.putExtra(Constants.MODULE, alarm.getModule());
+		intent.putExtra(Constants.VIBRATION, alarm.isVibrationEnabled());
+		intent.putExtra(Constants.TONEURI, alarm.getToneUri());
+		startActivityForResult(intent, Constants.EDIT_ALARM_REQUEST_CODE);
 		overrideTransition();
 	}
 
@@ -157,9 +157,9 @@ public class MainActivity extends Activity {
 		if (item.getItemId() == R.id.menu_add_alarm) {
 			boolean[] days = new boolean[AlarmUtils.DAYS_OF_WEEK];
 			Arrays.fill(days, false);
-			startActivityForResult(
-					new Intent(this, CreateAlarm.class).putExtra("daysOfWeek",
-							days), ADD_ALARM_REQUEST_CODE);
+			Intent intent = new Intent(this, CreateAlarm.class).putExtra(
+					Constants.DAYSOFWEEK, days);
+			startActivityForResult(intent, Constants.ADD_ALARM_REQUEST_CODE);
 			overrideTransition();
 			return true;
 		}
@@ -178,18 +178,18 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (isResonseValid(resultCode)) {
-			if (requestCode == EDIT_ALARM_REQUEST_CODE) {
-				aControl.deleteAlarm(data.getIntExtra("ID", -1));
+			if (requestCode == Constants.EDIT_ALARM_REQUEST_CODE) {
+				aControl.deleteAlarm(data.getIntExtra(Constants.ID, -1));
 			}
-			if (requestCode == ADD_ALARM_REQUEST_CODE
-					|| requestCode == EDIT_ALARM_REQUEST_CODE) {
-				createAlarm(data.getIntExtra("hours", -1),
-						data.getIntExtra("minutes", -1),
-						data.getIntExtra("days", 0),
-						data.getStringExtra("module"),
-						data.getIntExtra("volume", 1),
-						data.getBooleanExtra("vibration", false),
-						data.getStringExtra("toneuri"));
+			if (requestCode == Constants.ADD_ALARM_REQUEST_CODE
+					|| requestCode == Constants.EDIT_ALARM_REQUEST_CODE) {
+				createAlarm(data.getIntExtra(Constants.HOURS, -1),
+						data.getIntExtra(Constants.MINUTES, -1),
+						data.getIntExtra(Constants.DAYS, 0),
+						data.getStringExtra(Constants.MODULE),
+						data.getIntExtra(Constants.VOLUME, 1),
+						data.getBooleanExtra(Constants.VIBRATION, false),
+						data.getStringExtra(Constants.TONEURI));
 			}
 
 		}

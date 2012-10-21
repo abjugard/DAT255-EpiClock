@@ -18,6 +18,7 @@ package edu.chalmers.dat255.group09.Alarmed.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import edu.chalmers.dat255.group09.Alarmed.constants.Constants;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 
@@ -40,9 +41,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 			Intent activateIntent = new Intent(context,
 					ModuleFactory.getModule(data[1]));
 			activateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			activateIntent.putExtra("volume", data[2]);
-			activateIntent.putExtra("toneuri", data[3]);
-			activateIntent.putExtra("vibration", data[4]);
+			activateIntent.putExtra(Constants.VOLUME, data[2]);
+			activateIntent.putExtra(Constants.TONEURI, data[3]);
+			activateIntent.putExtra(Constants.VIBRATION, data[4]);
 			context.startActivity(activateIntent);
 		}
 		aControl.destroy();

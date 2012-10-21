@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import edu.chalmers.dat255.group09.Alarmed.R;
+import edu.chalmers.dat255.group09.Alarmed.constants.Constants;
 import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
 import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
 import edu.chalmers.dat255.group09.Alarmed.utils.AudioHelper;
@@ -90,10 +91,9 @@ public class CreateAlarm extends Activity {
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		int minute = calendar.get(Calendar.MINUTE);
 		Intent intent = this.getIntent();
-		if (intent.getIntExtra("requestCode", -1) == MainActivity.EDIT_ALARM_REQUEST_CODE) {
-			String[] times = intent.getStringExtra("time").split(":");
-			hour = Integer.parseInt(times[0]);
-			minute = Integer.parseInt(times[1]);
+		if (intent.getIntExtra(Constants.REQUESTCODE, -1) == Constants.EDIT_ALARM_REQUEST_CODE) {
+			hour = intent.getIntExtra(Constants.HOURS, hour);
+			minute = intent.getIntExtra(Constants.MINUTES, minute);
 		}
 		timePicker.setCurrentHour(hour);
 		timePicker.setCurrentMinute(minute);
@@ -145,7 +145,8 @@ public class CreateAlarm extends Activity {
 	/**
 	 * Opens the volume and vibration control dialog.
 	 * 
-	 * @param view The view that has been pressed
+	 * @param view
+	 *            The view that has been pressed
 	 */
 	public void onVolumeBtnPressed(View view) {
 		hAudio.getVolumeDialog().show();
@@ -168,11 +169,12 @@ public class CreateAlarm extends Activity {
 		String module = (String) spinner.getSelectedItem();
 
 		Intent intent = getIntent();
-		intent.putExtra("hours", hours);
-		intent.putExtra("minutes", minutes);
-		intent.putExtra("module", module);
-		intent.putExtra("days", AlarmUtils.getIntegerFromBooleanArray(intent
-				.getBooleanArrayExtra("daysOfWeek")));
+		intent.putExtra(Constants.HOURS, hours);
+		intent.putExtra(Constants.MINUTES, minutes);
+		intent.putExtra(Constants.MODULE, module);
+		intent.putExtra(Constants.DAYS, AlarmUtils
+				.getIntegerFromBooleanArray(intent
+						.getBooleanArrayExtra(Constants.DAYSOFWEEK)));
 
 		this.setResult(RESULT_OK, intent);
 		finish();
@@ -207,7 +209,7 @@ public class CreateAlarm extends Activity {
 		new AlertDialog.Builder(this)
 				.setTitle(R.string.recurring_alarms)
 				.setMultiChoiceItems(R.array.days_of_week,
-						getIntent().getBooleanArrayExtra("daysOfWeek"),
+						getIntent().getBooleanArrayExtra(Constants.DAYSOFWEEK),
 						new MultiClickListener())
 				.setPositiveButton(R.string.ok_button,
 						new DialogInterface.OnClickListener() {
@@ -230,7 +232,8 @@ public class CreateAlarm extends Activity {
 		@Override
 		public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 			Intent intent = getIntent();
-			boolean[] daysOfWeek = intent.getBooleanArrayExtra("daysOfWeek");
+			boolean[] daysOfWeek = intent
+					.getBooleanArrayExtra(Constants.DAYSOFWEEK);
 			daysOfWeek[which] = isChecked;
 
 		}
