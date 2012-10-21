@@ -4,8 +4,8 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>390</x>
-      <y>170</y>
+      <x>410</x>
+      <y>50</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -17,8 +17,8 @@ MainActivity
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>140</x>
-      <y>250</y>
+      <x>130</x>
+      <y>130</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -30,8 +30,8 @@ AlarmReceiver
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>630</x>
-      <y>250</y>
+      <x>610</x>
+      <y>220</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -43,8 +43,8 @@ DatabaseHandler
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>630</x>
-      <y>360</y>
+      <x>610</x>
+      <y>310</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
@@ -55,8 +55,8 @@ DatabaseHandler
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>390</x>
-      <y>250</y>
+      <x>410</x>
+      <y>130</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -67,9 +67,9 @@ DatabaseHandler
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>140</x>
-      <y>370</y>
-      <w>160</w>
+      <x>80</x>
+      <y>250</y>
+      <w>240</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Abstract&gt;&gt;
@@ -80,8 +80,8 @@ BaseActivationActivity
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>160</x>
-      <y>260</y>
+      <x>150</x>
+      <y>140</y>
       <w>106</w>
       <h>130</h>
     </coordinates>
@@ -92,8 +92,8 @@ creates</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>420</x>
-      <y>180</y>
+      <x>440</x>
+      <y>60</y>
       <w>50</w>
       <h>90</h>
     </coordinates>
@@ -103,8 +103,19 @@ creates</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>480</x>
-      <y>240</y>
+      <x>500</x>
+      <y>120</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>110;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>120</y>
       <w>170</w>
       <h>50</h>
     </coordinates>
@@ -112,21 +123,10 @@ creates</panel_attributes>
     <additional_attributes>150;30;30;30</additional_attributes>
   </element>
   <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>270</x>
-      <y>240</y>
-      <w>140</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>120;30;30;30</additional_attributes>
-  </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>630</x>
-      <y>170</y>
+      <x>610</x>
+      <y>50</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -138,33 +138,33 @@ CreateActivity
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>480</x>
-      <y>140</y>
-      <w>170</w>
+      <x>500</x>
+      <y>20</y>
+      <w>130</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 creates</panel_attributes>
-    <additional_attributes>150;50;30;50</additional_attributes>
+    <additional_attributes>110;50;30;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>130</x>
-      <y>480</y>
+      <x>200</x>
+      <y>360</y>
       <w>170</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Activity&gt;&gt;
-MathActivationActivty
+MathActivty
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>190</x>
-      <y>380</y>
+      <x>260</x>
+      <y>260</y>
       <w>50</w>
       <h>120</h>
     </coordinates>
@@ -174,19 +174,19 @@ MathActivationActivty
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>270</x>
-      <y>160</y>
-      <w>140</w>
+      <x>260</x>
+      <y>40</y>
+      <w>170</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30;30;120;30</additional_attributes>
+    <additional_attributes>30;30;150;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>140</x>
-      <y>170</y>
+      <x>130</x>
+      <y>50</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -198,20 +198,20 @@ BrowseAlarmAdapter
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>630</x>
-      <y>260</y>
+      <x>610</x>
+      <y>230</y>
       <w>106</w>
-      <h>120</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 creates</panel_attributes>
-    <additional_attributes>60;100;60;30</additional_attributes>
+    <additional_attributes>60;80;60;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>370</x>
-      <y>330</y>
+      <x>390</x>
+      <y>220</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -222,12 +222,60 @@ creates</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>420</x>
-      <y>260</y>
+      <x>440</x>
+      <y>140</y>
       <w>50</w>
-      <h>90</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30;70;30;30</additional_attributes>
+    <additional_attributes>30;80;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>20</x>
+      <y>360</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Activity&gt;&gt;
+MemoryActivty
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>80</x>
+      <y>260</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;100</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>610</x>
+      <y>130</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+AlarmHandler
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>640</x>
+      <y>140</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;80</additional_attributes>
   </element>
 </diagram>
