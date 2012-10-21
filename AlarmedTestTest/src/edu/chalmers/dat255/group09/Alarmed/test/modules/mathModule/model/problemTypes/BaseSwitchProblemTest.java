@@ -15,7 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.BaseSwitchProblem;
 
@@ -25,7 +25,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  * @author Joakim Persson
  * 
  */
-public class BaseSwitchProblemTest extends AndroidTestCase {
+public class BaseSwitchProblemTest extends TestCase {
 
 	private static final int ITERATIONS = 100;
 	private BaseSwitchProblem problem;

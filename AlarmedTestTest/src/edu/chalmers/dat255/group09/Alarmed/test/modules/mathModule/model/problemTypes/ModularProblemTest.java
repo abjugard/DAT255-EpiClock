@@ -15,7 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import android.util.Log;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.ModularProblem;
@@ -26,7 +26,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  * @author Joakim Persson
  * 
  */
-public class ModularProblemTest extends AndroidTestCase {
+public class ModularProblemTest extends TestCase {
 
 	private static final int ITERATIONS = 100;
 	private ModularProblem modularProblem;

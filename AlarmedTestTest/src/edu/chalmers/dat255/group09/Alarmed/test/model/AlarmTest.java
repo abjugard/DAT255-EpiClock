@@ -17,7 +17,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.model;
 
 import java.util.Calendar;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 /**
@@ -26,7 +26,7 @@ import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
  * @author Daniel Augurell
  * @author Joakim Persson
  */
-public class AlarmTest extends AndroidTestCase {
+public class AlarmTest extends TestCase {
 
 	private static final int HOURS_OF_DAY = 24;
 	private static final int MINUTES_OF_HOUR = 60;

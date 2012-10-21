@@ -15,7 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.memoryModule.model;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardStatus;
 
@@ -26,7 +26,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardS
  * @author Daniel Augurell
  * 
  */
-public class CardTest extends AndroidTestCase {
+public class CardTest extends TestCase {
 
 	private Card card;
 

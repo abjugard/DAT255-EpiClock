@@ -17,29 +17,33 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model;
 
 import java.util.Arrays;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
  * A test class for the MathProblem class.
+ * 
  * @author Joakim Persson
- *
+ * 
  */
-public class MathProblemTest extends AndroidTestCase {
+public class MathProblemTest extends TestCase {
 
 	private MathProblem problem = null;
 
+	/**
+	 * 
+	 */
 	public void testGetNumbers() {
-		int[] expected = { 2, 3 };
+		int[] expected = { 1, 2 };
 		MathProblemType operator = new AdditionProblem();
 		problem = new MathProblem(expected, operator);
 
 		int[] actual = problem.getNumbers();
 		assertTrue(Arrays.equals(expected, actual));
 
-		expected = new int[] { 2, 3, 4, 5 };
+		expected = new int[] { 1, 2, 1, 2, 1 };
 
 		operator = new AdditionProblem();
 		problem = new MathProblem(expected, operator);
@@ -48,6 +52,9 @@ public class MathProblemTest extends AndroidTestCase {
 		assertTrue(Arrays.equals(expected, actual));
 	}
 
+	/**
+	 * 
+	 */
 	public void testGetOperator() {
 		int[] numbers = { 1, 2 };
 		MathProblemType expectedOperator = new AdditionProblem();

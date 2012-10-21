@@ -18,7 +18,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.proble
 import java.util.ArrayList;
 import java.util.List;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.FibonacciProblem;
 
@@ -28,7 +28,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  * @author Joakim Persson
  * 
  */
-public class FibonacciProblemTest extends AndroidTestCase {
+public class FibonacciProblemTest extends TestCase {
 
 	private static final int ITERATIONS = 100;
 	private FibonacciProblem fibonacciProblem;

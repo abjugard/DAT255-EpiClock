@@ -15,7 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.problemTypes;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.DifferenceOfTwoSquaresProblem;
 
@@ -25,7 +25,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  * @author Joakim Persson
  * 
  */
-public class DifferenceOfTwoSquaresProblemTest extends AndroidTestCase {
+public class DifferenceOfTwoSquaresProblemTest extends TestCase {
 
 	private static final int ITERATIONS = 100;
 	private static final int NBR_OF_NUMBERS = 2;

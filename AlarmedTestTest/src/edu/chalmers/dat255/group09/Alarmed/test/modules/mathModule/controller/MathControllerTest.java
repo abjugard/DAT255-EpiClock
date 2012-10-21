@@ -18,7 +18,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.controller.MathController;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.factory.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
@@ -32,7 +32,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
  * @author Joakim Persson
  * 
  */
-public class MathControllerTest extends AndroidTestCase {
+public class MathControllerTest extends TestCase {
 
 	private MathController controller;
 	private final int[] correctAnswers = new int[] { 1, 4 };
@@ -49,6 +49,9 @@ public class MathControllerTest extends AndroidTestCase {
 		problemIndex = 0;
 	}
 
+	/**
+	 * Tests the controllers ability to verify that an aswer is correct or not.
+	 */
 	public void testcheckAnswer() {
 
 		// a new problem is generated

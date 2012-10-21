@@ -15,11 +15,11 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.memoryModule.views;
 
+import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model.Card.CardStatus;
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
-import android.test.AndroidTestCase;
 
 /**
  * 

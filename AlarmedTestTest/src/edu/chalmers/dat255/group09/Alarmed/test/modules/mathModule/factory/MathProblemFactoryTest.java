@@ -15,7 +15,7 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.factory;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.factory.MathProblemFactory;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
@@ -25,7 +25,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
  * @author Joakim Persson
  * 
  */
-public class MathProblemFactoryTest extends AndroidTestCase {
+public class MathProblemFactoryTest extends TestCase {
 
 	private MathProblemFactory generator;
 

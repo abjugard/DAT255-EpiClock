@@ -18,7 +18,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.model.proble
 import java.util.ArrayList;
 import java.util.List;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.PrimeProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
@@ -29,7 +29,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
  * @author Joakim Persson
  * 
  */
-public class PrimeProblemTest extends AndroidTestCase {
+public class PrimeProblemTest extends TestCase {
 
 	private PrimeProblem primeProblem;
 	private static final int ITERATIONS = 100;

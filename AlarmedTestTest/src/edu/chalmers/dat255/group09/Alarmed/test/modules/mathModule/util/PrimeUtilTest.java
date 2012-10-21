@@ -18,7 +18,7 @@ package edu.chalmers.dat255.group09.Alarmed.test.modules.mathModule.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
 
 /**
@@ -27,7 +27,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.util.PrimeUtil;
  * @author Joakim Persson
  * 
  */
-public class PrimeUtilTest extends AndroidTestCase {
+public class PrimeUtilTest extends TestCase {
 
 	private List<Integer> primeNumbers;
 	private static final int MAX_LIMIT = 100;
