@@ -1,11 +1,33 @@
-package edu.chalmers.dat255.group09.Alarmed.test.model;
+/*
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package edu.chalmers.dat255.group09.Alarmed.test.utils;
 
 import java.util.Calendar;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
+import android.util.Log;
 import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
 
-public class AlarmUtilTest extends AndroidTestCase {
+/**
+ * Test class for AlarmUtil.
+ * 
+ * @author Daniel Augurell
+ * 
+ */
+public class AlarmUtilTest extends TestCase {
 
 	public void testGetBooleanArray() {
 		String bits = "1110110";
@@ -77,14 +99,16 @@ public class AlarmUtilTest extends AndroidTestCase {
 	public void testAddDays() {
 		Calendar cal = Calendar.getInstance();
 		final int currentDay = cal.get(Calendar.DAY_OF_YEAR);
-		if (currentDay % 2 == 0) {
-			String bits = "1010101";
-			AlarmUtils.addDays(cal, Integer.parseInt(bits, 2));
-			assertEquals(currentDay + 1, cal.get(Calendar.DAY_OF_YEAR));
-		} else {
-			String bits = "0101010";
-			AlarmUtils.addDays(cal, Integer.parseInt(bits, 2));
-			assertEquals(currentDay + 1, cal.get(Calendar.DAY_OF_YEAR));
+		StringBuilder bits = new StringBuilder("0000000");
+		int currDay = cal.get(Calendar.DAY_OF_WEEK) - 2;
+		if (currDay == -1) {
+			currDay = AlarmUtils.DAYS_OF_WEEK - 1;
 		}
+		bits.setCharAt(AlarmUtils.DAYS_OF_WEEK - 1 - (currDay + 1)
+				% AlarmUtils.DAYS_OF_WEEK, '1');
+		AlarmUtils.addDays(cal, Integer.parseInt(bits.toString(), 2));
+		Log.w("Bits", bits.toString());
+		Log.w("day", "" + (currDay + 1));
+		assertEquals(currentDay + 1, cal.get(Calendar.DAY_OF_YEAR));
 	}
 }
