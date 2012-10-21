@@ -18,7 +18,6 @@ package edu.chalmers.dat255.group09.Alarmed.test.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.test.AndroidTestCase;
 import edu.chalmers.dat255.group09.Alarmed.controller.AlarmController;
 import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
