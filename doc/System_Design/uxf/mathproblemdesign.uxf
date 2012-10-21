@@ -4,8 +4,8 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>180</x>
-      <y>130</y>
+      <x>170</x>
+      <y>260</y>
       <w>170</w>
       <h>40</h>
     </coordinates>
@@ -17,8 +17,8 @@ MathActivity
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
-      <y>230</y>
+      <x>80</x>
+      <y>340</y>
       <w>310</w>
       <h>140</h>
     </coordinates>
@@ -37,14 +37,14 @@ MathActivity
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
-      <y>420</y>
+      <x>80</x>
+      <y>530</y>
       <w>310</w>
       <h>120</h>
     </coordinates>
-    <panel_attributes>MathProblemGenerator
+    <panel_attributes>MathProblemFactory
 --
--NBR_OF_OPERATORS: int
+-mathProblemTypes: List&lt;Class&lt;?&gt;&gt;
 --
 +generateProblem(): Difficulty
 -generateProblemType(): MathProblemType
@@ -54,8 +54,8 @@ MathActivity
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>230</x>
-      <y>340</y>
+      <x>220</x>
+      <y>450</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
@@ -65,8 +65,8 @@ MathActivity
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>520</x>
-      <y>420</y>
+      <x>510</x>
+      <y>530</y>
       <w>290</w>
       <h>120</h>
     </coordinates>
@@ -82,8 +82,8 @@ MathActivity
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>370</x>
-      <y>430</y>
+      <x>360</x>
+      <y>540</y>
       <w>170</w>
       <h>70</h>
     </coordinates>
@@ -94,23 +94,24 @@ Creates</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>230</x>
-      <y>140</y>
+      <x>220</x>
+      <y>270</y>
       <w>50</w>
-      <h>110</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>30;90;30;30</additional_attributes>
+    <additional_attributes>30;70;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>520</x>
-      <y>600</y>
+      <x>510</x>
+      <y>710</y>
       <w>290</w>
-      <h>100</h>
+      <h>120</h>
     </coordinates>
-    <panel_attributes>MathProblemType
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+MathProblemType
 --
 +getResult(int[] numbers): int
 +generateNumbers(difficulty: Difficulty)
@@ -121,8 +122,8 @@ Creates</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>640</x>
-      <y>510</y>
+      <x>630</x>
+      <y>620</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -132,22 +133,26 @@ Creates</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
-      <y>20</y>
+      <x>80</x>
+      <y>100</y>
       <w>310</w>
-      <h>80</h>
+      <h>130</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;Activity&gt;&gt;
+    <panel_attributes>&lt;&lt;Abstract&gt;&gt;&lt;&lt;Activity&gt;&gt;
 BaseActivationActivity
 --
-+stopAlarm(): void</panel_attributes>
++stopAlarm(): void
++increaseVolume(): void
++decreaseVolume(): void
++setVolume(desiredVolume: int): void
++inputDetected(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>230</x>
-      <y>70</y>
+      <x>220</x>
+      <y>200</y>
       <w>50</w>
       <h>80</h>
     </coordinates>
