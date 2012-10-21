@@ -15,10 +15,6 @@ public class AudioHelperTest extends AndroidTestCase {
 		hAudio = new AudioHelper(getContext(), intent);
 	}
 	
-	public void testGetAlarmToneDialog() {
-		assertNotNull(hAudio.getAlarmToneDialog());
-	}
-	
 	public void testGetVolumeDialog() {
 		assertNotNull(hAudio.getVolumeDialog());
 	}
