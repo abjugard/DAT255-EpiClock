@@ -15,6 +15,10 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.receiver;
 
+import java.util.List;
+
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -44,9 +48,26 @@ public class AlarmReceiver extends BroadcastReceiver {
 			activateIntent.putExtra(Constants.VOLUME, data[2]);
 			activateIntent.putExtra(Constants.TONEURI, data[3]);
 			activateIntent.putExtra(Constants.VIBRATION, data[4]);
-			context.startActivity(activateIntent);
+			if (!isModuleRunning(context)) {
+				context.startActivity(activateIntent);
+			}
 		}
 		aControl.destroy();
+	}
+
+	public boolean isModuleRunning(Context context) {
+		ActivityManager activityManager = (ActivityManager) context
+				.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningTaskInfo> tasks = activityManager
+				.getRunningTasks(Integer.MAX_VALUE);
+
+		for (RunningTaskInfo task : tasks) {
+			String className = task.topActivity.getClassName();
+			if (className.contains(Constants.MODULE)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
