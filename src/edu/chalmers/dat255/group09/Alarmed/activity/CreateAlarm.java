@@ -116,7 +116,16 @@ public class CreateAlarm extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
-
+		
+		Intent intent = this.getIntent();
+		if (intent.getIntExtra(Constants.REQUESTCODE, -1) == Constants.EDIT_ALARM_REQUEST_CODE) {
+			String[] modules = ModuleFactory.getModuleNames();
+			for (int i = 0; i < modules.length; i++) {
+				if (intent.getStringExtra(Constants.MODULE).equals(modules[i])) {
+					spinner.setSelection(i);
+				}
+			}
+		}
 	}
 
 	@Override
