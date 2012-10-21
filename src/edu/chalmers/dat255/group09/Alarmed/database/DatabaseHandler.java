@@ -138,8 +138,7 @@ public class DatabaseHandler implements AlarmHandler {
 		alarmTime.putNull(KEY_ROWID);
 		alarmTime.put(KEY_DAYSOFWEEK, alarm.getDaysOfWeek());
 		alarmTime.put(KEY_ENABLED, alarm.isEnabled());
-		alarmTime.put(KEY_TIME,
-				alarm.getAlarmHours() + ":" + alarm.getAlarmMinutes());
+		alarmTime.put(KEY_TIME, alarm.toString());
 		alarmTime.put(KEY_MODULE, alarm.getModule());
 		alarmTime.put(KEY_VOLUME, alarm.getVolume());
 		alarmTime.put(KEY_VIBRATION, alarm.isVibrationEnabled());
