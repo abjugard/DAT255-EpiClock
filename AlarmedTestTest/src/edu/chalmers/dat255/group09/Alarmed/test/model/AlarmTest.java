@@ -19,6 +19,7 @@ import java.util.Calendar;
 
 import junit.framework.TestCase;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
+import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
 
 /**
  * Class for testing the Alarm class.
@@ -68,8 +69,9 @@ public class AlarmTest extends TestCase {
 	}
 
 	/**
-	 * Creates a new alarm which is due in ten hours and thirty minutes from the current system
-	 * time and then validates that the alarm is set at the correct time.
+	 * Creates a new alarm which is due in ten hours and thirty minutes from the
+	 * current system time and then validates that the alarm is set at the
+	 * correct time.
 	 */
 	public void testAlarmTimeAfterTenHoursThrityMinutes() {
 		final int hoursToAdd = 10;
@@ -83,8 +85,9 @@ public class AlarmTest extends TestCase {
 	}
 
 	/**
-	 * Creates a new alarm which is due in twenty hours and fifty minutes from the current system
-	 * time and then validates that the alarm is set at the correct time.
+	 * Creates a new alarm which is due in twenty hours and fifty minutes from
+	 * the current system time and then validates that the alarm is set at the
+	 * correct time.
 	 */
 	public void testAlarmTimeAfterTwentyHoursFiftyMinutes() {
 
@@ -177,7 +180,7 @@ public class AlarmTest extends TestCase {
 	}
 
 	public void testThirtyMinuteToString() {
-		Alarm at = alarmTimeFromNow(30, 0);
+		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2, 0);
 		String toMatch = "Alarm is set for 30 minutes from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
@@ -189,7 +192,8 @@ public class AlarmTest extends TestCase {
 	}
 
 	public void testFiveHoursToString() {
-		Alarm at = alarmTimeFromNow(0, 5);
+		final int hour = 5;
+		Alarm at = alarmTimeFromNow(0, hour);
 		String toMatch = "Alarm is set for 5 hours from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
@@ -201,25 +205,28 @@ public class AlarmTest extends TestCase {
 	}
 
 	public void testOneHourThirtyMinuteToString() {
-		Alarm at = alarmTimeFromNow(30, 1);
+		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2, 1);
 		String toMatch = "Alarm is set for 1 hour and 30 minutes from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testFiveHourOneMinuteToString() {
-		Alarm at = alarmTimeFromNow(1, 5);
+		final int hour = 5;
+		Alarm at = alarmTimeFromNow(1, hour);
 		String toMatch = "Alarm is set for 5 hours and 1 minute from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testFiveHourThirtyMinuteToString() {
-		Alarm at = alarmTimeFromNow(30, 5);
+		final int hour = 5;
+		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2, hour);
 		String toMatch = "Alarm is set for 5 hours and 30 minutes from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
 	public void testTwentyThreeHourThirtyMinuteToString() {
-		Alarm at = alarmTimeFromNow(30, 23);
+		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2,
+				AlarmUtils.HOUR_OF_DAY - 1);
 		String toMatch = "Alarm is set for 23 hours and 30 minutes from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
@@ -362,6 +369,7 @@ public class AlarmTest extends TestCase {
 
 		// Sets the test to be set on different times depending on the current
 		// time
+		
 		int hour = 0;
 		if (currentHour > 12) {
 			hour = 6;
