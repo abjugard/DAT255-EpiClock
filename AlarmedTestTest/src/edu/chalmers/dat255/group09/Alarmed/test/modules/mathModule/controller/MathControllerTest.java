@@ -35,7 +35,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 public class MathControllerTest extends TestCase {
 
 	private MathController controller;
-	private final int[] correctAnswers = new int[] { 1, 4 };
+	private final int[] correctAnswers = new int[] { 1, 2 };
 	private static final int CORRECT_ANSWERS_TO_COMPLETE = 5;
 	private static final int CORRECT_ANSWERS_TO_HARD = 4;
 	private static final int CORRECT_ANSWERS_TO_MEDIUM = 3;
@@ -66,8 +66,8 @@ public class MathControllerTest extends TestCase {
 
 		assertFalse(controller.checkAnswer(answer));
 
-		// the correct answer is 4
-		answer = 4;
+		// the correct answer is 2
+		answer = 2;
 		assertTrue(controller.checkAnswer(answer));
 
 	}
@@ -273,7 +273,7 @@ public class MathControllerTest extends TestCase {
 			problems = new ArrayList<MathProblem>();
 			problems.add(new MathProblem(new int[] { 1, 1 },
 					new MultiplicationProblem()));
-			problems.add(new MathProblem(new int[] { 2, 2 },
+			problems.add(new MathProblem(new int[] { 0, 2 },
 					new AdditionProblem()));
 		}
 

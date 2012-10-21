@@ -54,18 +54,22 @@ public class FibonacciProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testGetResult() {
+	public void testGetResultForThreeFiveEight() {
+		int actualResult = fibonacciProblem.getResult(new int[] { 3, 5, 8 });
+		int expectedResult = 13;
+		assertEquals(expectedResult, actualResult);
 
+	}
+
+	public void testGetResultForZeroOneOne() {
 		int actualResult = fibonacciProblem.getResult(new int[] { 0, 1, 1 });
 		int expectedResult = 2;
 		assertEquals(expectedResult, actualResult);
+	}
 
-		actualResult = fibonacciProblem.getResult(new int[] { 3, 5, 8 });
-		expectedResult = 13;
-		assertEquals(expectedResult, actualResult);
-
-		actualResult = fibonacciProblem.getResult(new int[] { 8, 13 });
-		expectedResult = 21;
+	public void testGetResultForTwoTerms() {
+		int actualResult = fibonacciProblem.getResult(new int[] { 8, 13 });
+		int expectedResult = 21;
 		assertEquals(expectedResult, actualResult);
 	}
 

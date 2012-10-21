@@ -49,18 +49,21 @@ public class FactorialProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
-	public void testGetResult() {
-
+	public void testGetResultForThreeNumbers() {
 		int actualResult = factorialProblem.getResult(new int[] { 6, 2, 3 });
 		int expectedResult = 728;
 		assertEquals(expectedResult, actualResult);
+	}
 
-		actualResult = factorialProblem.getResult(new int[] { 0, 1 });
-		expectedResult = 2;
+	public void testGetResultForZeroAndZero() {
+		int actualResult = factorialProblem.getResult(new int[] { 0, 0 });
+		int expectedResult = 2;
 		assertEquals(expectedResult, actualResult);
+	}
 
-		actualResult = factorialProblem.getResult(new int[] { 4, 3 });
-		expectedResult = 30;
+	public void testGetResultForFourAndThree() {
+		int actualResult = factorialProblem.getResult(new int[] { 4, 3 });
+		int expectedResult = 30;
 		assertEquals(expectedResult, actualResult);
 	}
 
