@@ -22,8 +22,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -139,13 +142,36 @@ public class CreateAlarm extends Activity {
 	 *            The parent View of the dialog
 	 */
 	public void onAlarmToneBtnPressed(View view) {
-		hAudio.getAlarmToneDialog().show();
+		// hAudio.getAlarmToneDialog().show();
+		Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+		intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, getResources()
+				.getString(R.string.select_alarm_tone));
+		intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
+		intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+		intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
+				RingtoneManager.TYPE_ALL);
+		this.startActivityForResult(intent, 999);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			Uri uri = data
+					.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+			if (uri != null) {
+				String ringTonePath = uri.toString();
+				Log.d("Path", ringTonePath);
+				getIntent().putExtra("toneuri", ringTonePath);
+			}
+		}
 	}
 
 	/**
 	 * Opens the volume and vibration control dialog.
 	 * 
-	 * @param view The view that has been pressed
+	 * @param view
+	 *            The view that has been pressed
 	 */
 	public void onVolumeBtnPressed(View view) {
 		hAudio.getVolumeDialog().show();
