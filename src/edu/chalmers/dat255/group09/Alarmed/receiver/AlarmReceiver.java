@@ -32,6 +32,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.factory.ModuleFactory;
  * 
  * @author Daniel Augurell
  * @author Joakim Persson
+ * @author Adrian Bjugard
  * 
  */
 public class AlarmReceiver extends BroadcastReceiver {
@@ -55,6 +56,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 		aControl.destroy();
 	}
 
+	/**
+	 * Checks for a running Alarmed module.
+	 * 
+	 * @param context
+	 *            The context to get ActivityManager from
+	 * @return Whether or not a module is running
+	 */
 	public boolean isModuleRunning(Context context) {
 		ActivityManager activityManager = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);
