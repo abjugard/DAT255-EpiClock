@@ -38,6 +38,11 @@ public class AlarmTest extends TestCase {
 	 * the hh and mm will be equal. Since we are using milliseconds the delta
 	 * will be 60s = 60ms == 60000.
 	 */
+
+	/**
+	 * Creates a new alarm which is due in four hours from the current system
+	 * time and then validates that the alarm is set at the correct time.
+	 */
 	public void testAlarmTimeAfterFourHours() {
 		final int hoursToAdd = 4;
 		final int minutesToAdd = 0;
@@ -48,6 +53,10 @@ public class AlarmTest extends TestCase {
 		assertEquals(expectedTime, actualTime, AlarmTest.MILLISECONDS_OF_MINUTE);
 	}
 
+	/**
+	 * Creates a new alarm which is due in twelve hours from the current system
+	 * time and then validates that the alarm is set at the correct time.
+	 */
 	public void testAlarmTimeAfterTwelveHours() {
 		final int hoursToAdd = 12;
 		final int minutesToAdd = 0;
@@ -58,6 +67,10 @@ public class AlarmTest extends TestCase {
 		assertEquals(expectedTime, actualTime, AlarmTest.MILLISECONDS_OF_MINUTE);
 	}
 
+	/**
+	 * Creates a new alarm which is due in ten hours and thirty minutes from the current system
+	 * time and then validates that the alarm is set at the correct time.
+	 */
 	public void testAlarmTimeAfterTenHoursThrityMinutes() {
 		final int hoursToAdd = 10;
 		final int minutesToAdd = 30;
@@ -69,9 +82,13 @@ public class AlarmTest extends TestCase {
 		assertEquals(expectedTime, actualTime, AlarmTest.MILLISECONDS_OF_MINUTE);
 	}
 
+	/**
+	 * Creates a new alarm which is due in twenty hours and fifty minutes from the current system
+	 * time and then validates that the alarm is set at the correct time.
+	 */
 	public void testAlarmTimeAfterTwentyHoursFiftyMinutes() {
 
-		final int minutesToAdd = 52;
+		final int minutesToAdd = 50;
 		final int hoursToAdd = 20;
 		long currentTime = System.currentTimeMillis();
 		long expectedTime = getExpectedTime(hoursToAdd, minutesToAdd)
