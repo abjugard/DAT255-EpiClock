@@ -46,6 +46,8 @@ import edu.chalmers.dat255.group09.Alarmed.utils.AudioHelper;
  * 
  */
 public class CreateAlarm extends Activity {
+	private static final int SET_ALARM_TONE = 999;
+
 	private AudioHelper hAudio;
 
 	@Override
@@ -142,7 +144,6 @@ public class CreateAlarm extends Activity {
 	 *            The parent View of the dialog
 	 */
 	public void onAlarmToneBtnPressed(View view) {
-		// hAudio.getAlarmToneDialog().show();
 		Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
 		intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, getResources()
 				.getString(R.string.select_alarm_tone));
@@ -150,7 +151,7 @@ public class CreateAlarm extends Activity {
 		intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
 		intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
 				RingtoneManager.TYPE_ALL);
-		this.startActivityForResult(intent, 999);
+		this.startActivityForResult(intent, SET_ALARM_TONE);
 	}
 
 	@Override
