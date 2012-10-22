@@ -48,6 +48,8 @@ public class Alarm implements Comparable<Alarm> {
 	 * @param id
 	 *            The id of the alarm
 	 * @throws IllegalArgumentException
+	 *             If the hours or minutes is illegal
+	 *             {@link IllegalArgumentException} is thrown.
 	 */
 	public Alarm(int hours, int minutes, int id)
 			throws IllegalArgumentException {
