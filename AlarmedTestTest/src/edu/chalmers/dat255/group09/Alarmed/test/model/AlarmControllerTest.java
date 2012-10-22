@@ -39,23 +39,36 @@ public class AlarmControllerTest extends AndroidTestCase {
 		ac = AlarmController.getInstance();
 		handler = new MockAlarmHandler().openCon();
 		ac.init(getContext(), handler);
-		Alarm a1 = new Alarm(10, 10, 0, "", 0);
-		Alarm a2 = new Alarm(20, 20, 0, "", 0);
+		final int alarm1 = 20;
+		final int alarm2 = 10;
+		Alarm a1 = new Alarm(alarm1, alarm1, 0, "", 0);
+		Alarm a2 = new Alarm(alarm2, alarm2, 0, "", 0);
 		ac.addAlarm(a1);
 		ac.addAlarm(a2);
 	}
 
+	/**
+	 * Test to see if the controller has been destroyed.
+	 */
 	public void testDestroy() {
 		ac.destroy();
 		assertNull(handler.fetchAllAlarms());
 	}
 
+	/**
+	 * Test to see if the controller can delete alarms and only delete alarms
+	 * that is existing.
+	 */
 	public void testDeleteAlarm() {
 		assertTrue(ac.deleteAlarm(2));
 		assertNull(handler.fetchAlarm(2));
 		assertFalse(ac.deleteAlarm(2));
 	}
 
+	/**
+	 * Test to see if the controller can access all alarms and the alarms is not
+	 * null.
+	 */
 	public void testGetAllAlarms() {
 		List<Alarm> list = ac.getAllAlarms();
 		assertEquals(2, list.size());
@@ -64,18 +77,28 @@ public class AlarmControllerTest extends AndroidTestCase {
 		}
 	}
 
+	/**
+	 * Test to see if the alarm disables alarms after they have been received.
+	 */
 	public void testAlarmReceived() {
-		assertFalse(ac.alarmReceived(3));
+		final int size = 2;
+		assertFalse(ac.alarmReceived(size + 1));
 		ac.alarmReceived(2);
 		assertFalse(handler.isEnabled(2));
 	}
 
+	/**
+	 * Test to see if the controller can enable/disable alarms.
+	 */
 	public void testAlarmEnabled() {
 		assertTrue(ac.enableAlarm(1, false));
 		assertFalse(ac.enableAlarm(2, true));
 		assertFalse(ac.isAlarmEnabled(1));
 	}
 
+	/**
+	 * Test to see if the controller have created alarms.
+	 */
 	public void testCreateAlarm() {
 		assertNotNull(handler.fetchAlarm(1));
 		assertNotNull(handler.fetchAlarm(2));
@@ -97,20 +120,23 @@ public class AlarmControllerTest extends AndroidTestCase {
 	 * @author Daniel Augurell
 	 * 
 	 */
-	private class MockAlarmHandler implements AlarmHandler {
+	private static class MockAlarmHandler implements AlarmHandler {
 		private int nbrID;
 		private List<Alarm> alarms;
 
+		@Override
 		public AlarmHandler openCon() {
 			alarms = new ArrayList<Alarm>();
 			return this;
 		}
 
+		@Override
 		public void closeCon() {
 			alarms = null;
 			nbrID = 0;
 		}
 
+		@Override
 		public long addAlarm(Alarm alarm) {
 			Alarm addAlarm = new Alarm(alarm.getAlarmHours(),
 					alarm.getAlarmMinutes(), ++nbrID, alarm.getModule(),
@@ -119,6 +145,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 			return addAlarm.getId();
 		}
 
+		@Override
 		public boolean deleteAlarm(int alarmID) {
 			for (Alarm alarm : alarms) {
 				if (alarm.getId() == alarmID) {
@@ -129,14 +156,17 @@ public class AlarmControllerTest extends AndroidTestCase {
 			return false;
 		}
 
+		@Override
 		public Alarm fetchFirstEnabledAlarm() {
 			return null;
 		}
 
+		@Override
 		public List<Alarm> fetchAllAlarms() {
 			return alarms;
 		}
 
+		@Override
 		public Alarm fetchAlarm(int alarmID) {
 			for (Alarm alarm : alarms) {
 				if (alarm.getId() == alarmID) {
@@ -146,10 +176,12 @@ public class AlarmControllerTest extends AndroidTestCase {
 			return null;
 		}
 
+		@Override
 		public int getNumberOfAlarms() {
 			return alarms.size();
 		}
 
+		@Override
 		public boolean isEnabled(int id) {
 			for (Alarm alarm : alarms) {
 				if (alarm.getId() == id) {
@@ -159,6 +191,7 @@ public class AlarmControllerTest extends AndroidTestCase {
 			return false;
 		}
 
+		@Override
 		public boolean setAlarmEnabled(int id, boolean enable) {
 
 			for (Alarm alarm : alarms) {
