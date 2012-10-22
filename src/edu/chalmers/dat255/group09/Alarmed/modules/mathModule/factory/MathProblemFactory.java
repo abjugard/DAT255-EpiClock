@@ -20,6 +20,7 @@ import java.util.List;
 
 import android.util.Log;
 
+import edu.chalmers.dat255.group09.Alarmed.constants.Constants;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.AdditionProblem;
@@ -41,7 +42,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 public class MathProblemFactory {
 
 	private List<Class<?>> mathProblemTypes;
-	private static final String TAG = "edu.chalmers.dat255.group09.Alarmed.MathProblemFactory";
+	private static final String TAG = Constants.PACKAGE + ".MathProblemFactory";
 
 	/**
 	 * Create a new MathProblemGenerator.

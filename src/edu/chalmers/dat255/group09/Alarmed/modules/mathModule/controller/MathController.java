@@ -21,9 +21,9 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Di
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes.MathProblemType;
 
 /**
- * A controller for an mathproblem. It keeps tracks of the users progress and is
+ * A controller for an MathProblem. It keeps tracks of the users progress and is
  * also responsible for generating new math problems and validate if the user
- * has answerd correctly.
+ * has answered correctly.
  * 
  * @author Joakim Persson
  * 

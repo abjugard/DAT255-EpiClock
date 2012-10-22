@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugård, Andreas Rolén
+ * Copyright (C) 2012 Joakim Persson, Daniel Augurell, Adrian Bjugard, Andreas Rolen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,21 +29,25 @@ import edu.chalmers.dat255.group09.Alarmed.R;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
 
 /**
- * Adapter to set the view of alarms. 
+ * Adapter to set the view of alarms.
  * 
  * @author Daniel Augurell
  * @author Joakim Persson
- *
+ * 
  */
 public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 
 	private OnCreateContextMenuListener listener;
-	
+
 	/**
 	 * Constructor for the BrowseAlarmAdapter.
-	 * @param context The android context
-	 * @param textViewResourceId The id of the TextView
-	 * @param alarms The alarms to be shown
+	 * 
+	 * @param context
+	 *            The android context
+	 * @param textViewResourceId
+	 *            The id of the TextView
+	 * @param alarms
+	 *            The alarms to be shown
 	 */
 	public BrowseAlarmAdapter(Context context, int textViewResourceId,
 			List<Alarm> alarms) {
@@ -63,7 +67,7 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 		textView.setText(getItem(position).toString());
 		checkBox.setChecked(getItem(position).isEnabled());
 		checkBox.setTag(getItem(position).getId());
-		
+
 		view.setOnCreateContextMenuListener(listener);
 
 		return view;
@@ -71,7 +75,9 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 
 	/**
 	 * Updates the views with a new list.
-	 * @param list The new list to be shown
+	 * 
+	 * @param list
+	 *            The new list to be shown
 	 */
 	public void updateList(List<Alarm> list) {
 		clear();
@@ -83,7 +89,9 @@ public class BrowseAlarmAdapter extends ArrayAdapter<Alarm> {
 
 	/**
 	 * Sets a listener to listen on clicks on the views.
-	 * @param contextListener Listener to listen on clicks
+	 * 
+	 * @param contextListener
+	 *            Listener to listen on clicks
 	 */
 	public void setContexMenuListner(OnCreateContextMenuListener contextListener) {
 		this.listener = contextListener;

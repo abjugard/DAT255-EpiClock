@@ -26,7 +26,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -43,7 +42,7 @@ import edu.chalmers.dat255.group09.Alarmed.utils.AudioHelper;
  * 
  * @author Daniel Augurell
  * @author Joakim Persson
- * @author Adrian Bjugård
+ * @author Adrian Bjugard
  * 
  */
 public class CreateAlarm extends Activity {
@@ -116,7 +115,7 @@ public class CreateAlarm extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
-		
+
 		Intent intent = this.getIntent();
 		if (intent.getIntExtra(Constants.REQUESTCODE, -1) == Constants.EDIT_ALARM_REQUEST_CODE) {
 			String[] modules = ModuleFactory.getModuleNames();
@@ -166,12 +165,11 @@ public class CreateAlarm extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+		if (resultCode == RESULT_OK && SET_ALARM_TONE == requestCode) {
 			Uri uri = data
 					.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 			if (uri != null) {
 				String ringTonePath = uri.toString();
-				Log.d("Path", ringTonePath);
 				getIntent().putExtra(Constants.TONEURI, ringTonePath);
 			}
 		}
@@ -217,7 +215,7 @@ public class CreateAlarm extends Activity {
 	}
 
 	/**
-	 * Flashy transition between views.
+	 * Override default transition between views.
 	 */
 	private void overrideTransition() {
 		int fadeIn = android.R.anim.fade_in;
