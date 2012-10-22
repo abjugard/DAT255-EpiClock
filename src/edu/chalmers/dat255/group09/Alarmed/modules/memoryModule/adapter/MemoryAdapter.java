@@ -67,10 +67,9 @@ public class MemoryAdapter extends BaseAdapter {
 			view = (CardImage) convertView;
 		} else {
 			view = images.get(position);
-			view.setLayoutParams(new GridView.LayoutParams(160, 160));
+			view.setLayoutParams(new GridView.LayoutParams(120, 120));
 			view.setAdjustViewBounds(false);
 			view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			view.setPadding(8, 8, 8, 8);
 		}
 
 		return view;
