@@ -38,17 +38,27 @@ public class CardImageTest extends AndroidTestCase {
 		cardImage = new CardImage(getContext(), card, IMAGE_RESOURCE);
 	}
 
+	/**
+	 * Test if the image is hidden when the card created.
+	 */
 	public void testGetImageResourceIfHidden() {
 		assertTrue(card.getStatus().equals(CardStatus.Hidden));
 		assertEquals(R.drawable.ic_launcher, cardImage.getImageResource());
 	}
 
+	/**
+	 * Test if cardPressed is changing the status of the card.
+	 */
 	public void testCardPressed() {
 		cardImage.cardPressed();
-		assertTrue(card.getStatus().equals(CardStatus.Visable));
+		assertTrue(card.getStatus().equals(CardStatus.Visible));
 		assertEquals(IMAGE_RESOURCE, cardImage.getImageResource());
 	}
 
+	/**
+	 * Test if the hash code is equal if it's the same image and the same status
+	 * on the card.
+	 */
 	public void testHashCodeAgainstSameImage() {
 		Card otherCard = new Card();
 		CardImage otherImage = new CardImage(getContext(), otherCard,
@@ -56,30 +66,45 @@ public class CardImageTest extends AndroidTestCase {
 		assertEquals(cardImage.hashCode(), otherImage.hashCode());
 	}
 
+	/**
+	 * Test if the hash code is not equal if it's not the same image but the same status
+	 * on the card.
+	 */
 	public void testHashCodeAgainstOtherImage() {
 		Card otherCard = new Card();
 		CardImage otherImage = new CardImage(getContext(), otherCard, 0);
 		assertFalse(cardImage.hashCode() == otherImage.hashCode());
 	}
-
+	/**
+	 * Test if the hash code is equal against itself.
+	 */
 	public void testHashCodeAgainstItself() {
 		assertEquals(cardImage.hashCode(), cardImage.hashCode());
 	}
-
+	/**
+	 * Test if equals works on null.
+	 */
 	public void testEqualsNull() {
 		assertFalse(cardImage.equals(null));
 	}
-
+	/**
+	 * Test if the cardImage is equal to it self.
+	 */
 	public void testEqualsItself() {
 		assertTrue(cardImage.equals(cardImage));
 	}
 
+	/**
+	 * Test if its not equal to a different image.
+	 */
 	public void testEqualsAgainstOtherImage() {
 		Card otherCard = new Card();
 		CardImage otherImage = new CardImage(getContext(), otherCard, 0);
 		assertFalse(cardImage.equals(otherImage));
 	}
-
+	/**
+	 * Test of its not equal on different statuses.
+	 */
 	public void testEqualsSameImageOtherCardStatus() {
 		Card otherCard = new Card();
 		CardImage otherImage = new CardImage(getContext(), otherCard,
@@ -87,7 +112,9 @@ public class CardImageTest extends AndroidTestCase {
 		otherImage.cardPressed();
 		assertFalse(cardImage.equals(otherImage));
 	}
-
+	/**
+	 * Set if setDisable disables a card.
+	 */
 	public void testDisabled() {
 		cardImage.setDisabled();
 		assertTrue(cardImage.isDisabled());

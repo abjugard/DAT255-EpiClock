@@ -46,7 +46,7 @@ public class CardTest extends TestCase {
 		card.toggleStatus();
 
 		actual = card.getStatus();
-		assertEquals(CardStatus.Visable, actual);
+		assertEquals(CardStatus.Visible, actual);
 
 		card.toggleStatus();
 

@@ -29,7 +29,7 @@ public final class Card {
 	 * 
 	 */
 	public enum CardStatus {
-		Hidden, Visable;
+		Hidden, Visible;
 	}
 
 	private CardStatus currentStatus;
@@ -58,7 +58,7 @@ public final class Card {
 	public void toggleStatus() {
 
 		if (currentStatus == CardStatus.Hidden) {
-			currentStatus = CardStatus.Visable;
+			currentStatus = CardStatus.Visible;
 		} else {
 			currentStatus = CardStatus.Hidden;
 		}
