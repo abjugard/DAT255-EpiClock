@@ -36,37 +36,61 @@ public class FactorialProblemTest extends TestCase {
 		factorialProblem = new FactorialProblem();
 	}
 
+	/**
+	 * Tests that the factorial problem is returning a correct problem
+	 * header/description.
+	 */
 	public void testGetPromlemHeader() {
 		String expected = "What is the sum?";
 		String actual = factorialProblem.getProblemHeader();
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Tests that the getFormattedString is working as expected and that the
+	 * returned formatted problem description is correct.
+	 */
 	public void testGetFormattedString() {
-		int[] nbrs = { 3, 4 };
-		String expected = "3! + 4! = ?";
+		int[] nbrs = { 1, 0 };
+		String expected = "1! + 0! = ?";
 		String actual = factorialProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the getResult method is working as expected for three
+	 * numbers.
+	 */
 	public void testGetResultForThreeNumbers() {
-		int actualResult = factorialProblem.getResult(new int[] { 6, 2, 3 });
-		int expectedResult = 728;
+		int actualResult = factorialProblem.getResult(new int[] { 0, 1, 2 });
+		int expectedResult = 4;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly when the input is
+	 * two zeros. Remember that by definition 0! =1.
+	 */
 	public void testGetResultForZeroAndZero() {
 		int actualResult = factorialProblem.getResult(new int[] { 0, 0 });
 		int expectedResult = 2;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Tests the getResult method for "normal" input and validates that it works
+	 * as expected.
+	 */
 	public void testGetResultForFourAndThree() {
 		int actualResult = factorialProblem.getResult(new int[] { 4, 3 });
 		int expectedResult = 30;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Tests the generateEasyProblem method by running several different tests
+	 * on the randomly generated numbers.
+	 */
 	public void testGenerateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 6;
@@ -76,6 +100,10 @@ public class FactorialProblemTest extends TestCase {
 				upperLimit, expectedNbrOfNumbers);
 	}
 
+	/**
+	 * Tests the generateMediumProblem method by running several different tests
+	 * on the randomly generated numbers.
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 0;
 		int upperLimit = 30;
@@ -85,6 +113,10 @@ public class FactorialProblemTest extends TestCase {
 				upperLimit, expectedNbrOfNumbers);
 	}
 
+	/**
+	 * Tests the generateHardProblem method by running several different tests
+	 * on the randomly generated numbers.
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = 0;
 		int upperLimit = 8;
