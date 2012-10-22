@@ -33,7 +33,8 @@ public class MathProblemTest extends TestCase {
 	private MathProblem problem = null;
 
 	/**
-	 * 
+	 * Tests that the getNumbers method is working correctly, and is returning
+	 * the same numbers that is was given upon creation.
 	 */
 	public void testGetNumbers() {
 		int[] expected = { 1, 2 };
@@ -53,7 +54,8 @@ public class MathProblemTest extends TestCase {
 	}
 
 	/**
-	 * 
+	 * Testing that the getOperator method is working correctly and is returning
+	 * the expected operator.
 	 */
 	public void testGetOperator() {
 		int[] numbers = { 1, 2 };

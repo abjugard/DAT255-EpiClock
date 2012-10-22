@@ -21,6 +21,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.MathProblem;
 import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.constants.Difficulty;
 
 /**
+ * A test class for the MathProblemFactory class.
  * 
  * @author Joakim Persson
  * 

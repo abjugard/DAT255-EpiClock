@@ -37,7 +37,9 @@ import edu.chalmers.dat255.group09.Alarmed.modules.mathModule.model.problemTypes
 public class MathActivity extends BaseActivationActivity {
 
 	private MathController controller;
-
+	private static final String WRONG_ANSWER_MESSAGE = "OOOOOOO not good....";
+	private static final String NO_INPUT_ERROR_MESSAGE = "Please Enter Something!";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class MathActivity extends BaseActivationActivity {
 		if (isInputValid(text)) {
 			evaluateAnswer(text);
 		} else {
-			displayErrorMessage("Please Enter Something!");
+			displayErrorMessage(NO_INPUT_ERROR_MESSAGE);
 		}
 
 		answerField.setText("");
@@ -90,7 +92,7 @@ public class MathActivity extends BaseActivationActivity {
 		int answer = Integer.parseInt(text);
 
 		if (isWrongAnswer(answer)) {
-			displayErrorMessage("OOOOOOO not good....");
+			displayErrorMessage(WRONG_ANSWER_MESSAGE);
 		}
 
 		if (controller.isComplete()) {
