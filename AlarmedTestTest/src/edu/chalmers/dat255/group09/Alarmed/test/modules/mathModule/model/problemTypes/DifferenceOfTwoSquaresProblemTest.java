@@ -43,61 +43,102 @@ public class DifferenceOfTwoSquaresProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Tests that the problem formates the problem thesis correctly.
+	 */
 	public void testGetFormattedString() {
-		int[] nbrs = { 3, 4 };
-		String expected = "(3-4)(3+4)";
+		int[] nbrs = { 1, 2 };
+		String expected = "(1-2)(1+2)";
 		String actual = problem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that when using one number > 0 and zero, verifying that if the
+	 * number > 0 is squared in the result.
+	 */
 	public void testGetResultForTenZero() {
 		int actualResult = problem.getResult(new int[] { 10, 0 });
 		int expectedResult = 100;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that when using one number > 0 and zero, verifying that if the
+	 * number > 0 is squared in the result. However if the number > 0 is the
+	 * second paramater or b in the form a^2-b^2 the result will be b^2 and
+	 * negative.
+	 */
 	public void testGetResultForZeroTen() {
 		int actualResult = problem.getResult(new int[] { 0, 10 });
 		int expectedResult = -100;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method for when using the same number: a=b, and
+	 * verifying that the result is going to be zero.
+	 */
 	public void testGetResultForSameNumbers() {
-		int actualResult = problem.getResult(new int[] { 5, 5 });
+		int actualResult = problem.getResult(new int[] { 2, 2 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method for when using the same number, but the one
+	 * is negative: a=-b, and verifying that the result is going to be zero.
+	 */
 	public void testGetResultSameNumbersOnePosOneNeg() {
-		int actualResult = problem.getResult(new int[] { -5, 5 });
+		int actualResult = problem.getResult(new int[] { -2, -2 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method for when using the same number, but both are
+	 * negative: -a=-b, and verifying that the result is going to be zero.
+	 */
 	public void testGetResultSameNumbersBothNegative() {
 		int actualResult = problem.getResult(new int[] { -5, -5 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method for two negative numbers and verifying that
+	 * the result will be the same as if they where positive.
+	 */
 	public void testGetResultTwoNegativeNumbers() {
 		int actualResult = problem.getResult(new int[] { -3, -2 });
 		int expectedResult = 5;
 		assertEquals(expectedResult, actualResult);
 	}
 
-	public void testGetResultTwoPositiveNumbers() {
+	/**
+	 * Testing the getResult with two positive number, but b>a and verifying
+	 * that the method is working correctly and returns a negative number.
+	 */
+	public void testGetResultTwoPositiveNumbersBiggerNumberIsB() {
 		int actualResult = problem.getResult(new int[] { 6, 7 });
 		int expectedResult = -13;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method with one positive and one negtive number and
+	 * verifying that the method is working correctly.
+	 */
 	public void testGetResultOnePosOneNeg() {
 		int actualResult = problem.getResult(new int[] { -6, 7 });
 		int expectedResult = -13;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Tests that the generateEasyProblem method is generating numbers within
+	 * the specified [lowerLimit, upperLimit).
+	 */
 	public void testGenerateEasyProblem() {
 		int lowerLimit = 1;
 		int upperLimit = 5;
@@ -106,6 +147,10 @@ public class DifferenceOfTwoSquaresProblemTest extends TestCase {
 				upperLimit);
 	}
 
+	/**
+	 * Tests that the generateMediumProblem method is generating numbers within
+	 * the specified [lowerLimit, upperLimit).
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 4;
 		int upperLimit = 8;
@@ -114,6 +159,10 @@ public class DifferenceOfTwoSquaresProblemTest extends TestCase {
 				upperLimit);
 	}
 
+	/**
+	 * Tests that the generateHardProblem method is generating numbers within
+	 * the specified [lowerLimit, upperLimit).
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = 7;
 		int upperLimit = 11;
