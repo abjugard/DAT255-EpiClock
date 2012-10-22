@@ -41,7 +41,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		AlarmController aControl = AlarmController.getInstance();
 		aControl.init(context);
-		String[] data = intent.getData().toString().split(":::");
+		String[] data = intent.getData().toString()
+				.split(Constants.DATA_SEPERATOR);
 		if (aControl.alarmReceived(Integer.parseInt(data[0]))) {
 			Intent activateIntent = new Intent(context,
 					ModuleFactory.getModule(data[1]));
@@ -63,7 +64,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	 *            The context to get ActivityManager from
 	 * @return Whether or not a module is running
 	 */
-	public boolean isModuleRunning(Context context) {
+	private boolean isModuleRunning(Context context) {
 		ActivityManager activityManager = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);
 		List<RunningTaskInfo> tasks = activityManager

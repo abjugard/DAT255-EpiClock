@@ -22,6 +22,9 @@ package edu.chalmers.dat255.group09.Alarmed.constants;
  * 
  */
 public final class Constants {
+	/*
+	 * Constants for using when sending intents.
+	 */
 	public static final String PACKAGE = "edu.chalmers.dat255.group09.Alarmed";
 	public static final String ID = PACKAGE + ".id";
 	public static final String HOURS = PACKAGE + ".hours";
@@ -33,10 +36,17 @@ public final class Constants {
 	public static final String VIBRATION = PACKAGE + ".vibration";
 	public static final String TONEURI = PACKAGE + ".toneuri";
 	public static final String REQUESTCODE = PACKAGE + ".requestcode";
+
+	/*
+	 * Request codes between classes.
+	 */
 	public static final int ADD_ALARM_REQUEST_CODE = 1;
 	public static final int EDIT_ALARM_REQUEST_CODE = 2;
 	
-	
+	/**
+	 * Seperator of data in an uri.
+	 */
+	public static final String DATA_SEPERATOR = ":::";
 
 	/**
 	 * Private Constructor.

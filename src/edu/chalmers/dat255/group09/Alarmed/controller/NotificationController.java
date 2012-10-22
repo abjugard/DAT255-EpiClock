@@ -80,7 +80,7 @@ public class NotificationController {
 
 		Notification notification = new NotificationCompat.Builder(context)
 				.setContentIntent(pendingIntent)
-				.setSmallIcon(R.drawable.ic_launcher).setAutoCancel(true)
+				.setSmallIcon(R.drawable.ic_launcher).setAutoCancel(false)
 				.setTicker(tickerText).setContentTitle(contentTitle)
 				.setContentText(contentText).setOngoing(true)
 				.setOnlyAlertOnce(true).build();

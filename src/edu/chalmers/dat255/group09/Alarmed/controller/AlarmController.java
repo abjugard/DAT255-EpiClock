@@ -22,6 +22,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import edu.chalmers.dat255.group09.Alarmed.constants.Constants;
 import edu.chalmers.dat255.group09.Alarmed.database.AlarmHandler;
 import edu.chalmers.dat255.group09.Alarmed.database.DatabaseHandler;
 import edu.chalmers.dat255.group09.Alarmed.model.Alarm;
@@ -146,7 +147,7 @@ public final class AlarmController {
 	 */
 	private PendingIntent createAlarmPendingIntent(Alarm alarm) {
 		Intent intent = new Intent(context, AlarmReceiver.class);
-		String separator = ":::";
+		String separator = Constants.DATA_SEPERATOR;
 		intent.setData(Uri.parse(alarm.getId() + separator + alarm.getModule()
 				+ separator + alarm.getVolume() + separator
 				+ alarm.getToneUri() + separator + alarm.isVibrationEnabled()));

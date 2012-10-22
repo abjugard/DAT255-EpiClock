@@ -2,7 +2,6 @@ package edu.chalmers.dat255.group09.Alarmed.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.widget.TimePicker;

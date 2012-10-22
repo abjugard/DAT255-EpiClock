@@ -29,6 +29,10 @@ import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
  */
 public class AlarmUtilTest extends TestCase {
 
+	/**
+	 * Tests so you get the correct responding boolean array from bits
+	 * represented by an integer.
+	 */
 	public void testGetBooleanArray() {
 		String bits = "1110110";
 		boolean[] array = AlarmUtils.getBooleanArray(Integer.parseInt(bits, 2));
@@ -42,13 +46,19 @@ public class AlarmUtilTest extends TestCase {
 		}
 	}
 
+	/**
+	 * Tests so minutesToTime returns how long it is to a set minute.
+	 */
 	public void testGetMinutesToTime() {
 		int minute = Calendar.getInstance().get(Calendar.MINUTE);
 		final int minuteToAdd = 10;
-		int minuteToTime = (minute + minuteToAdd) % AlarmUtils.MINUTES_OF_HOUR;
-		assertEquals(minuteToAdd, AlarmUtils.getMinutesToTime(minuteToTime));
+		int time = (minute + minuteToAdd) % AlarmUtils.MINUTES_OF_HOUR;
+		assertEquals(minuteToAdd, AlarmUtils.getMinutesToTime(time));
 	}
 
+	/**
+	 * Tests so hoursToTime returns how long it is to a set hour and minute.
+	 */
 	public void testGetHoursToTime() {
 		int minute = Calendar.getInstance().get(Calendar.MINUTE);
 		int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
@@ -63,8 +73,12 @@ public class AlarmUtilTest extends TestCase {
 				AlarmUtils.getHoursToTime(hourToTime, minuteToTime));
 	}
 
+	/**
+	 * Test so a boolean array, where each value represents a day, Monday to
+	 * Sunday, shifts to represents Sunday to Saturday (as the Calendar does).
+	 */
 	public void testChangeToCalendar() {
-		boolean[] days = { true, false, false, false, false, false, true };
+		boolean[] days = {true, false, false, false, false, false, true };
 		boolean[] calDays = AlarmUtils.changeToCalendar(days);
 		assertEquals(days[days.length - 1], calDays[0]);
 		for (int i = 0; i < calDays.length - 1; i++) {
@@ -72,6 +86,10 @@ public class AlarmUtilTest extends TestCase {
 		}
 	}
 
+	/**
+	 * Test so you get the right numbers of days until the next day according to
+	 * a integer representing each day as a binary number.
+	 */
 	public void testGetDaysToNextDay() {
 		final int currentDay = 6;
 		String bits = "1000101";
@@ -80,14 +98,20 @@ public class AlarmUtilTest extends TestCase {
 		assertEquals(2, days);
 	}
 
+	/**
+	 * Test if you get the correct integer from a boolean array.
+	 */
 	public void testGetIntegerFromBooleanArray() {
-		boolean[] days = { true, false, false, false, false, false, true };
+		boolean[] days = {true, false, false, false, false, false, true };
 		final int intDays = AlarmUtils.getIntegerFromBooleanArray(days);
 		final int expextedDays = Integer.parseInt("1000001", 2);
 		assertEquals(expextedDays, intDays);
 
 	}
 
+	/**
+	 * Test if you add no days to the calendar if there is no reccuring set.
+	 */
 	public void testAddDaysNone() {
 		Calendar cal = Calendar.getInstance();
 		final int currentDay = cal.get(Calendar.DAY_OF_YEAR);
@@ -96,6 +120,9 @@ public class AlarmUtilTest extends TestCase {
 		assertEquals(currentDay, cal.get(Calendar.DAY_OF_YEAR));
 	}
 
+	/**
+	 * Test if you add a day to the calendar if the recurring is set tomorrow.
+	 */
 	public void testAddDays() {
 		Calendar cal = Calendar.getInstance();
 		final int currentDay = cal.get(Calendar.DAY_OF_YEAR);
