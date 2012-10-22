@@ -36,37 +36,60 @@ public class AdditionProblemTest extends TestCase {
 		additionProblem = new AdditionProblem();
 	}
 
+	/**
+	 * Testing that the problem is returning the correctly problem description.
+	 */
 	public void testGetPromlemHeader() {
 		String expected = "What Is The Sum?";
 		String actual = additionProblem.getProblemHeader();
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the problem is formatting and returning a correct string.
+	 */
 	public void testGetFormattedString() {
-		int[] nbrs = { 3, 4, 5 };
-		String expected = "3 + 4 + 5 = ?";
+		int[] nbrs = { 0, 1, 2 };
+		String expected = "0 + 1 + 2 = ?";
 		String actual = additionProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Tests that the getResult method is working as expected when using three
+	 * numbers.
+	 */
 	public void testGetResultForThreeNumbers() {
-		int actualResult = additionProblem.getResult(new int[] { 5, -5, 1 });
-		int expectedResult = 1;
+		int actualResult = additionProblem.getResult(new int[] { 1, 0, 2 });
+		int expectedResult = 3;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the getResult is working correctly when using the same
+	 * number. This test covers the basic usage of the getResult method.
+	 */
 	public void testGetResultForSixPlusSixe() {
 		int actualResult = additionProblem.getResult(new int[] { 6, 6 });
 		int expectedResult = 12;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method for when using one positive and one negative
+	 * number.
+	 */
 	public void testGetResultForTwoPlusMinusOne() {
 		int actualResult = additionProblem.getResult(new int[] { 2, -1 });
 		int expectedResult = 1;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the problems generateEasyProblems by running several tests for
+	 * validating everything from that the expected number of numbers is correct
+	 * to that the numbers is within the limits.
+	 */
 	public void testGenerateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 10;
@@ -76,6 +99,11 @@ public class AdditionProblemTest extends TestCase {
 				upperLimit, expectedNbrOfNumbers);
 	}
 
+	/**
+	 * Testing the problems generateMediumProblems by running several tests for
+	 * validating everything from that the expected number of numbers is correct
+	 * to that the numbers is within the limits.
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 0;
 		int upperLimit = 10;
@@ -85,6 +113,11 @@ public class AdditionProblemTest extends TestCase {
 				upperLimit, expectedNbrOfNumbers);
 	}
 
+	/**
+	 * Testing the problems generateHardProblems by running several tests for
+	 * validating everything from that the expected number of numbers is correct
+	 * to that the numbers is within the limits.
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = 10;
 		int upperLimit = 500;
