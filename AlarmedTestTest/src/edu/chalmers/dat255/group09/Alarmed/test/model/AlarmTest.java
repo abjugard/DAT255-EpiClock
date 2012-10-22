@@ -29,9 +29,10 @@ import edu.chalmers.dat255.group09.Alarmed.utils.AlarmUtils;
  */
 public class AlarmTest extends TestCase {
 
+	private static final String FAIL_MESSAGE = "Should generate an illegalargumentexpection";
 	private static final int HOURS_OF_DAY = 24;
 	private static final int MINUTES_OF_HOUR = 60;
-	private static final int MILLISECONDS_OF_MINUTE = 60000;
+	private static final long MILLISECONDS_OF_MINUTE = 60000;
 	private static final long ONE_HOUR_IN_MILLI_SECONDS = 3600000;
 
 	/*
@@ -119,7 +120,7 @@ public class AlarmTest extends TestCase {
 		int currentMinute = cal.get(Calendar.MINUTE);
 
 		if (minutesToAdd + currentMinute >= AlarmTest.MINUTES_OF_HOUR) {
-			hoursToAdd++;
+			currentTime++;
 		}
 
 		int hours = (currentTime + hoursToAdd) % AlarmTest.HOURS_OF_DAY;
@@ -169,9 +170,8 @@ public class AlarmTest extends TestCase {
 				(minuteToTrigger % AlarmTest.MINUTES_OF_HOUR), 0);
 	}
 
-	/*
-	 * The toString() will return a different format depending on how long it's
-	 * left. The string has 8 different formats.
+	/**
+	 * Test method to test formated strings with only one minute.
 	 */
 	public void testOneMinuteToString() {
 		Alarm at = alarmTimeFromNow(1, 0);
@@ -179,18 +179,27 @@ public class AlarmTest extends TestCase {
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with only minutes.
+	 */
 	public void testThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2, 0);
 		String toMatch = "Alarm is set for 30 minutes from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with only one hour.
+	 */
 	public void testOneHourToString() {
 		Alarm at = alarmTimeFromNow(0, 1);
 		String toMatch = "Alarm is set for 1 hour from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with only hours.
+	 */
 	public void testFiveHoursToString() {
 		final int hour = 5;
 		Alarm at = alarmTimeFromNow(0, hour);
@@ -198,18 +207,27 @@ public class AlarmTest extends TestCase {
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with one hour and one minute.
+	 */
 	public void testOneHourOneMinuteToString() {
 		Alarm at = alarmTimeFromNow(1, 1);
 		String toMatch = "Alarm is set for 1 hour and 1 minute from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with one hour and thirty minutes.
+	 */
 	public void testOneHourThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2, 1);
 		String toMatch = "Alarm is set for 1 hour and 30 minutes from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with five hours and one minute.
+	 */
 	public void testFiveHourOneMinuteToString() {
 		final int hour = 5;
 		Alarm at = alarmTimeFromNow(1, hour);
@@ -217,6 +235,9 @@ public class AlarmTest extends TestCase {
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with five hours and thirty minutes.
+	 */
 	public void testFiveHourThirtyMinuteToString() {
 		final int hour = 5;
 		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2, hour);
@@ -224,6 +245,10 @@ public class AlarmTest extends TestCase {
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with 23 hours and thirty minutes.
+	 * Could be an edge case.
+	 */
 	public void testTwentyThreeHourThirtyMinuteToString() {
 		Alarm at = alarmTimeFromNow(AlarmUtils.MINUTES_OF_HOUR / 2,
 				AlarmUtils.HOUR_OF_DAY - 1);
@@ -231,12 +256,18 @@ public class AlarmTest extends TestCase {
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test method to test formated strings with 24 hours. Edge case.
+	 */
 	public void testTwentyFourHourToString() {
 		Alarm at = alarmTimeFromNow(0, AlarmTest.HOURS_OF_DAY);
 		String toMatch = "Alarm is set for 24 hours from now.";
 		assertEquals(at.getTimeToNextAlarmString(), toMatch);
 	}
 
+	/**
+	 * Test toString, should be formated hh:mm.
+	 */
 	public void testToString() {
 		final int hour = 23;
 		final int minute = 23;
@@ -248,70 +279,93 @@ public class AlarmTest extends TestCase {
 		assertEquals(at2.toString(), "03:03");
 	}
 
+	/**
+	 * Test if the alarm is generating an exception when the hour is 24.
+	 */
 	public void testIllegalHourInput() {
 		final int minute = 23;
 		try {
 			new Alarm(AlarmTest.HOURS_OF_DAY, minute, 0);
-			fail("Should generate an illegalargumentexpection");
+			fail(AlarmTest.FAIL_MESSAGE);
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 	}
 
+	/**
+	 * Test if the alarm is generating an exception when the hour is negative.
+	 */
 	public void testNegativeHourInput() {
 		final int minutes = 23;
 		final int hours = -3;
 		try {
 			new Alarm(hours, minutes, 0);
-			fail("Should generate an illegalargumentexpection");
+			fail(AlarmTest.FAIL_MESSAGE);
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
 	}
 
+	/**
+	 * Test if the alarm is generating an exception when the minute is 60.
+	 */
 	public void testIllegalMinuteInput() {
 		try {
 			new Alarm(0, AlarmTest.MINUTES_OF_HOUR, 0);
-			fail("Should generate an illegalargumentexpection");
+			fail(AlarmTest.FAIL_MESSAGE);
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
 	}
 
+	/**
+	 * Test if the alarm is generating an exception when the minute is negative.
+	 */
 	public void testNegativeMinuteInput() {
 		final int hours = 22;
 		try {
 			new Alarm(hours, -AlarmTest.MINUTES_OF_HOUR, 0);
-			fail("Should generate an illegalargumentexpection");
+			fail(AlarmTest.FAIL_MESSAGE);
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
 	}
 
+	/**
+	 * Test if the alarm is generating an exception when the hour and the minute
+	 * is negative.
+	 */
 	public void testNegativeHourMinuteInput() {
 		final int minutes = -2;
 		final int hours = -1;
 		try {
 			new Alarm(hours, minutes, 0);
-			fail("Should generate an illegalargumentexpection");
+			fail(AlarmTest.FAIL_MESSAGE);
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
 	}
 
+	/**
+	 * Test if the alarm is generating an exception when the hour is 24 and the
+	 * minute is 60.
+	 */
 	public void testIllegalHourMinuteInput() {
 		try {
 			new Alarm(AlarmTest.HOURS_OF_DAY, AlarmTest.MINUTES_OF_HOUR, 0);
-			fail("Should generate an illegalargumentexpection");
+			fail(AlarmTest.FAIL_MESSAGE);
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 	}
 
+	/**
+	 * Test if the id is stored correctly.
+	 */
 	public void testGetID() {
 		final int minutes = 20;
 		final int hours = 20;
@@ -320,6 +374,9 @@ public class AlarmTest extends TestCase {
 		assertEquals(alarm.getId(), actual);
 	}
 
+	/**
+	 * Test if the hour of the alarm is stored correctly.
+	 */
 	public void testGetAlarmHours() {
 		final int minutes = 20;
 		final int hours = 20;
@@ -327,6 +384,9 @@ public class AlarmTest extends TestCase {
 		assertEquals(alarm.getAlarmHours(), hours);
 	}
 
+	/**
+	 * Test if the minute of the alarm is stored correctly.
+	 */
 	public void testGetAlarmMinutes() {
 		final int minutes = 20;
 		final int hours = 20;
@@ -334,6 +394,9 @@ public class AlarmTest extends TestCase {
 		assertEquals(alarm.getAlarmMinutes(), minutes);
 	}
 
+	/**
+	 * Test if the hash code of the alarms is correct.
+	 */
 	public void testHashCode() {
 		final int minutes = 20;
 		final int hours = 20;
@@ -347,6 +410,9 @@ public class AlarmTest extends TestCase {
 		assertTrue(alarm.hashCode() == otherAlarm.hashCode());
 	}
 
+	/**
+	 * Test if two alarms is equal if their time is equal.
+	 */
 	public void testEquals() {
 		final int minutes = 20;
 		final int hours = 20;
@@ -364,17 +430,24 @@ public class AlarmTest extends TestCase {
 		assertTrue(alarm.equals(otherAlarm));
 	}
 
+	/**
+	 * Test if an alarm is smaller than another alarm if the time left is
+	 * lesser.
+	 */
 	public void testCompareTo() {
 		int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		final int noon = 12;
+		final int afterNoon = 18;
+		final int beforeNoon = 6;
 
 		// Sets the test to be set on different times depending on the current
 		// time
-		
+
 		int hour = 0;
-		if (currentHour > 12) {
-			hour = 6;
+		if (currentHour > noon) {
+			hour = beforeNoon;
 		} else {
-			hour = 18;
+			hour = afterNoon;
 		}
 
 		final int minute = 20;
@@ -392,6 +465,9 @@ public class AlarmTest extends TestCase {
 		assertTrue(alarm.compareTo(otherAlarm) > 0);
 	}
 
+	/**
+	 * Test if the alarm is enabled and disabled correctly.
+	 */
 	public void testEnabled() {
 
 		final int minutes = 20;
@@ -409,6 +485,9 @@ public class AlarmTest extends TestCase {
 		assertTrue(alarm.isEnabled());
 	}
 
+	/**
+	 * Test if the name of the module is stored correctly.
+	 */
 	public void testModule() {
 		final int minutes = 20;
 		final int hours = 20;
@@ -421,7 +500,9 @@ public class AlarmTest extends TestCase {
 
 		assertFalse(alarm.getModule().equals(moduleName));
 	}
-
+	/**
+	 * Test if the volume is stored and set correctly before and after changing it.
+	 */
 	public void testVolume() {
 		final int volume = 6;
 		String moduleName = "module";
@@ -435,15 +516,24 @@ public class AlarmTest extends TestCase {
 
 	}
 
+	/**
+	 * Test if the vibration is enabled/disabled correctly.
+	 */
 	public void testVibration() {
-		Alarm alarm = new Alarm(20, 20, 1);
+		final int minute = 20;
+		final int hour = 21;
+		Alarm alarm = new Alarm(hour, minute, 1);
 		assertFalse(alarm.isVibrationEnabled());
 		alarm.setVibrationEnabled(true);
 		assertTrue(alarm.isVibrationEnabled());
 	}
-
+	/**
+	 * Test if the alarmtone name is set correctly.
+	 */
 	public void testAlarmTone() {
-		Alarm alarm = new Alarm(20, 20, 1);
+		final int minute = 20;
+		final int hour = 21;
+		Alarm alarm = new Alarm(hour, minute, 1);
 		String toneUri = "super awesome ringtone";
 		alarm.setToneUri(toneUri);
 		assertEquals(alarm.getToneUri(), toneUri);
