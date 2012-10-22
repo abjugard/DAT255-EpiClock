@@ -37,12 +37,20 @@ public class ModularProblemTest extends TestCase {
 		modularProblem = new ModularProblem();
 	}
 
+	/**
+	 * Testing that the modular problem is returning the correct problem
+	 * header/description.
+	 */
 	public void testGetProblemHeader() {
 		String expected = "Solve for x!";
 		String actual = modularProblem.getProblemHeader();
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the modular problem is working as expected and that the
+	 * formatted string that is returned is formatted correctly.
+	 */
 	public void testGetFormattedString() {
 		int[] nbrs = { 3, 4 };
 		String expected = "x = 3 mod 4";
@@ -50,6 +58,10 @@ public class ModularProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the getFormateddString method is formatting the string
+	 * correctly for more than two numbers.
+	 */
 	public void testGetFormattedStringForMoreThanTwoNumbers() {
 		int[] nbrs = { 3, 4, 8 };
 		String expected = "x = 3 + 4 mod 8";
@@ -58,48 +70,77 @@ public class ModularProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that 0 mod 1 returns zero.
+	 */
 	public void testZeroModOne() {
 		int actualResult = modularProblem.getResult(new int[] { 0, 1 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly when b=n in a = b
+	 * mod n.
+	 */
 	public void testTenModTen() {
 		int actualResult = modularProblem.getResult(new int[] { 10, 10 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly when b = 2n in a =
+	 * b mod n.
+	 */
 	public void testTwentyModTen() {
 		int actualResult = modularProblem.getResult(new int[] { 20, 10 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method is working as expcted when b = -n.
+	 */
 	public void testMinusTenModTen() {
 		int actualResult = modularProblem.getResult(new int[] { -10, 10 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult for the "normal" input e.g b < n and veryfying that
+	 * the method is working correctly.
+	 */
 	public void testFourteenModTen() {
 		int actualResult = modularProblem.getResult(new int[] { 14, 10 });
 		int expectedResult = 4;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly when b is negative
+	 * and greater than n.
+	 */
 	public void testMinusFourteenModTen() {
 		int actualResult = modularProblem.getResult(new int[] { -14, 10 });
 		int expectedResult = 6;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly for three numbers.
+	 */
 	public void testTreeNumbersGetResult() {
 		int actualResult = modularProblem.getResult(new int[] { -14, -6, 10 });
 		int expectedResult = 0;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the generateEasyProblem method is working as expected by running
+	 * several verification tests on the randomly generated numbers.
+	 */
 	public void testGenerateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 30;
@@ -108,6 +149,10 @@ public class ModularProblemTest extends TestCase {
 				upperLimit);
 	}
 
+	/**
+	 * Testing the generateMediumProblem method is working as expected by
+	 * running several verification tests on the randomly generated numbers.
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = -30;
 		int upperLimit = 30;
@@ -116,6 +161,10 @@ public class ModularProblemTest extends TestCase {
 				upperLimit);
 	}
 
+	/**
+	 * Testing the generateHardProblem method is working as expected by running
+	 * several verification tests on the randomly generated numbers.
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = -50;
 		int upperLimit = 50;
