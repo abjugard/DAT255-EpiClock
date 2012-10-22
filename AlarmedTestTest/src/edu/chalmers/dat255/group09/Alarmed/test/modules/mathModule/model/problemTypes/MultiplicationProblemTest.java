@@ -36,12 +36,20 @@ public class MultiplicationProblemTest extends TestCase {
 		multiProblem = new MultiplicationProblem();
 	}
 
+	/**
+	 * Testing that the problem header/description is working correctly for the
+	 * multiplication problem clsss.
+	 */
 	public void testGetPromlemHeader() {
 		String expected = "What Is The Product?";
 		String actual = multiProblem.getProblemHeader();
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the problem description for a multiplication problem is
+	 * correct.
+	 */
 	public void testGetFormattedString() {
 		int[] nbrs = { 3, 4, 5 };
 		String expected = "3 * 4 * 5 = ?";
@@ -49,12 +57,20 @@ public class MultiplicationProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing the getResult with "normal" input and in this case when the two
+	 * numbers are equal.
+	 */
 	public void testGetResultForSixTimesSix() {
 		int actualResult = multiProblem.getResult(new int[] { 6, 6 });
 		int expectedResult = 36;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method for when used with one positive and one
+	 * negative number.
+	 */
 	public void testGetResultForTwoTimesMinusOne() {
 		int actualResult = multiProblem.getResult(new int[] { 2, -1 });
 		int expectedResult = -2;
@@ -62,12 +78,19 @@ public class MultiplicationProblemTest extends TestCase {
 
 	}
 
+	/**
+	 * Testing that the getResult method for three numbers is working corrctly.
+	 */
 	public void testGetResultForThreeNumbers() {
 		int actualResult = multiProblem.getResult(new int[] { 5, -5, -1 });
 		int expectedResult = 25;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the method generateEasyProblem is working correctly and
+	 * returning numbers that are passing the specifications.
+	 */
 	public void testGenerateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 10;
@@ -77,6 +100,10 @@ public class MultiplicationProblemTest extends TestCase {
 				upperLimit, expectedNbrOfNumbers);
 	}
 
+	/**
+	 * Testing that the method generateMediumProblem is working correctly and
+	 * returning numbers that are passing the specifications.
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 0;
 		int upperLimit = 10;
@@ -86,10 +113,14 @@ public class MultiplicationProblemTest extends TestCase {
 				upperLimit, expectedNbrOfNumbers);
 	}
 
+	/**
+	 * Testing that the method generateHardProblem is working correctly and
+	 * returning numbers that are passing the specifications.
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = 10;
 		int upperLimit = 15;
-		int expectedNbrOfNumbers = 3;
+		int expectedNbrOfNumbers = 2;
 
 		testGenerateNumbersMultiplicationProblem(Difficulty.HARD, lowerLimit,
 				upperLimit, expectedNbrOfNumbers);

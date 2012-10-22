@@ -82,7 +82,7 @@ public final class MultiplicationProblem extends MathProblemType {
 	 */
 	@Override
 	protected int[] generateHardProblem() {
-		final int numberOfNumbers = 3;
+		final int numberOfNumbers = 2;
 		final int upperLimit = 15;
 		final int lowerLimit = 10;
 
