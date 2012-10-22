@@ -193,12 +193,10 @@ public class DatabaseHandler implements AlarmHandler {
 	public List<Alarm> fetchAllAlarms() {
 		Cursor cursor = getAlarms();
 		ArrayList<Alarm> list = new ArrayList<Alarm>();
-		if (cursor != null) {
-			if (cursor.moveToFirst()) {
-				do {
-					list.add(getAlarmFromCursor(cursor));
-				} while (cursor.moveToNext());
-			}
+		if (cursor != null && cursor.moveToFirst()) {
+			do {
+				list.add(getAlarmFromCursor(cursor));
+			} while (cursor.moveToNext());
 		}
 		return list;
 	}
