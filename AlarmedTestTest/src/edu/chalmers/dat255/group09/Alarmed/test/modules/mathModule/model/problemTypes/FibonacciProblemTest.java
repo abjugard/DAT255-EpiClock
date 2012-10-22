@@ -41,19 +41,31 @@ public class FibonacciProblemTest extends TestCase {
 		fibonacciNumbers = initFibonacciList();
 	}
 
+	/**
+	 * Verifies that the getProblemHeader method is returning a valid problem
+	 * header/title.
+	 */
 	public void testGetPromlemHeader() {
 		String expected = "What is the next term?";
 		String actual = fibonacciProblem.getProblemHeader();
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Verifies that the testGetFormattedString method is returning a valid
+	 * problem formatted string.
+	 */
 	public void testGetFormattedString() {
-		int[] nbrs = { 3, 4, 5 };
-		String expected = "3, 4, 5, ?";
+		int[] nbrs = { 1, 1, 2 };
+		String expected = "1, 1, 2, ?";
 		String actual = fibonacciProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the getResult method is working as expected when the given
+	 * numbers are 3, 5, 8 from the fibonacci sequecnce.
+	 */
 	public void testGetResultForThreeFiveEight() {
 		int actualResult = fibonacciProblem.getResult(new int[] { 3, 5, 8 });
 		int expectedResult = 13;
@@ -61,18 +73,30 @@ public class FibonacciProblemTest extends TestCase {
 
 	}
 
+	/**
+	 * Testing that the getResult method is working as expected when the given
+	 * numbers are 0, 1, 1 from the fibonacci sequecnce.
+	 */
 	public void testGetResultForZeroOneOne() {
 		int actualResult = fibonacciProblem.getResult(new int[] { 0, 1, 1 });
 		int expectedResult = 2;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing that the getResult method is working as expected when given only
+	 * two numbers that are in this case 8, 13 from the fibonacci sequecnce.
+	 */
 	public void testGetResultForTwoTerms() {
 		int actualResult = fibonacciProblem.getResult(new int[] { 8, 13 });
 		int expectedResult = 21;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Tests the generateEasyProblem method by running several tests on the
+	 * randomly generated numbers.
+	 */
 	public void testGenerateEasyProblem() {
 		int lowerLimit = 0;
 		int upperLimit = 10;
@@ -81,6 +105,10 @@ public class FibonacciProblemTest extends TestCase {
 				upperLimit);
 	}
 
+	/**
+	 * Tests the generateMediumProblem method by running several tests on the
+	 * randomly generated numbers.
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 8;
 		int upperLimit = 30;
@@ -89,6 +117,10 @@ public class FibonacciProblemTest extends TestCase {
 				upperLimit);
 	}
 
+	/**
+	 * Tests the generateHardProblem method by running several tests on the
+	 * randomly generated numbers.
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = 30;
 		int upperLimit = 100;
