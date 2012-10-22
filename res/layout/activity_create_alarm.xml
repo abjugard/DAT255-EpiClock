@@ -22,14 +22,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <TimePicker
+        <edu.chalmers.dat255.group09.Alarmed.views.CustomTimePicker
             android:id="@+id/createAlarmTimePicker"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="51dp" />
+            android:layout_marginTop="30dp" 
+            class="edu.chalmers.dat255.group.Alarmed.views.CustomTimePicker" />
 
         <Spinner
             android:id="@+id/activity_create_alarm_task_spinner"
