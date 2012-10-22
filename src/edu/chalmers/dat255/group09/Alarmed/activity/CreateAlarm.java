@@ -225,13 +225,6 @@ public class CreateAlarm extends Activity {
 		overridePendingTransition(fadeIn, fadeOut);
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		TimePicker timePicker = (TimePicker) findViewById(R.id.createAlarmTimePicker);
-		setTimepickerToCurrentTime(timePicker);
-	}
-
 	/**
 	 * Creates a dialog with a list of the days of the week. You can enable and
 	 * disable every day and the selected days will be the days that is
