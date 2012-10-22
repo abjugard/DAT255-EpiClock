@@ -40,43 +40,79 @@ public class PrimeProblemTest extends TestCase {
 		primeProblem = new PrimeProblem();
 	}
 
+	/**
+	 * Testing that the problem is returning a correct problem
+	 * description/header.
+	 */
 	public void testGetPromlemHeader() {
 		String expected = "Which Number Is Prime?";
 		String actual = primeProblem.getProblemHeader();
 		assertEquals(expected, actual);
+
 	}
 
+	/**
+	 * Testing that the problem is formatting the problem descriptions strings
+	 * correctly.
+	 */
 	public void testGetFormattedString() {
-		int[] nbrs = { 1, 2, 3, 4 };
-		String expected = "1, 2, 3, 4";
+		int[] nbrs = { 0, 1, 2, 1 };
+		String expected = "0, 1, 2, 1";
 		String actual = primeProblem.getFormattedProblem(nbrs);
 		assertEquals(expected, actual);
 	}
 
-	public void testGetResult() {
-
+	/**
+	 * Testing that the getResult method is finding one prime numbers if the
+	 * total number of numbers is four.
+	 */
+	public void tesetGetResultForFourNumbers() {
 		int actualResult = primeProblem.getResult(new int[] { 6, 12, 36, 97 });
 		int expectedResult = 97;
 		assertEquals(expectedResult, actualResult);
+	}
 
-		actualResult = primeProblem.getResult(new int[] { 34, 20, 29, 8 });
-		expectedResult = 29;
-		assertEquals(expectedResult, actualResult);
-
-		actualResult = primeProblem.getResult(new int[] { 9, 4, 1, 5 });
-		expectedResult = 5;
+	/**
+	 * Testing the getResult method is working as expected when using three
+	 * numbers and returns the only prime.
+	 */
+	public void testGetResultForThreeNumbers() {
+		int actualResult = primeProblem.getResult(new int[] { 34, 20, 29 });
+		int expectedResult = 29;
 		assertEquals(expectedResult, actualResult);
 	}
 
+	/**
+	 * Testing the getResult method is returning the correct prime number when
+	 * working with four numbers and two prime numbers, but one of them are
+	 * negative.
+	 */
+	public void testGetResultForFourNumberWithAlsoOneNegativePimeNumber() {
+		int actualResult = primeProblem.getResult(new int[] { 9, -5, 1, 5 });
+		int expectedResult = 5;
+		assertEquals(expectedResult, actualResult);
+	}
+
+	/**
+	 * Tests the problems generateEasyNumbers method using several different
+	 * tests, but is for example validating the the other numbers is within
+	 * delta from the prime numbers etc.
+	 */
 	public void testGenerateEasyNumbers() {
 		int lowerLimit = 0;
 		int upperLimit = 30;
 		int deltaToPrime = 10;
 
-		testProblemGenerateNumbers(Difficulty.EASY, lowerLimit, upperLimit, deltaToPrime);
+		testProblemGenerateNumbers(Difficulty.EASY, lowerLimit, upperLimit,
+				deltaToPrime);
 
 	}
 
+	/**
+	 * Tests the problems generateMediumNumbers method using several different
+	 * tests, but is for example validating the the other numbers is within
+	 * delta from the prime numbers etc.
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 30;
 		int upperLimit = 50;
@@ -86,12 +122,18 @@ public class PrimeProblemTest extends TestCase {
 				deltaToPrime);
 	}
 
+	/**
+	 * Tests the problems generateHardNumbers method using several different
+	 * tests, but is for example validating the the other numbers is within
+	 * delta from the prime numbers etc.
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = 50;
 		int upperLimit = 100;
 		int deltaToPrime = 20;
 
-		testProblemGenerateNumbers(Difficulty.HARD, lowerLimit, upperLimit, deltaToPrime);
+		testProblemGenerateNumbers(Difficulty.HARD, lowerLimit, upperLimit,
+				deltaToPrime);
 	}
 
 	/**
@@ -108,8 +150,8 @@ public class PrimeProblemTest extends TestCase {
 	 * @param deltaToPrime
 	 *            The allowed delta for other numbers than the prime number v
 	 */
-	private void testProblemGenerateNumbers(Difficulty difficulty, int lowerLimit,
-			int upperLimit, int deltaToPrime) {
+	private void testProblemGenerateNumbers(Difficulty difficulty,
+			int lowerLimit, int upperLimit, int deltaToPrime) {
 
 		for (int i = 0; i < ITERATIONS; i++) {
 
