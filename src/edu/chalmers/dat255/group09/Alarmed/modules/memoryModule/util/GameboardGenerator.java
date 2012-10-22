@@ -73,17 +73,18 @@ public class GameboardGenerator {
 	/**
 	 * Get an unique pair of cardimages.
 	 * 
-	 * @param i
+	 * @param key
 	 *            The image key to be used
 	 * @return A list containing a unique pair of card images
 	 */
-	private List<CardImage> getUniqueImagePair(int i) {
+	private List<CardImage> getUniqueImagePair(int key) {
 		List<CardImage> pair = new ArrayList<CardImage>();
 		Card card = new Card();
 		Card otherCard = new Card();
 
-		pair.add(new CardImage(context, card, imageLoader.getImageResource(i)));
-		pair.add(new CardImage(context, otherCard, imageLoader.getImageResource(i)));
+		pair.add(new CardImage(context, card, imageLoader.getImageResource(key)));
+		pair.add(new CardImage(context, otherCard, imageLoader
+				.getImageResource(key)));
 		return pair;
 	}
 }

@@ -33,6 +33,7 @@ import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.util.GameboardGe
 import edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.views.CardImage;
 
 /**
+ * An MemoryActivity controller for the memory activity.
  * 
  * @author Joakim Persson
  * 
@@ -167,7 +168,8 @@ public class MemoryActivity extends BaseActivationActivity implements
 		 * @param secondCardPressed
 		 *            The second card that was pressed.
 		 */
-		public MemoryTask(CardImage firstCardPressed, CardImage secondCardPressed) {
+		public MemoryTask(CardImage firstCardPressed,
+				CardImage secondCardPressed) {
 			this.cardOne = firstCardPressed;
 			this.cardTwo = secondCardPressed;
 		}

@@ -15,7 +15,6 @@
  */
 package edu.chalmers.dat255.group09.Alarmed.modules.memoryModule.model;
 
-
 /**
  * A class representing the logic code for a card in an memory game.
  * 
@@ -67,6 +66,7 @@ public final class Card {
 	}
 
 	/**
+	 * Get the current status of the card.
 	 * 
 	 * @return The cards current status
 	 */
