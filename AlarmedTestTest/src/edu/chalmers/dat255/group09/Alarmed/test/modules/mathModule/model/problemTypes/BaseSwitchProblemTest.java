@@ -36,12 +36,20 @@ public class BaseSwitchProblemTest extends TestCase {
 		problem = new BaseSwitchProblem();
 	}
 
+	/**
+	 * Testing that the problem header in BaseSwitchProblem is working as
+	 * expected an return a correct problem description.
+	 */
 	public void testGetProblemHeader() {
 		String expected = "Convert to base ten";
 		String actual = problem.getProblemHeader();
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the getFormattedProblem string is working as expected and
+	 * returning a valid string.
+	 */
 	public void testGetFormattedProblem() {
 		int[] nbrs = { 0, 1, 1, 0 };
 		String expected = "0 1 1 0";
@@ -49,6 +57,9 @@ public class BaseSwitchProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly for two digits.
+	 */
 	public void testGetResultForTwoDigits() {
 		int[] nbrs = { 1, 1 };
 		int expected = 3;
@@ -56,6 +67,9 @@ public class BaseSwitchProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly for three digits.
+	 */
 	public void testGetResultForThreeDigits() {
 		int[] nbrs = { 1, 1, 0 };
 		int expected = 6;
@@ -63,6 +77,9 @@ public class BaseSwitchProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the getResult method is working correctly for nine digits.
+	 */
 	public void testGetResultForNineDigits() {
 		int[] nbrs = { 1, 1, 0, 1, 0, 1, 0, 1, 0 };
 		int expected = 426;
@@ -70,6 +87,10 @@ public class BaseSwitchProblemTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	/**
+	 * Testing that the generateEasyProblem method is working as expected by
+	 * running multiple tests on the generated random number.
+	 */
 	public void testGenerateEasyProblem() {
 		int lowerLimit = 1;
 		int upperLimit = 30;
@@ -77,6 +98,10 @@ public class BaseSwitchProblemTest extends TestCase {
 		testProblemGenerateNumbers(Difficulty.EASY, lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Testing that the generateMediumProblem method is working as expected by
+	 * running multiple tests on the generated random number.
+	 */
 	public void testGenerateMediumProblems() {
 		int lowerLimit = 30;
 		int upperLimit = 80;
@@ -84,6 +109,10 @@ public class BaseSwitchProblemTest extends TestCase {
 		testProblemGenerateNumbers(Difficulty.MEDIUM, lowerLimit, upperLimit);
 	}
 
+	/**
+	 * Testing that the generateHardProblem method is working as expected by
+	 * running multiple tests on the generated random number.
+	 */
 	public void testGenerateHardProblems() {
 		int lowerLimit = 80;
 		int upperLimit = 120;
